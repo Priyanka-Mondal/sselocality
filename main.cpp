@@ -31,7 +31,8 @@ int main(int argc, char** argv) {
     //    Utilities::readConfigFile(testCases, usehdd, cleaningMode);       //for testing crimes dataset
     Utilities::readConfigFile(argc, argv, filename, testCases, inMemory, overwrite);
 
-    if (overwrite) {
+    if (overwrite) 
+    {
         Utilities::generateTestCases(testCases, keywordLength, time(NULL));
         fstream file("/tmp/search.txt", std::ofstream::out);
         if (file.fail()) {
@@ -65,16 +66,6 @@ int main(int argc, char** argv) {
     Amortized client(testCases[0].N, inMemory, overwrite);
     client.endSetup();
 
-
-    //    client.update(OP::INS, "salam", 1, true);
-    //    client.update(OP::INS, "salam", 2, true);
-    //    client.update(OP::INS, "salam", 3, true);
-    //    client.update(OP::INS, "salam", 4, true);
-    //    client.update(OP::INS, "salam", 5, true);
-    //    client.update(OP::INS, "salam", 6, true);
-    //    client.update(OP::INS, "salam", 7, true);
-    //    client.update(OP::DEL, "salam", 4, true);
-    //    vector<int> res2 = client.search("salam");
 
 
 
@@ -124,7 +115,8 @@ int main(int argc, char** argv) {
         }
         //        client.endSetup();
         for (uint j = 0; j < testCases[i].Qs.size(); j++) {
-            cout << "---------------------" << endl;
+            cout << "-----------------------------------------" << endl;
+            cout << "-----------------------------------------" << endl;
             cout << "Result of Operations for DB Size " << testCases[i].N << endl;
             auto item = testCases[i].filePairs[testCases[i].testKeywords[j]];
             //measuring search and update execution times

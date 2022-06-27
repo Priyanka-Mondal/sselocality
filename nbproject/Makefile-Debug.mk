@@ -46,6 +46,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/OneChoiceClient.o \
 	${OBJECTDIR}/OneChoiceServer.o \
 	${OBJECTDIR}/OneChoiceStorage.o \
+	${OBJECTDIR}/TwoChoiceClient.o \
+	${OBJECTDIR}/TwoChoiceServer.o \
+	${OBJECTDIR}/TwoChoiceStorage.o \
 	${OBJECTDIR}/RAMStore.o \
 	${OBJECTDIR}/Server.o \
 	${OBJECTDIR}/Storage.o \
@@ -133,6 +136,21 @@ ${OBJECTDIR}/OneChoiceStorage.o: OneChoiceStorage.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceStorage.o OneChoiceStorage.cpp
+
+${OBJECTDIR}/TwoChoiceClient.o: TwoChoiceClient.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TwoChoiceClient.o TwoChoiceClient.cpp
+
+${OBJECTDIR}/TwoChoiceServer.o: TwoChoiceServer.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TwoChoiceServer.o TwoChoiceServer.cpp
+
+${OBJECTDIR}/TwoChoiceStorage.o: TwoChoiceStorage.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TwoChoiceStorage.o TwoChoiceStorage.cpp
 
 ${OBJECTDIR}/RAMStore.o: RAMStore.cpp
 	${MKDIR} -p ${OBJECTDIR}

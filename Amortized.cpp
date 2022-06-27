@@ -1,5 +1,5 @@
 #include "Amortized.h"
-#include "OneChoiceClient.h"
+#include "TwoChoiceClient.h"
 #include <openssl/conf.h>
 #include <openssl/evp.h>
 #include <openssl/err.h>
@@ -9,7 +9,7 @@ using namespace std;
 
 Amortized::Amortized(int N, bool inMemory, bool overwrite) {
     //    L = new AmortizedBASClient(ceil(log2(N)), inMemory, overwrite, profile);
-    L = new OneChoiceClient(ceil(log2(N)), inMemory, overwrite, profile);
+    L = new TwoChoiceClient(ceil(log2(N)), inMemory, overwrite, profile);
     for (int i = 0; i < ceil(log2(N)); i++) {
         keys.push_back(NULL);
     }
@@ -59,7 +59,8 @@ void Amortized::update(OP op, string keyword, int ind, bool setup) {
     L->totalCommunication = 0;
     int rm0 = log2((~updateCounter & (updateCounter + 1)));
     updateCounter++;
-    unordered_map<string, vector<prf_type> > previousData;
+    //unordered_map<string, vector<prf_type> > previousData;
+    map<string, vector<prf_type> > previousData;
 
 
     for (int i = 0; i < min(rm0, localSize); i++) {

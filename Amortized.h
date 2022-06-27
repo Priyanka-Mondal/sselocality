@@ -11,7 +11,8 @@
 #include "Server.h"
 #include "Utilities.h"
 #include "AmortizedBASClient.h"
-#include "OneChoiceClient.h"
+//#include "OneChoiceClient.h"
+#include "TwoChoiceClient.h"
 #include "AES.hpp"
 #include <set>
 #include <unordered_map>
@@ -28,7 +29,7 @@ private:
     inline prf_type bitwiseXOR(prf_type input1, prf_type input2);
     vector<unsigned char*> keys;
     //        AmortizedBASClient* L;
-    OneChoiceClient* L;
+    TwoChoiceClient* L;
     int updateCounter = 0;
     double totalUpdateCommSize;
     double totalSearchCommSize;
