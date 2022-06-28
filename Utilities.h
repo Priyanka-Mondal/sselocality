@@ -19,25 +19,31 @@
 #define SUB_BLOCK_SIZE 4096
 #define SUB_BLOCKS_PER_BLOCK 4096
 
-struct PRFHasher {
-
-    std::size_t operator()(const prf_type &key) const {
+struct PRFHasher 
+{
+    std::size_t operator()(const prf_type &key) const 
+    {
         std::hash<byte_t> hasher;
         size_t result = 0;
-        for (size_t i = 0; i < AES_KEY_SIZE; ++i) {
+        for (size_t i = 0; i < AES_KEY_SIZE; ++i) 
+	{
             result = (result << 1) ^ hasher(key[i]);
         }
         return result;
     }
 };
 
-struct CompareLess {
-
-    bool operator()(const prf_type& a, const prf_type& b) const {
-        for (int i = 0; i < AES_KEY_SIZE; i++) {
-            if (a[i] > b[i]) {
+struct CompareLess 
+{
+    bool operator()(const prf_type& a, const prf_type& b) const 
+    {
+        for (int i = 0; i < AES_KEY_SIZE; i++) 
+	{
+            if (a[i] > b[i]) 
+	    {
                 return false;
-            } else if (a[i] < b[i]) {
+            } else if (a[i] < b[i]) 
+	    {
                 return true;
             }
         }
@@ -45,17 +51,21 @@ struct CompareLess {
         return false;
     }
 
-    static prf_type min_value() {
+    static prf_type min_value() 
+    {
         prf_type result;
-        for (int i = 0; i < AES_KEY_SIZE; i++) {
+        for (int i = 0; i < AES_KEY_SIZE; i++) 
+	{
             result[i] = 0;
         }
         return result;
     }
 
-    static prf_type max_value() {
+    static prf_type max_value() 
+    {
         prf_type result;
-        for (int i = 0; i < AES_KEY_SIZE; i++) {
+        for (int i = 0; i < AES_KEY_SIZE; i++) 
+	{
             result[i] = 0xFF;
         }
         return result;
@@ -63,7 +73,8 @@ struct CompareLess {
 };
 
 template <typename T>
-class TC {
+class TC 
+{
 public:
     uint N;
     uint K;
@@ -74,7 +85,8 @@ public:
     std::map<std::string, std::vector<T> > filePairs;
 };
 
-class Utilities {
+class Utilities 
+{
 private:
     static int parseLine(char* line);
 public:
@@ -82,7 +94,7 @@ public:
     //        static std::string getSHA256(std::string input);
     //    static std::string encryptAndEncode(std::string input, unsigned char* key, unsigned char* iv);
     //    static std::string decodeAndDecrypt(std::string plaintext, unsigned char* key, unsigned char* iv);
-    static unsigned char* sha256(char* input, int size);
+    static unsigned char* sha256(char* input, int size, int pos);
     static std::string base64_encode(const char* bytes_to_encode, unsigned int in_len);
     static std::string base64_decode(std::string const& enc);
     static std::string XOR(std::string value, std::string key);
@@ -119,7 +131,8 @@ public:
         testCase.N = numOfLines;
         testCase.K = 148;
         std::set<std::string> keywords;
-        for (int i = 1; i <= numOfLines; i++) {
+        for (int i = 1; i <= numOfLines; i++) 
+	{
             getline(infile, tmp);
             testCase.filePairs[tmp].push_back(i);
             keywords.insert(tmp);
@@ -174,7 +187,8 @@ public:
     }
 
     template <typename T>
-    static void readConfigFile(int argc, char** argv, std::string address, std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) {
+    static void readConfigFile(int argc, char** argv, std::string address, std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) 
+    {
         /*
          * Config file structure (They should be sorted based on N)
          * 
@@ -205,14 +219,15 @@ public:
         overwrite = (tmp == "true") ? true : false;
         getline(infile, tmp);
         int totalTests = stoi(tmp);
-        for (int i = 0; i < totalTests; i++) {
+        for (int i = 0; i < totalTests; i++) 
+	{
             TC<T> testCase;
             getline(infile, tmp);
             testCase.N = stoi(tmp);
             getline(infile, tmp);
             testCase.K = stoi(tmp);
             getline(infile, tmp);
-            int qNum = stoi(tmp);
+            int qNum = stoi(tmp); // what is it ?
             for (int i = 0; i < qNum; i++) {
                 getline(infile, tmp);
                 testCase.Qs.push_back(stoi(tmp));
@@ -226,7 +241,8 @@ public:
     };
 
     template <typename T>
-    static void generateTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed) {
+    static void generateTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed) 
+    {
         char alphanum[] =
                 "0123456789"
                 "!@#$%^&*"
@@ -236,11 +252,13 @@ public:
         srand(seed);
         uint totalKeywordSize = 0;
         uint totalPairNumber = 0;
-        for (uint i = 0; i < testCases.size(); i++) {
-
-            for (uint j = 0; j < testCases[i].K - totalKeywordSize; j++) {
+        for (uint i = 0; i < testCases.size(); i++) 
+	{
+            for (uint j = 0; j < testCases[i].K - totalKeywordSize; j++) 
+	    {
                 std::string str;
-                for (uint k = 0; k < keywordLength; ++k) {
+                for (uint k = 0; k < keywordLength; ++k) 
+		{
                     str += alphanum[rand() % (sizeof (alphanum) - 1)];
                 }
                 //                str="salam";
@@ -248,14 +266,15 @@ public:
             }
             totalKeywordSize += testCases[i].keywords.size();
 
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) {
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+	    {
                 testCases[i].testKeywords.push_back(testCases[i].keywords[j]);
             }
-
-
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) {
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+	    {
                 std::vector<T> files;
-                for (uint k = 0; k < testCases[i].Qs[j]; k++) {
+                for (uint k = 0; k < testCases[i].Qs[j]; k++) 
+		{
                     files.push_back(k);
                     totalPairNumber++;
                 }
@@ -264,9 +283,11 @@ public:
             }
             uint totalCounter = totalPairNumber;
             uint reminderKeywords = testCases[i].keywords.size() - testCases[i].testKeywords.size();
-            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) {
+            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
+	    {
                 std::vector<T> files;
-                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
+                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) 
+		{
                     int fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
@@ -288,27 +309,32 @@ public:
         srand(seed);
         uint totalKeywordSize = 0;
         uint totalPairNumber = 0;
-        for (uint i = 0; i < testCases.size(); i++) {
-            for (uint j = 0; j < testKeywords.size(); j++) {
+        for (uint i = 0; i < testCases.size(); i++) 
+	{
+            for (uint j = 0; j < testKeywords.size(); j++) 
+	    {
                 testCases[i].keywords.push_back(testKeywords[j]);
             }
-            for (uint j = testKeywords.size(); j < testCases[i].K - totalKeywordSize; j++) {
+            for (uint j = testKeywords.size(); j < testCases[i].K - totalKeywordSize; j++) 
+	    {
                 std::string str;
-                for (uint k = 0; k < keywordLength; ++k) {
+                for (uint k = 0; k < keywordLength; ++k) 
+		{
                     str += alphanum[rand() % (sizeof (alphanum) - 1)];
                 }
                 testCases[i].keywords.push_back(str);
             }
             totalKeywordSize += testCases[i].keywords.size();
 
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) {
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+	    {
                 testCases[i].testKeywords.push_back(testCases[i].keywords[j]);
             }
-
-
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) {
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+	    {
                 std::vector<T> files;
-                for (uint k = 0; k < testCases[i].Qs[j]; k++) {
+                for (uint k = 0; k < testCases[i].Qs[j]; k++) 
+		{
                     files.push_back(k);
                     totalPairNumber++;
                 }
@@ -317,9 +343,11 @@ public:
             }
             uint totalCounter = totalPairNumber;
             uint reminderKeywords = testCases[i].keywords.size() - testCases[i].testKeywords.size();
-            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) {
+            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
+	    {
                 std::vector<T> files;
-                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
+                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) 
+		{
                     int fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
@@ -333,4 +361,3 @@ public:
 };
 
 #endif /* UTILITIES_H */
-

@@ -37,7 +37,7 @@ void OneChoiceClient::setup(int index, unordered_map<string, vector<prf_type> > 
         mapValue = Utilities::encode(valueTmp.data(), K1.data());
         keywprdCntCiphers[mapKey] = mapValue;
 
-        unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
+        unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE,0);
         int pos = (unsigned int) (*((int*) hash)) % numberOfBins[index];
         int cipherIndex = pos;
         for (unsigned int i = 0; i < pair.second.size(); i++) {

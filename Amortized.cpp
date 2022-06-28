@@ -54,7 +54,8 @@ Amortized::~Amortized() {
     file.close();
 }
 
-void Amortized::update(OP op, string keyword, int ind, bool setup) {
+void Amortized::update(OP op, string keyword, int ind, bool setup) 
+{
     totalUpdateCommSize = 0;
     L->totalCommunication = 0;
     int rm0 = log2((~updateCounter & (updateCounter + 1)));
