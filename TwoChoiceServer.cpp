@@ -12,7 +12,8 @@ TwoChoiceServer::TwoChoiceServer(int dataIndex, bool inMemory, bool overwrite, b
 TwoChoiceServer::~TwoChoiceServer() {
 }
 
-void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters) {
+void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters) 
+{
     storage->insertAll(dataIndex, ciphers);
     keyworkCounters->insert(dataIndex, keywordCounters);
 }
@@ -33,7 +34,7 @@ vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type token, int& key
     prf_type res = keyworkCounters->find(dataIndex, keywordMapKey, found);
     if (profile) {
         keywordCounterTime = Utilities::stopTimer(35);
-        printf("keyword counter Search Time:%f number of SeekG:%d number of read bytes:%d\n", keywordCounterTime, keyworkCounters->seekgCount, keyworkCounters->KEY_VALUE_SIZE * keyworkCounters->seekgCount);
+        //printf("keyword counter Search Time:%f number of SeekG:%d number of read bytes:%d\n", keywordCounterTime, keyworkCounters->seekgCount, keyworkCounters->KEY_VALUE_SIZE * keyworkCounters->seekgCount);
         Utilities::startTimer(45);
     }
 

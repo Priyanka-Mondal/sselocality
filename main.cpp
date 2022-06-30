@@ -56,9 +56,10 @@ int main(int argc, char** argv)
         file.close();
         Utilities::generateTestCases(testCases, keywordLength, time(NULL), testKeywords);
     }
-    Amortized client(testCases[0].N, inMemory, overwrite);
-    client.endSetup();
+    Amortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
+    client.endSetup(testCases[0].N);
     cout << "Start of Static" << endl;
+    
     for (uint i = 0; i < testCases.size(); i++) 
     {
         int cnt = 0;
@@ -79,6 +80,7 @@ int main(int argc, char** argv)
                 }
             }
             cnt = 0;
+	    
             for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 auto item = testCases[i].filePairs[testCases[i].testKeywords[j]];
@@ -111,37 +113,21 @@ int main(int argc, char** argv)
             }
         }
         //        client.endSetup();
+	
         for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	{
-            cout << "-----------------------------------------" << endl;
-            cout << "-----------------------------------------" << endl;
+            cout << "------------------------------------------------------------------------------" << endl;
             cout << "Result of Operations for DB Size " << testCases[i].N << endl;
-            auto item = testCases[i].filePairs[testCases[i].testKeywords[j]];
-            //measuring search and update execution times
-            cout << "Search for Keyword With " << testCases[i].Qs[j] << " Result and " << testCases[i].delNumber[j] << " Deletions:" << endl;
-            for (int z = 0; z < 1; z++) 
-	    {
+            cout << "Search for Keyword With " << testCases[i].Qs[j] << " Results and " << testCases[i].delNumber[j] << " Deletions:" << endl;
                 Utilities::startTimer(500);
                 vector<int> res = client.search(testCases[i].testKeywords[j]);
                 time = Utilities::stopTimer(500);
-                cout << "Search Computation Time (microseconds):" << time << endl;
-                cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
+                //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
+                //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
                 cout << "Number of return item:" << res.size() << endl;
-            }
-            //            Utilities::startTimer(500);
-            //            client.update(OP::DEL, testCases[i].testKeywords[j], item[0], false);
-            //            time = Utilities::stopTimer(500);
-            //            cout << "Deletion Time:" << time << endl;
-            //            cout << "Deletion Communication Size:" << client.getTotalUpdateCommSize() << endl;
-            //            Utilities::startTimer(500);
-            //            client.update(OP::INS, testCases[i].testKeywords[j], testCases[i].filePairs[testCases[i].testKeywords[j]][0], false);
-            //            time = Utilities::stopTimer(500);
-            //            cout << "Insertion Time:" << time << endl;
-            //            cout << "Insertion Communication Size:" << client.getTotalUpdateCommSize() << endl;
-
         }
-        cout << "************" << endl;
-    }
+        cout << "**************************************************************************" << endl;
 
+    }
     return 0;
 }

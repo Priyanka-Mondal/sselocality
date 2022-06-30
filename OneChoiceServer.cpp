@@ -17,7 +17,8 @@ void OneChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, p
     keyworkCounters->insert(dataIndex, keywordCounters);
 }
 
-vector<prf_type> OneChoiceServer::search(int dataIndex, prf_type token, int& keywordCnt) {
+vector<prf_type> OneChoiceServer::search(int dataIndex, prf_type token, int& keywordCnt) 
+{
     keyworkCounters->seekgCount = 0;
     storage->readBytes = 0;
     double keywordCounterTime = 0, serverSearchTime = 0;

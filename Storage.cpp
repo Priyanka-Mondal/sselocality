@@ -70,8 +70,10 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers) {
                 int pos = (unsigned int) (*((int*) hash)) % maxSize;
 
                 fstream file(filenames[dataIndex].c_str(), ios::binary | ios::in | ios::out | ios::ate);
-                if (file.fail()) {
-                    cerr << "Error in insert: " << strerror(errno);
+                if (file.fail()) 
+		{
+		    cout <<"xx:"<<dataIndex<<endl;
+                    cerr << "[Error in insert: " << strerror(errno)<<"]"<<endl;
                 }
                 int tmpNextPos = file.tellp();
                 file.seekg(pos * KEY_VALUE_SIZE, ios::beg);

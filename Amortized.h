@@ -29,6 +29,7 @@ private:
     inline prf_type bitwiseXOR(prf_type input1, prf_type input2);
     vector<unsigned char*> keys;
     //        AmortizedBASClient* L;
+    //OneChoiceClient* L;
     TwoChoiceClient* L;
     int updateCounter = 0;
     double totalUpdateCommSize;
@@ -44,7 +45,7 @@ public:
     virtual ~Amortized();
     double getTotalSearchCommSize() const;
     double getTotalUpdateCommSize() const;
-    void endSetup();
+    void endSetup(int N);
 
 };
 

@@ -122,7 +122,8 @@ public:
     static std::array<uint8_t, 16> generatePRF(unsigned char* keyword, unsigned char* prfkey);
 
     template <typename T>
-    static void readConfigFile(std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) {
+    static void readConfigFile(std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) 
+    {
         std::ifstream infile;
         infile.open("crimes2.csv");
         std::string tmp;
@@ -227,8 +228,9 @@ public:
             getline(infile, tmp);
             testCase.K = stoi(tmp);
             getline(infile, tmp);
-            int qNum = stoi(tmp); // what is it ?
-            for (int i = 0; i < qNum; i++) {
+            int qNum = stoi(tmp); //#of queries
+            for (int i = 0; i < qNum; i++) 
+	    {
                 getline(infile, tmp);
                 testCase.Qs.push_back(stoi(tmp));
                 getline(infile, tmp);
@@ -357,6 +359,7 @@ public:
             }
         }
     };
+
     virtual ~Utilities();
 };
 

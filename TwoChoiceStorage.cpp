@@ -8,8 +8,10 @@ TwoChoiceStorage::TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddr
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
     for (int i = 0; i < dataIndex; i++) {
-        int curNumberOfBins = i > 0 ? (int) ceil((float) pow(2, i + 1) / (float) (log2(pow(2, i + 1)) * log2(log2(pow(2, i + 1))))) : 1;
-        int curSizeOfEachBin = i > 0 ? (log2(pow(2, i + 1)) * log2(log2(pow(2, i + 1))))*3 : 1;
+        int curNumberOfBins = 
+	     i>3 ? ((int)ceil((float) (pow(2,i)/((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i))))))))) : 1;
+	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins))); 
+        int curSizeOfEachBin = i > 3 ? ((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*3) : 3*pow(2,i);
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
         printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
@@ -17,13 +19,18 @@ TwoChoiceStorage::TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddr
 
 }
 
-bool TwoChoiceStorage::setup(bool overwrite) {
-    if (inMemoryStorage) {
-        for (int i = 0; i < dataIndex; i++) {
+bool TwoChoiceStorage::setup(bool overwrite) 
+{
+    if (inMemoryStorage) 
+    {
+        for (int i = 0; i < dataIndex; i++) 
+	{
             vector<pair<prf_type, prf_type> > curData;
             data.push_back(curData);
         }
-    } else {
+    } 
+    else 
+    {
 	/*    
         if (USE_XXL) {
             diskData = new stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru >::result*[dataIndex];
@@ -31,19 +38,23 @@ bool TwoChoiceStorage::setup(bool overwrite) {
                 diskData[i] = new stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru>::result();
             }
         } else {*/
-            for (int i = 0; i < dataIndex; i++) {
+            for (int i = 0; i < dataIndex; i++) 
+	    {
                 string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
                 filenames.push_back(filename);
                 fstream testfile(filename.c_str(), std::ofstream::in);
-                if (testfile.fail() || overwrite) {
+                if (testfile.fail() || overwrite) 
+		{
                     testfile.close();
                     fstream file(filename.c_str(), std::ofstream::out);
-                    if (file.fail()) {
+                    if (file.fail()) 
+		    {
                         cerr << "Error: " << strerror(errno);
                     }
 
                     int maxSize = numberOfBins[i] * sizeOfEachBin[i];
-                    for (int j = 0; j < maxSize; j++) {
+                    for (int j = 0; j < maxSize; j++) 
+		    {
                         file.write((char*) nullKey.data(), AES_KEY_SIZE);
                         file.write((char*) nullKey.data(), AES_KEY_SIZE);
                     }
@@ -55,12 +66,17 @@ bool TwoChoiceStorage::setup(bool overwrite) {
 
 }
 
-void TwoChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_type> > > ciphers) {
-    if (inMemoryStorage) {
-        for (auto item : ciphers) {
+void TwoChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_type> > > ciphers) 
+{
+    if (inMemoryStorage) 
+    {
+        for (auto item : ciphers) 
+	{
             data[index].insert(data[index].end(), item.begin(), item.end());
         }
-    } else {
+    } 
+    else 
+    {
 	    /*
         if (USE_XXL) {
             for (auto item : ciphers) {
@@ -71,11 +87,15 @@ void TwoChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_ty
             }
         } else {*/
             fstream file(filenames[index].c_str(), ios::binary | ios::out);
-            if (file.fail()) {
-                cerr << "Error in insert: " << strerror(errno);
+            if (file.fail()) 
+	    {
+		cout <<"XX:"<<index<<endl;
+                cerr << "(Error in insert: " << strerror(errno)<<")"<<endl;
             }
-            for (auto item : ciphers) {
-                for (auto pair : item) {
+            for (auto item : ciphers) 
+	    {
+                for (auto pair : item) 
+		{
                     unsigned char newRecord[KEY_VALUE_SIZE];
                     memset(newRecord, 0, KEY_VALUE_SIZE);
                     std::copy(pair.first.begin(), pair.first.end(), newRecord);

@@ -6,10 +6,6 @@ TwoChoiceClient::~TwoChoiceClient() {
     delete server;
 }
 
-float Omicron(int n)
-{
-	return log2(log2(pow(2,n)))*(log2(log2(log2(pow(2,n)))));
-}
 TwoChoiceClient::TwoChoiceClient(int numOfDataSets, bool inMemory, bool overwrite, bool profile) {
     this->profile = profile;
     cout <<"RUNNING 2 choice====================="<<endl;
@@ -17,9 +13,9 @@ TwoChoiceClient::TwoChoiceClient(int numOfDataSets, bool inMemory, bool overwrit
     for (int i = 0; i < numOfDataSets; i++) //why not <=
     {
         exist.push_back(false);
-        int curNumberOfBins = i > 3 ? ((int) ceil((float) pow(2, i) / (Omicron(i)))) : i;
+        int curNumberOfBins = i > 3 ? ((int) ceil((float) pow(2, i) / (log2(log2(pow(2,i)))*(log2(log2(log2(pow(2,i)))))))) : 1;
 	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins))); 
-        int curSizeOfEachBin = i > 3 ? (Omicron(i)*3) : 3;
+        int curSizeOfEachBin = i > 3 ? (log2(log2(pow(2,i)))*(log2(log2(log2(pow(2,i)))))*3) : 3*pow(2,i);
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
     }
@@ -38,9 +34,10 @@ int countTotal(map<int,int> fullness, int bin,int size)
 bool cmp(pair<string, vector<prf_type>> &a,
          pair<string, vector<prf_type>> &b)
 {
-    return (a.second.size() < b.second.size());
+	cout <<"cmp:["<<a.second.size()<< " "<<b.second.size()<<"]["<<(a.second.size() > b.second.size()) <<"]"<<endl;
+    return (a.second.size() > b.second.size());
 }
-  
+
 vector<pair<string, vector<prf_type>>> sort(map<string, vector<prf_type>> &M)
 {
     vector<pair<string, vector<prf_type>> > A;
@@ -58,16 +55,19 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
     vector<vector<pair<prf_type, prf_type> > > ciphers;
     for (int i = 0; i < numberOfBins[index]; i++) 
     {
-        ciphers.push_back(vector<pair<prf_type, prf_type> >());
+        ciphers.push_back(vector<pair<prf_type,prf_type>>());
     }
+    cout <<"pairs size:"<<pairs.size()<<endl;
     map<prf_type, prf_type> keywordCntCiphers;
     map<int, int> fullness;
     vector<pair<string,vector<prf_type>>> sorted = sort(pairs);
     for (auto pair : sorted) 
     {
+	    cout <<"pair size:"<<pair.second.size()<<endl;
 	int nearPow2 = pow(2, (int)ceil(log2(pair.second.size())));
-	if(nearPow2 <= numberOfBins[index])
-	{
+	//if(nearPow2 <= numberOfBins[index])
+	//	pair.second.resize(nearPow2);
+
         prf_type K1 = Utilities::encode(pair.first.append("1"), key);
         prf_type K2 = Utilities::encode(pair.first.append("2"), key);
         prf_type mapKey1, mapValue1;
@@ -92,7 +92,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 	int totalItems2 = countTotal(fullness, pos2*nearPow2, nearPow2);
         int cipherIndex = totalItems1>totalItems2 ? pos2*nearPow2 : pos1*nearPow2 ;
         //cout <<"sb:"<<superBins<<" bin:"<< numberOfBins[index]<<" nearpow2:"<<nearPow2<<endl;
-	cout <<"pos:"<<pos1<<" pos:"<<pos2 <<endl;
+	//cout <<"pos:"<<pos1<<" pos:"<<pos2 <<endl;
 	//cout <<"tot1:"<<totalItems1<<" tot2:"<<totalItems2<<endl;
         
 	for (unsigned int i = 0; i < pair.second.size(); i++) 
@@ -111,9 +111,9 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 	    	    fullness[cipherIndex] = fullness[cipherIndex]+1;
 	    //cout <<"ind:"<<index<<" bin:"<<cipherIndex<<" full:"<<fullness[cipherIndex]<<endl;
             cipherIndex++;
-	   //delete it later 
-            if (cipherIndex == numberOfBins[index]) 
-                cipherIndex = 0;
+	   //no wrap around in 2-choice
+           //if (cipherIndex == numberOfBins[index]) 
+             //  cipherIndex = 0;
         }
 	for(int i = pair.second.size(); i<nearPow2; i++)
 	{
@@ -122,21 +122,18 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
     		auto dummypair = std::pair<prf_type, prf_type>(dummy, dummy);
             	ciphers[cipherIndex].push_back(dummypair);
 	    	fullness[cipherIndex] = fullness[cipherIndex]+1;
-	        cout <<"ind:"<<index<<" bin:"<<cipherIndex<<" full:"<<fullness[cipherIndex]<<endl;
+	        //cout <<"ind:"<<index<<" bin:"<<cipherIndex<<" full:"<<fullness[cipherIndex]<<endl;
             	cipherIndex++;
 	}
-    }
-    //else
-    //{
-    //	cout <<"|D(w)|>m_i******************:"<<nearPow2<<endl;
-    //}
     }
     prf_type dummy;
     memset(dummy.data(), 0, AES_KEY_SIZE);
     auto dummypair = pair<prf_type, prf_type>(dummy, dummy);
-    for (int i = 0; i < numberOfBins[index]; i++) {
+    for (int i = 0; i < numberOfBins[index]; i++) 
+    {
         int curSize = ciphers[i].size();
-        for (int j = curSize; j < sizeOfEachBin[index]; j++) {
+        for (int j = curSize; j < sizeOfEachBin[index]; j++) 
+	{
             ciphers[i].push_back(dummypair);
         }
     }
@@ -145,7 +142,8 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
     for (int i = 0; i < AES_KEY_SIZE; i++) {
         randomKey[i] = rand();
     }
-    for (int i = keywordCntCiphers.size(); i < pow(2, index); i++) {
+    for (int i = keywordCntCiphers.size(); i < pow(2, index); i++) 
+    {
         unsigned char cntstr[AES_KEY_SIZE];
         memset(cntstr, 0, AES_KEY_SIZE);
         *(int*) (&(cntstr[AES_KEY_SIZE - 9])) = rand();
@@ -156,7 +154,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
     }
     //    totalCommunication += ciphers.size() * sizeof (prf_type)*2;
     server->storeCiphers(index, ciphers, keywordCntCiphers);
-    cout <<"_____________________________________________"<<endl;
+    //cout <<"_____________________________________________"<<endl;
 }
 
 vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned char* key) {
@@ -176,7 +174,7 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
     if (profile) 
     {
         searchPreparation = Utilities::stopTimer(65);
-        printf("search preparation time:%f include server time\n", searchPreparation);
+        //printf("search preparation time:%f include server time\n", searchPreparation);
         Utilities::startTimer(65);
     }
 
@@ -197,7 +195,7 @@ if(flag == 0)
     if (profile) 
     {
         searchDecryption = Utilities::stopTimer(65);
-        printf("search decryption time:%f for decrypting:%d ciphers\n", searchDecryption, ciphers.size());
+        //printf("search decryption time:%f for decrypting:%d ciphers\n", searchDecryption, ciphers.size());
     }
     totalCommunication += ciphers.size() * sizeof (prf_type) + sizeof (prf_type);
     }
