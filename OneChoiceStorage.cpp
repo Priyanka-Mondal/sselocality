@@ -162,7 +162,7 @@ vector<prf_type> OneChoiceStorage::find(int index, prf_type mapKey, int cnt) {
     if (inMemoryStorage) {
         vector<prf_type> results;
 
-        unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE,0);
+        unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
         if (cnt >= numberOfBins[index]) {
             for (int i = 0; i < numberOfBins[index] * sizeOfEachBin[index]; i++) {
                 if (data[index][i].first != nullKey) {
@@ -245,7 +245,7 @@ vector<prf_type> OneChoiceStorage::find(int index, prf_type mapKey, int cnt) {
             if (file.fail()) {
                 //cerr << "Error in read: " << strerror(errno);
             }
-            unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE,0);
+            unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
             if (cnt >= numberOfBins[index]) {
                 //read everything
                 int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;

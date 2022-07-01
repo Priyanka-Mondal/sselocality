@@ -49,7 +49,8 @@ double Utilities::stopTimer(int id) {
 //    return output;
 //}
 
-unsigned char* Utilities::sha256(char* input, int size,int pos) {
+unsigned char* Utilities::sha256(char* input, int size) 
+{
 
     unsigned char* hash = new unsigned char[SHA256_DIGEST_LENGTH];
     SHA256_CTX sha256;

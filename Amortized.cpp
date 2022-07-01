@@ -8,18 +8,14 @@ using namespace std;
 
 Amortized::Amortized(int N, bool inMemory, bool overwrite) 
 {
-    //    L = new AmortizedBASClient(ceil(log2(N)), inMemory, overwrite, profile);
     //L = new OneChoiceClient(ceil(log2(N)), inMemory, overwrite, profile);
     L = new TwoChoiceClient(ceil(log2(N)), inMemory, overwrite, profile);
     for (int i = 0; i < ceil(log2(N)); i++) 
-    {
         keys.push_back(NULL);
-    
-    }
     for (int i = 0; i < localSize; i++) 
-    {
         data.push_back(unordered_map<string, vector<prf_type> >());
-    }
+
+    /*
     if (!overwrite) 
     {
 	    cout <<"NOT OVERWRITE"<<endl;
@@ -46,18 +42,19 @@ Amortized::Amortized(int N, bool inMemory, bool overwrite)
         }
         file.close();
     }
+    */
 }
 
 Amortized::~Amortized() 
 {
     fstream file("/tmp/existStatus.txt", std::ofstream::out);
+    //this file is written for next pass,
     if (file.fail()) 
     {
         cerr << "Error: " << strerror(errno);
     }
     for (unsigned int i = localSize; i < L->exist.size(); i++) 
     {
-	cout <<"L:"<<L->exist[i]<<endl;
         if (L->exist[i]) 
 	{
             file << "true" << endl;
@@ -71,15 +68,12 @@ Amortized::~Amortized()
 
 void Amortized::update(OP op, string keyword, int ind, bool setup) 
 {
-cout <<"UPADTE"<<endl;
     totalUpdateCommSize = 0;
     L->totalCommunication = 0;
     int rm0 = log2((~updateCounter & (updateCounter + 1)));
     updateCounter++;
-    //unordered_map<string, vector<prf_type> > previousData;
     map<string, vector<prf_type> > previousData;
-
-
+/*
     for (int i = 0; i < min(rm0, localSize); i++) 
     {
         for (auto item : data[i]) 
@@ -92,6 +86,7 @@ cout <<"UPADTE"<<endl;
         }
         data[i].clear();
     }
+    */
     for (int i = localSize; i < rm0; i++) 
     {
         vector<prf_type> curData = L->getAllData(i, keys[i]);
@@ -106,9 +101,11 @@ cout <<"UPADTE"<<endl;
         }
 
         L->destry(i);
+	//cout <<"L->destroy("<<i<<") called"<<endl;
         delete keys[i];
         keys[i] = NULL;
     }
+    //cout <<"size of previous data:"<< previousData.size()<<endl;
     prf_type value;
     std::fill(value.begin(), value.end(), 0);
     std::copy(keyword.begin(), keyword.end(), value.begin());
@@ -130,6 +127,7 @@ cout <<"UPADTE"<<endl;
         memset(newKey, 0, 16);
         keys[rm0] = newKey;
         L->setup(rm0, previousData, newKey);
+	//cout <<"L->setup("<<rm0<<") was called"<<endl;
         totalUpdateCommSize += L->totalCommunication;
     }
 }
@@ -233,8 +231,4 @@ double Amortized::getTotalUpdateCommSize() const
 
 void Amortized::endSetup(int N) 
 {
-    /*for (int i = 0; i < ceil(log2(N)); i++) 
-    {
-	cout <<L->exist[i]<<endl;
-    }*/
 }

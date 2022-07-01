@@ -52,7 +52,8 @@ vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type token, int& key
     return result;
 }
 
-vector<pair<prf_type, prf_type> > TwoChoiceServer::getAllData(int dataIndex) {
+vector<pair<prf_type, prf_type> > TwoChoiceServer::getAllData(int dataIndex) 
+{
     return storage->getAllData(dataIndex);
 }
 

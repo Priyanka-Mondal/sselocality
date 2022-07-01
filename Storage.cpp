@@ -66,7 +66,7 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers) {
                 std::copy(item.first.begin(), item.first.end(), newRecord);
                 std::copy(item.second.begin(), item.second.end(), newRecord + AES_KEY_SIZE);
 
-                unsigned char* hash = Utilities::sha256((char*) item.first.data(), AES_KEY_SIZE,0);
+                unsigned char* hash = Utilities::sha256((char*) item.first.data(), AES_KEY_SIZE);
                 int pos = (unsigned int) (*((int*) hash)) % maxSize;
 
                 fstream file(filenames[dataIndex].c_str(), ios::binary | ios::in | ios::out | ios::ate);
@@ -200,7 +200,7 @@ prf_type Storage::find(int index, prf_type mapKey, bool& found) {
             if (file.fail()) {
                 cerr << "Error in read: " << strerror(errno);
             }
-            unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE,0);
+            unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
             int maxSize = pow(2, index);
             int readPos = (unsigned int) (*((int*) hash)) % maxSize;
             readPos = readPos*KEY_VALUE_SIZE;

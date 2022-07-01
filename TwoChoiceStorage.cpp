@@ -1,17 +1,21 @@
 #include "TwoChoiceStorage.h"
 #include<string.h>
 
-TwoChoiceStorage::TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) {
+TwoChoiceStorage::TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) 
+{
     this->inMemoryStorage = inMemory;
     this->fileAddressPrefix = fileAddressPrefix;
     this->dataIndex = dataIndex;
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-    for (int i = 0; i < dataIndex; i++) {
+    for (int i = 0; i < dataIndex; i++) 
+    {
         int curNumberOfBins = 
-	     i>3 ? ((int)ceil((float) (pow(2,i)/((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i))))))))) : 1;
+	     i>3 ? ((int)ceil((float) (pow(2,i)/((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i))))))))) : pow(2,i);
+	//in twochoice they assume #of Bins in power of 2
 	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins))); 
-        int curSizeOfEachBin = i > 3 ? ((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*3) : 3*pow(2,i);
+
+   int curSizeOfEachBin = i > 3 ? ceil(((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*3)) : 3;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
         printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
@@ -108,7 +112,8 @@ void TwoChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_ty
     }
 }
 
-vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index) {
+vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index) 
+{
     if (inMemoryStorage) {
         vector<pair<prf_type, prf_type> > results;
         for (int i = 0; i < data[index].size(); i++) {
@@ -117,7 +122,8 @@ vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index) {
             }
         }
         return results;
-    } else {
+    } else 
+    {
         /*if (USE_XXL) {
             vector<pair<prf_type, prf_type> > results;
             for (int i = 0; i < diskData[index]->size(); i++) {
@@ -138,17 +144,17 @@ vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index) {
             file.read(keyValues, size);
             file.close();
 
-            for (int i = 0; i < size / KEY_VALUE_SIZE; i++) {
+            for (int i = 0; i < size / KEY_VALUE_SIZE; i++) 
+	    {
                 prf_type tmp, restmp;
                 std::copy(keyValues + i*KEY_VALUE_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
                 std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
-                if (tmp != nullKey) {
+                if (tmp != nullKey) //dummy added to fillup bins 
+		{
                     results.push_back(pair<prf_type, prf_type>(tmp, restmp));
                 }
             }
-
             delete keyValues;
-
             return results;
         //}
     }
@@ -182,7 +188,7 @@ vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt) {
     if (inMemoryStorage) {
         vector<prf_type> results;
 
-        unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE,0);
+        unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
         if (cnt >= numberOfBins[index]) {
             for (int i = 0; i < numberOfBins[index] * sizeOfEachBin[index]; i++) {
                 if (data[index][i].first != nullKey) {
@@ -265,7 +271,7 @@ vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt) {
             if (file.fail()) {
                 //cerr << "Error in read: " << strerror(errno);
             }
-            unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE,0);
+            unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
             if (cnt >= numberOfBins[index]) {
                 //read everything
                 int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;

@@ -15,9 +15,11 @@
 #include <math.h>
 #include <set>
 #include "Types.hpp"
+#include<algorithm>
 
 #define SUB_BLOCK_SIZE 4096
 #define SUB_BLOCKS_PER_BLOCK 4096
+using namespace std;
 
 struct PRFHasher 
 {
@@ -82,7 +84,7 @@ public:
     std::vector<uint> delNumber;
     std::vector<std::string> keywords;
     std::vector<std::string> testKeywords;
-    std::map<std::string, std::vector<T> > filePairs;
+    std::vector<std::pair<std::string, std::vector<T>>> filePairs;
 };
 
 class Utilities 
@@ -94,7 +96,7 @@ public:
     //        static std::string getSHA256(std::string input);
     //    static std::string encryptAndEncode(std::string input, unsigned char* key, unsigned char* iv);
     //    static std::string decodeAndDecrypt(std::string plaintext, unsigned char* key, unsigned char* iv);
-    static unsigned char* sha256(char* input, int size, int pos);
+    static unsigned char* sha256(char* input, int size);
     static std::string base64_encode(const char* bytes_to_encode, unsigned int in_len);
     static std::string base64_decode(std::string const& enc);
     static std::string XOR(std::string value, std::string key);
@@ -242,6 +244,71 @@ public:
         //        }
     };
 
+
+    template <typename T>
+    static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed) 
+    {
+        char alphanum[] =
+                "0123456789"
+                "!@#$%^&*"
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                "abcdefghijklmnopqrstuvwxyz";
+
+        srand(seed);
+        uint totalKeywordSize = 0;
+        uint totalPairNumber = 0;
+        for (uint i = 0; i < testCases.size(); i++) //for each test suite
+	{
+            for (uint j = 0; j < testCases[i].K - totalKeywordSize; j++) // generate random K keywords 
+	    {
+                std::string str;
+                for (uint k = 0; k < keywordLength; ++k) 
+		{
+                    str += alphanum[rand() % (sizeof (alphanum) - 1)];
+                }
+                //                str="salam";
+                testCases[i].keywords.push_back(str);
+            }
+            totalKeywordSize += testCases[i].keywords.size();
+
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) // first few keywords are testkeywords
+	    {
+                testCases[i].testKeywords.push_back(testCases[i].keywords[j]);
+            }
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+	    {
+                std::vector<T> files;
+	        testCases[i].Qs[j] = pow(2, (int)ceil(log2(testCases[i].Qs[j])));	
+                for (uint k = 0; k < testCases[i].Qs[j]; k++)   //add file ids based on number in config file
+		{
+                    files.push_back(k);
+                    totalPairNumber++;
+                }
+                testCases[i].filePairs.push_back(make_pair(testCases[i].testKeywords[j],files));
+                files.clear();
+            }
+            uint totalCounter = totalPairNumber;
+            uint reminderKeywords = testCases[i].keywords.size() - testCases[i].testKeywords.size();
+            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
+	    {
+                std::vector<T> files;
+		int sz=rand()%((int)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
+		sz = pow(2, (int)ceil(log2(sz)));
+                //for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
+		for(uint k =0; k<sz;k++)
+		{
+                    int fileName = ((rand() % 1000)) + 10000000;
+                    files.push_back(fileName);
+                    totalPairNumber++;
+                }
+                testCases[i].filePairs.push_back(make_pair(testCases[i].keywords[j],files));
+                files.clear();
+            }
+	cout <<"Total pair number:"<< totalPairNumber<<endl;
+        }
+	//delete queries are not added here
+    };
+    /*
     template <typename T>
     static void generateTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed) 
     {
@@ -254,9 +321,9 @@ public:
         srand(seed);
         uint totalKeywordSize = 0;
         uint totalPairNumber = 0;
-        for (uint i = 0; i < testCases.size(); i++) 
+        for (uint i = 0; i < testCases.size(); i++) //for each test suite
 	{
-            for (uint j = 0; j < testCases[i].K - totalKeywordSize; j++) 
+            for (uint j = 0; j < testCases[i].K - totalKeywordSize; j++) // generate random K keywords 
 	    {
                 std::string str;
                 for (uint k = 0; k < keywordLength; ++k) 
@@ -268,14 +335,14 @@ public:
             }
             totalKeywordSize += testCases[i].keywords.size();
 
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) // first few keywords are testkeywords
 	    {
                 testCases[i].testKeywords.push_back(testCases[i].keywords[j]);
             }
             for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 std::vector<T> files;
-                for (uint k = 0; k < testCases[i].Qs[j]; k++) 
+                for (uint k = 0; k < testCases[i].Qs[j]; k++)   //add file ids based on number in config file
 		{
                     files.push_back(k);
                     totalPairNumber++;
@@ -288,7 +355,7 @@ public:
             for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
 	    {
                 std::vector<T> files;
-                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) 
+                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
 		{
                     int fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
@@ -298,6 +365,7 @@ public:
                 files.clear();
             }
         }
+	//delete queries are not added here
     };
 
     template <typename T>
@@ -359,6 +427,7 @@ public:
             }
         }
     };
+    */
 
     virtual ~Utilities();
 };
