@@ -43,6 +43,7 @@ public:
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
     void clear(int index);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
+    vector<prf_type> newfind(int index, prf_type hashKey, int cnt);
     virtual ~TwoChoiceStorage();
 
 

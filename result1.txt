@@ -1,4 +1,4 @@
-Total pair number:30
+Total pair number:43
 ===================RUNNING SDa+TwoChoice=====================
 Level:0 number of Bins:1 size of bin:3
 Level:1 number of Bins:2 size of bin:3
@@ -9,65 +9,74 @@ Level:5 number of Bins:16 size of bin:9
 Start of Static, size of test suits:1
 overwrite:1
 ----------------------------------------------
- SIZE of testcases:1
+ SIZE of testcases:2
  Total keywords:0/3
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:1 bins:2 sb:1 newsize:2 pss:2
- SIZE of file ids:2/2
+ SIZE of file ids:4/4
  Total keywords:1/3
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:2 bins:4 sb:4 newsize:1 pss:1
-*index:2 bins:4 sb:4 newsize:1 pss:1
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:1 bins:2 sb:1 newsize:2 pss:2
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:3 bins:8 sb:4 newsize:2 pss:2
-*index:3 bins:8 sb:4 newsize:2 pss:2
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:1 bins:2 sb:1 newsize:2 pss:2
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:2 bins:4 sb:4 newsize:1 pss:1
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:1 bins:2 sb:1 newsize:2 pss:2
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:4 bins:8 sb:2 newsize:4 pss:4
-*index:4 bins:8 sb:4 newsize:2 pss:2
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:1 bins:2 sb:1 newsize:2 pss:2
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:2 bins:4 sb:4 newsize:1 pss:1
-*index:0 bins:1 sb:1 newsize:1 pss:1
- SIZE of file ids:19/19
+ SIZE of file ids:2/2
  Total keywords:2/3
-*index:1 bins:2 sb:2 newsize:1 pss:1
-*index:1 bins:2 sb:2 newsize:1 pss:1
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:3 bins:8 sb:4 newsize:2 pss:2
-*index:3 bins:8 sb:4 newsize:2 pss:2
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:1 bins:2 sb:1 newsize:2 pss:2
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:2 bins:4 sb:4 newsize:1 pss:1
-*index:0 bins:1 sb:1 newsize:1 pss:1
-*index:1 bins:2 sb:1 newsize:2 pss:2
- SIZE of file ids:9/9
- SIZE:1
+ SIZE of file ids:37/37
+ SIZE:2
+------------------------------------------------------------------------------
+Result of Operations for DB Size 50
+Search for Keyword With 4 Results and 0 Deletions:
+size of finalRes:0
+
+size of finalRes:0
+
+size of finalRes:0
+
+size of finalRes:0
+
+size of finalRes:0
+
+size of finalRes:0
+
+total:4
+s:1 KEYWORD COUNT IS:4
+cnt at storage:4
+cnt < numberofBins: sb :4
+size of result:2
+size of finalRes:2
+
+total:4
+s:2 KEYWORD COUNT IS:4
+cnt at storage:4
+cnt < numberofBins: sb :4
+size of result:4
+size of finalRes:2
+
+=====================================================
+Number of return item:2
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 50
 Search for Keyword With 2 Results and 0 Deletions:
-level 1:
 size of finalRes:0
-level 2:
+
 size of finalRes:0
-level 3:
+
 size of finalRes:0
-level 4:
-keyword count:2
+
+size of finalRes:0
+
+size of finalRes:0
+
+size of finalRes:0
+
+total:2
+s:1 KEYWORD COUNT IS:2
 cnt at storage:2
-size of enc bins:0
-server Search Time:129.000000 number of SeekG:1 number of read bytes:384
+cnt < numberofBins: sb :8
+size of result:1
 size of finalRes:0
-Amortized Search time:460.000000
-filteration time:0.000000
+
+total:2
+s:2 KEYWORD COUNT IS:2
+cnt at storage:2
+cnt < numberofBins: sb :8
+size of result:2
+size of finalRes:0
+
+=====================================================
 Number of return item:0
 **************************************************************************

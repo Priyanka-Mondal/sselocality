@@ -190,6 +190,7 @@ vector<int> Amortized::search(string keyword)
         printf("filteration time:%f\n", filterationTime);
     }
     totalSearchCommSize += L->totalCommunication;
+cout <<"====================================================="<<endl;
     return finalRes;
 }
 

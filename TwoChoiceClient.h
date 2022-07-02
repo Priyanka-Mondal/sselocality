@@ -29,6 +29,7 @@ public:
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;
     map<int,map<string,vector<prf_type>>> stash;
+    map<int,map<string,pair<int,int>>> counters;
     vector<bool> exist;
     void destry(int index);
     void setup(int index, map<string, vector<prf_type> >pairs, unsigned char* key);

@@ -36,7 +36,7 @@ private:
     double totalSearchCommSize;
     vector< unordered_map< string, vector<prf_type > > > data;
     int localSize = 0;
-    bool profile = true;
+    bool profile = false;
 
 public:
     Amortized(int N, bool inMemory, bool overwrite);

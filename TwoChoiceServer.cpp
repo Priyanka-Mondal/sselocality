@@ -61,12 +61,38 @@ vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type
     return result;
 }
 
+
+
+vector<prf_type> TwoChoiceServer::newsearch(int dataIndex , prf_type hashtoken,int keywordCnt) 
+{
+    keyworkCounters->seekgCount = 0;
+    storage->readBytes = 0;
+    vector<prf_type> result;
+    
+   // prf_type curToken = tokkw;
+   // unsigned char cntstr[AES_KEY_SIZE];
+   // memset(cntstr, 0, AES_KEY_SIZE);
+   // *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+   // prf_type keywordMapKey = Utilities::generatePRF(cntstr, curToken.data());
+
+    prf_type curToken = hashtoken;
+    unsigned char cntstr[AES_KEY_SIZE];
+    memset(cntstr, 0, AES_KEY_SIZE);
+    *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+    prf_type hashKey = Utilities::generatePRF(cntstr, curToken.data());
+    result = storage->newfind(dataIndex, hashKey, keywordCnt);
+    return result;
+}
+
+
+
 vector<pair<prf_type, prf_type> > TwoChoiceServer::getAllData(int dataIndex) 
 {
     return storage->getAllData(dataIndex);
 }
 
-void TwoChoiceServer::clear(int index) {
+void TwoChoiceServer::clear(int index) 
+{
     storage->clear(index);
     keyworkCounters->clear(index);
 }

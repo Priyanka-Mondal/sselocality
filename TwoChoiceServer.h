@@ -19,6 +19,7 @@ public:
     void storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters);
     vector<prf_type> search(int dataIndex, prf_type tokkw, prf_type token, int & keywordCnt);
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
+    vector<prf_type> newsearch(int dataIndex , prf_type hashtoken, int keywordCnt);
 
 };
 
