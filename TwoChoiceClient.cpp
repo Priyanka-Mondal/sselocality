@@ -50,6 +50,35 @@ vector<pair<string, vector<prf_type>>> sort(map<string, vector<prf_type>> &M)
     return A;
 }
 
+int maxPossibleLen(int N, int bins, int index)
+{
+	int max;
+	if(N<4)
+		max = bins;
+	else
+	{
+		float p = (float) ((float)1/log2(log2(N)));
+		float m = (float) (1-p);
+		max = (float) floor(pow(N,m));
+	}
+	int maxmax= pow(2, (int)ceil(log2(max)));
+	int minmin= pow(2, (int)floor(log2(max)));
+	if(maxmax<= bins)
+		max = maxmax;
+	else
+		max = minmin;
+//cout<<"index:"<<index <<" bins:"<<bins<<" N:"<< N<<" max:"<< max<<"("<<maxmax<<","<<minmin<<"):"<<endl;
+	return max;
+}
+void TwoChoiceClient::trancateToMpl(int pss, int mpl, int index, string keyword, vector<prf_type> fileids)
+{
+	map<string,vector<prf_type>> indexstash = stash[index];
+	vector<prf_type> trunc;
+	for(int k=mpl; k<pss; k++)
+		trunc.push_back(fileids[k]);
+	indexstash[keyword]=trunc;
+	stash[index]=indexstash;
+}
 
 void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, unsigned char* key) 
 {
@@ -62,18 +91,18 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
     map<prf_type, prf_type> keywordCntCiphers;
     map<int, int> fullness;
     vector<pair<string,vector<prf_type>>> sorted = sort(pairs);
+    int mpl = maxPossibleLen((pow(2,index)),numberOfBins[index], index);
     for (auto pair : sorted) 
     {
-	int nearPow2 = pow(2, (int)ceil(log2(pair.second.size())));
-	if(nearPow2 >= numberOfBins[index])
+	int pss = pair.second.size();
+	if(pss > mpl)
 	{
-		//cout <<"actual nearPow:"<<nearPow2<<endl;
-		nearPow2 = ceil((float)nearPow2/2);
-		//cout <<"new nearPow:"<<nearPow2<<endl;
-		//cout <<"actual size:"<< pair.second.size()<<endl;
-		pair.second.resize(nearPow2);
-		//cout <<"new size:"<< pair.second.size()<<endl;
+		trancateToMpl(pss,mpl,index,pair.first,pair.second); // stores extra elems in stash
+		pss = mpl;
 	}
+	int newsize = pow(2, (int)ceil(log2(pss)));
+        if(pss <= mpl && mpl < newsize)
+		newsize = mpl;
 
         prf_type K = Utilities::encode(pair.first, key);
         prf_type K1 = Utilities::encode(pair.first.append("1"), key);
@@ -86,45 +115,48 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
         memset(cntstr, 0, AES_KEY_SIZE);
         *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
         mapKey = Utilities::generatePRF(cntstr, K.data());
-        mapKey1 = Utilities::generatePRF(cntstr, K1.data());
-        mapKey2 = Utilities::generatePRF(cntstr, K2.data());
-
         prf_type valueTmp;
-        *(int*) (&(valueTmp[0])) = pair.second.size(); //already resized to nearPow2
+        *(int*) (&(valueTmp[0])) = newsize;//pair.second.size(); //already resized to nearPow2
         mapValue = Utilities::encode(valueTmp.data(), K.data());
-        mapValue1 = Utilities::encode(valueTmp.data(), K1.data());
-        mapValue2 = Utilities::encode(valueTmp.data(), K2.data());
         keywordCntCiphers[mapKey] = mapValue; 
 
+        //mapValue1 = Utilities::encode(valueTmp.data(), K1.data());
+        //mapValue2 = Utilities::encode(valueTmp.data(), K2.data());
+
+        mapKey1 = Utilities::generatePRF(cntstr, K1.data());
+        mapKey2 = Utilities::generatePRF(cntstr, K2.data());
         unsigned char* hash1 = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
         unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
 
-        int superBins = ceil((float) numberOfBins[index]/nearPow2); // very weird situation
+        int superBins = ceil((float) numberOfBins[index]/newsize); // very weird situation
         int pos1 = (unsigned int) (*((int*) hash1)) % superBins;
         int pos2 = (unsigned int) (*((int*) hash2)) % superBins; 
 
-	int totalItems1 = countTotal(fullness, pos1*nearPow2, nearPow2);
-	int totalItems2 = countTotal(fullness, pos2*nearPow2, nearPow2);
+	int totalItems1 = countTotal(fullness, pos1*newsize, newsize);
+	int totalItems2 = countTotal(fullness, pos2*newsize, newsize);
         int cipherIndex ;
 	if(totalItems1>totalItems2)
 	{
-		cipherIndex = pos2*nearPow2;
-		K1 = K2;
+		cipherIndex = pos2*newsize;
+		K = K2;
 	}	
 	else
-		cipherIndex = pos1*nearPow2;
+	{
+		cipherIndex = pos1*newsize;
+		K = K1;
+	}
         
-	//cout <<"sb:"<<superBins<<" bin:"<< numberOfBins[index]<<" nearpow2:"<<nearPow2<<endl;
-	//cout <<"pos:"<<pos1<<" pos:"<<pos2 <<endl;
+    cout <<"*index:"<<index <<" bins:"<<numberOfBins[index]<<" sb:"<<superBins<<" newsize:"<<newsize<<" pss:"<<pss <<endl;
 	//cout <<"tot1:"<<totalItems1<<" tot2:"<<totalItems2<<endl;
         
-	for (unsigned int i = 0; i < pair.second.size(); i++) 
+	//for (unsigned int i = 0; i < pair.second.size(); i++) 
+	for (unsigned int i = 0; i < pss; i++) 
 	{
             prf_type mapKey, mapValue;
             unsigned char cntstr[AES_KEY_SIZE];
             memset(cntstr, 0, AES_KEY_SIZE);
             *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
-            mapKey = Utilities::generatePRF(cntstr, K1.data());
+            mapKey = Utilities::generatePRF(cntstr, K.data());
             mapValue = Utilities::encode(pair.second[i].data(), key);
 
             auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
@@ -140,7 +172,8 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
            //if (cipherIndex == numberOfBins[index]) 
              //  cipherIndex = 0;
         }
-	for(int i = pair.second.size(); i<nearPow2; i++)
+	//for(int i = pair.second.size(); i<nearPow2; i++)
+	for(int i = pss; i<newsize; i++)
 	{
     		prf_type dummy;
     		memset(dummy.data(), 0, AES_KEY_SIZE);
@@ -165,7 +198,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
     prf_type randomKey;
     for (int i = 0; i < AES_KEY_SIZE; i++) 
         randomKey[i] = rand();
-/*
+
     for (int i = keywordCntCiphers.size(); i < pow(2, index); i++)  // what is this loop doing ?
     {
         unsigned char cntstr[AES_KEY_SIZE];
@@ -175,54 +208,59 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
         *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = rand();
         prf_type mapValue = Utilities::generatePRF(cntstr, randomKey.data());
         keywordCntCiphers[mapKey] = mapValue;
-    }*/
+    }
     //    totalCommunication += ciphers.size() * sizeof (prf_type)*2;
     server->storeCiphers(index, ciphers, keywordCntCiphers);
     //cout <<"_____________________________________________"<<endl;
 }
 
-vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned char* key) {
+vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned char* key) 
+{
     double searchPreparation = 0, searchDecryption = 0;
     int flag = 0;
-    if (profile) {
+    if (profile) 
         Utilities::startTimer(65);
-    }
     vector<prf_type> finalRes;
-    for(int s = 1 ;s<=2;s++)
+    for(int s = 1 ;s<=2; s++)
     {
-    keyword = keyword.append("s");
-    prf_type token = Utilities::encode(keyword, key);
-    int keywordCnt = 0;
-    vector<prf_type> ciphers = server->search(index, token, keywordCnt);
-    int cnt = 0;
-    if (profile) 
-    {
-        searchPreparation = Utilities::stopTimer(65);
-        //printf("search preparation time:%f include server time\n", searchPreparation);
-        Utilities::startTimer(65);
-    }
+        prf_type tokkw = Utilities::encode(keyword, key);
+	if(s==1) 
+		keyword = keyword.append("1");
+	else 
+		keyword = keyword.append("2");
 
-if(flag == 0)
-{
-    for (auto item : ciphers) 
-    {
-        prf_type plaintext;
-        Utilities::decode(item, plaintext, key);
-        //        if (string((char*) plaintext.data()) == keyword) {
-        if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-	{
-            finalRes.push_back(plaintext);
-	    flag = 1;
+        prf_type token = Utilities::encode(keyword, key);
+        int keywordCnt = 0;
+        vector<prf_type> ciphers = server->search(index, tokkw, token, keywordCnt);
+        int cnt = 0;
+        if (profile) 
+        {
+            searchPreparation = Utilities::stopTimer(65);
+            //printf("search preparation time:%f include server time\n", searchPreparation);
+            Utilities::startTimer(65);
         }
+        if(flag == 0)
+        {
+            for (auto item : ciphers) 
+            {
+                prf_type plaintext;
+                Utilities::decode(item, plaintext, key);
+                //        if (string((char*) plaintext.data()) == keyword) {
+                if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+        	{
+                    finalRes.push_back(plaintext);
+        	    flag = 1;
+                }
+            }
+        }
+        if (profile) 
+        {
+            searchDecryption = Utilities::stopTimer(65);
+            //printf("search decryption time:%f for decrypting:%d ciphers\n", searchDecryption, ciphers.size());
+        }
+        totalCommunication += ciphers.size() * sizeof (prf_type) + sizeof (prf_type);
     }
-}
-    if (profile) 
-    {
-        searchDecryption = Utilities::stopTimer(65);
-        //printf("search decryption time:%f for decrypting:%d ciphers\n", searchDecryption, ciphers.size());
-    }
-    totalCommunication += ciphers.size() * sizeof (prf_type) + sizeof (prf_type);
-    }
+	cout <<"size of finalRes:"<<finalRes.size()<<endl;
     return finalRes;
 }
 
@@ -236,12 +274,23 @@ vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key)
         Utilities::decode(cipher.second, plaintext, key);
         finalRes.push_back(plaintext);
     }
+    map<string, vector<prf_type>> temp = stash[index];
+    for(auto a : temp)
+    {
+	    for(auto b : a.second)
+	    {
+		    finalRes.push_back(b);
+		    //cout <<"size of b:"<< a.second.size()<<endl;
+	    }
+    }
     totalCommunication += ciphers.size() * sizeof (prf_type);
     return finalRes;
 }
 
-void TwoChoiceClient::destry(int index) {
+void TwoChoiceClient::destry(int index) 
+{
     server->clear(index);
     exist[index] = false;
+    stash.erase(index);
     totalCommunication += sizeof (int);
 }

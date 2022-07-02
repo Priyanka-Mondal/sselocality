@@ -50,17 +50,22 @@ bool Storage::setup(bool overwrite) {
     }
 }
 
-void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers) {
-    if (inMemoryStorage) {
+void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers) 
+{
+    if (inMemoryStorage) 
+    {
         data[dataIndex].insert(ciphers.begin(), ciphers.end());
-    } else {
+    } 
+    else 
+    {
         /*if (USE_XXL) {
             for (auto item : ciphers) {
                 diskData[dataIndex]->insert(std::make_pair(item.first, item.second));
             }
         } else {*/
             int maxSize = pow(2, dataIndex);
-            for (auto item : ciphers) {
+            for (auto item : ciphers) 
+	    {
                 unsigned char newRecord[KEY_VALUE_SIZE];
                 memset(newRecord, 0, KEY_VALUE_SIZE);
                 std::copy(item.first.begin(), item.first.end(), newRecord);
@@ -108,7 +113,8 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers) {
     }
 }
 
-vector<prf_type> Storage::getAllData(int dataIndex) {
+vector<prf_type> Storage::getAllData(int dataIndex) 
+{
     vector<prf_type> results;
     if (inMemoryStorage) {
         for (auto item : data[dataIndex]) {

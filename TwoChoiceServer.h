@@ -17,7 +17,7 @@ public:
     void clear(int index);
     virtual ~TwoChoiceServer();
     void storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters);
-    vector<prf_type> search(int dataIndex, prf_type token, int & keywordCnt);
+    vector<prf_type> search(int dataIndex, prf_type tokkw, prf_type token, int & keywordCnt);
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
 
 };

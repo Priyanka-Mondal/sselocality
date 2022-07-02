@@ -278,7 +278,7 @@ public:
             for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 std::vector<T> files;
-	        testCases[i].Qs[j] = pow(2, (int)ceil(log2(testCases[i].Qs[j])));	
+	        //testCases[i].Qs[j] = pow(2, (int)ceil(log2(testCases[i].Qs[j])));	
                 for (uint k = 0; k < testCases[i].Qs[j]; k++)   //add file ids based on number in config file
 		{
                     files.push_back(k);
@@ -293,7 +293,7 @@ public:
 	    {
                 std::vector<T> files;
 		int sz=rand()%((int)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
-		sz = pow(2, (int)ceil(log2(sz)));
+		//sz = pow(2, (int)ceil(log2(sz)));
                 //for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
 		for(uint k =0; k<sz;k++)
 		{

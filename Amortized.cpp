@@ -101,11 +101,10 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
         }
 
         L->destry(i);
-	//cout <<"L->destroy("<<i<<") called"<<endl;
+	//cout <<"L->destroy("<<i<<") was called"<<endl;
         delete keys[i];
         keys[i] = NULL;
     }
-    //cout <<"size of previous data:"<< previousData.size()<<endl;
     prf_type value;
     std::fill(value.begin(), value.end(), 0);
     std::copy(keyword.begin(), keyword.end(), value.begin());
@@ -126,6 +125,7 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
         unsigned char* newKey = new unsigned char[16];
         memset(newKey, 0, 16);
         keys[rm0] = newKey;
+        //cout <<"size of previous data:"<< previousData.size()<<endl;
         L->setup(rm0, previousData, newKey);
 	//cout <<"L->setup("<<rm0<<") was called"<<endl;
         totalUpdateCommSize += L->totalCommunication;
@@ -162,7 +162,6 @@ vector<int> Amortized::search(string keyword)
             encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
         }
     }
-
     double filterationTime = 0;
     double searchTime = 0;
     if (profile) 

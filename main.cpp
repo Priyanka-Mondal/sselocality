@@ -91,11 +91,12 @@ int main(int argc, char** argv)
         if (overwrite) 
 	{
 	    int key = 0;
-	    auto ZZ = sortt(testCases[i].filePairs);
-            //for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
-            for (auto cur = ZZ.begin(); cur != ZZ.end(); cur++) 
+	    //auto ZZ = sortt(testCases[i].filePairs);
+	    
+            for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
+            //for (auto cur = ZZ.begin(); cur != ZZ.end(); cur++) 
 	    {
-			//cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
+			cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
 			key++;
 			int j;
                 for (j = 0; j < cur->second.size(); j++) 
@@ -144,9 +145,8 @@ int main(int argc, char** argv)
                 }
             }*/
         }
-	cout <<" SIZE2:"<<testCases[i].Qs.size()<<endl;
         //        client.endSetup();
-/*	
+	
 	cout <<" SIZE:"<<testCases[i].Qs.size()<<endl;
         for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	{
@@ -161,7 +161,7 @@ int main(int argc, char** argv)
                 cout << "Number of return item:" << res.size() << endl;
         }
         cout << "**************************************************************************" << endl;
-*/
+
     }
     return 0;
 }

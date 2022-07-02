@@ -28,12 +28,13 @@ public:
     int totalCommunication = 0;
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;
-
+    map<int,map<string,vector<prf_type>>> stash;
     vector<bool> exist;
     void destry(int index);
     void setup(int index, map<string, vector<prf_type> >pairs, unsigned char* key);
     vector<prf_type> search(int index, string keyword, unsigned char* key);
     vector<prf_type> getAllData(int index, unsigned char* key);
+    void trancateToMpl(int pss, int mpl, int index, string keyword, vector<prf_type> fileids);
 };
 
 #endif /* TWOCHOICECLIENT_H */
