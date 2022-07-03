@@ -30,12 +30,15 @@ public:
     vector<int> sizeOfEachBin;
     map<int,map<string,vector<prf_type>>> stash;
     map<int,map<string,pair<int,int>>> counters;
+    map<int,int> position;
     vector<bool> exist;
     void destry(int index);
     void setup(int index, map<string, vector<prf_type> >pairs, unsigned char* key);
     vector<prf_type> search(int index, string keyword, unsigned char* key);
+    vector<prf_type> newsearch(int index, string keyword, unsigned char* key);
     vector<prf_type> getAllData(int index, unsigned char* key);
-    void trancateToMpl(int pss, int mpl, int index, string keyword, vector<prf_type> fileids);
+    void truncateToMpl(int pss, int mpl, int index, string keyword, vector<prf_type> fileids, unsigned char* key);
+void writeToStash(int pss, int mpl, int index, string keyword, vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers);
 };
 
 #endif /* TWOCHOICECLIENT_H */

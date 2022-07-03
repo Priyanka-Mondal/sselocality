@@ -38,10 +38,11 @@ int main(int argc, char** argv)
     }
     //    Utilities::readConfigFile(testCases, usehdd, cleaningMode);       //for testing crimes dataset
     Utilities::readConfigFile(argc, argv, filename, testCases, inMemory, overwrite);
-    /*
+    
     if (overwrite) 
     {
-        Utilities::generateTestCases(testCases, keywordLength, time(NULL));
+        //Utilities::generateTestCases(testCases, keywordLength, time(NULL));
+    Utilities::generateTwoChoiceTestCases(testCases, keywordLength, time(NULL));
         fstream file("/tmp/search.txt", std::ofstream::out);
         if (file.fail()) 
             cerr << "Error: " << strerror(errno);
@@ -73,10 +74,10 @@ int main(int argc, char** argv)
             }
         }
         file.close();
-        Utilities::generateTestCases(testCases, keywordLength, time(NULL), testKeywords);
-    }
-   */ 
+        //Utilities::generateTestCases(testCases, keywordLength, time(NULL), testKeywords);
     Utilities::generateTwoChoiceTestCases(testCases, keywordLength, time(NULL));
+    }
+    
     Amortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
     client.endSetup(testCases[0].N);
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;
@@ -112,7 +113,7 @@ int main(int argc, char** argv)
 		    cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;
             }
             cnt = 0;
-	   /* 
+	    
             for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 auto item = testCases[i].filePairs[testCases[i].testKeywords[j]];
@@ -143,7 +144,7 @@ int main(int argc, char** argv)
                         cout << cnt << " Deleted" << endl;
                     }
                 }
-            }*/
+            }
         }
         //        client.endSetup();
 	
@@ -152,13 +153,13 @@ int main(int argc, char** argv)
 	{
             cout << "------------------------------------------------------------------------------" << endl;
             cout << "Result of Operations for DB Size " << testCases[i].N << endl;
-            cout << "Search for Keyword With " << testCases[i].Qs[j] << " Results and " << testCases[i].delNumber[j] << " Deletions:" << endl;
+            cout << "Search for Keyword With [" << testCases[i].Qs[j] << "] Results and " << testCases[i].delNumber[j] << " Deletions:" << endl;
                 Utilities::startTimer(500);
                 vector<int> res = client.search(testCases[i].testKeywords[j]);
                 time = Utilities::stopTimer(500);
                 //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
                 //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
-                cout << "Number of return item:" << res.size() << endl;
+                cout << "Number of return item:[" << res.size()<<"]" << endl;
         }
         cout << "**************************************************************************" << endl;
 

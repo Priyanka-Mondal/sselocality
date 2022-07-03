@@ -46,6 +46,9 @@ bool TwoChoiceStorage::setup(bool overwrite)
 	    {
                 string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
                 filenames.push_back(filename);
+                filename = fileAddressPrefix + "STASH-" + to_string(i) + ".dat";
+                stashfilenames.push_back(filename);
+
                 fstream testfile(filename.c_str(), std::ofstream::in);
                 if (testfile.fail() || overwrite) 
 		{
@@ -69,6 +72,51 @@ bool TwoChoiceStorage::setup(bool overwrite)
     }
 
 }
+
+void TwoChoiceStorage::insertStash(int index, vector<prf_type> ciphers) 
+{
+      fstream file(stashfilenames[index].c_str(), ios::binary | ios::out);
+      if (file.fail()) 
+      {
+          cout <<"StashXX:"<<index<<endl;
+          cerr << "(Error in insert: " << strerror(errno)<<")"<<endl;
+      }
+      for (auto item : ciphers) 
+      {
+          unsigned char newRecord[AES_KEY_SIZE];
+          memset(newRecord, 0, AES_KEY_SIZE);
+          std::copy(item.begin(), item.end(), newRecord);
+          file.write((char*) newRecord, AES_KEY_SIZE);
+      }
+      file.close();
+}
+
+vector<prf_type> TwoChoiceStorage::getStash(int index) 
+{
+      vector<prf_type> results;
+      fstream file(stashfilenames[index].c_str(), ios::binary | ios::in | ios::ate);
+      if (file.fail()) 
+          cerr << "Error in read: " << strerror(errno);
+      
+      int size = file.tellg();
+      file.seekg(0, ios::beg);
+      char* keyValues = new char[size];
+      file.read(keyValues, size);
+      file.close();
+
+      for (int i = 0; i < size/AES_KEY_SIZE ; i++) 
+      {
+          prf_type tmp;
+          std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
+          if (tmp != nullKey) //dummy added to fillup bins 
+          {
+              results.push_back(tmp);
+          }
+      }
+      delete keyValues;
+      return results;
+}
+
 
 void TwoChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_type> > > ciphers) 
 {
@@ -281,7 +329,6 @@ vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt)
                 //cerr << "Error in read: " << strerror(errno);
             }
             unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
-	    cout <<"cnt at storage:"<<cnt<<endl;
             if (cnt >= numberOfBins[index]) 
 	    {
                 //read everything
@@ -303,7 +350,7 @@ vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt)
 	    {
         	int superBins = ceil((float) numberOfBins[index]/cnt); 
                 int pos = (unsigned int) (*((int*) hash)) % superBins; //numberOfBins[index];
-                int readPos = pos * KEY_VALUE_SIZE * sizeOfEachBin[index];
+                int readPos = pos *cnt* KEY_VALUE_SIZE * sizeOfEachBin[index];
                 int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;
                 int remainder = fileLength - readPos;
                 int totalReadLength = cnt * KEY_VALUE_SIZE * sizeOfEachBin[index];
@@ -356,7 +403,7 @@ vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt)
 
 
 
-vector<prf_type> TwoChoiceStorage::newfind(int index, prf_type hashKey, int cnt) 
+vector<prf_type> TwoChoiceStorage::newfind(int index, prf_type hashKey, int cnt, int posi) 
 {
             vector<prf_type> results;
 
@@ -402,12 +449,13 @@ vector<prf_type> TwoChoiceStorage::newfind(int index, prf_type hashKey, int cnt)
 //////////
 
             unsigned char* hash = Utilities::sha256((char*) hashKey.data(), AES_KEY_SIZE);
-	    cout <<"cnt at storage:"<<cnt<<endl;
+	    //cout <<"cnt at storage:"<<cnt<<endl;
 	    {
         	int superBins = ceil((float) numberOfBins[index]/cnt); 
-		cout <<"cnt < numberofBins: sb :"<<superBins<<endl;
                 int pos = (unsigned int) (*((int*) hash)) % superBins; //numberOfBins[index];
+		//cout <<"cnt < numberofBins: sb :"<<pos<<"/"<<superBins<<endl;
 		//cout <<"pos at storage:"<< pos<<endl;
+		pos = pos * cnt;
                 int readPos = pos * KEY_VALUE_SIZE * sizeOfEachBin[index];
                 int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;
                 int remainder = fileLength - readPos;
@@ -457,7 +505,7 @@ vector<prf_type> TwoChoiceStorage::newfind(int index, prf_type hashKey, int cnt)
                 }
             }
             file.close();
-	    cout <<"size of result:"<<results.size()<<endl;
+	    //cout <<"size of result:"<<results.size()<<endl;
             return results;
         //}
     //}

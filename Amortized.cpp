@@ -93,6 +93,7 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
         for (auto item : curData) 
 	{
             string curKeyword((char*) item.data());
+	    if (curKeyword == "") cout<<"[[curKeyword NULL]]"<<endl;
             if (previousData.count(curKeyword) == 0) 
 	    {
                 previousData[curKeyword] = vector < prf_type>();
@@ -190,7 +191,7 @@ vector<int> Amortized::search(string keyword)
         printf("filteration time:%f\n", filterationTime);
     }
     totalSearchCommSize += L->totalCommunication;
-cout <<"====================================================="<<endl;
+//cout <<"====================================================="<<endl;
     return finalRes;
 }
 

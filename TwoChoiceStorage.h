@@ -25,6 +25,7 @@ private:
     bool inMemoryStorage;
     bool profile = false;
     vector<string> filenames;
+    vector<string> stashfilenames;
     prf_type nullKey;
     string fileAddressPrefix = "/tmp/";
     int dataIndex;
@@ -40,10 +41,12 @@ public:
     TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
     void insertAll(int dataIndex, vector<vector< pair<prf_type, prf_type> > > ciphers);
+    void insertStash(int dataIndex, vector<prf_type> ciphers);
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
+    vector<prf_type> getStash(int index); 
     void clear(int index);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
-    vector<prf_type> newfind(int index, prf_type hashKey, int cnt);
+    vector<prf_type> newfind(int index, prf_type hashKey, int cnt, int posi);
     virtual ~TwoChoiceStorage();
 
 
