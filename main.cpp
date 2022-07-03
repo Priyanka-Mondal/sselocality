@@ -92,57 +92,49 @@ int main(int argc, char** argv)
         if (overwrite) 
 	{
 	    int key = 0;
-	    //auto ZZ = sortt(testCases[i].filePairs);
-	    
             for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
-            //for (auto cur = ZZ.begin(); cur != ZZ.end(); cur++) 
 	    {
-			cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
-			key++;
-			int j;
+		key++;
+		cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
+		int j;
                 for (j = 0; j < cur->second.size(); j++) 
 		{
                     client.update(OP::INS, cur->first, cur->second[j], true);
-		    //cout <<"inserted:"<<cur->first<<endl;
                     cnt++;
                     //if (cnt % 100 == 0) 
 		    //{
                     //    cout << "Initial Insertion:" << cnt << "/" << to_string(testCases[i].N) << endl;
                     //}
                 }
-		    cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;
+	        cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;
             }
             cnt = 0;
-	    
             for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
-                auto item = testCases[i].filePairs[testCases[i].testKeywords[j]];
+                auto item = testCases[i].filePairs[j].second;
                 vector<int> delPoses;
-
-                //Generating random delete queries to satisfy config file query conditions
-                for (uint k = 0; k < testCases[i].delNumber[j]; k++) 
+		if(testCases[i].delNumber[j] < item.size())
 		{
-                    int randPos = (rand() % (item.size() - 1)) + 1;
-                    if (find(delPoses.begin(), delPoses.end(), randPos) != delPoses.end()) 
-		    {
-                        k--;
-                    } 
-		    else 
-		    {
-                        delPoses.push_back(randPos);
+                    for (uint k = 0; k < testCases[i].delNumber[j]; k++) 
+	            {
+                        int randPos = (rand() % (item.size() - 1)) + 1;
+                        if (find(delPoses.begin(), delPoses.end(), randPos) != delPoses.end()) 
+                            k--;
+	                else 
+                            delPoses.push_back(randPos);
                     }
-                }
+		}
+		else
+		{
+			for(uint k= 0 ;k<item.size();k++)
+				delPoses.push_back(k);
+		}
                 for (uint k = 0; k < testCases[i].delNumber[j]; k++) 
 		{
-                    cnt++;
                     Utilities::startTimer(500);
                     client.update(OP::DEL, testCases[i].testKeywords[j], item[delPoses[k]], true);
-		    cout <<"deleted:"<<testCases[i].testKeywords[j]<<endl;
+		    //cout <<"deleted:"<<testCases[i].testKeywords[j]<<" fileid:"<<delPoses[k]<<endl;
                     time = Utilities::stopTimer(500);
-                    if (cnt % 2 == 0) 
-		    {
-                        cout << cnt << " Deleted" << endl;
-                    }
                 }
             }
         }
@@ -153,7 +145,7 @@ int main(int argc, char** argv)
 	{
             cout << "------------------------------------------------------------------------------" << endl;
             cout << "Result of Operations for DB Size " << testCases[i].N << endl;
-            cout << "Search for Keyword With [" << testCases[i].Qs[j] << "] Results and " << testCases[i].delNumber[j] << " Deletions:" << endl;
+            cout << "Search for Keyword With [" << testCases[i].Qs[j] << "] Results and [" << testCases[i].delNumber[j] << "] Deletions:" << endl;
                 Utilities::startTimer(500);
                 vector<int> res = client.search(testCases[i].testKeywords[j]);
                 time = Utilities::stopTimer(500);

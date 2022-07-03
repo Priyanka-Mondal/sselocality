@@ -8,7 +8,6 @@ using namespace std;
 
 Amortized::Amortized(int N, bool inMemory, bool overwrite) 
 {
-    //L = new OneChoiceClient(ceil(log2(N)), inMemory, overwrite, profile);
     L = new TwoChoiceClient(ceil(log2(N)), inMemory, overwrite, profile);
     for (int i = 0; i < ceil(log2(N)); i++) 
         keys.push_back(NULL);
@@ -73,7 +72,7 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
     int rm0 = log2((~updateCounter & (updateCounter + 1)));
     updateCounter++;
     map<string, vector<prf_type> > previousData;
-/*
+
     for (int i = 0; i < min(rm0, localSize); i++) 
     {
         for (auto item : data[i]) 
@@ -86,7 +85,7 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
         }
         data[i].clear();
     }
-    */
+    
     for (int i = localSize; i < rm0; i++) 
     {
         vector<prf_type> curData = L->getAllData(i, keys[i]);
@@ -126,7 +125,6 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
         unsigned char* newKey = new unsigned char[16];
         memset(newKey, 0, 16);
         keys[rm0] = newKey;
-        //cout <<"size of previous data:"<< previousData.size()<<endl;
         L->setup(rm0, previousData, newKey);
 	//cout <<"L->setup("<<rm0<<") was called"<<endl;
         totalUpdateCommSize += L->totalCommunication;
@@ -191,7 +189,6 @@ vector<int> Amortized::search(string keyword)
         printf("filteration time:%f\n", filterationTime);
     }
     totalSearchCommSize += L->totalCommunication;
-//cout <<"====================================================="<<endl;
     return finalRes;
 }
 

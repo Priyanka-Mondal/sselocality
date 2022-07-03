@@ -85,6 +85,7 @@ public:
     std::vector<std::string> keywords;
     std::vector<std::string> testKeywords;
     std::vector<std::pair<std::string, std::vector<T>>> filePairs;
+    //std::map<std::string, std::vector<T> > filePairs;
 };
 
 class Utilities 

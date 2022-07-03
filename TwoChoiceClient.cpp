@@ -197,18 +197,12 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 
 	int totalItems1 = countTotal(fullness, pos1*newsize, newsize);
 	int totalItems2 = countTotal(fullness, pos2*newsize, newsize);
+	//assert(totalItems1 == totalItems2);
         int cipherIndex ;
 	if(totalItems1>totalItems2)
-	{
 		cipherIndex = pos2*newsize;
-      		//cout <<"pos2"<<endl;// at client:"<< pos2<<endl;  
-	}
 	else
-	{
 		cipherIndex = pos1*newsize;
-      		//cout <<"pos1"<<endl;// at client:"<< pos2<<endl;  
-	}
-	//cipherIndex = pos2;
         
 	for (unsigned int i = 0; i < pss; i++) 
 	{
@@ -291,66 +285,55 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
     int total = count.second;
     prf_type hashtoken;
     prf_type token = Utilities::encode(keyword, key);
-//cout <<"in search:"<< index<<endl;
+    vector<prf_type> ciphers;
+    vector<prf_type> stashCiphers;
     for(int s = 1 ;s<=2; s++)
     {
 	string newkeyword = keyword;
 	if(s==1) 
 	{
 	      newkeyword = newkeyword.append("1");
-	      //cout <<"s is 1 ["<<newkeyword<<"]"<<endl;
               hashtoken = Utilities::encode(newkeyword, key);
 	}
 	else if(s==2)
 	{
 	      newkeyword = keyword;
 	      newkeyword = newkeyword.append("2");
-	      //cout <<"s is 2 ["<<newkeyword<<"]"<<endl;
               hashtoken = Utilities::encode(newkeyword, key);
 	}
-        //vector<prf_type> ciphers = server->search(index, tokkw, token, keywordCnt);
-int po =0;	
-		//cout <<"total:"<< total<<endl;
-		//cout <<"s:"<<s<<" KEYWORD COUNT IS:"<<keywordCnt<<endl;
-        	vector<prf_type> ciphers = server->search(index, token, hashtoken, keywordCnt);
-        	int cnt = 0;
-       	 	if(flag == 0)
-       	 	{
-       	     		for (auto item : ciphers) 
-       	     		{
-       	         		prf_type plaintext;
-       	         		Utilities::decode(item, plaintext, key);
-       	         		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-       	 			{
-       	             			finalRes.push_back(plaintext);
-       	 	    			flag++;
-       	         		}
-       	     		}
-       	 	}
-    }
-    if(total>keywordCnt && stash.count(index)>0)
-    {
-	map<string, vector<prf_type>> srch = stash[index];
-	if(srch.count(keyword)>0)
-	{
-
-		cout <<"Searching from stash.. !!!!!:"<<srch[keyword].size()<<endl;
-		vector<prf_type> fileids = srch[keyword];
-		for(auto a : fileids)
+        ciphers = server->search(index, token, hashtoken, keywordCnt);
+        stashCiphers = server->stashSearch(index, token, keywordCnt);
+       	if(flag == 0)
+       	{
+       		for (auto item : ciphers) 
+       		{
+       	 		prf_type plaintext;
+       	 		Utilities::decode(item, plaintext, key);
+       	 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+       			{
+       	     			finalRes.push_back(plaintext);
+       	    			flag++;
+       	 		}
+       		}
+		if(flag !=0)//found in one superBin will imply NOT found in the other
 		{
-
-			prf_type plaintext;
-			//Utilities::decode(a, plaintext, key);
-			//somemore decode ?;
-			finalRes.push_back(plaintext);
+       			for (auto item : stashCiphers) 
+       			{
+       		 		prf_type plaintext;
+       		 		Utilities::decode(item, plaintext, key);
+       		 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+       				{
+       		     			finalRes.push_back(plaintext);
+       		    			flag++;
+       		 		}
+       			}
 		}
-	//cout <<"size of finalRes after adding from:"<<finalRes.size()<<endl<<endl;
-	}
+       	}
     }
-    	return finalRes;
+    return finalRes;
 }
 
-
+/*
 vector<prf_type> TwoChoiceClient::newsearch(int index, string keyword, unsigned char* key) 
 {
     double searchPreparation = 0, searchDecryption = 0;
@@ -361,34 +344,26 @@ vector<prf_type> TwoChoiceClient::newsearch(int index, string keyword, unsigned 
     vector<prf_type> finalRes;
     auto count = counters[index][keyword];
     int keywordCnt = count.first;
-    //int keywordCnt = 0;
     int total = count.second;
     prf_type hashtoken;
     prf_type token = Utilities::encode(keyword, key);
-//cout <<"in search:"<< index<<endl;
     for(int s = 1 ;s<=2; s++)
     {
 	string newkeyword = keyword;
 	if(s==1) 
 	{
 	      newkeyword = newkeyword.append("1");
-	      //cout <<"s is 1 ["<<newkeyword<<"]"<<endl;
               hashtoken = Utilities::encode(newkeyword, key);
 	}
 	else if(s==2)
 	{
 	      newkeyword = keyword;
 	      newkeyword = newkeyword.append("2");
-	      //cout <<"s is 2 ["<<newkeyword<<"]"<<endl;
               hashtoken = Utilities::encode(newkeyword, key);
 	}
-        //vector<prf_type> ciphers = server->search(index, tokkw, token, keywordCnt);
-int po =0;	
+	int po =0;	
 	if(keywordCnt != 0)
 	{
-		//cout <<"total:"<< total<<endl;
-		//cout <<"s:"<<s<<" KEYWORD COUNT IS:"<<keywordCnt<<endl;
-        	//vector<prf_type> ciphers = server->search(index, token, hashtoken, keywordCnt);
         	vector<prf_type> ciphers = server->newsearch(index, hashtoken, keywordCnt,po);
         	int cnt = 0;
        	 	if(flag == 0)
@@ -406,7 +381,6 @@ int po =0;
        	 	}
 	}
     }
-    
     if(total>keywordCnt && stash.count(index)>0)
     {
 	map<string, vector<prf_type>> srch = stash[index];
@@ -428,6 +402,7 @@ int po =0;
     }
     	return finalRes;
 }
+*/
 
 vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key) 
 {

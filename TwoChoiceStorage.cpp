@@ -14,13 +14,11 @@ TwoChoiceStorage::TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddr
 	     i>3 ? ((int)ceil((float) (pow(2,i)/((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i))))))))) : pow(2,i);
 	//in twochoice they assume #of Bins in power of 2
 	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins))); 
-
-   int curSizeOfEachBin = i > 3 ? ceil(((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*3)) : 3;
+        int curSizeOfEachBin = i > 3 ? ceil(((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*3)) : 3;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
         printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
     }
-
 }
 
 bool TwoChoiceStorage::setup(bool overwrite) 
@@ -58,7 +56,6 @@ bool TwoChoiceStorage::setup(bool overwrite)
 		    {
                         cerr << "Error: " << strerror(errno);
                     }
-
                     int maxSize = numberOfBins[i] * sizeOfEachBin[i];
                     for (int j = 0; j < maxSize; j++) 
 		    {
@@ -97,7 +94,6 @@ vector<prf_type> TwoChoiceStorage::getStash(int index)
       fstream file(stashfilenames[index].c_str(), ios::binary | ios::in | ios::ate);
       if (file.fail()) 
           cerr << "Error in read: " << strerror(errno);
-      
       int size = file.tellg();
       file.seekg(0, ios::beg);
       char* keyValues = new char[size];
