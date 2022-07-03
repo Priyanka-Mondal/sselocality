@@ -96,13 +96,10 @@ void TwoChoiceStorage::insertStash(int index, vector<prf_type> ciphers)
       }
       for (auto item : ciphers) 
       {
-	 //if(item != nullKey)
-	 //{ 
           unsigned char newRecord[AES_KEY_SIZE];
           memset(newRecord, 0, AES_KEY_SIZE);
           std::copy(item.begin(), item.end(), newRecord);
           file.write((char*) newRecord, AES_KEY_SIZE);
-	 //}
       }
       file.close();
 }
@@ -240,6 +237,16 @@ void TwoChoiceStorage::clear(int index) {
                 file.write((char*) nullKey.data(), AES_KEY_SIZE);
             }
             file.close();
+
+            fstream sfile(stashfilenames[index].c_str(), std::ios::binary | std::ofstream::out);
+            if (sfile.fail()) {
+                cerr << "Error: " << strerror(errno);
+            }
+            for (int j = 0; j < maxSize; j++) {
+                sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+                sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+            }
+            sfile.close();
         //}
     }
 }

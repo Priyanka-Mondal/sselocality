@@ -15,6 +15,7 @@ TwoChoiceClient::TwoChoiceClient(int numOfDataSets, bool inMemory, bool overwrit
     for (int i = 0; i < numOfDataSets; i++) //why not <=
     {
         exist.push_back(false);
+        stashExist.push_back(false);
         int curNumberOfBins = i > 3 ? ((int) ceil((float) pow(2, i) / (log2(log2(pow(2,i)))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
 	//in twochoice they assume #of Bins in power of 2
 	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins)));
@@ -72,18 +73,13 @@ int maxPossibleLen(int N, int bins, int index)
 }
 
 
-void TwoChoiceClient::writeToStash(int pss, int mpl, int index, string keyword, vector<prf_type> fileids, unsigned char* key,vector<prf_type> &stashCiphers )
+void TwoChoiceClient::writeToStash(int pss, int mpl, vector<prf_type> fileids, unsigned char* key,vector<prf_type> &stashCiphers )
 {
-        prf_type K = Utilities::encode(keyword, key);
 	for (unsigned int i = mpl; i < pss; i++) 
 	{
-            prf_type mapKey, mapValue;
-            unsigned char cntstr[AES_KEY_SIZE];
-            memset(cntstr, 0, AES_KEY_SIZE);
-            *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
-            mapKey = Utilities::generatePRF(cntstr, K.data());
-            mapValue = Utilities::encode(fileids[i].data(), key);
-            stashCiphers.push_back(mapValue);
+            prf_type value;
+            value = Utilities::encode(fileids[i].data(), key);
+            stashCiphers.push_back(value);
 	}
 }
 
@@ -109,27 +105,27 @@ void TwoChoiceClient::truncateToMpl(int pss, int mpl, int index, string keyword,
 void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, unsigned char* key) 
 {
     exist[index] = true;
-    vector<vector<pair<prf_type, prf_type> > > ciphers;
+    stashExist[index] = true;
+    vector<vector<pair<prf_type, prf_type>>> ciphers;
     vector<prf_type> stashCiphers;
-
     for (int i = 0; i < numberOfBins[index]; i++) 
-    {
         ciphers.push_back(vector<pair<prf_type,prf_type>>());
-    }
+    
     map<prf_type, prf_type> keywordCntCiphers;
     map<prf_type, prf_type> stashCntCiphers;
     map<int, int> fullness;
+
     vector<pair<string,vector<prf_type>>> sorted = sort(pairs);
     int mpl = maxPossibleLen((pow(2,index)),numberOfBins[index], index);
     mpl = numberOfBins[index]; // for now
+
     for (auto pair : sorted) 
     {
 	int pss = pair.second.size();
 	int newsize = pow(2, (int)ceil(log2(pss)));
 	if(pss > mpl)
 	{
-		//truncateToMpl(pss,mpl,index,pair.first,pair.second,key); // stores extra elems in stash
-		writeToStash(pss,mpl,index,pair.first,pair.second,key, stashCiphers);
+		writeToStash(pss,mpl,pair.second,key, stashCiphers);
 		pss = mpl;
 		newsize = mpl;
 	}
@@ -234,7 +230,6 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
             ciphers[i].push_back(dummypair);
         }
     }
-
     prf_type randomKey;
     for (int i = 0; i < AES_KEY_SIZE; i++) 
         randomKey[i] = rand();
@@ -270,9 +265,7 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
     if (profile) 
         Utilities::startTimer(65);
     vector<prf_type> finalRes;
-    auto count = counters[index][keyword];
     int keywordCnt = 0;
-    int total = count.second;
     prf_type hashtoken;
     prf_type token = Utilities::encode(keyword, key);
     vector<prf_type> ciphers;
@@ -325,8 +318,6 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
 
 vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key) 
 {
-    prf_type nullKey;
-    memset(nullKey.data(), 0, AES_KEY_SIZE);
     vector<prf_type> finalRes = vector<prf_type>();
     auto ciphers = server->getAllData(index);
     for (auto cipher : ciphers) 
@@ -335,28 +326,21 @@ vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key)
         Utilities::decode(cipher.second, plaintext, key);
         finalRes.push_back(plaintext);
     }
-    //if(stash.count(index)>0)
-    //{
-	    //cout <<"getAllData: Adding from stash"<<endl;
-    	//map<string, vector<prf_type>> temp = stash[index];
-	vector<prf_type> stashCiphers = server->getStash(index);
-    	//for(auto a : temp)
-    	//{
-	    for(auto b : stashCiphers)
-	    {
-	    	//assert( b.data()!= "");
-        	//prf_type plaintext;
-        	//Utilities::decode(b, plaintext, key);
-        	//finalRes.push_back(plaintext);
-		if(b.data() != NULL)
-		{
-			finalRes.push_back(b);
-		cout <<"b.data():["<<b.data()<<"]"<<endl;
-		}
-	    }
-    	//}
-    //}
-    totalCommunication += ciphers.size() * sizeof (prf_type);
+    
+    vector<prf_type> stashCiphers = server->getStash(index);
+    if(stashCiphers.size()>0)
+    {
+    cout <<"size of stashCiphers:"<<stashCiphers.size()<<endl;
+    for(auto b : stashCiphers)
+    {
+       	prf_type plaintext;
+       	Utilities::decode(b, plaintext, key);
+	finalRes.push_back(b);
+    }
+    }
+    totalCommunication += (ciphers.size() + stashCiphers.size())* sizeof (prf_type);
+    
+    
     return finalRes;
 }
 
@@ -364,7 +348,8 @@ void TwoChoiceClient::destry(int index)
 {
     server->clear(index);
     exist[index] = false;
-    stash.erase(index);
-    counters.erase(index);
+    stashExist[index] = false;
+    //stash.erase(index);
+    //counters.erase(index);
     totalCommunication += sizeof (int);
 }
