@@ -22,6 +22,7 @@ public:
     vector<prf_type> search(int dataIndex, prf_type tokkw, prf_type token, int & keywordCnt);
     vector<prf_type> stashSearch(int dataIndex, prf_type tokkw, int & keywordCnt);
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
+    vector<prf_type> getStash(int dataIndex);
     vector<prf_type> newsearch(int dataIndex , prf_type hashtoken, int keywordCnt, int pos);
 
 };

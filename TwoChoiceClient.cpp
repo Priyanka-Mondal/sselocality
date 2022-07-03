@@ -19,7 +19,6 @@ TwoChoiceClient::TwoChoiceClient(int numOfDataSets, bool inMemory, bool overwrit
 	//in twochoice they assume #of Bins in power of 2
 	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins)));
      int curSizeOfEachBin = i > 3 ? ceil((log2(log2(pow(2,i)))*(log2(log2(log2(pow(2,i)))))*3)) : 3;
-	//cout <<"cur num of bins:"<< curNumberOfBins<<"/"<<curSizeOfEachBin<<endl;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
     }
@@ -36,8 +35,6 @@ int countTotal(map<int,int> fullness, int bin,int size)
 bool cmpp(pair<string, vector<prf_type>> &a, pair<string, vector<prf_type>> &b)
 {
 	//cout <<"cmp:["<<a.second.size()<< " "<<b.second.size()<<"]["<<(a.second.size() > b.second.size()) <<"]"<<endl;
-	//if(a.first=="") cout <<"a is empty"<<endl;
-	//if(b.first=="") cout <<"b is empty"<<endl;
     return (a.second.size() > b.second.size());
 }
 
@@ -90,31 +87,25 @@ void TwoChoiceClient::writeToStash(int pss, int mpl, int index, string keyword, 
 	}
 }
 
-
+/*
 void TwoChoiceClient::truncateToMpl(int pss, int mpl, int index, string keyword, vector<prf_type> fileids, unsigned char* key)
 {
     if(keyword != "") //not required
     {
-	cout <<"ADDING TO STASH++"<<endl;
+	//cout <<"ADDING TO STASH++"<<endl;
 	map<string,vector<prf_type>> indexstash;
 	if(stash.count(index)>0)
 		indexstash = stash[index];
 	vector<prf_type> trunc = vector < prf_type>();
 	for(int k=mpl; k<pss; k++)
-	{
-            //prf_type mapValue;
-            //mapValue = Utilities::encode(fileids[k].data(), key);
-	    //trunc.push_back(mapValue);
-	    //cout <<"fileids[k]:"<<fileids[k].data()<<endl;
 		trunc.push_back(fileids[k]);
-	}
 	if(indexstash.count(keyword)==0)
 		 indexstash[keyword] = vector < prf_type>();
 	indexstash[keyword]= trunc;
 	stash[index]=indexstash;
     }
 }
-
+*/
 void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, unsigned char* key) 
 {
     exist[index] = true;
@@ -137,7 +128,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 	int newsize = pow(2, (int)ceil(log2(pss)));
 	if(pss > mpl)
 	{
-		truncateToMpl(pss,mpl,index,pair.first,pair.second,key); // stores extra elems in stash
+		//truncateToMpl(pss,mpl,index,pair.first,pair.second,key); // stores extra elems in stash
 		writeToStash(pss,mpl,index,pair.first,pair.second,key, stashCiphers);
 		pss = mpl;
 		newsize = mpl;
@@ -166,9 +157,9 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 
 
 /////////////////////////////////////////////////////////////////////////	
-	auto count = counters[index];				       //	
-	count[pair.first] = make_pair(newsize,pair.second.size());     //
-	counters[index]=count;                                         //
+//	auto count = counters[index];				       //	
+//	count[pair.first] = make_pair(newsize,pair.second.size());     //
+//	counters[index]=count;                                         //
 /////////////////////////////////////////////////////////////////////////
 
 
@@ -269,8 +260,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
         stashCntCiphers[mapKey] = mapValue;
     }
     //    totalCommunication += ciphers.size() * sizeof (prf_type)*2;
-    
-    server->storeCiphers(index, ciphers, stashCiphers, keywordCntCiphers,stashCntCiphers);
+    server->storeCiphers(index, ciphers, stashCiphers, keywordCntCiphers, stashCntCiphers);
 }
 
 vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned char* key) 
@@ -333,79 +323,10 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
     return finalRes;
 }
 
-/*
-vector<prf_type> TwoChoiceClient::newsearch(int index, string keyword, unsigned char* key) 
-{
-    double searchPreparation = 0, searchDecryption = 0;
-    int flag = 0;
-    if (profile) 
-        Utilities::startTimer(65);
-
-    vector<prf_type> finalRes;
-    auto count = counters[index][keyword];
-    int keywordCnt = count.first;
-    int total = count.second;
-    prf_type hashtoken;
-    prf_type token = Utilities::encode(keyword, key);
-    for(int s = 1 ;s<=2; s++)
-    {
-	string newkeyword = keyword;
-	if(s==1) 
-	{
-	      newkeyword = newkeyword.append("1");
-              hashtoken = Utilities::encode(newkeyword, key);
-	}
-	else if(s==2)
-	{
-	      newkeyword = keyword;
-	      newkeyword = newkeyword.append("2");
-              hashtoken = Utilities::encode(newkeyword, key);
-	}
-	int po =0;	
-	if(keywordCnt != 0)
-	{
-        	vector<prf_type> ciphers = server->newsearch(index, hashtoken, keywordCnt,po);
-        	int cnt = 0;
-       	 	if(flag == 0)
-       	 	{
-       	     		for (auto item : ciphers) 
-       	     		{
-       	         		prf_type plaintext;
-       	         		Utilities::decode(item, plaintext, key);
-       	         		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-       	 			{
-       	             			finalRes.push_back(plaintext);
-       	 	    			flag++;
-       	         		}
-       	     		}
-       	 	}
-	}
-    }
-    if(total>keywordCnt && stash.count(index)>0)
-    {
-	map<string, vector<prf_type>> srch = stash[index];
-	if(srch.count(keyword)>0)
-	{
-
-		cout <<"Searching from stash.. Aborting!!:"<<srch[keyword].size()<<endl;
-		vector<prf_type> fileids = srch[keyword];
-		for(auto a : fileids)
-		{
-
-			prf_type plaintext;
-			//Utilities::decode(a, plaintext, key);
-			//somemore decode ?;
-			finalRes.push_back(plaintext);
-		}
-	//cout <<"size of finalRes after adding from:"<<finalRes.size()<<endl<<endl;
-	}
-    }
-    	return finalRes;
-}
-*/
-
 vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key) 
 {
+    prf_type nullKey;
+    memset(nullKey.data(), 0, AES_KEY_SIZE);
     vector<prf_type> finalRes = vector<prf_type>();
     auto ciphers = server->getAllData(index);
     for (auto cipher : ciphers) 
@@ -414,23 +335,27 @@ vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key)
         Utilities::decode(cipher.second, plaintext, key);
         finalRes.push_back(plaintext);
     }
-    if(stash.count(index)>0)
-    {
-	    cout <<"getAllData: Adding from stash"<<endl;
-    	map<string, vector<prf_type>> temp = stash[index];
-    	for(auto a : temp)
-    	{
-	    assert(a.first != "");
-	    for(auto b : a.second)
+    //if(stash.count(index)>0)
+    //{
+	    //cout <<"getAllData: Adding from stash"<<endl;
+    	//map<string, vector<prf_type>> temp = stash[index];
+	vector<prf_type> stashCiphers = server->getStash(index);
+    	//for(auto a : temp)
+    	//{
+	    for(auto b : stashCiphers)
 	    {
+	    	//assert( b.data()!= "");
         	//prf_type plaintext;
         	//Utilities::decode(b, plaintext, key);
         	//finalRes.push_back(plaintext);
-		//cout <<"b.data():["<<b.data()<<"]"<<endl;
-		finalRes.push_back(b);
+		if(b.data() != NULL)
+		{
+			finalRes.push_back(b);
+		cout <<"b.data():["<<b.data()<<"]"<<endl;
+		}
 	    }
-    	}
-    }
+    	//}
+    //}
     totalCommunication += ciphers.size() * sizeof (prf_type);
     return finalRes;
 }

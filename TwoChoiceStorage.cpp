@@ -44,9 +44,6 @@ bool TwoChoiceStorage::setup(bool overwrite)
 	    {
                 string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
                 filenames.push_back(filename);
-                filename = fileAddressPrefix + "STASH-" + to_string(i) + ".dat";
-                stashfilenames.push_back(filename);
-
                 fstream testfile(filename.c_str(), std::ofstream::in);
                 if (testfile.fail() || overwrite) 
 		{
@@ -64,6 +61,25 @@ bool TwoChoiceStorage::setup(bool overwrite)
                     }
                     file.close();
                 }
+                string stashfilename = fileAddressPrefix + "STASH-" + to_string(i) + ".dat";
+                stashfilenames.push_back(stashfilename);
+                fstream tfile(stashfilename.c_str(), std::ofstream::in);
+                if (tfile.fail() || overwrite) 
+		{
+                    tfile.close();
+                    fstream sfile(stashfilename.c_str(), std::ofstream::out);
+                    if (sfile.fail()) 
+		    {
+                        cerr << "Error: " << strerror(errno);
+                    }
+                    int maxSize = numberOfBins[i] * sizeOfEachBin[i];
+                    for (int j = 0; j < maxSize; j++) 
+		    {
+                        sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+                        sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+                    }
+                    sfile.close();
+                }
             }
        // }
     }
@@ -76,14 +92,17 @@ void TwoChoiceStorage::insertStash(int index, vector<prf_type> ciphers)
       if (file.fail()) 
       {
           cout <<"StashXX:"<<index<<endl;
-          cerr << "(Error in insert: " << strerror(errno)<<")"<<endl;
+          cerr << "(Error in Stash insert: " << strerror(errno)<<")"<<endl;
       }
       for (auto item : ciphers) 
       {
+	 //if(item != nullKey)
+	 //{ 
           unsigned char newRecord[AES_KEY_SIZE];
           memset(newRecord, 0, AES_KEY_SIZE);
           std::copy(item.begin(), item.end(), newRecord);
           file.write((char*) newRecord, AES_KEY_SIZE);
+	 //}
       }
       file.close();
 }
@@ -104,7 +123,7 @@ vector<prf_type> TwoChoiceStorage::getStash(int index)
       {
           prf_type tmp;
           std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-          if (tmp != nullKey) //dummy added to fillup bins 
+          if (tmp != nullKey) 
           {
               results.push_back(tmp);
           }

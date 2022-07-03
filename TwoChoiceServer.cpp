@@ -134,6 +134,11 @@ vector<pair<prf_type, prf_type> > TwoChoiceServer::getAllData(int dataIndex)
     return storage->getAllData(dataIndex);
 }
 
+vector<prf_type> TwoChoiceServer::getStash(int dataIndex) 
+{
+    return storage->getStash(dataIndex);
+}
+
 void TwoChoiceServer::clear(int index) 
 {
     storage->clear(index);
