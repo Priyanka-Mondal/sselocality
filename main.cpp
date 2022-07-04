@@ -1,5 +1,5 @@
-#include "Amortized.h"
-#include "Utilities.h"
+#include "twochoice/Amortized.h"
+#include "twochoice/Utilities.h"
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
 		{
                     client.update(OP::INS, cur->first, cur->second[j], true);
                     cnt++;
-                    if (cnt % 500 == 0) 
+                    if (cnt % 1000 == 0) 
 		    {
                         cout << "Initial Insertion:" << cnt << "/" << to_string(testCases[i].N) << endl;
                     }
@@ -129,8 +129,8 @@ int main(int argc, char** argv)
                 Utilities::startTimer(500);
                 vector<int> res = client.search(testCases[i].testKeywords[j]);
                 time = Utilities::stopTimer(500);
-                //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
-                //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
+                cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
+                cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
                 cout << "Number of return item:[" << res.size()<<"]" << endl;
         }
         cout << "**************************************************************************" << endl;

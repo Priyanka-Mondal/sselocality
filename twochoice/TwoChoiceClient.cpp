@@ -271,6 +271,7 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
        			}
 		}
        	}
+    totalCommunication += ciphers.size() * sizeof (prf_type) + sizeof (prf_type) + stashCiphers.size()* sizeof(prf_type);
     }
     return finalRes;
 }

@@ -1,8 +1,0 @@
-inMemory
-overwrite
-number of tests to do
-N # of kw,id pair
-K # of keywords
-n # of of search query
-update query
-delete query in loop n times
