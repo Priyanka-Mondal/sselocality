@@ -26,6 +26,7 @@ CND_DLIB_EXT=so
 CND_CONF=Release
 CND_DISTDIR=dist
 CND_BUILDDIR=build
+TWO_CHOICE=twochoice
 
 # Include project Makefile
 include Makefile
@@ -36,16 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/AES.o \
-	${OBJECTDIR}/AVLTree.o \
 	${OBJECTDIR}/Amortized.o \
-	${OBJECTDIR}/AmortizedBASClient.o \
-	${OBJECTDIR}/AmortizedBASServer.o \
-	${OBJECTDIR}/Bid.o \
-	${OBJECTDIR}/OMAP.o \
-	${OBJECTDIR}/ORAM.o \
-	${OBJECTDIR}/OneChoiceClient.o \
-	${OBJECTDIR}/OneChoiceServer.o \
-	${OBJECTDIR}/OneChoiceStorage.o \
 	${OBJECTDIR}/RAMStore.o \
 	${OBJECTDIR}/Server.o \
 	${OBJECTDIR}/Storage.o \
@@ -55,6 +47,14 @@ OBJECTFILES= \
 	${OBJECTDIR}/utils.o
 
 
+#	${OBJECTDIR}/AmortizedBASClient.o \
+	${OBJECTDIR}/AmortizedBASServer.o \
+	${OBJECTDIR}/Bid.o \
+	${OBJECTDIR}/OMAP.o \
+	${OBJECTDIR}/ORAM.o \
+	${OBJECTDIR}/OneChoiceClient.o \
+	${OBJECTDIR}/OneChoiceServer.o \
+	${OBJECTDIR}/OneChoiceStorage.o \
 # C Compiler Flags
 CFLAGS=
 
@@ -73,71 +73,71 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sse-locality-sda
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/sse-locality-sda
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sse-locality-sda: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/sse-locality-sda: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sse-locality-sda ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/sse-locality-sda ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/AES.o: AES.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/AES.o: ${TWO_CHOICE}/AES.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AES.o AES.cpp
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/AES.o ${TWO_CHOICE}/AES.cpp
 
-${OBJECTDIR}/AVLTree.o: AVLTree.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AVLTree.o AVLTree.cpp
+#${OBJECTDIR}/AVLTree.o: ${TWO_CHOICE}/AVLTree.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AVLTree.o ${TWO_CHOICE}/AVLTree.cpp
 
-${OBJECTDIR}/Amortized.o: Amortized.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/Amortized.o: ${TWO_CHOICE}/Amortized.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Amortized.o Amortized.cpp
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/Amortized.o ${TWO_CHOICE}/${TWO_CHOICE}/Amortized.cpp
 
-${OBJECTDIR}/AmortizedBASClient.o: AmortizedBASClient.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AmortizedBASClient.o AmortizedBASClient.cpp
+#${OBJECTDIR}/AmortizedBASClient.o: AmortizedBASClient.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AmortizedBASClient.o AmortizedBASClient.cpp
 
-${OBJECTDIR}/AmortizedBASServer.o: AmortizedBASServer.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AmortizedBASServer.o AmortizedBASServer.cpp
+#${OBJECTDIR}/AmortizedBASServer.o: AmortizedBASServer.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AmortizedBASServer.o AmortizedBASServer.cpp
 
-${OBJECTDIR}/Bid.o: Bid.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Bid.o Bid.cpp
+#${OBJECTDIR}/Bid.o: Bid.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Bid.o Bid.cpp
 
-${OBJECTDIR}/OMAP.o: OMAP.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OMAP.o OMAP.cpp
+#${OBJECTDIR}/OMAP.o: OMAP.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OMAP.o OMAP.cpp
 
-${OBJECTDIR}/ORAM.o: ORAM.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ORAM.o ORAM.cpp
+#${OBJECTDIR}/ORAM.o: ORAM.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ORAM.o ORAM.cpp
 
-${OBJECTDIR}/OneChoiceClient.o: OneChoiceClient.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceClient.o OneChoiceClient.cpp
+#${OBJECTDIR}/OneChoiceClient.o: OneChoiceClient.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceClient.o OneChoiceClient.cpp
 
-${OBJECTDIR}/OneChoiceServer.o: OneChoiceServer.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceServer.o OneChoiceServer.cpp
+#${OBJECTDIR}/OneChoiceServer.o: OneChoiceServer.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceServer.o OneChoiceServer.cpp
 
-${OBJECTDIR}/OneChoiceStorage.o: OneChoiceStorage.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceStorage.o OneChoiceStorage.cpp
+#${OBJECTDIR}/OneChoiceStorage.o: OneChoiceStorage.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceStorage.o OneChoiceStorage.cpp
 
-${OBJECTDIR}/RAMStore.o: RAMStore.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RAMStore.o RAMStore.cpp
+#${OBJECTDIR}/RAMStore.o: RAMStore.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RAMStore.o RAMStore.cpp
 
 ${OBJECTDIR}/Server.o: Server.cpp
 	${MKDIR} -p ${OBJECTDIR}

@@ -26,6 +26,7 @@ CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
+TWO_CHOICE=twochoice
 
 # Include project Makefile
 include Makefile
@@ -33,12 +34,23 @@ include Makefile
 # Object Directory
 OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
+
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/AES.o \
-	${OBJECTDIR}/AVLTree.o \
-	${OBJECTDIR}/Amortized.o \
-	${OBJECTDIR}/AmortizedBASClient.o \
+	${OBJECTDIR}/${TWO_CHOICE}/AES.o \
+	${OBJECTDIR}/${TWO_CHOICE}/Amortized.o \
+	${OBJECTDIR}/${TWO_CHOICE}/TwoChoiceClient.o \
+	${OBJECTDIR}/${TWO_CHOICE}/TwoChoiceServer.o \
+	${OBJECTDIR}/${TWO_CHOICE}/TwoChoiceStorage.o \
+	${OBJECTDIR}/${TWO_CHOICE}/Server.o \
+	${OBJECTDIR}/${TWO_CHOICE}/Storage.o \
+	${OBJECTDIR}/${TWO_CHOICE}/Utilities.o \
+	${OBJECTDIR}/${TWO_CHOICE}/logger.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/${TWO_CHOICE}/utils.o
+
+
+	#${OBJECTDIR}/AmortizedBASClient.o \
 	${OBJECTDIR}/AmortizedBASServer.o \
 	${OBJECTDIR}/Bid.o \
 	${OBJECTDIR}/OMAP.o \
@@ -46,18 +58,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/OneChoiceClient.o \
 	${OBJECTDIR}/OneChoiceServer.o \
 	${OBJECTDIR}/OneChoiceStorage.o \
-	${OBJECTDIR}/TwoChoiceClient.o \
-	${OBJECTDIR}/TwoChoiceServer.o \
-	${OBJECTDIR}/TwoChoiceStorage.o \
 	${OBJECTDIR}/RAMStore.o \
-	${OBJECTDIR}/Server.o \
-	${OBJECTDIR}/Storage.o \
-	${OBJECTDIR}/Utilities.o \
-	${OBJECTDIR}/logger.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/utils.o
-
-
 # C Compiler Flags
 CFLAGS=
 
@@ -76,116 +77,116 @@ LDLIBSOPTIONS=-lcrypto -lssl #-lstxxl_debug
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sse-locality-sda
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/twochoice-sda
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sse-locality-sda: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sse-locality-sda ${OBJECTFILES} ${LDLIBSOPTIONS} -lpthread
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/twochoice-sda: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/twochoice-sda ${OBJECTFILES} ${LDLIBSOPTIONS} -lpthread
 
-${OBJECTDIR}/AES.o: AES.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/${TWO_CHOICE}/AES.o: ${TWO_CHOICE}/AES.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AES.o AES.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/AES.o ${TWO_CHOICE}/AES.cpp
 
-${OBJECTDIR}/AVLTree.o: AVLTree.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AVLTree.o AVLTree.cpp
+#${OBJECTDIR}/AVLTree.o: ${TWO_CHOICE}/AVLTree.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AVLTree.o ${TWO_CHOICE}/AVLTree.cpp
 
-${OBJECTDIR}/Amortized.o: Amortized.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/${TWO_CHOICE}/Amortized.o: ${TWO_CHOICE}/Amortized.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Amortized.o Amortized.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/Amortized.o ${TWO_CHOICE}/Amortized.cpp
 
-${OBJECTDIR}/AmortizedBASClient.o: AmortizedBASClient.cpp
-	${MKDIR} -p ${OBJECTDIR}
+#${OBJECTDIR}/AmortizedBASClient.o: AmortizedBASClient.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AmortizedBASClient.o AmortizedBASClient.cpp
+#
+#${OBJECTDIR}/AmortizedBASServer.o: AmortizedBASServer.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AmortizedBASServer.o AmortizedBASServer.cpp
+#
+#${OBJECTDIR}/Bid.o: Bid.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Bid.o Bid.cpp
+#
+#${OBJECTDIR}/OMAP.o: OMAP.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OMAP.o OMAP.cpp
+#
+#${OBJECTDIR}/ORAM.o: ORAM.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ORAM.o ORAM.cpp
+#
+#${OBJECTDIR}/OneChoiceClient.o: OneChoiceClient.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceClient.o OneChoiceClient.cpp
+#
+#${OBJECTDIR}/OneChoiceServer.o: OneChoiceServer.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceServer.o OneChoiceServer.cpp
+#
+#${OBJECTDIR}/OneChoiceStorage.o: OneChoiceStorage.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceStorage.o OneChoiceStorage.cpp
+#
+${OBJECTDIR}/${TWO_CHOICE}/TwoChoiceClient.o: ${TWO_CHOICE}/TwoChoiceClient.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AmortizedBASClient.o AmortizedBASClient.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/TwoChoiceClient.o ${TWO_CHOICE}/TwoChoiceClient.cpp
 
-${OBJECTDIR}/AmortizedBASServer.o: AmortizedBASServer.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/${TWO_CHOICE}/TwoChoiceServer.o: ${TWO_CHOICE}/TwoChoiceServer.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AmortizedBASServer.o AmortizedBASServer.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/TwoChoiceServer.o ${TWO_CHOICE}/TwoChoiceServer.cpp
 
-${OBJECTDIR}/Bid.o: Bid.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/${TWO_CHOICE}/TwoChoiceStorage.o: ${TWO_CHOICE}/TwoChoiceStorage.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Bid.o Bid.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/TwoChoiceStorage.o ${TWO_CHOICE}/TwoChoiceStorage.cpp
 
-${OBJECTDIR}/OMAP.o: OMAP.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OMAP.o OMAP.cpp
+#${OBJECTDIR}/RAMStore.o: RAMStore.cpp
+#	${MKDIR} -p ${OBJECTDIR}
+#	${RM} "$@.d"
+#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RAMStore.o RAMStore.cpp
 
-${OBJECTDIR}/ORAM.o: ORAM.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/${TWO_CHOICE}/Server.o: ${TWO_CHOICE}/Server.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ORAM.o ORAM.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/Server.o ${TWO_CHOICE}/Server.cpp
 
-${OBJECTDIR}/OneChoiceClient.o: OneChoiceClient.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/${TWO_CHOICE}/Storage.o: ${TWO_CHOICE}/Storage.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceClient.o OneChoiceClient.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/Storage.o ${TWO_CHOICE}/Storage.cpp
 
-${OBJECTDIR}/OneChoiceServer.o: OneChoiceServer.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/${TWO_CHOICE}/Utilities.o: ${TWO_CHOICE}/Utilities.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceServer.o OneChoiceServer.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/Utilities.o ${TWO_CHOICE}/Utilities.cpp
 
-${OBJECTDIR}/OneChoiceStorage.o: OneChoiceStorage.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/${TWO_CHOICE}/logger.o: ${TWO_CHOICE}/logger.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OneChoiceStorage.o OneChoiceStorage.cpp
-
-${OBJECTDIR}/TwoChoiceClient.o: TwoChoiceClient.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TwoChoiceClient.o TwoChoiceClient.cpp
-
-${OBJECTDIR}/TwoChoiceServer.o: TwoChoiceServer.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TwoChoiceServer.o TwoChoiceServer.cpp
-
-${OBJECTDIR}/TwoChoiceStorage.o: TwoChoiceStorage.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TwoChoiceStorage.o TwoChoiceStorage.cpp
-
-${OBJECTDIR}/RAMStore.o: RAMStore.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RAMStore.o RAMStore.cpp
-
-${OBJECTDIR}/Server.o: Server.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Server.o Server.cpp
-
-${OBJECTDIR}/Storage.o: Storage.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Storage.o Storage.cpp
-
-${OBJECTDIR}/Utilities.o: Utilities.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Utilities.o Utilities.cpp
-
-${OBJECTDIR}/logger.o: logger.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/logger.o logger.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/logger.o ${TWO_CHOICE}/logger.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
-${OBJECTDIR}/utils.o: utils.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/${TWO_CHOICE}/utils.o: ${TWO_CHOICE}/utils.cpp
+	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utils.o utils.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/utils.o ${TWO_CHOICE}/utils.cpp
 
 # Subprojects
 .build-subprojects:

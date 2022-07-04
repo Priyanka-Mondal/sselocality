@@ -82,9 +82,9 @@ int main(int argc, char** argv)
 		{
                     client.update(OP::INS, cur->first, cur->second[j], true);
                     cnt++;
-                    if (cnt % 1000 == 0) 
+                    if (cnt % 10000 == 0) 
 		    {
-                        cout << "Initial Insertion:" << cnt << "/" << to_string(testCases[i].N) << endl;
+                        cout << "Initial Insertions:" << cnt << "/" << to_string(testCases[i].N) << endl;
                     }
                 }
 	        //cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;

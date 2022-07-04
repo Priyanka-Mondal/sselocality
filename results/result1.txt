@@ -1,4 +1,4 @@
-Total pair number:31837
+Total pair number:32567
 ===================RUNNING SDa+TwoChoice=====================
 Level:0 number of Bins:1 size of bin:3
 Level:1 number of Bins:2 size of bin:3
@@ -19,83 +19,55 @@ Level:15 number of Bins:8192 size of bin:24
 Start of Static, size of test suits:1
 ----------------------------------------------
  SIZE of testcases:8
-Initial Insertion:1000/50000
-Initial Insertion:2000/50000
-Initial Insertion:3000/50000
-Initial Insertion:4000/50000
-Initial Insertion:5000/50000
-Initial Insertion:6000/50000
-Initial Insertion:7000/50000
-Initial Insertion:8000/50000
-Initial Insertion:9000/50000
-Initial Insertion:10000/50000
-Initial Insertion:11000/50000
-Initial Insertion:12000/50000
-Initial Insertion:13000/50000
-Initial Insertion:14000/50000
-Initial Insertion:15000/50000
-Initial Insertion:16000/50000
-Initial Insertion:17000/50000
-Initial Insertion:18000/50000
-Initial Insertion:19000/50000
-Initial Insertion:20000/50000
-Initial Insertion:21000/50000
-Initial Insertion:22000/50000
-Initial Insertion:23000/50000
-Initial Insertion:24000/50000
-Initial Insertion:25000/50000
-Initial Insertion:26000/50000
-Initial Insertion:27000/50000
-Initial Insertion:28000/50000
-Initial Insertion:29000/50000
-Initial Insertion:30000/50000
-Initial Insertion:31000/50000
+Initial Insertions:10000/50000
+Initial Insertions:20000/50000
+Initial Insertions:30000/50000
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 50000
 Search for Keyword With [5000] Results and [50] Deletions:
-Search Computation Time(micro):14749 for:LffHPCH
-Search Communication Size (Bytes):530176
+Search Computation Time(micro):14176 for:5#jsRSn
+Search Communication Size (Bytes):528832
 Number of return item:[4950]
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 50000
 Search for Keyword With [4000] Results and [40] Deletions:
-Search Computation Time(micro):14532 for:bjWKNHX
-Search Communication Size (Bytes):527264
+Search Computation Time(micro):14452 for:MSuZzzA
+Search Communication Size (Bytes):530880
 Number of return item:[3960]
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 50000
 Search for Keyword With [3000] Results and [30] Deletions:
-Search Computation Time(micro):14398 for:!sOB!xM
-Search Communication Size (Bytes):527232
+Search Computation Time(micro):14415 for:0%iSRt%
+Search Communication Size (Bytes):527968
 Number of return item:[2970]
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 50000
 Search for Keyword With [2000] Results and [20] Deletions:
-Search Computation Time(micro):9626 for:J$^GU%@
-Search Communication Size (Bytes):308640
+Search Computation Time(micro):9298 for:e#nv%L!
+Search Communication Size (Bytes):280512
 Number of return item:[1980]
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 50000
 Search for Keyword With [1000] Results and [10] Deletions:
-Search Computation Time(micro):4069 for:5&^cw61
-Search Communication Size (Bytes):139808
+Search Computation Time(micro):5330 for:a9nfQXX
+Search Communication Size (Bytes):155184
 Number of return item:[990]
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 50000
 Search for Keyword With [500] Results and [5] Deletions:
-Search Computation Time(micro):2898 for:XIV&D9a
-Search Communication Size (Bytes):88928
+Search Computation Time(micro):2447 for:zBKXxR^
+Search Communication Size (Bytes):107600
 Number of return item:[495]
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 50000
 Search for Keyword With [100] Results and [0] Deletions:
-Search Computation Time(micro):1286 for:jQJtVqH
-Search Communication Size (Bytes):45072
+Search Computation Time(micro):1319 for:wcbwqJO
+Search Communication Size (Bytes):44576
 Number of return item:[100]
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 50000
 Search for Keyword With [100] Results and [1] Deletions:
-Search Computation Time(micro):1254 for:fzlA$#Y
-Search Communication Size (Bytes):48128
+Search Computation Time(micro):1748 for:TOo^ab@
+Search Communication Size (Bytes):48080
 Number of return item:[99]
 **************************************************************************

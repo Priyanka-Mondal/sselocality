@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/sse-locality-sda bconfig.txt |tee result1.txt 
+dist/Debug/GNU-Linux/sse-locality-sda configs/bconfig.txt |tee results/result1.txt 

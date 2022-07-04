@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/sse-locality-sda config.txt |tee result1.txt 
+dist/Debug/GNU-Linux/twochoice/twochoice-sda configs/config.txt |tee results/result1.txt 
