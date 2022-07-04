@@ -28,8 +28,6 @@ public:
     int totalCommunication = 0;
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;
-    //map<int,map<string,vector<prf_type>>> stash;
-    //map<int,map<string,pair<int,int>>> counters;
     map<int,int> position;
     vector<bool> exist;
     vector<bool> stashExist;

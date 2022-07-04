@@ -174,15 +174,17 @@ void TwoChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_ty
 
 vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index) 
 {
-    if (inMemoryStorage) {
+    if (inMemoryStorage) 
+    {
         vector<pair<prf_type, prf_type> > results;
-        for (int i = 0; i < data[index].size(); i++) {
-            if (data[index][i].first != nullKey) {
+        for (int i = 0; i < data[index].size(); i++) 
+	{
+            if (data[index][i].first != nullKey) 
                 results.push_back(data[index][i]);
-            }
         }
         return results;
-    } else 
+    } 
+    else 
     {
         /*if (USE_XXL) {
             vector<pair<prf_type, prf_type> > results;
@@ -220,34 +222,33 @@ vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index)
     }
 }
 
-void TwoChoiceStorage::clear(int index) {
-    if (inMemoryStorage) {
+void TwoChoiceStorage::clear(int index) 
+{
+    if (inMemoryStorage) 
+    {
         data[index].clear();
-    } else {
+    } 
+    else {
         /*if (USE_XXL) {
             diskData[index]->clear();
         } else {*/
             fstream file(filenames[index].c_str(), std::ios::binary | std::ofstream::out);
-            if (file.fail()) {
+            if (file.fail()) 
                 cerr << "Error: " << strerror(errno);
-            }
             int maxSize = numberOfBins[index] * sizeOfEachBin[index];
-            for (int j = 0; j < maxSize; j++) {
+            for (int j = 0; j < maxSize; j++) 
+	    {
                 file.write((char*) nullKey.data(), AES_KEY_SIZE);
                 file.write((char*) nullKey.data(), AES_KEY_SIZE);
             }
             file.close();
 
             fstream sfile(stashfilenames[index].c_str(), std::ios::binary | std::ofstream::out);
-            if (sfile.fail()) {
+            if (sfile.fail()) 
                 cerr << "Error: " << strerror(errno);
-            }
-            for (int j = 0; j < maxSize; j++) {
+            for (int j = 0; j < maxSize; j++) 
                 sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
-                //sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
-            }
             sfile.close();
-        //}
     }
 }
 
@@ -532,3 +533,4 @@ vector<prf_type> TwoChoiceStorage::newfind(int index, prf_type hashKey, int cnt,
         //}
     //}
 }
+
