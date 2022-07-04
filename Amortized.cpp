@@ -13,11 +13,8 @@ Amortized::Amortized(int N, bool inMemory, bool overwrite)
         keys.push_back(NULL);
     for (int i = 0; i < localSize; i++) 
         data.push_back(unordered_map<string, vector<prf_type> >());
-
-    /*
     if (!overwrite) 
     {
-	    cout <<"NOT OVERWRITE"<<endl;
         fstream file("/tmp/existStatus.txt", std::ofstream::in);
         if (file.fail()) 
 	{
@@ -41,13 +38,12 @@ Amortized::Amortized(int N, bool inMemory, bool overwrite)
         }
         file.close();
     }
-    */
+    
 }
 
 Amortized::~Amortized() 
 {
     fstream file("/tmp/existStatus.txt", std::ofstream::out);
-    //this file is written for next pass,
     if (file.fail()) 
     {
         cerr << "Error: " << strerror(errno);
@@ -55,12 +51,9 @@ Amortized::~Amortized()
     for (unsigned int i = localSize; i < L->exist.size(); i++) 
     {
         if (L->exist[i]) 
-	{
             file << "true" << endl;
-        } else 
-	{
+        else 
             file << "false" << endl;
-        }
     }
     file.close();
 }

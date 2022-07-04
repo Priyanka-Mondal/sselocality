@@ -10,7 +10,8 @@ Storage::Storage(bool inMemory, int dataIndex, string fileAddressPrefix, bool pr
 
 }
 
-bool Storage::setup(bool overwrite) {
+bool Storage::setup(bool overwrite) 
+{
     if (inMemoryStorage) {
         for (int i = 0; i < dataIndex; i++) {
             unordered_map<prf_type, prf_type, PRFHasher> curData;
@@ -23,20 +24,21 @@ bool Storage::setup(bool overwrite) {
                 diskData[i] = new stxxl::unordered_map<prf_type, prf_type, PRFHasher, CompareLess, SUB_BLOCK_SIZE, SUB_BLOCKS_PER_BLOCK>();
             }
         } else {*/
-            for (int i = 0; i < dataIndex; i++) {
+            for (int i = 0; i < dataIndex; i++) 
+	    {
                 string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
                 filenames.push_back(filename);
                 fstream testfile(filename.c_str(), std::ofstream::in);
-                if (testfile.fail() || overwrite) {
+                if (testfile.fail() || overwrite) 
+		{
                     testfile.close();
-
                     fstream file(filename.c_str(), std::ofstream::out);
-                    if (file.fail()) {
+                    if (file.fail()) 
                         cerr << "Error: " << strerror(errno);
-                    }
                     int maxSize = pow(2, i);
                     int nextPtr = 0;
-                    for (int j = 0; j < maxSize; j++) {
+                    for (int j = 0; j < maxSize; j++) 
+		    {
                         file.write((char*) nullKey.data(), AES_KEY_SIZE);
                         file.write((char*) nullKey.data(), AES_KEY_SIZE);
                         file.write((char*) &nextPtr, sizeof (int));

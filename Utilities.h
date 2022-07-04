@@ -247,20 +247,26 @@ public:
 
 
     template <typename T>
-    static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed) 
+static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed, bool overwrite, vector<string> testKeywords)	
     {
         char alphanum[] =
                 "0123456789"
                 "!@#$%^&*"
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 "abcdefghijklmnopqrstuvwxyz";
-
         srand(seed);
         uint totalKeywordSize = 0;
         uint totalPairNumber = 0;
         for (uint i = 0; i < testCases.size(); i++) //for each test suite
 	{
-            for (uint j = 0; j < testCases[i].K - totalKeywordSize; j++) // generate random K keywords 
+	   if(overwrite)
+	   {
+           	for (uint j = 0; j < testKeywords.size(); j++) 
+	   	{
+           		testCases[i].keywords.push_back(testKeywords[j]);
+           	}
+	    }
+            for (uint j = testKeywords.size(); j<testCases[i].K-totalKeywordSize; j++)
 	    {
                 std::string str;
                 for (uint k = 0; k < keywordLength; ++k) 

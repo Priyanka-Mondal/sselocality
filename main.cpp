@@ -5,23 +5,6 @@
 #include <vector>
 using namespace std;
 
-//template <typename T>
-bool cmp(pair<string, vector<int>> &a, pair<string, vector<int>> &b)
-{
-    return (a.second.size() > b.second.size());
-}
-//template <typename T>
-vector<pair<string, vector<int>>> sortt(vector<pair<string, vector<int>>> &M)
-{
-    vector<pair<string, vector<int>>> A;
-    for (auto& it : M) 
-    {
-        A.push_back(it);
-    }
-    std::sort(A.begin(), A.end(), cmp);
-    return A;
-}
-
 int main(int argc, char** argv) 
 {
     // create a disk_config structure.
@@ -29,6 +12,7 @@ int main(int argc, char** argv)
     //stxxl::config * cfg = stxxl::config::get_instance();
     //cfg->add_disk(stxxl::disk_config("disk=/tmp/stxxl.tmp, 10 GiB, syscall unlink"));
     vector<TC<int> > testCases;
+    vector<string> testKeywords;
     uint keywordLength = 7;
     bool inMemory, overwrite;
     string filename = "config.txt";
@@ -37,12 +21,11 @@ int main(int argc, char** argv)
         filename = string(argv[1]);
     }
     //    Utilities::readConfigFile(testCases, usehdd, cleaningMode);       //for testing crimes dataset
-    Utilities::readConfigFile(argc, argv, filename, testCases, inMemory, overwrite);
+    Utilities::readConfigFile(argc, argv, filename, testCases, inMemory,overwrite);
     
     if (overwrite) 
     {
-        //Utilities::generateTestCases(testCases, keywordLength, time(NULL));
-    Utilities::generateTwoChoiceTestCases(testCases, keywordLength, time(NULL));
+        Utilities::generateTwoChoiceTestCases(testCases, keywordLength, time(NULL),overwrite, testKeywords);
         fstream file("/tmp/search.txt", std::ofstream::out);
         if (file.fail()) 
             cerr << "Error: " << strerror(errno);
@@ -55,7 +38,6 @@ int main(int argc, char** argv)
         }
         file.close();
     } 
-    
     else 
     {
         fstream file("/tmp/search.txt", std::ofstream::in);
@@ -63,7 +45,6 @@ int main(int argc, char** argv)
 	{
             cerr << "Error in read: " << strerror(errno);
         }
-        vector<string> testKeywords;
         for (int i = 0; i < testCases.size(); i++) 
 	{
             for (int z = 0; z < testCases[i].Qs.size(); z++) 
@@ -71,17 +52,17 @@ int main(int argc, char** argv)
                 string tmp;
                 getline(file, tmp);
                 testKeywords.push_back(tmp);
+		cout <<"["<<tmp<<"]"<<endl;
             }
         }
         file.close();
         //Utilities::generateTestCases(testCases, keywordLength, time(NULL), testKeywords);
-    Utilities::generateTwoChoiceTestCases(testCases, keywordLength, time(NULL));
+    Utilities::generateTwoChoiceTestCases(testCases, keywordLength, time(NULL),overwrite, testKeywords);
     }
     
     Amortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
     client.endSetup(testCases[0].N);
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;
-    cout <<"overwrite:"<<overwrite<<endl;
     cout <<"----------------------------------------------"<<endl;
     
     for (uint i = 0; i < testCases.size(); i++) 
@@ -95,18 +76,18 @@ int main(int argc, char** argv)
             for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
 	    {
 		key++;
-		cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
+		//cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
 		int j;
                 for (j = 0; j < cur->second.size(); j++) 
 		{
                     client.update(OP::INS, cur->first, cur->second[j], true);
                     cnt++;
-                    //if (cnt % 100 == 0) 
-		    //{
-                    //    cout << "Initial Insertion:" << cnt << "/" << to_string(testCases[i].N) << endl;
-                    //}
+                    if (cnt % 500 == 0) 
+		    {
+                        cout << "Initial Insertion:" << cnt << "/" << to_string(testCases[i].N) << endl;
+                    }
                 }
-	        cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;
+	        //cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;
             }
             cnt = 0;
             for (uint j = 0; j < testCases[i].Qs.size(); j++) 
@@ -140,7 +121,6 @@ int main(int argc, char** argv)
         }
         //        client.endSetup();
 	
-	cout <<" SIZE:"<<testCases[i].Qs.size()<<endl;
         for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	{
             cout << "------------------------------------------------------------------------------" << endl;
