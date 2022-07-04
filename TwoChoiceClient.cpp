@@ -143,12 +143,12 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
         mapValue = Utilities::encode(valueTmp.data(), K.data());
         keywordCntCiphers[mapKey] = mapValue; 
        
-        if(pair.second.size()>newsize)
+        /*if(pair.second.size()>newsize)
 	{	
 		*(int*) (&(totalTmp[0])) = pair.second.size(); 
         	mapValue = Utilities::encode(totalTmp.data(), K.data());
         	stashCntCiphers[mapKey] = mapValue; 
-	}
+	}*/
 
 
 
@@ -244,6 +244,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
         prf_type mapValue = Utilities::generatePRF(cntstr, randomKey.data());
         keywordCntCiphers[mapKey] = mapValue;
     }
+    /*
     for (int i = stashCntCiphers.size(); i < pow(2, index); i++)  // what is this loop doing ?
     {
         unsigned char cntstr[AES_KEY_SIZE];
@@ -253,7 +254,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
         *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = rand();
         prf_type mapValue = Utilities::generatePRF(cntstr, randomKey.data());
         stashCntCiphers[mapKey] = mapValue;
-    }
+    }*/
     //    totalCommunication += ciphers.size() * sizeof (prf_type)*2;
     server->storeCiphers(index, ciphers, stashCiphers, keywordCntCiphers, stashCntCiphers);
 }
@@ -285,7 +286,8 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
               hashtoken = Utilities::encode(newkeyword, key);
 	}
         ciphers = server->search(index, token, hashtoken, keywordCnt);
-        stashCiphers = server->stashSearch(index, token, keywordCnt);
+        //stashCiphers = server->stashSearch(index, token, keywordCnt);
+        stashCiphers = server->getStash(index);
        	if(flag == 0)
        	{
        		for (auto item : ciphers) 
@@ -335,7 +337,7 @@ vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key)
     {
        	prf_type plaintext;
        	Utilities::decode(b, plaintext, key);
-	finalRes.push_back(b);
+	finalRes.push_back(plaintext);
     }
     }
     totalCommunication += (ciphers.size() + stashCiphers.size())* sizeof (prf_type);

@@ -76,7 +76,7 @@ bool TwoChoiceStorage::setup(bool overwrite)
                     for (int j = 0; j < maxSize; j++) 
 		    {
                         sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
-                        sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+                        //sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
                     }
                     sfile.close();
                 }
@@ -244,7 +244,7 @@ void TwoChoiceStorage::clear(int index) {
             }
             for (int j = 0; j < maxSize; j++) {
                 sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
-                sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+                //sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
             }
             sfile.close();
         //}

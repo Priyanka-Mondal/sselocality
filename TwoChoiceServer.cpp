@@ -20,7 +20,7 @@ void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, p
 {
     storage->insertAll(dataIndex, ciphers);
     keyworkCounters->insert(dataIndex, keywordCounters);
-    stashCounters->insert(dataIndex,stashCounter);
+    //stashCounters->insert(dataIndex,stashCounter);
     storage->insertStash(dataIndex,stashCiphers);
 }
 

@@ -1,4 +1,4 @@
-Total pair number:150
+Total pair number:32579
 ===================RUNNING SDa+TwoChoice=====================
 Level:0 number of Bins:1 size of bin:3
 Level:1 number of Bins:2 size of bin:3
@@ -9,17 +9,2973 @@ Level:5 number of Bins:16 size of bin:9
 Level:6 number of Bins:32 size of bin:11
 Level:7 number of Bins:32 size of bin:13
 Level:8 number of Bins:64 size of bin:15
+Level:9 number of Bins:128 size of bin:16
+Level:10 number of Bins:256 size of bin:18
+Level:11 number of Bins:512 size of bin:19
+Level:12 number of Bins:1024 size of bin:20
+Level:13 number of Bins:2048 size of bin:21
+Level:14 number of Bins:4096 size of bin:23
+Level:15 number of Bins:8192 size of bin:24
 Start of Static, size of test suits:1
 overwrite:1
 ----------------------------------------------
- SIZE of testcases:1
- Total keywords:1/5
- SIZE of file ids:10/10
- Total keywords:2/5
+ SIZE of testcases:7
+ Total keywords:1/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:768
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:768
+size of stashCiphers:1536
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+ SIZE of file ids:5000/5000
+ Total keywords:2/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:24
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:648
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:768
+size of stashCiphers:1024
+size of stashCiphers:3072
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+ SIZE of file ids:4000/4000
+ Total keywords:3/500
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:64
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:552
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:3000/3000
+ Total keywords:4/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:160
+size of stashCiphers:384
+size of stashCiphers:768
+size of stashCiphers:1024
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:384
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+ SIZE of file ids:2000/2000
+ Total keywords:5/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:16
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:128
+size of stashCiphers:384
+size of stashCiphers:768
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:192
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+ SIZE of file ids:1000/1000
+ Total keywords:6/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:96
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+size of stashCiphers:96
+size of stashCiphers:128
+size of stashCiphers:384
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+ SIZE of file ids:500/500
+ Total keywords:7/500
+size of stashCiphers:4
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:8
+ SIZE of file ids:100/100
+ Total keywords:8/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:20
+size of stashCiphers:96
+ SIZE of file ids:34/34
+ Total keywords:9/500
+size of stashCiphers:8
+size of stashCiphers:8
 size of stashCiphers:2
- SIZE of file ids:35/35
- Total keywords:3/5
+ SIZE of file ids:66/66
+ Total keywords:10/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:14
+ SIZE of file ids:63/63
+ Total keywords:11/500
+size of stashCiphers:8
+ SIZE of file ids:34/34
+ Total keywords:12/500
+size of stashCiphers:8
+size of stashCiphers:3
+ SIZE of file ids:31/31
+ Total keywords:13/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:2
+size of stashCiphers:46
+size of stashCiphers:112
+ SIZE of file ids:48/48
+ Total keywords:14/500
+size of stashCiphers:4
+size of stashCiphers:8
+size of stashCiphers:12
+ SIZE of file ids:63/63
+ Total keywords:15/500
+ SIZE of file ids:25/25
+ Total keywords:16/500
 size of stashCiphers:5
+size of stashCiphers:8
+size of stashCiphers:9
+size of stashCiphers:28
+ SIZE of file ids:56/56
+ Total keywords:17/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:4
+ SIZE of file ids:47/47
+ Total keywords:18/500
+size of stashCiphers:5
+ SIZE of file ids:51/51
+ Total keywords:19/500
+size of stashCiphers:8
+size of stashCiphers:13
+size of stashCiphers:12
+size of stashCiphers:35
+size of stashCiphers:8
+ SIZE of file ids:55/55
+ Total keywords:20/500
+size of stashCiphers:5
+size of stashCiphers:16
+ SIZE of file ids:19/19
+ Total keywords:21/500
+ SIZE of file ids:22/22
+ Total keywords:22/500
+size of stashCiphers:8
+ SIZE of file ids:36/36
+ Total keywords:23/500
+size of stashCiphers:8
+size of stashCiphers:6
+size of stashCiphers:13
+ SIZE of file ids:33/33
+ Total keywords:24/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:11
+ SIZE of file ids:50/50
+ Total keywords:25/500
+size of stashCiphers:5
+ SIZE of file ids:50/50
+ Total keywords:26/500
+size of stashCiphers:8
+size of stashCiphers:3
+size of stashCiphers:5
+size of stashCiphers:17
+size of stashCiphers:12
+size of stashCiphers:512
+size of stashCiphers:1200
+size of stashCiphers:1976
+size of stashCiphers:4096
+ SIZE of file ids:14/14
+ Total keywords:27/500
+ SIZE of file ids:7/7
+ Total keywords:28/500
+size of stashCiphers:5
+size of stashCiphers:8
+ SIZE of file ids:60/60
+ Total keywords:29/500
+ SIZE of file ids:4/4
+ Total keywords:30/500
+size of stashCiphers:8
+ SIZE of file ids:17/17
+ Total keywords:31/500
+size of stashCiphers:3
+size of stashCiphers:12
+ SIZE of file ids:51/51
+ Total keywords:32/500
+size of stashCiphers:8
+ SIZE of file ids:38/38
+ Total keywords:33/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+ SIZE of file ids:61/61
+ Total keywords:34/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:6
+size of stashCiphers:28
+size of stashCiphers:8
+ SIZE of file ids:61/61
+ Total keywords:35/500
+size of stashCiphers:8
+size of stashCiphers:16
+ SIZE of file ids:12/12
+ Total keywords:36/500
+size of stashCiphers:4
+ SIZE of file ids:52/52
+ Total keywords:37/500
+size of stashCiphers:8
+size of stashCiphers:12
+size of stashCiphers:24
+ SIZE of file ids:12/12
+ Total keywords:38/500
+size of stashCiphers:4
+ SIZE of file ids:37/37
+ Total keywords:39/500
+ SIZE of file ids:15/15
+ Total keywords:40/500
+ SIZE of file ids:2/2
+ Total keywords:41/500
+size of stashCiphers:1
+size of stashCiphers:12
+size of stashCiphers:8
+ SIZE of file ids:44/44
+ Total keywords:42/500
+size of stashCiphers:2
+size of stashCiphers:16
+size of stashCiphers:5
+size of stashCiphers:44
+size of stashCiphers:8
+ SIZE of file ids:69/69
+ Total keywords:43/500
+size of stashCiphers:3
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:57/57
+ Total keywords:44/500
+ SIZE of file ids:5/5
+ Total keywords:45/500
+ SIZE of file ids:15/15
+ Total keywords:46/500
+size of stashCiphers:16
+size of stashCiphers:11
+size of stashCiphers:8
+ SIZE of file ids:47/47
+ Total keywords:47/500
+size of stashCiphers:1
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:67/67
+ Total keywords:48/500
+size of stashCiphers:2
+size of stashCiphers:16
+size of stashCiphers:7
+size of stashCiphers:36
+ SIZE of file ids:23/23
+ Total keywords:49/500
+ SIZE of file ids:20/20
+ Total keywords:50/500
+size of stashCiphers:7
+ SIZE of file ids:16/16
+ Total keywords:51/500
+ SIZE of file ids:9/9
+ Total keywords:52/500
+size of stashCiphers:1
+size of stashCiphers:4
+ SIZE of file ids:19/19
+ Total keywords:53/500
+ SIZE of file ids:21/21
+ Total keywords:54/500
+size of stashCiphers:7
+size of stashCiphers:8
+size of stashCiphers:5
+ SIZE of file ids:44/44
+ Total keywords:55/500
+ SIZE of file ids:12/12
+ Total keywords:56/500
+size of stashCiphers:4
+ SIZE of file ids:33/33
+ Total keywords:57/500
+size of stashCiphers:7
+size of stashCiphers:2
+size of stashCiphers:8
+ SIZE of file ids:58/58
+ Total keywords:58/500
+size of stashCiphers:1
+size of stashCiphers:16
+size of stashCiphers:1
+size of stashCiphers:10
+size of stashCiphers:3
+size of stashCiphers:8
+ SIZE of file ids:67/67
+ Total keywords:59/500
+size of stashCiphers:4
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:52/52
+ Total keywords:60/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:12
+ SIZE of file ids:45/45
+ Total keywords:61/500
+size of stashCiphers:5
+ SIZE of file ids:47/47
+ Total keywords:62/500
+size of stashCiphers:8
+size of stashCiphers:3
+ SIZE of file ids:10/10
+ Total keywords:63/500
+size of stashCiphers:2
+ SIZE of file ids:26/26
+ Total keywords:64/500
+ SIZE of file ids:23/23
+ Total keywords:65/500
+size of stashCiphers:8
+size of stashCiphers:10
+size of stashCiphers:15
+size of stashCiphers:32
+ SIZE of file ids:14/14
+ Total keywords:66/500
+size of stashCiphers:3
+ SIZE of file ids:35/35
+ Total keywords:67/500
+size of stashCiphers:11
+ SIZE of file ids:53/53
+ Total keywords:68/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:13
+size of stashCiphers:3
+ SIZE of file ids:48/48
+ Total keywords:69/500
+size of stashCiphers:5
+ SIZE of file ids:40/40
+ Total keywords:70/500
+size of stashCiphers:8
+size of stashCiphers:3
+ SIZE of file ids:27/27
+ Total keywords:71/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:27
+ SIZE of file ids:50/50
+ Total keywords:72/500
 size of stashCiphers:6
 size of stashCiphers:8
-[[curKeyword NULL]]
+size of stashCiphers:14
+ SIZE of file ids:63/63
+ Total keywords:73/500
+size of stashCiphers:7
+size of stashCiphers:8
+size of stashCiphers:15
+size of stashCiphers:30
+ SIZE of file ids:68/68
+ Total keywords:74/500
+size of stashCiphers:3
+size of stashCiphers:8
+size of stashCiphers:11
+ SIZE of file ids:62/62
+ Total keywords:75/500
+ SIZE of file ids:0/0
+ Total keywords:76/500
+size of stashCiphers:5
+size of stashCiphers:8
+size of stashCiphers:13
+size of stashCiphers:27
+size of stashCiphers:62
+ SIZE of file ids:66/66
+ Total keywords:77/500
+size of stashCiphers:3
+ SIZE of file ids:56/56
+ Total keywords:78/500
+size of stashCiphers:8
+size of stashCiphers:11
+size of stashCiphers:8
+ SIZE of file ids:46/46
+ Total keywords:79/500
+size of stashCiphers:3
+size of stashCiphers:16
+size of stashCiphers:24
+size of stashCiphers:8
+ SIZE of file ids:62/62
+ Total keywords:80/500
+ SIZE of file ids:19/19
+ Total keywords:81/500
+size of stashCiphers:1
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:57/57
+ Total keywords:82/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:9
+size of stashCiphers:38
+size of stashCiphers:4
+ SIZE of file ids:22/22
+ Total keywords:83/500
+size of stashCiphers:3
+ SIZE of file ids:21/21
+ Total keywords:84/500
+size of stashCiphers:8
+size of stashCiphers:5
+ SIZE of file ids:63/63
+ Total keywords:85/500
+size of stashCiphers:8
+ SIZE of file ids:4/4
+ Total keywords:86/500
+ SIZE of file ids:20/20
+ Total keywords:87/500
+ SIZE of file ids:1/1
+ Total keywords:88/500
+size of stashCiphers:5
+size of stashCiphers:15
+size of stashCiphers:8
+ SIZE of file ids:61/61
+ Total keywords:89/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:54/54
+ Total keywords:90/500
+size of stashCiphers:3
+size of stashCiphers:16
+size of stashCiphers:21
+size of stashCiphers:31
+size of stashCiphers:8
+ SIZE of file ids:61/61
+ Total keywords:91/500
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:67/67
+ Total keywords:92/500
+ SIZE of file ids:6/6
+ Total keywords:93/500
+size of stashCiphers:3
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+ SIZE of file ids:69/69
+ Total keywords:94/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:66/66
+ Total keywords:95/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:22
+size of stashCiphers:43
+ SIZE of file ids:16/16
+ Total keywords:96/500
+ SIZE of file ids:2/2
+ Total keywords:97/500
+size of stashCiphers:8
+size of stashCiphers:6
+ SIZE of file ids:56/56
+ Total keywords:98/500
+ SIZE of file ids:19/19
+ Total keywords:99/500
+size of stashCiphers:6
+size of stashCiphers:8
+size of stashCiphers:3
+size of stashCiphers:22
+ SIZE of file ids:49/49
+ Total keywords:100/500
+size of stashCiphers:2
+ SIZE of file ids:42/42
+ Total keywords:101/500
+size of stashCiphers:8
+size of stashCiphers:10
+size of stashCiphers:8
+ SIZE of file ids:48/48
+ Total keywords:102/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:10
+size of stashCiphers:35
+ SIZE of file ids:59/59
+ Total keywords:103/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:11
+ SIZE of file ids:68/68
+ Total keywords:104/500
+size of stashCiphers:8
+ SIZE of file ids:11/11
+ Total keywords:105/500
+size of stashCiphers:2
+size of stashCiphers:15
+size of stashCiphers:5
+size of stashCiphers:8
+ SIZE of file ids:56/56
+ Total keywords:106/500
+size of stashCiphers:6
+size of stashCiphers:16
+ SIZE of file ids:33/33
+ Total keywords:107/500
+size of stashCiphers:5
+ SIZE of file ids:57/57
+ Total keywords:108/500
+size of stashCiphers:8
+size of stashCiphers:13
+size of stashCiphers:2
+size of stashCiphers:36
+size of stashCiphers:8
+ SIZE of file ids:48/48
+ Total keywords:109/500
+ SIZE of file ids:1/1
+ Total keywords:110/500
+size of stashCiphers:4
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:52/52
+ Total keywords:111/500
+size of stashCiphers:7
+size of stashCiphers:16
+size of stashCiphers:12
+ SIZE of file ids:51/51
+ Total keywords:112/500
+ SIZE of file ids:6/6
+ Total keywords:113/500
+size of stashCiphers:8
+ SIZE of file ids:26/26
+ Total keywords:114/500
+ SIZE of file ids:3/3
+ Total keywords:115/500
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:8
+ SIZE of file ids:64/64
+ Total keywords:116/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:32
+ SIZE of file ids:29/29
+ Total keywords:117/500
+ SIZE of file ids:1/1
+ Total keywords:118/500
+ SIZE of file ids:9/9
+ Total keywords:119/500
+size of stashCiphers:8
+ SIZE of file ids:18/18
+ Total keywords:120/500
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:8
+ SIZE of file ids:66/66
+ Total keywords:121/500
+size of stashCiphers:8
+size of stashCiphers:16
+ SIZE of file ids:28/28
+ Total keywords:122/500
+size of stashCiphers:6
+size of stashCiphers:8
+size of stashCiphers:2
+ SIZE of file ids:65/65
+ Total keywords:123/500
+ SIZE of file ids:14/14
+ Total keywords:124/500
+size of stashCiphers:7
+ SIZE of file ids:33/33
+ Total keywords:125/500
+size of stashCiphers:8
+size of stashCiphers:18
+size of stashCiphers:34
+ SIZE of file ids:7/7
+ Total keywords:126/500
+size of stashCiphers:3
+ SIZE of file ids:32/32
+ Total keywords:127/500
+size of stashCiphers:3
+size of stashCiphers:11
+ SIZE of file ids:37/37
+ Total keywords:128/500
+size of stashCiphers:2
+ SIZE of file ids:43/43
+ Total keywords:129/500
+size of stashCiphers:8
+size of stashCiphers:6
+size of stashCiphers:8
+ SIZE of file ids:47/47
+ Total keywords:130/500
+size of stashCiphers:4
+size of stashCiphers:16
+ SIZE of file ids:36/36
+ Total keywords:131/500
+ SIZE of file ids:5/5
+ Total keywords:132/500
+ SIZE of file ids:3/3
+ Total keywords:133/500
+ SIZE of file ids:7/7
+ Total keywords:134/500
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:16
+ SIZE of file ids:66/66
+ Total keywords:135/500
+ SIZE of file ids:0/0
+ Total keywords:136/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:9
+ SIZE of file ids:40/40
+ Total keywords:137/500
+size of stashCiphers:7
+ SIZE of file ids:32/32
+ Total keywords:138/500
+ SIZE of file ids:29/29
+ Total keywords:139/500
+size of stashCiphers:7
+size of stashCiphers:15
+size of stashCiphers:7
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+ SIZE of file ids:67/67
+ Total keywords:140/500
+ SIZE of file ids:18/18
+ Total keywords:141/500
+size of stashCiphers:7
+ SIZE of file ids:39/39
+ Total keywords:142/500
+size of stashCiphers:8
+size of stashCiphers:2
+size of stashCiphers:32
+size of stashCiphers:8
+size of stashCiphers:8
+ SIZE of file ids:58/58
+ Total keywords:143/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:61/61
+ Total keywords:144/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:20
+ SIZE of file ids:41/41
+ Total keywords:145/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:10
+ SIZE of file ids:68/68
+ Total keywords:146/500
+size of stashCiphers:8
+ SIZE of file ids:17/17
+ Total keywords:147/500
+size of stashCiphers:7
+size of stashCiphers:14
+size of stashCiphers:6
+size of stashCiphers:49
+ SIZE of file ids:43/43
+ Total keywords:148/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:10
+ SIZE of file ids:56/56
+ Total keywords:149/500
+ SIZE of file ids:13/13
+ Total keywords:150/500
+size of stashCiphers:8
+ SIZE of file ids:1/1
+ Total keywords:151/500
+ SIZE of file ids:7/7
+ Total keywords:152/500
+ SIZE of file ids:15/15
+ Total keywords:153/500
+size of stashCiphers:1
+size of stashCiphers:2
+size of stashCiphers:6
+ SIZE of file ids:11/11
+ Total keywords:154/500
+ SIZE of file ids:19/19
+ Total keywords:155/500
+size of stashCiphers:7
+size of stashCiphers:8
+size of stashCiphers:3
+ SIZE of file ids:60/60
+ Total keywords:156/500
+size of stashCiphers:8
+ SIZE of file ids:26/26
+ Total keywords:157/500
+size of stashCiphers:2
+size of stashCiphers:12
+size of stashCiphers:24
+size of stashCiphers:4
+ SIZE of file ids:32/32
+ Total keywords:158/500
+size of stashCiphers:2
+ SIZE of file ids:51/51
+ Total keywords:159/500
+size of stashCiphers:8
+size of stashCiphers:6
+ SIZE of file ids:10/10
+ Total keywords:160/500
+size of stashCiphers:1
+ SIZE of file ids:39/39
+ Total keywords:161/500
+size of stashCiphers:6
+size of stashCiphers:9
+size of stashCiphers:19
+ SIZE of file ids:35/35
+ Total keywords:162/500
+size of stashCiphers:8
+ SIZE of file ids:20/20
+ Total keywords:163/500
+size of stashCiphers:3
+size of stashCiphers:1
+ SIZE of file ids:36/36
+ Total keywords:164/500
+size of stashCiphers:1
+ SIZE of file ids:42/42
+ Total keywords:165/500
+ SIZE of file ids:0/0
+ Total keywords:166/500
+size of stashCiphers:8
+size of stashCiphers:7
+size of stashCiphers:26
+size of stashCiphers:8
+ SIZE of file ids:65/65
+ Total keywords:167/500
+size of stashCiphers:8
+size of stashCiphers:16
+ SIZE of file ids:28/28
+ Total keywords:168/500
+ SIZE of file ids:4/4
+ Total keywords:169/500
+ SIZE of file ids:7/7
+ Total keywords:170/500
+size of stashCiphers:8
+ SIZE of file ids:6/6
+ Total keywords:171/500
+ SIZE of file ids:23/23
+ Total keywords:172/500
+size of stashCiphers:7
+size of stashCiphers:20
+ SIZE of file ids:35/35
+ Total keywords:173/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:11
+ SIZE of file ids:50/50
+ Total keywords:174/500
+size of stashCiphers:5
+ SIZE of file ids:40/40
+ Total keywords:175/500
+size of stashCiphers:8
+size of stashCiphers:3
+size of stashCiphers:5
+size of stashCiphers:20
+size of stashCiphers:8
+ SIZE of file ids:57/57
+ Total keywords:176/500
+size of stashCiphers:6
+size of stashCiphers:16
+ SIZE of file ids:30/30
+ Total keywords:177/500
+size of stashCiphers:4
+ SIZE of file ids:22/22
+ Total keywords:178/500
+ SIZE of file ids:2/2
+ Total keywords:179/500
+ SIZE of file ids:25/25
+ Total keywords:180/500
+size of stashCiphers:4
+size of stashCiphers:4
+size of stashCiphers:14
+ SIZE of file ids:19/19
+ Total keywords:181/500
+ SIZE of file ids:0/0
+ Total keywords:182/500
+size of stashCiphers:8
+size of stashCiphers:8
+ SIZE of file ids:65/65
+ Total keywords:183/500
+size of stashCiphers:8
+ SIZE of file ids:36/36
+ Total keywords:184/500
+size of stashCiphers:8
+size of stashCiphers:1
+size of stashCiphers:16
+size of stashCiphers:14
+ SIZE of file ids:25/25
+ Total keywords:185/500
+ SIZE of file ids:2/2
+ Total keywords:186/500
+ SIZE of file ids:15/15
+ Total keywords:187/500
+size of stashCiphers:6
+ SIZE of file ids:17/17
+ Total keywords:188/500
+size of stashCiphers:8
+size of stashCiphers:8
+ SIZE of file ids:63/63
+ Total keywords:189/500
+ SIZE of file ids:7/7
+ Total keywords:190/500
+size of stashCiphers:7
+size of stashCiphers:16
+ SIZE of file ids:40/40
+ Total keywords:191/500
+size of stashCiphers:8
+ SIZE of file ids:31/31
+ Total keywords:192/500
+size of stashCiphers:8
+size of stashCiphers:14
+size of stashCiphers:8
+ SIZE of file ids:60/60
+ Total keywords:193/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:31
+size of stashCiphers:1
+ SIZE of file ids:7/7
+ Total keywords:194/500
+size of stashCiphers:8
+ SIZE of file ids:37/37
+ Total keywords:195/500
+ SIZE of file ids:12/12
+ Total keywords:196/500
+size of stashCiphers:3
+size of stashCiphers:16
+ SIZE of file ids:43/43
+ Total keywords:197/500
+size of stashCiphers:8
+ SIZE of file ids:18/18
+ Total keywords:198/500
+size of stashCiphers:6
+size of stashCiphers:12
+size of stashCiphers:5
+ SIZE of file ids:48/48
+ Total keywords:199/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:14
+ SIZE of file ids:37/37
+ Total keywords:200/500
+size of stashCiphers:5
+ SIZE of file ids:41/41
+ Total keywords:201/500
+size of stashCiphers:4
+size of stashCiphers:13
+size of stashCiphers:2
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:66/66
+ Total keywords:202/500
+ SIZE of file ids:0/0
+ Total keywords:203/500
+size of stashCiphers:6
+size of stashCiphers:16
+ SIZE of file ids:29/29
+ Total keywords:204/500
+ SIZE of file ids:20/20
+ Total keywords:205/500
+size of stashCiphers:3
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:14
+ SIZE of file ids:37/37
+ Total keywords:206/500
+ SIZE of file ids:10/10
+ Total keywords:207/500
+ SIZE of file ids:0/0
+ Total keywords:208/500
+size of stashCiphers:2
+size of stashCiphers:8
+size of stashCiphers:2
+ SIZE of file ids:67/67
+ Total keywords:209/500
+size of stashCiphers:8
+ SIZE of file ids:41/41
+ Total keywords:210/500
+size of stashCiphers:8
+size of stashCiphers:1
+size of stashCiphers:18
+size of stashCiphers:15
+ SIZE of file ids:11/11
+ Total keywords:211/500
+ SIZE of file ids:7/7
+ Total keywords:212/500
+size of stashCiphers:8
+size of stashCiphers:4
+ SIZE of file ids:69/69
+ Total keywords:213/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:1
+size of stashCiphers:20
+ SIZE of file ids:52/52
+ Total keywords:214/500
+size of stashCiphers:3
+size of stashCiphers:8
+size of stashCiphers:11
+ SIZE of file ids:68/68
+ Total keywords:215/500
+size of stashCiphers:1
+ SIZE of file ids:52/52
+ Total keywords:216/500
+size of stashCiphers:8
+size of stashCiphers:7
+size of stashCiphers:27
+size of stashCiphers:52
+size of stashCiphers:8
+ SIZE of file ids:40/40
+ Total keywords:217/500
+size of stashCiphers:3
+size of stashCiphers:16
+ SIZE of file ids:56/56
+ Total keywords:218/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:13
+size of stashCiphers:5
+ SIZE of file ids:47/47
+ Total keywords:219/500
+ SIZE of file ids:18/18
+ Total keywords:220/500
+size of stashCiphers:4
+size of stashCiphers:8
+size of stashCiphers:2
+ SIZE of file ids:58/58
+ Total keywords:221/500
+size of stashCiphers:8
+ SIZE of file ids:8/8
+ Total keywords:222/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:2
+size of stashCiphers:32
+size of stashCiphers:9
+ SIZE of file ids:49/49
+ Total keywords:223/500
+ SIZE of file ids:0/0
+ Total keywords:224/500
+size of stashCiphers:8
+ SIZE of file ids:46/46
+ Total keywords:225/500
+size of stashCiphers:8
+size of stashCiphers:1
+ SIZE of file ids:14/14
+ Total keywords:226/500
+ SIZE of file ids:15/15
+ Total keywords:227/500
+size of stashCiphers:5
+size of stashCiphers:8
+size of stashCiphers:14
+ SIZE of file ids:59/59
+ Total keywords:228/500
+size of stashCiphers:8
+ SIZE of file ids:39/39
+ Total keywords:229/500
+size of stashCiphers:8
+size of stashCiphers:7
+ SIZE of file ids:22/22
+ Total keywords:230/500
+size of stashCiphers:8
+ SIZE of file ids:40/40
+ Total keywords:231/500
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:7
+size of stashCiphers:18
+ SIZE of file ids:29/29
+ Total keywords:232/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:9
+ SIZE of file ids:40/40
+ Total keywords:233/500
+ SIZE of file ids:23/23
+ Total keywords:234/500
+size of stashCiphers:7
+ SIZE of file ids:19/19
+ Total keywords:235/500
+ SIZE of file ids:10/10
+ Total keywords:236/500
+size of stashCiphers:3
+size of stashCiphers:7
+size of stashCiphers:7
+ SIZE of file ids:14/14
+ Total keywords:237/500
+ SIZE of file ids:8/8
+ Total keywords:238/500
+ SIZE of file ids:23/23
+ Total keywords:239/500
+size of stashCiphers:6
+size of stashCiphers:5
+size of stashCiphers:8
+ SIZE of file ids:65/65
+ Total keywords:240/500
+ SIZE of file ids:4/4
+ Total keywords:241/500
+size of stashCiphers:1
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+ SIZE of file ids:63/63
+ Total keywords:242/500
+size of stashCiphers:2
+size of stashCiphers:16
+ SIZE of file ids:50/50
+ Total keywords:243/500
+size of stashCiphers:8
+ SIZE of file ids:21/21
+ Total keywords:244/500
+size of stashCiphers:5
+size of stashCiphers:8
+size of stashCiphers:6
+ SIZE of file ids:21/21
+ Total keywords:245/500
+size of stashCiphers:6
+ SIZE of file ids:57/57
+ Total keywords:246/500
+ SIZE of file ids:1/1
+ Total keywords:247/500
+size of stashCiphers:8
+size of stashCiphers:14
+size of stashCiphers:8
+ SIZE of file ids:64/64
+ Total keywords:248/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:25
+size of stashCiphers:24
+size of stashCiphers:8
+ SIZE of file ids:50/50
+ Total keywords:249/500
+size of stashCiphers:6
+size of stashCiphers:16
+ SIZE of file ids:41/41
+ Total keywords:250/500
+size of stashCiphers:8
+ SIZE of file ids:25/25
+ Total keywords:251/500
+ SIZE of file ids:3/3
+ Total keywords:252/500
+size of stashCiphers:8
+size of stashCiphers:7
+size of stashCiphers:14
+size of stashCiphers:8
+ SIZE of file ids:55/55
+ Total keywords:253/500
+ SIZE of file ids:2/2
+ Total keywords:254/500
+size of stashCiphers:2
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:53/53
+ Total keywords:255/500
+ SIZE of file ids:7/7
+ Total keywords:256/500
+size of stashCiphers:16
+size of stashCiphers:10
+size of stashCiphers:23
+ SIZE of file ids:54/54
+ Total keywords:257/500
+size of stashCiphers:8
+ SIZE of file ids:12/12
+ Total keywords:258/500
+ SIZE of file ids:20/20
+ Total keywords:259/500
+size of stashCiphers:2
+size of stashCiphers:14
+ SIZE of file ids:23/23
+ Total keywords:260/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:5
+ SIZE of file ids:48/48
+ Total keywords:261/500
+size of stashCiphers:3
+ SIZE of file ids:36/36
+ Total keywords:262/500
+ SIZE of file ids:6/6
+ Total keywords:263/500
+size of stashCiphers:1
+size of stashCiphers:11
+size of stashCiphers:8
+ SIZE of file ids:63/63
+ Total keywords:264/500
+size of stashCiphers:6
+size of stashCiphers:16
+size of stashCiphers:4
+size of stashCiphers:11
+size of stashCiphers:8
+ SIZE of file ids:62/62
+ Total keywords:265/500
+size of stashCiphers:4
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:61/61
+ Total keywords:266/500
+size of stashCiphers:1
+size of stashCiphers:16
+size of stashCiphers:12
+size of stashCiphers:8
+ SIZE of file ids:69/69
+ Total keywords:267/500
+size of stashCiphers:6
+size of stashCiphers:16
+ SIZE of file ids:47/47
+ Total keywords:268/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:13
+size of stashCiphers:14
+size of stashCiphers:41
+ SIZE of file ids:52/52
+ Total keywords:269/500
+size of stashCiphers:8
+ SIZE of file ids:38/38
+ Total keywords:270/500
+size of stashCiphers:8
+size of stashCiphers:1
+ SIZE of file ids:39/39
+ Total keywords:271/500
+size of stashCiphers:8
+ SIZE of file ids:30/30
+ Total keywords:272/500
+size of stashCiphers:8
+size of stashCiphers:14
+size of stashCiphers:6
+size of stashCiphers:8
+ SIZE of file ids:39/39
+ Total keywords:273/500
+ SIZE of file ids:4/4
+ Total keywords:274/500
+size of stashCiphers:1
+size of stashCiphers:16
+ SIZE of file ids:25/25
+ Total keywords:275/500
+ SIZE of file ids:23/23
+ Total keywords:276/500
+size of stashCiphers:8
+ SIZE of file ids:15/15
+ Total keywords:277/500
+ SIZE of file ids:23/23
+ Total keywords:278/500
+size of stashCiphers:2
+size of stashCiphers:7
+size of stashCiphers:3
+size of stashCiphers:13
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:16
+ SIZE of file ids:69/69
+ Total keywords:279/500
+size of stashCiphers:6
+ SIZE of file ids:30/30
+ Total keywords:280/500
+ SIZE of file ids:26/26
+ Total keywords:281/500
+size of stashCiphers:8
+size of stashCiphers:14
+size of stashCiphers:32
+ SIZE of file ids:20/20
+ Total keywords:282/500
+size of stashCiphers:6
+ SIZE of file ids:28/28
+ Total keywords:283/500
+size of stashCiphers:2
+size of stashCiphers:2
+size of stashCiphers:8
+ SIZE of file ids:59/59
+ Total keywords:284/500
+size of stashCiphers:3
+size of stashCiphers:16
+size of stashCiphers:34
+size of stashCiphers:8
+ SIZE of file ids:59/59
+ Total keywords:285/500
+size of stashCiphers:8
+size of stashCiphers:16
+ SIZE of file ids:52/52
+ Total keywords:286/500
+ SIZE of file ids:11/11
+ Total keywords:287/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:8
+ SIZE of file ids:66/66
+ Total keywords:288/500
+ SIZE of file ids:27/27
+ Total keywords:289/500
+size of stashCiphers:7
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:62/62
+ Total keywords:290/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:1
+size of stashCiphers:21
+size of stashCiphers:8
+ SIZE of file ids:47/47
+ Total keywords:291/500
+ SIZE of file ids:12/12
+ Total keywords:292/500
+size of stashCiphers:1
+size of stashCiphers:16
+ SIZE of file ids:18/18
+ Total keywords:293/500
+size of stashCiphers:1
+ SIZE of file ids:37/37
+ Total keywords:294/500
+ SIZE of file ids:12/12
+ Total keywords:295/500
+size of stashCiphers:4
+size of stashCiphers:9
+size of stashCiphers:9
+ SIZE of file ids:15/15
+ Total keywords:296/500
+ SIZE of file ids:22/22
+ Total keywords:297/500
+size of stashCiphers:1
+size of stashCiphers:8
+size of stashCiphers:6
+ SIZE of file ids:54/54
+ Total keywords:298/500
+ SIZE of file ids:2/2
+ Total keywords:299/500
+size of stashCiphers:8
+ SIZE of file ids:27/27
+ Total keywords:300/500
+size of stashCiphers:8
+size of stashCiphers:3
+size of stashCiphers:3
+size of stashCiphers:14
+size of stashCiphers:2
+size of stashCiphers:8
+ SIZE of file ids:68/68
+ Total keywords:301/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:60/60
+ Total keywords:302/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:20
+ SIZE of file ids:23/23
+ Total keywords:303/500
+size of stashCiphers:1
+ SIZE of file ids:55/55
+ Total keywords:304/500
+size of stashCiphers:8
+size of stashCiphers:9
+size of stashCiphers:8
+ SIZE of file ids:36/36
+ Total keywords:305/500
+size of stashCiphers:6
+size of stashCiphers:16
+size of stashCiphers:23
+size of stashCiphers:48
+ SIZE of file ids:56/56
+ Total keywords:306/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:10
+ SIZE of file ids:59/59
+ Total keywords:307/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:5
+size of stashCiphers:6
+ SIZE of file ids:67/67
+ Total keywords:308/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+ SIZE of file ids:66/66
+ Total keywords:309/500
+size of stashCiphers:8
+ SIZE of file ids:17/17
+ Total keywords:310/500
+ SIZE of file ids:0/0
+ Total keywords:311/500
+ SIZE of file ids:3/3
+ Total keywords:312/500
+ SIZE of file ids:0/0
+ Total keywords:313/500
+size of stashCiphers:3
+size of stashCiphers:10
+size of stashCiphers:8
+size of stashCiphers:38
+size of stashCiphers:8
+ SIZE of file ids:54/54
+ Total keywords:314/500
+size of stashCiphers:4
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:60/60
+ Total keywords:315/500
+ SIZE of file ids:5/5
+ Total keywords:316/500
+ SIZE of file ids:8/8
+ Total keywords:317/500
+size of stashCiphers:16
+size of stashCiphers:4
+size of stashCiphers:8
+ SIZE of file ids:58/58
+ Total keywords:318/500
+size of stashCiphers:1
+size of stashCiphers:16
+ SIZE of file ids:36/36
+ Total keywords:319/500
+ SIZE of file ids:7/7
+ Total keywords:320/500
+ SIZE of file ids:4/4
+ Total keywords:321/500
+size of stashCiphers:3
+size of stashCiphers:8
+size of stashCiphers:7
+size of stashCiphers:32
+ SIZE of file ids:63/63
+ Total keywords:322/500
+size of stashCiphers:8
+ SIZE of file ids:37/37
+ Total keywords:323/500
+size of stashCiphers:8
+size of stashCiphers:5
+size of stashCiphers:8
+ SIZE of file ids:52/52
+ Total keywords:324/500
+size of stashCiphers:6
+size of stashCiphers:16
+size of stashCiphers:5
+size of stashCiphers:8
+ SIZE of file ids:56/56
+ Total keywords:325/500
+size of stashCiphers:2
+size of stashCiphers:16
+ SIZE of file ids:38/38
+ Total keywords:326/500
+size of stashCiphers:4
+ SIZE of file ids:30/30
+ Total keywords:327/500
+ SIZE of file ids:9/9
+ Total keywords:328/500
+ SIZE of file ids:7/7
+ Total keywords:329/500
+size of stashCiphers:2
+size of stashCiphers:4
+size of stashCiphers:6
+size of stashCiphers:25
+size of stashCiphers:8
+ SIZE of file ids:41/41
+ Total keywords:330/500
+ SIZE of file ids:8/8
+ Total keywords:331/500
+size of stashCiphers:16
+ SIZE of file ids:27/27
+ Total keywords:332/500
+size of stashCiphers:2
+size of stashCiphers:8
+size of stashCiphers:10
+size of stashCiphers:3
+ SIZE of file ids:62/62
+ Total keywords:333/500
+ SIZE of file ids:19/19
+ Total keywords:334/500
+ SIZE of file ids:2/2
+ Total keywords:335/500
+size of stashCiphers:4
+ SIZE of file ids:10/10
+ Total keywords:336/500
+size of stashCiphers:5
+size of stashCiphers:3
+size of stashCiphers:8
+ SIZE of file ids:64/64
+ Total keywords:337/500
+ SIZE of file ids:8/8
+ Total keywords:338/500
+ SIZE of file ids:14/14
+ Total keywords:339/500
+size of stashCiphers:16
+size of stashCiphers:29
+size of stashCiphers:8
+ SIZE of file ids:56/56
+ Total keywords:340/500
+ SIZE of file ids:1/1
+ Total keywords:341/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:56/56
+ Total keywords:342/500
+ SIZE of file ids:14/14
+ Total keywords:343/500
+size of stashCiphers:2
+size of stashCiphers:16
+size of stashCiphers:17
+ SIZE of file ids:20/20
+ Total keywords:344/500
+size of stashCiphers:4
+ SIZE of file ids:43/43
+ Total keywords:345/500
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:8
+ SIZE of file ids:53/53
+ Total keywords:346/500
+size of stashCiphers:4
+size of stashCiphers:16
+size of stashCiphers:11
+size of stashCiphers:41
+ SIZE of file ids:38/38
+ Total keywords:347/500
+ SIZE of file ids:5/5
+ Total keywords:348/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:2
+ SIZE of file ids:43/43
+ Total keywords:349/500
+size of stashCiphers:6
+ SIZE of file ids:48/48
+ Total keywords:350/500
+size of stashCiphers:8
+size of stashCiphers:14
+size of stashCiphers:9
+ SIZE of file ids:38/38
+ Total keywords:351/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:8
+ SIZE of file ids:56/56
+ Total keywords:352/500
+ SIZE of file ids:12/12
+ Total keywords:353/500
+size of stashCiphers:8
+ SIZE of file ids:12/12
+ Total keywords:354/500
+ SIZE of file ids:15/15
+ Total keywords:355/500
+size of stashCiphers:8
+size of stashCiphers:27
+size of stashCiphers:8
+ SIZE of file ids:44/44
+ Total keywords:356/500
+ SIZE of file ids:8/8
+ Total keywords:357/500
+ SIZE of file ids:18/18
+ Total keywords:358/500
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:44/44
+ Total keywords:359/500
+size of stashCiphers:1
+size of stashCiphers:16
+size of stashCiphers:3
+ SIZE of file ids:36/36
+ Total keywords:360/500
+size of stashCiphers:5
+size of stashCiphers:8
+size of stashCiphers:3
+ SIZE of file ids:63/63
+ Total keywords:361/500
+ SIZE of file ids:9/9
+ Total keywords:362/500
+size of stashCiphers:4
+size of stashCiphers:8
+size of stashCiphers:19
+size of stashCiphers:15
+ SIZE of file ids:52/52
+ Total keywords:363/500
+size of stashCiphers:1
+size of stashCiphers:8
+size of stashCiphers:7
+ SIZE of file ids:57/57
+ Total keywords:364/500
+size of stashCiphers:6
+ SIZE of file ids:46/46
+ Total keywords:365/500
+size of stashCiphers:8
+size of stashCiphers:14
+size of stashCiphers:23
+size of stashCiphers:8
+ SIZE of file ids:50/50
+ Total keywords:366/500
+ SIZE of file ids:13/13
+ Total keywords:367/500
+size of stashCiphers:5
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:68/68
+ Total keywords:368/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:2
+size of stashCiphers:39
+ SIZE of file ids:15/15
+ Total keywords:369/500
+size of stashCiphers:6
+ SIZE of file ids:50/50
+ Total keywords:370/500
+size of stashCiphers:8
+size of stashCiphers:14
+ SIZE of file ids:43/43
+ Total keywords:371/500
+size of stashCiphers:8
+ SIZE of file ids:14/14
+ Total keywords:372/500
+size of stashCiphers:5
+size of stashCiphers:15
+size of stashCiphers:18
+size of stashCiphers:8
+ SIZE of file ids:55/55
+ Total keywords:373/500
+ SIZE of file ids:26/26
+ Total keywords:374/500
+size of stashCiphers:4
+size of stashCiphers:16
+ SIZE of file ids:25/25
+ Total keywords:375/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:7
+size of stashCiphers:4
+size of stashCiphers:29
+size of stashCiphers:4
+ SIZE of file ids:63/63
+ Total keywords:376/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:6
+ SIZE of file ids:52/52
+ Total keywords:377/500
+size of stashCiphers:2
+ SIZE of file ids:31/31
+ Total keywords:378/500
+size of stashCiphers:1
+size of stashCiphers:6
+size of stashCiphers:10
+ SIZE of file ids:37/37
+ Total keywords:379/500
+size of stashCiphers:6
+ SIZE of file ids:21/21
+ Total keywords:380/500
+ SIZE of file ids:6/6
+ Total keywords:381/500
+size of stashCiphers:2
+size of stashCiphers:8
+ SIZE of file ids:58/58
+ Total keywords:382/500
+ SIZE of file ids:19/19
+ Total keywords:383/500
+size of stashCiphers:5
+size of stashCiphers:16
+size of stashCiphers:20
+ SIZE of file ids:21/21
+ Total keywords:384/500
+size of stashCiphers:3
+ SIZE of file ids:47/47
+ Total keywords:385/500
+size of stashCiphers:8
+size of stashCiphers:5
+size of stashCiphers:8
+ SIZE of file ids:64/64
+ Total keywords:386/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:15
+ SIZE of file ids:17/17
+ Total keywords:387/500
+ SIZE of file ids:8/8
+ Total keywords:388/500
+size of stashCiphers:3
+ SIZE of file ids:43/43
+ Total keywords:389/500
+size of stashCiphers:8
+size of stashCiphers:8
+ SIZE of file ids:58/58
+ Total keywords:390/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:11
+size of stashCiphers:47
+ SIZE of file ids:17/17
+ Total keywords:391/500
+size of stashCiphers:1
+ SIZE of file ids:30/30
+ Total keywords:392/500
+size of stashCiphers:1
+size of stashCiphers:7
+ SIZE of file ids:25/25
+ Total keywords:393/500
+size of stashCiphers:8
+ SIZE of file ids:32/32
+ Total keywords:394/500
+ SIZE of file ids:23/23
+ Total keywords:395/500
+size of stashCiphers:8
+size of stashCiphers:16
+ SIZE of file ids:37/37
+ Total keywords:396/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:12
+ SIZE of file ids:57/57
+ Total keywords:397/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:5
+size of stashCiphers:4
+ SIZE of file ids:52/52
+ Total keywords:398/500
+size of stashCiphers:1
+size of stashCiphers:8
+size of stashCiphers:7
+ SIZE of file ids:56/56
+ Total keywords:399/500
+ SIZE of file ids:3/3
+ Total keywords:400/500
+ SIZE of file ids:11/11
+ Total keywords:401/500
+ SIZE of file ids:15/15
+ Total keywords:402/500
+size of stashCiphers:3
+size of stashCiphers:8
+size of stashCiphers:23
+size of stashCiphers:8
+ SIZE of file ids:69/69
+ Total keywords:403/500
+ SIZE of file ids:0/0
+ Total keywords:404/500
+size of stashCiphers:5
+size of stashCiphers:16
+ SIZE of file ids:51/51
+ Total keywords:405/500
+size of stashCiphers:8
+ SIZE of file ids:37/37
+ Total keywords:406/500
+size of stashCiphers:8
+size of stashCiphers:6
+size of stashCiphers:3
+size of stashCiphers:26
+size of stashCiphers:8
+ SIZE of file ids:66/66
+ Total keywords:407/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:66/66
+ Total keywords:408/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:29
+ SIZE of file ids:27/27
+ Total keywords:409/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:10
+ SIZE of file ids:57/57
+ Total keywords:410/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:3
+size of stashCiphers:6
+size of stashCiphers:63
+ SIZE of file ids:66/66
+ Total keywords:411/500
+size of stashCiphers:8
+ SIZE of file ids:28/28
+ Total keywords:412/500
+size of stashCiphers:8
+size of stashCiphers:5
+size of stashCiphers:8
+ SIZE of file ids:69/69
+ Total keywords:413/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:60/60
+ Total keywords:414/500
+size of stashCiphers:8
+size of stashCiphers:16
+ SIZE of file ids:35/35
+ Total keywords:415/500
+size of stashCiphers:8
+ SIZE of file ids:31/31
+ Total keywords:416/500
+size of stashCiphers:8
+size of stashCiphers:5
+size of stashCiphers:18
+size of stashCiphers:37
+size of stashCiphers:2
+size of stashCiphers:8
+ SIZE of file ids:46/46
+ Total keywords:417/500
+size of stashCiphers:6
+size of stashCiphers:16
+ SIZE of file ids:30/30
+ Total keywords:418/500
+size of stashCiphers:8
+ SIZE of file ids:35/35
+ Total keywords:419/500
+size of stashCiphers:5
+size of stashCiphers:16
+size of stashCiphers:2
+ SIZE of file ids:38/38
+ Total keywords:420/500
+size of stashCiphers:1
+size of stashCiphers:8
+size of stashCiphers:7
+ SIZE of file ids:57/57
+ Total keywords:421/500
+size of stashCiphers:6
+ SIZE of file ids:53/53
+ Total keywords:422/500
+size of stashCiphers:8
+size of stashCiphers:14
+size of stashCiphers:23
+size of stashCiphers:5
+ SIZE of file ids:36/36
+ Total keywords:423/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:11
+ SIZE of file ids:66/66
+ Total keywords:424/500
+size of stashCiphers:8
+ SIZE of file ids:34/34
+ Total keywords:425/500
+size of stashCiphers:8
+size of stashCiphers:13
+size of stashCiphers:5
+ SIZE of file ids:26/26
+ Total keywords:426/500
+size of stashCiphers:8
+ SIZE of file ids:18/18
+ Total keywords:427/500
+size of stashCiphers:3
+size of stashCiphers:9
+ SIZE of file ids:23/23
+ Total keywords:428/500
+size of stashCiphers:6
+ SIZE of file ids:60/60
+ Total keywords:429/500
+size of stashCiphers:8
+size of stashCiphers:14
+size of stashCiphers:36
+ SIZE of file ids:8/8
+ Total keywords:430/500
+size of stashCiphers:2
+ SIZE of file ids:35/35
+ Total keywords:431/500
+size of stashCiphers:1
+size of stashCiphers:10
+size of stashCiphers:8
+ SIZE of file ids:64/64
+ Total keywords:432/500
+size of stashCiphers:1
+size of stashCiphers:16
+size of stashCiphers:3
+size of stashCiphers:8
+ SIZE of file ids:56/56
+ Total keywords:433/500
+size of stashCiphers:7
+size of stashCiphers:16
+ SIZE of file ids:34/34
+ Total keywords:434/500
+size of stashCiphers:5
+ SIZE of file ids:39/39
+ Total keywords:435/500
+size of stashCiphers:2
+size of stashCiphers:13
+size of stashCiphers:1
+size of stashCiphers:35
+ SIZE of file ids:47/47
+ Total keywords:436/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:9
+ SIZE of file ids:69/69
+ Total keywords:437/500
+size of stashCiphers:8
+ SIZE of file ids:25/25
+ Total keywords:438/500
+size of stashCiphers:8
+size of stashCiphers:14
+size of stashCiphers:7
+size of stashCiphers:8
+ SIZE of file ids:56/56
+ Total keywords:439/500
+size of stashCiphers:7
+size of stashCiphers:16
+ SIZE of file ids:41/41
+ Total keywords:440/500
+size of stashCiphers:8
+ SIZE of file ids:9/9
+ Total keywords:441/500
+ SIZE of file ids:28/28
+ Total keywords:442/500
+size of stashCiphers:7
+size of stashCiphers:8
+size of stashCiphers:15
+size of stashCiphers:37
+ SIZE of file ids:28/28
+ Total keywords:443/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:9
+ SIZE of file ids:61/61
+ Total keywords:444/500
+size of stashCiphers:8
+ SIZE of file ids:15/15
+ Total keywords:445/500
+ SIZE of file ids:5/5
+ Total keywords:446/500
+ SIZE of file ids:12/12
+ Total keywords:447/500
+ SIZE of file ids:9/9
+ Total keywords:448/500
+ SIZE of file ids:0/0
+ Total keywords:449/500
+size of stashCiphers:6
+size of stashCiphers:7
+size of stashCiphers:8
+ SIZE of file ids:46/46
+ Total keywords:450/500
+ SIZE of file ids:16/16
+ Total keywords:451/500
+size of stashCiphers:5
+size of stashCiphers:16
+ SIZE of file ids:17/17
+ Total keywords:452/500
+ SIZE of file ids:14/14
+ Total keywords:453/500
+size of stashCiphers:6
+size of stashCiphers:8
+size of stashCiphers:13
+size of stashCiphers:29
+ SIZE of file ids:48/48
+ Total keywords:454/500
+ SIZE of file ids:11/11
+ Total keywords:455/500
+size of stashCiphers:4
+ SIZE of file ids:18/18
+ Total keywords:456/500
+size of stashCiphers:1
+ SIZE of file ids:45/45
+ Total keywords:457/500
+size of stashCiphers:8
+ SIZE of file ids:14/14
+ Total keywords:458/500
+ SIZE of file ids:18/18
+ Total keywords:459/500
+size of stashCiphers:4
+size of stashCiphers:6
+ SIZE of file ids:21/21
+ Total keywords:460/500
+ SIZE of file ids:11/11
+ Total keywords:461/500
+size of stashCiphers:3
+size of stashCiphers:8
+ SIZE of file ids:58/58
+ Total keywords:462/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:10
+size of stashCiphers:13
+ SIZE of file ids:55/55
+ Total keywords:463/500
+size of stashCiphers:1
+ SIZE of file ids:54/54
+ Total keywords:464/500
+size of stashCiphers:8
+size of stashCiphers:9
+ SIZE of file ids:28/28
+ Total keywords:465/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:9
+size of stashCiphers:22
+ SIZE of file ids:41/41
+ Total keywords:466/500
+size of stashCiphers:6
+ SIZE of file ids:30/30
+ Total keywords:467/500
+size of stashCiphers:8
+size of stashCiphers:14
+ SIZE of file ids:44/44
+ Total keywords:468/500
+size of stashCiphers:4
+ SIZE of file ids:40/40
+ Total keywords:469/500
+size of stashCiphers:8
+size of stashCiphers:4
+size of stashCiphers:29
+size of stashCiphers:8
+ SIZE of file ids:48/48
+ Total keywords:470/500
+ SIZE of file ids:27/27
+ Total keywords:471/500
+size of stashCiphers:4
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:38/38
+ Total keywords:472/500
+ SIZE of file ids:15/15
+ Total keywords:473/500
+ SIZE of file ids:9/9
+ Total keywords:474/500
+size of stashCiphers:3
+size of stashCiphers:16
+size of stashCiphers:4
+size of stashCiphers:8
+ SIZE of file ids:38/38
+ Total keywords:475/500
+size of stashCiphers:5
+size of stashCiphers:16
+size of stashCiphers:8
+ SIZE of file ids:69/69
+ Total keywords:476/500
+ SIZE of file ids:2/2
+ Total keywords:477/500
+ SIZE of file ids:16/16
+ Total keywords:478/500
+size of stashCiphers:16
+size of stashCiphers:3
+size of stashCiphers:10
+ SIZE of file ids:27/27
+ Total keywords:479/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:5
+ SIZE of file ids:60/60
+ Total keywords:480/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:1
+size of stashCiphers:11
+ SIZE of file ids:66/66
+ Total keywords:481/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:3
+ SIZE of file ids:66/66
+ Total keywords:482/500
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:5
+size of stashCiphers:13
+size of stashCiphers:43
+ SIZE of file ids:64/64
+ Total keywords:483/500
+size of stashCiphers:8
+ SIZE of file ids:42/42
+ Total keywords:484/500
+size of stashCiphers:8
+size of stashCiphers:5
+ SIZE of file ids:1/1
+ Total keywords:485/500
+size of stashCiphers:8
+ SIZE of file ids:53/53
+ Total keywords:486/500
+size of stashCiphers:8
+size of stashCiphers:16
+size of stashCiphers:10
+size of stashCiphers:8
+ SIZE of file ids:57/57
+ Total keywords:487/500
+ SIZE of file ids:16/16
+ Total keywords:488/500
+size of stashCiphers:6
+size of stashCiphers:16
+ SIZE of file ids:22/22
+ Total keywords:489/500
+size of stashCiphers:8
+ SIZE of file ids:16/16
+ Total keywords:490/500
+size of stashCiphers:4
+size of stashCiphers:4
+size of stashCiphers:14
+size of stashCiphers:31
+size of stashCiphers:4
+ SIZE of file ids:48/48
+ Total keywords:491/500
+size of stashCiphers:8
+ SIZE of file ids:41/41
+ Total keywords:492/500
+ SIZE of file ids:0/0
+ Total keywords:493/500
+size of stashCiphers:8
+size of stashCiphers:4
+ SIZE of file ids:16/16
+ Total keywords:494/500
+size of stashCiphers:5
+ SIZE of file ids:34/34
+ Total keywords:495/500
+size of stashCiphers:7
+size of stashCiphers:3
+size of stashCiphers:9
+size of stashCiphers:8
+ SIZE of file ids:55/55
+ Total keywords:496/500
+size of stashCiphers:2
+size of stashCiphers:16
+ SIZE of file ids:36/36
+ Total keywords:497/500
+size of stashCiphers:2
+size of stashCiphers:8
+size of stashCiphers:6
+size of stashCiphers:6
+size of stashCiphers:11
+ SIZE of file ids:63/63
+ Total keywords:498/500
+size of stashCiphers:1
+ SIZE of file ids:48/48
+ Total keywords:499/500
+ SIZE of file ids:4/4
+ Total keywords:500/500
+size of stashCiphers:8
+size of stashCiphers:7
+ SIZE of file ids:6/6
+size of stashCiphers:5
+size of stashCiphers:8
+size of stashCiphers:13
+size of stashCiphers:16
+size of stashCiphers:8
+size of stashCiphers:8
+size of stashCiphers:13
+ SIZE:7
+------------------------------------------------------------------------------
+Result of Operations for DB Size 50000
+Search for Keyword With [5000] Results and [50] Deletions:
+Number of return item:[4950]
+------------------------------------------------------------------------------
+Result of Operations for DB Size 50000
+Search for Keyword With [4000] Results and [40] Deletions:
+Number of return item:[3960]
+------------------------------------------------------------------------------
+Result of Operations for DB Size 50000
+Search for Keyword With [3000] Results and [30] Deletions:
+Number of return item:[2970]
+------------------------------------------------------------------------------
+Result of Operations for DB Size 50000
+Search for Keyword With [2000] Results and [20] Deletions:
+Number of return item:[1980]
+------------------------------------------------------------------------------
+Result of Operations for DB Size 50000
+Search for Keyword With [1000] Results and [10] Deletions:
+Number of return item:[990]
+------------------------------------------------------------------------------
+Result of Operations for DB Size 50000
+Search for Keyword With [500] Results and [5] Deletions:
+Number of return item:[495]
+------------------------------------------------------------------------------
+Result of Operations for DB Size 50000
+Search for Keyword With [100] Results and [0] Deletions:
+Number of return item:[100]
+**************************************************************************
