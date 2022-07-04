@@ -1,5 +1,11 @@
+Configuration files are in configs folder
+
+
 compile:
 	make
+
+
+
 execute:
 	./mt.sh (for small test)
 	./mmt.sh (for medium test)

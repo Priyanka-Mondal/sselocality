@@ -15,7 +15,7 @@ int main(int argc, char** argv)
     vector<string> testKeywords;
     uint keywordLength = 7;
     bool inMemory, overwrite;
-    string filename = "config.txt";
+    string filename = "configs/config.txt";
     if (argc == 2) 
     {
         filename = string(argv[1]);
@@ -32,9 +32,7 @@ int main(int argc, char** argv)
         for (int j = 0; j < testCases.size(); j++) 
 	{
             for (int z = 0; z < testCases[j].Qs.size(); z++) 
-	    {
                 file << testCases[j].testKeywords[z] << endl;
-            }
         }
         file.close();
     } 
@@ -42,32 +40,29 @@ int main(int argc, char** argv)
     {
         fstream file("/tmp/search.txt", std::ofstream::in);
         if (file.fail()) 
-	{
             cerr << "Error in read: " << strerror(errno);
-        }
         for (int i = 0; i < testCases.size(); i++) 
 	{
             for (int z = 0; z < testCases[i].Qs.size(); z++) 
 	    {
                 string tmp;
                 getline(file, tmp);
+		testCases[i].testKeywords.push_back(tmp);
                 testKeywords.push_back(tmp);
-		cout <<"["<<tmp<<"]"<<endl;
+		cout <<"Reading test keyword: ["<<tmp<<"]"<<endl;
             }
         }
         file.close();
-        //Utilities::generateTestCases(testCases, keywordLength, time(NULL), testKeywords);
-    Utilities::generateTwoChoiceTestCases(testCases, keywordLength, time(NULL),overwrite, testKeywords);
     }
     
     Amortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
     client.endSetup(testCases[0].N);
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;
-    cout <<"----------------------------------------------"<<endl;
+    cout <<"*************************************************************************"<<endl;
     
     for (uint i = 0; i < testCases.size(); i++) 
     {
-	cout <<" SIZE of testcases:"<<testCases[i].Qs.size()<<endl;
+	cout <<"SIZE of testcases:"<<testCases[i].Qs.size()<<endl;
         int cnt = 0;
         double time = 0;
         if (overwrite) 
@@ -125,7 +120,7 @@ int main(int argc, char** argv)
 	{
             cout << "------------------------------------------------------------------------------" << endl;
             cout << "Result of Operations for DB Size " << testCases[i].N << endl;
-            cout << "Search for Keyword With [" << testCases[i].Qs[j] << "] Results and [" << testCases[i].delNumber[j] << "] Deletions:" << endl;
+            cout << "Search for Keyword With [" << testCases[i].Qs[j] << "] Results and [" << testCases[i].delNumber[j] << "] Deletions:" <<testCases[i].testKeywords[j]<< endl;
                 Utilities::startTimer(500);
                 vector<int> res = client.search(testCases[i].testKeywords[j]);
                 time = Utilities::stopTimer(500);
@@ -133,7 +128,7 @@ int main(int argc, char** argv)
                 cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
                 cout << "Number of return item:[" << res.size()<<"]" << endl;
         }
-        cout << "**************************************************************************" << endl;
+        cout << "*********************************************************************************" << endl;
 
     }
     return 0;

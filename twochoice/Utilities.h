@@ -311,7 +311,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
                 testCases[i].filePairs.push_back(make_pair(testCases[i].keywords[j],files));
                 files.clear();
             }
-	cout <<"Total pair number:"<< totalPairNumber<<endl;
+	cout <<"Total number of keyword-fileID pairs:"<< totalPairNumber<<endl;
         }
 	//delete queries are not added here
     };
