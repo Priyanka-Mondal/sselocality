@@ -30,14 +30,14 @@ public:
     vector<int> sizeOfEachBin;
     map<int,int> position;
     vector<bool> exist;
-    vector<bool> stashExist;
     void destry(int index);
     void setup(int index, map<string, vector<prf_type> >pairs, unsigned char* key);
     vector<prf_type> search(int index, string keyword, unsigned char* key);
     vector<prf_type> newsearch(int index, string keyword, unsigned char* key);
     vector<prf_type> getAllData(int index, unsigned char* key);
     void truncateToMpl(int pss, int mpl, int index, string keyword, vector<prf_type> fileids, unsigned char* key);
-void writeToStash(int pss, int mpl, vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers);
+    void writeToCuckooHT(int mpl, string keyword, vector<prf_type> fileids, vector<pair<prf_type, vector<prf_type>>> &cuckooCiphers, unsigned char* key);
+//void writeToStash(int pss, int mpl, vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers, bool overflow);
 };
 
 #endif /* TWOCHOICECLIENT_H */

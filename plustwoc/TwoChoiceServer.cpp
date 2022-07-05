@@ -7,17 +7,20 @@ TwoChoiceServer::TwoChoiceServer(int dataIndex, bool inMemory, bool overwrite, b
     storage = new TwoChoiceStorage(inMemory, dataIndex, "/tmp/", profile);
     storage->setup(overwrite);
     keyworkCounters = new Storage(inMemory, dataIndex, "/tmp/keyword-", profile);
+    cout <<"server"<<endl;
     keyworkCounters->setup(overwrite);
 }
 
 TwoChoiceServer::~TwoChoiceServer() {}
 
 
-void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, vector<prf_type> stashCiphers,map<prf_type, prf_type> keywordCounters, map<prf_type, prf_type> stashCounter) 
+void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, vector<pair<prf_type,vector<prf_type>>> cuckooCiphers, map<prf_type, prf_type> keywordCounters) 
 {
     storage->insertAll(dataIndex, ciphers);
     keyworkCounters->insert(dataIndex, keywordCounters);
-    storage->insertStash(dataIndex,stashCiphers);
+    cout <<"ciphers stored"<<endl;
+    //storage->insertStash(dataIndex,stashCiphers);
+    //storage->insertCuckooHT(dataIndex,cuckooCiphers);
 }
 
 

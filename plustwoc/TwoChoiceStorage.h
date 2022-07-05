@@ -26,6 +26,8 @@ private:
     bool profile = false;
     vector<string> filenames;
     vector<string> stashfilenames;
+    vector<vector<string>> cuckoo1filenames;
+    vector<vector<string>> cuckoo2filenames;
     prf_type nullKey;
     string fileAddressPrefix = "/tmp/";
     int dataIndex;
@@ -42,6 +44,8 @@ public:
     bool setup(bool overwrite);
     void insertAll(int dataIndex, vector<vector< pair<prf_type, prf_type> > > ciphers);
     void insertStash(int dataIndex, vector<prf_type> ciphers);
+    void insertCuckooHT(int dataIndex, vector<pair<prf_type, vector<prf_type>>> cuckooCiphers);
+    void insertCuckoo(int index, int tablenum, pair <prf_type, vector<prf_type>> ciphers); 
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
     vector<prf_type> getStash(int index); 
     void clear(int index);

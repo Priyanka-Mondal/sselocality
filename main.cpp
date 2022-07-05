@@ -79,7 +79,7 @@ int main(int argc, char** argv)
                     cnt++;
                     if (cnt % 10000 == 0) 
 		    {
-                        cout << "Initial Insertions:" << cnt << "/" << to_string(testCases[i].N) << endl;
+                        cout << "Initial Insertions::" << cnt << "/" << to_string(testCases[i].N) << endl;
                     }
                 }
 	        //cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;
