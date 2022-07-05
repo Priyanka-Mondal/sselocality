@@ -17,7 +17,7 @@ TwoChoiceStorage::TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddr
         int curSizeOfEachBin = i > 3 ? ceil(((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*3)) : 3;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
-        printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
+	cout<<"Level:"<<i<<" number of bins:"<<curNumberOfBins<<" size of each bin:"<<curSizeOfEachBin<<endl;
     }
 }
 
@@ -33,130 +33,146 @@ bool TwoChoiceStorage::setup(bool overwrite)
     } 
     else 
     {
-	/*    
-        if (USE_XXL) {
-            diskData = new stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru >::result*[dataIndex];
-            for (int i = 0; i < dataIndex; i++) {
-                diskData[i] = new stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru>::result();
-            }
-        } else {*/
-            for (int i = 0; i < dataIndex; i++) 
+	cuckoo1filenames.resize(dataIndex);
+	cuckoo2filenames.resize(dataIndex);
+	stashfilenames.resize(dataIndex);
+        for (int i = 0; i < dataIndex; i++) 
+	{
+            string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
+            filenames.push_back(filename);
+            fstream testfile(filename.c_str(), std::ofstream::in);
+            if (testfile.fail() || overwrite) 
 	    {
-                string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
-                filenames.push_back(filename);
-                fstream testfile(filename.c_str(), std::ofstream::in);
-                if (testfile.fail() || overwrite) 
-		{
-                    testfile.close();
-                    fstream file(filename.c_str(), std::ofstream::out);
-                    if (file.fail()) 
-		    {
+                testfile.close();
+                fstream file(filename.c_str(), std::ofstream::out);
+                if (file.fail()) 
+	        {
+                    cerr << "Error: " << strerror(errno);
+                }
+                int maxSize = numberOfBins[i] * sizeOfEachBin[i];
+                for (int j = 0; j < maxSize; j++) 
+	        {
+                    file.write((char*) nullKey.data(), AES_KEY_SIZE);
+                    file.write((char*) nullKey.data(), AES_KEY_SIZE);
+                }
+                file.close();
+            }
+	    
+	    cuckoo1filenames[i].resize(dataIndex);
+	    cuckoo2filenames[i].resize(dataIndex);
+	    stashfilenames[i].resize(dataIndex);
+	    for(int k = 0; k< dataIndex; k++) // k < log2(pow(2, dataIndex))
+	    {
+                string cuckoo1 = fileAddressPrefix + "CUCKOO1-" + to_string(i) +"-"+to_string(k)+ ".dat";
+                string cuckoo2 = fileAddressPrefix + "CUCKOO2-" + to_string(i) +"-"+to_string(k)+ ".dat";
+            	string stashfilename = fileAddressPrefix + "STASH-" + to_string(i)+"-"+to_string(k) + ".dat";
+	        cuckoo1filenames[i][k]=cuckoo1;
+	        cuckoo2filenames[i][k]=cuckoo2;
+		stashfilenames[i][k]=stashfilename;
+
+                fstream c1file(cuckoo1.c_str(), std::ofstream::in);
+                if (c1file.fail() || overwrite) 
+	        {
+                    c1file.close();
+                    fstream c11file(cuckoo1.c_str(), std::ofstream::out);
+                    if (c11file.fail()) 
+	            {
                         cerr << "Error: " << strerror(errno);
                     }
-                    int maxSize = numberOfBins[i] * sizeOfEachBin[i];
-                    for (int j = 0; j < maxSize; j++) 
-		    {
-                        file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                        file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                    }
-                    file.close();
+                    int maxSize = 2* pow(2,i);//numberOfBins[i] * sizeOfEachBin[i];
+                	for (int j = 0; j < maxSize; j++) 
+	        	{
+                        c11file.write((char*) nullKey.data(), AES_KEY_SIZE);
+                	}
+                    c11file.close();
                 }
-                string stashfilename = fileAddressPrefix + "STASH-" + to_string(i) + ".dat";
-                stashfilenames.push_back(stashfilename);
+                fstream c2file(cuckoo2.c_str(), std::ofstream::in);
+                if (c2file.fail() || overwrite) 
+	        {
+                    c2file.close();
+                    fstream c22file(cuckoo2.c_str(), std::ofstream::out);
+                    if (c22file.fail()) 
+	            {
+                        cerr << "Error: " << strerror(errno);
+                    }
+                    int maxSize = 2*pow(2,i);//numberOfBins[i] * sizeOfEachBin[i]; 
+                    for (int j = 0; j < maxSize; j++) 
+	            {
+                        c22file.write((char*) nullKey.data(), AES_KEY_SIZE);
+                    }
+                    c22file.close();
+                }
                 fstream tfile(stashfilename.c_str(), std::ofstream::in);
                 if (tfile.fail() || overwrite) 
-		{
+	        {
                     tfile.close();
                     fstream sfile(stashfilename.c_str(), std::ofstream::out);
                     if (sfile.fail()) 
-		    {
+	            {
                         cerr << "Error: " << strerror(errno);
                     }
-                    int maxSize = numberOfBins[i] * sizeOfEachBin[i];
+                    int maxSize = 2*pow(2,i);//numberOfBins[i] * sizeOfEachBin[i]; 
                     for (int j = 0; j < maxSize; j++) 
-		    {
+	            {
                         sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
                     }
                     sfile.close();
                 }
-		
-		for(int k = 0; k< dataIndex; k++) // k < log2(pow(2, dataIndex))
-		{
-                    string cuckoo1 = fileAddressPrefix + "CUCKOO1-" + to_string(i) +"_"+to_string(k)+ ".dat";
-                    string cuckoo2 = fileAddressPrefix + "CUCKOO2-" + to_string(i) +"_"+to_string(k)+ ".dat";
-                    cuckoo1filenames[i].push_back(cuckoo1);
-                    cuckoo2filenames[i].push_back(cuckoo2);
-                    fstream c1file(cuckoo1.c_str(), std::ofstream::in);
-                    if (c1file.fail() || overwrite) 
-		    {
-                        c1file.close();
-                        fstream c11file(cuckoo1.c_str(), std::ofstream::out);
-                        if (c11file.fail()) 
-		        {
-                            cerr << "Error: " << strerror(errno);
-                        }
-                        int maxSize = 2* pow(2,i);//numberOfBins[i] * sizeOfEachBin[i];
-                    	for (int j = 0; j < maxSize; j++) 
-		    	{
-                            c11file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                    	}
-                        c11file.close();
-                    }
-                    fstream c2file(cuckoo2.c_str(), std::ofstream::in);
-                    if (c2file.fail() || overwrite) 
-	            {
-                        c2file.close();
-                        fstream c22file(cuckoo2.c_str(), std::ofstream::out);
-                        if (c22file.fail()) 
-	                {
-                            cerr << "Error: " << strerror(errno);
-                        }
-                        int maxSize = 2*pow(2,i);//numberOfBins[i] * sizeOfEachBin[i]; 
-                        for (int j = 0; j < maxSize; j++) 
-	                {
-                            c22file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                        }
-                        c22file.close();
-                    }
-		}
-		
-            }
-       // }
+	    }
+        }	
     }
-
 }
 
-
-void TwoChoiceStorage::insertCuckooHT(int index, vector<pair <prf_type, vector<prf_type>>> ciphers) 
+void TwoChoiceStorage::insertCuckooHT(int index, vector<pair <string, vector<prf_type>>> ciphers) 
 {
 	for(auto l : ciphers)
 	{
 		int size = l.second.size();
-		int tablenum = ceil(log2(size));
-		insertCuckoo(index,tablenum,l);
+		if(size != 0)
+		{
+		    int tablenum = ceil((float)log2(size));
+		    //cout <<"size:"<<size<<" tablenum:"<< tablenum<< endl;
+		    insertCuckoo(index,tablenum,l);
+		}
 	}
 }
-void TwoChoiceStorage::insertCuckoo(int index, int tablenum, pair <prf_type, vector<prf_type>> ciphers) 
+
+void TwoChoiceStorage::insertCuckoo(int index, int tablenum, pair <string, vector<prf_type>> ciphers) 
 {
+      cout <<"CUCKOO TABLE:"<<index<<" "<< tablenum<<endl;
       fstream cuckoo1(cuckoo1filenames[index][tablenum].c_str(), ios::binary | ios::out);
+      fstream cuckoo2(cuckoo2filenames[index][tablenum].c_str(), ios::binary | ios::out);
       if (cuckoo1.fail()) 
       {
           cout <<"Cuckoo Hash Table XX:"<<index<<endl;
           cerr << "(Error in Cuckoo HT insert: " << strerror(errno)<<")"<<endl;
       }
       /*
-      for (auto item : ciphers) 
+       * use hash function to write to proper position, do it in client
+       * /
+    /* 
+        prf_type K = Utilities::encode(pair.first, key);
+	prf_type mapKey, mapValue;
+        unsigned char cntstr[AES_KEY_SIZE];
+        memset(cntstr, 0, AES_KEY_SIZE);
+        *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+        mapKey = Utilities::generatePRF(cntstr, K.data());
+*/
+      unsigned char newRecord[AES_KEY_SIZE];
+      memset(newRecord, 0, AES_KEY_SIZE);
+      std::copy(ciphers.first.begin(), ciphers.first.end(), newRecord);
+      cuckoo1.write((char*) newRecord, AES_KEY_SIZE);
+      for (auto item : ciphers.second) 
       {
           unsigned char newRecord[AES_KEY_SIZE];
           memset(newRecord, 0, AES_KEY_SIZE);
           std::copy(item.begin(), item.end(), newRecord);
-          file.write((char*) newRecord, AES_KEY_SIZE);
+          cuckoo1.write((char*) newRecord, AES_KEY_SIZE);
       }
-      */
       cuckoo1.close();
 }
 
-
+/*
 void TwoChoiceStorage::insertStash(int index, vector<prf_type> ciphers) 
 {
       fstream file(stashfilenames[index].c_str(), ios::binary | ios::out);
@@ -199,7 +215,7 @@ vector<prf_type> TwoChoiceStorage::getStash(int index)
       delete keyValues;
       return results;
 }
-
+*/
 
 void TwoChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_type> > > ciphers) 
 {
@@ -257,15 +273,6 @@ vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index)
     } 
     else 
     {
-        /*if (USE_XXL) {
-            vector<pair<prf_type, prf_type> > results;
-            for (int i = 0; i < diskData[index]->size(); i++) {
-                if (diskData[index]->at(i).first != nullKey) {
-                    results.push_back(diskData[index]->at(i));
-                }
-            }
-            return results;
-        } else {*/
             vector<pair<prf_type, prf_type> > results;
             fstream file(filenames[index].c_str(), ios::binary | ios::in | ios::ate);
             if (file.fail()) {
@@ -300,9 +307,6 @@ void TwoChoiceStorage::clear(int index)
         data[index].clear();
     } 
     else {
-        /*if (USE_XXL) {
-            diskData[index]->clear();
-        } else {*/
             fstream file(filenames[index].c_str(), std::ios::binary | std::ofstream::out);
             if (file.fail()) 
                 cerr << "Error: " << strerror(errno);
@@ -314,12 +318,36 @@ void TwoChoiceStorage::clear(int index)
             }
             file.close();
 
-            fstream sfile(stashfilenames[index].c_str(), std::ios::binary | std::ofstream::out);
-            if (sfile.fail()) 
-                cerr << "Error: " << strerror(errno);
-            for (int j = 0; j < maxSize; j++) 
-                sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
-            sfile.close();
+ 	    for(int k=0; k<index; k++)
+	    {
+                fstream sfile(stashfilenames[index][k].c_str(), std::ios::binary | std::ofstream::out);
+                if (sfile.fail()) 
+                    cerr << "Error: " << strerror(errno);
+            	int maxSize = 2*pow(2,index);
+                for (int j = 0; j < maxSize; j++) 
+                    sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+                sfile.close();
+	    }
+ 	    for(int k=0; k<index; k++)
+	    {
+                fstream sfile(cuckoo1filenames[index][k].c_str(), std::ios::binary | std::ofstream::out);
+                if (sfile.fail()) 
+                    cerr << "Error: " << strerror(errno);
+            	int maxSize = 2*pow(2,index);
+                for (int j = 0; j < maxSize; j++) 
+                    sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+                sfile.close();
+	    }
+ 	    for(int k=0; k<index; k++)
+	    {
+                fstream sfile(cuckoo2filenames[index][k].c_str(), std::ios::binary | std::ofstream::out);
+                if (sfile.fail()) 
+                    cerr << "Error: " << strerror(errno);
+            	int maxSize = 2*pow(2,index);
+                for (int j = 0; j < maxSize; j++) 
+                    sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+                sfile.close();
+	    }
     }
 }
 

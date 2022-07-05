@@ -1,20 +1,97 @@
-Total number of keyword-fileID pairs:184
+Total number of keyword-fileID pairs:1183
 ===================RUNNING SDa+TwoChoicePLUSPLUS=====================
-TOTAL:9
-storage
-Level:0 number of Bins:1 size of bin:3
-storage
-Level:1 number of Bins:2 size of bin:3
-storage
-Level:2 number of Bins:4 size of bin:3
-storage
-Level:3 number of Bins:8 size of bin:3
-storage
-Level:4 number of Bins:8 size of bin:6
-storage
-Level:5 number of Bins:16 size of bin:9
-storage
-Level:6 number of Bins:32 size of bin:11
-storage
-Level:7 number of Bins:32 size of bin:13
-storage
+Level:0 number of bins:1 size of each bin:3
+Level:1 number of bins:2 size of each bin:3
+Level:2 number of bins:4 size of each bin:3
+Level:3 number of bins:8 size of each bin:3
+Level:4 number of bins:8 size of each bin:6
+Level:5 number of bins:16 size of each bin:9
+Level:6 number of bins:32 size of each bin:11
+Level:7 number of bins:32 size of each bin:13
+Level:8 number of bins:64 size of each bin:15
+Level:9 number of bins:128 size of each bin:16
+Level:10 number of bins:256 size of each bin:18
+Level:11 number of bins:512 size of each bin:19
+Level:12 number of bins:1024 size of each bin:20
+Start of Static, size of test suits:1
+*************************************************************************
+SIZE of testcases:1
+ Total keywords:1/5
+ Total keywords:2/5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:6 6
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:7 7
+ Total keywords:3/5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:6 6
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:8 7
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:6 6
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:7 7
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:6 6
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:9 8
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:6 6
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:7 7
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:6 6
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:8 7
+ Total keywords:4/5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:6 6
+CUCKOO TABLE:4 4
+ Total keywords:5/5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:7 6
+CUCKOO TABLE:7 6
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:6 6
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+Initial Insertions:1000/5000
+CUCKOO TABLE:4 4
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:6 6
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5
+CUCKOO TABLE:4 4
+CUCKOO TABLE:7 7
+CUCKOO TABLE:4 4
+CUCKOO TABLE:5 5

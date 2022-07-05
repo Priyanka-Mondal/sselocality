@@ -71,19 +71,20 @@ int main(int argc, char** argv)
             for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
 	    {
 		key++;
-		//cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
+		cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
 		int j;
                 for (j = 0; j < cur->second.size(); j++) 
 		{
                     client.update(OP::INS, cur->first, cur->second[j], true);
                     cnt++;
-                    if (cnt % 10000 == 0) 
+                    if (cnt % 1000 == 0) 
 		    {
-                        cout << "Initial Insertions:" << cnt << "/" << to_string(testCases[i].N) << endl;
+                      cout << "Initial Insertions:" << cnt << "/" << to_string(testCases[i].N) << endl;
                     }
                 }
 	        //cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;
             }
+	    
             cnt = 0;
             for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
@@ -115,7 +116,12 @@ int main(int argc, char** argv)
             }
         }
         //        client.endSetup();
-	
+
+
+
+
+
+/*
         for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	{
             cout << "------------------------------------------------------------------------------" << endl;
@@ -129,7 +135,7 @@ int main(int argc, char** argv)
                 cout << "Number of return item:[" << res.size()<<"]" << endl;
         }
         cout << "*********************************************************************************" << endl;
-
+*/
     }
     return 0;
 }

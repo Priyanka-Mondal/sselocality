@@ -7,20 +7,17 @@ TwoChoiceServer::TwoChoiceServer(int dataIndex, bool inMemory, bool overwrite, b
     storage = new TwoChoiceStorage(inMemory, dataIndex, "/tmp/", profile);
     storage->setup(overwrite);
     keyworkCounters = new Storage(inMemory, dataIndex, "/tmp/keyword-", profile);
-    cout <<"server"<<endl;
     keyworkCounters->setup(overwrite);
 }
 
 TwoChoiceServer::~TwoChoiceServer() {}
 
 
-void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, vector<pair<prf_type,vector<prf_type>>> cuckooCiphers, map<prf_type, prf_type> keywordCounters) 
+void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, vector<pair<string,vector<prf_type>>> cuckooCiphers, map<prf_type, prf_type> keywordCounters) 
 {
     storage->insertAll(dataIndex, ciphers);
     keyworkCounters->insert(dataIndex, keywordCounters);
-    cout <<"ciphers stored"<<endl;
-    //storage->insertStash(dataIndex,stashCiphers);
-    //storage->insertCuckooHT(dataIndex,cuckooCiphers);
+    storage->insertCuckooHT(dataIndex,cuckooCiphers);
 }
 
 
@@ -88,7 +85,7 @@ vector<pair<prf_type, prf_type> > TwoChoiceServer::getAllData(int dataIndex)
 
 vector<prf_type> TwoChoiceServer::getStash(int dataIndex) 
 {
-    return storage->getStash(dataIndex);
+    //return storage->getStash(dataIndex);
 }
 
 void TwoChoiceServer::clear(int index) 

@@ -87,28 +87,30 @@ int maxPossibleLen(int N, int bins, int index)
 	}
 }*/
 
-void TwoChoiceClient::writeToCuckooHT(int size, string keyword, vector<prf_type> fileids, vector<pair<prf_type,vector<prf_type>>> &cuckooCiphers, unsigned char* key)
+void TwoChoiceClient::writeToCuckooHT(int size, string keyword, vector<prf_type> fileids, vector<pair<string,vector<prf_type>>> &cuckooCiphers, unsigned char* key)
 {
-	int tableNum = (int)ceil(log2(fileids.size()));
+	assert(fileids.size() > 0);
+	int tableNum = (int)ceil((float) log2(fileids.size()));
 	int entrySize = pow(2, tableNum);
 
-        prf_type K = Utilities::encode(keyword, key);
-        prf_type mapKey, mapValue;
-        unsigned char cntstr[AES_KEY_SIZE];
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        mapKey = Utilities::generatePRF(cntstr, K.data());
+        //prf_type K = Utilities::encode(keyword, key);
+        //prf_type mapKey, mapValue;
+        //unsigned char cntstr[AES_KEY_SIZE];
+        //memset(cntstr, 0, AES_KEY_SIZE);
+        //*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+        //mapKey = Utilities::generatePRF(cntstr, K.data());
 	vector<prf_type> ctCiphers;
 	for(int i = size; i<fileids.size();i++)
 	{
-        	mapValue = Utilities::encode(fileids[i].data(), key);
-		ctCiphers.push_back(mapValue);
+        	//mapValue = Utilities::encode(fileids[i].data(), key);
+		ctCiphers.push_back(fileids[i]);
 	}
     	prf_type dummy;
+	int sz = ctCiphers.size();
     	memset(dummy.data(), 0, AES_KEY_SIZE);
-	for(int i = fileids.size(); i<entrySize ; i++)
+	for(int i = sz; i<entrySize ; i++)
 		ctCiphers.push_back(dummy);
-	cuckooCiphers.push_back(make_pair(mapKey,ctCiphers));
+	cuckooCiphers.push_back(make_pair(keyword,ctCiphers));
 }
 
 
@@ -116,10 +118,13 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 {
     exist[index] = true;
     vector<vector<pair<prf_type, prf_type>>> ciphers;
-    vector<pair<prf_type,vector<prf_type>>> cuckooCiphers;
     for (int i = 0; i < numberOfBins[index]; i++) 
         ciphers.push_back(vector<pair<prf_type,prf_type>>());
     
+    vector<pair<string,vector<prf_type>>> cuckooCiphers; // make keyword prf_type later
+    cuckooCiphers.resize(pairs.size());
+    for (int i = 0; i < pairs.size(); i++) 
+        cuckooCiphers.push_back(pair<string,vector<prf_type>>());
     map<prf_type, prf_type> keywordCntCiphers;
     map<int, int> fullness;
 
@@ -138,8 +143,8 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 	}
 	if(newsize > mpl)
 		newsize = mpl;
-cout <<"??"<<endl;
-	writeToCuckooHT(newsize, pair.first, pair.second, cuckooCiphers, key);
+	if(pair.second.size()>newsize) // will it leak list size, should we call it irrespectively ?
+	    writeToCuckooHT(newsize, pair.first, pair.second, cuckooCiphers, key);
 
         prf_type K = Utilities::encode(pair.first, key);
 	prf_type mapKey, mapValue;
@@ -149,15 +154,10 @@ cout <<"??"<<endl;
         mapKey = Utilities::generatePRF(cntstr, K.data());
         prf_type valueTmp, totalTmp;
         *(int*) (&(valueTmp[0])) = newsize;//pair.second.size(); 
+        //*(int*) (&(valueTmp[0])) = pair.second.size(); 
         mapValue = Utilities::encode(valueTmp.data(), K.data());
         keywordCntCiphers[mapKey] = mapValue; 
        
-/////////////////////////////////////////////////////////////////////////	
-//	auto count = counters[index];				       //	
-//	count[pair.first] = make_pair(newsize,pair.second.size());     //
-//	counters[index]=count;                                         //
-/////////////////////////////////////////////////////////////////////////
-
         string temp = pair.first;
 	temp = temp.append("1");
         prf_type K1 = Utilities::encode(temp, key);
@@ -309,7 +309,8 @@ vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key)
 {
     vector<prf_type> finalRes = vector<prf_type>();
     auto ciphers = server->getAllData(index);
-    vector<prf_type> stashCiphers = server->getStash(index);
+    vector<prf_type> stashCiphers;// = server->getStash(index);
+    //vector<prf_type> stashCiphers = server->getStash(index);
 
     for (auto cipher : ciphers) 
     {
@@ -317,6 +318,7 @@ vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key)
         Utilities::decode(cipher.second, plaintext, key);
         finalRes.push_back(plaintext);
     }
+    /*
     if(stashCiphers.size()>0)
     {
     	for(auto b : stashCiphers)
@@ -325,7 +327,7 @@ vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key)
        	    Utilities::decode(b, plaintext, key);
 	    finalRes.push_back(plaintext);
         }
-    }
+    }*/
     totalCommunication += (ciphers.size() + stashCiphers.size())* sizeof (prf_type);
     return finalRes;
 }
