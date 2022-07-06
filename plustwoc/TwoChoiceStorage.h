@@ -44,8 +44,9 @@ public:
     bool setup(bool overwrite);
     void insertAll(int dataIndex, vector<vector< pair<prf_type, prf_type> > > ciphers);
     void insertStash(int dataIndex, vector<prf_type> ciphers);
-    void insertCuckooHT(int dataIndex, vector<pair<string, vector<prf_type>>> cuckooCiphers);
-    void insertCuckoo(int index, int tablenum, pair <string, vector<prf_type>> ciphers); 
+   void insertCuckooHT(int dataIndex, vector<pair<pair<prf_type,prf_type>, pair<prf_type,vector<prf_type>>>> cuckooCiphers);
+    void insertCuckoo(int index, int tablenum, pair <pair<prf_type,prf_type>, pair<prf_type,vector<prf_type>>> ciphers); 
+    pair<prf_type, vector<prf_type>> insertCuckooHT(int index, int tableNum, int hash, int cuckooID, prf_type keyw, vector<prf_type> fileids);
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
     vector<prf_type> getStash(int index); 
     void clear(int index);

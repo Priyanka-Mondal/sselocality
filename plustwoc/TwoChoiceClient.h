@@ -27,6 +27,7 @@ public:
     TwoChoiceClient(int maxUpdate, bool inMemory, bool overwrite, bool profile);
     int totalCommunication = 0;
     vector<int> numberOfBins;
+    prf_type nullKey;
     vector<int> sizeOfEachBin;
     map<int,int> position;
     vector<bool> exist;
@@ -36,7 +37,8 @@ public:
     vector<prf_type> newsearch(int index, string keyword, unsigned char* key);
     vector<prf_type> getAllData(int index, unsigned char* key);
     void truncateToMpl(int pss, int mpl, int index, string keyword, vector<prf_type> fileids, unsigned char* key);
-    void writeToCuckooHT(int mpl, string keyword, vector<prf_type> fileids, vector<pair<string, vector<prf_type>>> &cuckooCiphers, unsigned char* key);
+    void writeToCuckooHT(int index, int mpl, string keyword, vector<prf_type> fileids, vector<pair<pair<prf_type,prf_type>, pair<prf_type,vector<prf_type>>>> &cuckooCiphers, unsigned char* key);
+void place(prf_type keyw,vector<prf_type> fileids,int cuckooID,int cnt,int index, int tableNum, unsigned char* key);
 //void writeToStash(int pss, int mpl, vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers, bool overflow);
 };
 

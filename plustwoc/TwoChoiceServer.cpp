@@ -13,13 +13,18 @@ TwoChoiceServer::TwoChoiceServer(int dataIndex, bool inMemory, bool overwrite, b
 TwoChoiceServer::~TwoChoiceServer() {}
 
 
-void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, vector<pair<string,vector<prf_type>>> cuckooCiphers, map<prf_type, prf_type> keywordCounters) 
+void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, vector<pair<pair<prf_type,prf_type>,pair<prf_type,vector<prf_type>>>> cuckooCiphers, map<prf_type, prf_type> keywordCounters) 
 {
     storage->insertAll(dataIndex, ciphers);
     keyworkCounters->insert(dataIndex, keywordCounters);
-    storage->insertCuckooHT(dataIndex,cuckooCiphers);
+    //storage->insertCuckooHT(dataIndex,cuckooCiphers);
 }
 
+pair<prf_type, vector<prf_type>> TwoChoiceServer::insertCuckooHT(int index, int tableNum, int hash, int cuckooID, prf_type keyw, vector<prf_type> fileids)
+{
+	cout <<"server:insert in CT"<<endl;
+	return storage->insertCuckooHT(index, tableNum, hash, cuckooID, keyw, fileids);
+}
 
 vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type hashtoken, int& keywordCnt) 
 {

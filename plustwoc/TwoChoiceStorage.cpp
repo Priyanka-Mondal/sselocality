@@ -123,41 +123,36 @@ bool TwoChoiceStorage::setup(bool overwrite)
     }
 }
 
-void TwoChoiceStorage::insertCuckooHT(int index, vector<pair <string, vector<prf_type>>> ciphers) 
+/*
+void TwoChoiceStorage::insertCuckooHT(int index, vector<pair <pair<prf_type,prf_type>, pair<prf_type,vector<prf_type>>>> ciphers) 
 {
 	for(auto l : ciphers)
 	{
-		int size = l.second.size();
+		int size = l.second.second.size();
 		if(size != 0)
 		{
 		    int tablenum = ceil((float)log2(size));
-		    //cout <<"size:"<<size<<" tablenum:"<< tablenum<< endl;
 		    insertCuckoo(index,tablenum,l);
 		}
 	}
 }
+*/
 
-void TwoChoiceStorage::insertCuckoo(int index, int tablenum, pair <string, vector<prf_type>> ciphers) 
+void TwoChoiceStorage::insertCuckoo(int index, int tablenum, pair <pair<prf_type,prf_type>, pair<prf_type,vector<prf_type>>> ciphers) 
 {
       cout <<"CUCKOO TABLE:"<<index<<" "<< tablenum<<endl;
       fstream cuckoo1(cuckoo1filenames[index][tablenum].c_str(), ios::binary | ios::out);
       fstream cuckoo2(cuckoo2filenames[index][tablenum].c_str(), ios::binary | ios::out);
+      int entrySize = pow(2, tablenum);
       if (cuckoo1.fail()) 
       {
           cout <<"Cuckoo Hash Table XX:"<<index<<endl;
           cerr << "(Error in Cuckoo HT insert: " << strerror(errno)<<")"<<endl;
       }
       /*
-       * use hash function to write to proper position, do it in client
+       * call the cuckoo hashing algo here, but read file instead
        * /
-    /* 
-        prf_type K = Utilities::encode(pair.first, key);
-	prf_type mapKey, mapValue;
-        unsigned char cntstr[AES_KEY_SIZE];
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        mapKey = Utilities::generatePRF(cntstr, K.data());
-*/
+/*
       unsigned char newRecord[AES_KEY_SIZE];
       memset(newRecord, 0, AES_KEY_SIZE);
       std::copy(ciphers.first.begin(), ciphers.first.end(), newRecord);
@@ -169,7 +164,56 @@ void TwoChoiceStorage::insertCuckoo(int index, int tablenum, pair <string, vecto
           std::copy(item.begin(), item.end(), newRecord);
           cuckoo1.write((char*) newRecord, AES_KEY_SIZE);
       }
+      */
       cuckoo1.close();
+}
+
+pair<prf_type, vector<prf_type>> TwoChoiceStorage::insertCuckooHT(int index,int tableNum,int hash,int cuckooID, prf_type keyword, vector<prf_type> fileids)
+{
+	fstream cuckoo;
+	if(cuckooID == 0)
+      	    cuckoo.open(cuckoo1filenames[index][tableNum].c_str(), ios::binary | ios::out);
+	if(cuckooID == 1)
+            cuckoo.open(cuckoo2filenames[index][tableNum].c_str(), ios::binary | ios::out);
+	int entrySize = pow(2, tableNum);
+        int readPos = hash *(entrySize+1)* KEY_VALUE_SIZE;
+        cuckoo.seekg(readPos, ios::beg);
+        SeekG++;
+	
+	char* oldKey = new char[AES_KEY_SIZE];
+	prf_type keyw;
+	cuckoo.read(oldKey,AES_KEY_SIZE);
+        copy(oldKey+0, oldKey+KEY_VALUE_SIZE, keyw.begin());
+        readBytes +=AES_KEY_SIZE ;
+
+	vector<prf_type> results;
+	results.resize(entrySize);
+        int readLength = entrySize*AES_KEY_SIZE;
+	cout <<"["<<keyw.data()<<"]"<<endl;
+        cuckoo.seekg(readPos+AES_KEY_SIZE, ios::beg);
+	if(keyw != nullKey)
+	{
+	    cout <<"storage:insert in CT"<<endl;
+            char* keyValues = new char[readLength];
+            cuckoo.read(keyValues, readLength);
+            readBytes += readLength;
+            for (int i = 0; i < readLength /AES_KEY_SIZE ; i++) 
+	    {
+                prf_type tmp;
+                std::copy(keyValues + i*AES_KEY_SIZE, keyValues + i * AES_KEY_SIZE, tmp.begin());
+                if (tmp != nullKey)
+	        {
+                   results.push_back(tmp);
+                }
+            }
+	}
+	else
+	{
+            cout << "you can insert in CT"<<endl;
+	}
+	//if(keyw!=nullKey) cout <<"NOT NULL"<<endl;
+	auto result = make_pair(keyw , results);
+	return result;
 }
 
 /*

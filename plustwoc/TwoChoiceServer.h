@@ -16,10 +16,11 @@ public:
     TwoChoiceServer(int dataIndex, bool inMemory, bool overwrite, bool profile);
     void clear(int index);
     virtual ~TwoChoiceServer();
-    void storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers,vector<pair<string,vector<prf_type>>> cuckooCiphers, map<prf_type, prf_type> keywordCounters);
+    void storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers,vector<pair<pair<prf_type,prf_type>,pair<prf_type,vector<prf_type>>>> cuckooCiphers, map<prf_type, prf_type> keywordCounters);
     vector<prf_type> search(int dataIndex, prf_type tokkw, prf_type token, int & keywordCnt);
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
     vector<prf_type> getStash(int dataIndex);
+    pair<prf_type, vector<prf_type>> insertCuckooHT(int index, int tableNum, int hash, int cuckooID, prf_type keyw, vector<prf_type> fileids);
     //vector<prf_type> newsearch(int dataIndex , prf_type hashtoken, int keywordCnt, int pos);
 
 };
