@@ -50,7 +50,7 @@ TWOOBJECTFILES= \
 	${OBJECTDIR}/${TWO_CHOICE}/Utilities.o \
 	${OBJECTDIR}/${TWO_CHOICE}/logger.o \
 	${OBJECTDIR}/${TWO_CHOICE}/utils.o \
-	${OBJECTDIR}/main.o 
+	${OBJECTDIR}/twomain.o 
 
 #plus2 object files
 PLUSOBJECTFILES= \
@@ -152,10 +152,10 @@ ${OBJECTDIR}/${TWO_CHOICE}/logger.o: ${TWO_CHOICE}/logger.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${TWO_CHOICE}/logger.o ${TWO_CHOICE}/logger.cpp
 
-${OBJECTDIR}/main.o: main.cpp
+${OBJECTDIR}/twomain.o: twomain.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/twomain.o twomain.cpp
 
 ${OBJECTDIR}/${TWO_CHOICE}/utils.o: ${TWO_CHOICE}/utils.cpp
 	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}

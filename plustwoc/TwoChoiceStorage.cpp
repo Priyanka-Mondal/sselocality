@@ -1,5 +1,6 @@
 #include "TwoChoiceStorage.h"
 #include<string.h>
+#include<assert.h>
 
 TwoChoiceStorage::TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) 
 {
@@ -82,7 +83,7 @@ bool TwoChoiceStorage::setup(bool overwrite)
                     int maxSize = 2* pow(2,i);//numberOfBins[i] * sizeOfEachBin[i];
                 	for (int j = 0; j < maxSize; j++) 
 	        	{
-                        c11file.write((char*) nullKey.data(), AES_KEY_SIZE);
+	                        c11file.write((char*) nullKey.data(), AES_KEY_SIZE);
                 	}
                     c11file.close();
                 }
@@ -123,77 +124,43 @@ bool TwoChoiceStorage::setup(bool overwrite)
     }
 }
 
-/*
-void TwoChoiceStorage::insertCuckooHT(int index, vector<pair <pair<prf_type,prf_type>, pair<prf_type,vector<prf_type>>>> ciphers) 
-{
-	for(auto l : ciphers)
-	{
-		int size = l.second.second.size();
-		if(size != 0)
-		{
-		    int tablenum = ceil((float)log2(size));
-		    insertCuckoo(index,tablenum,l);
-		}
-	}
-}
-*/
-
-void TwoChoiceStorage::insertCuckoo(int index, int tablenum, pair <pair<prf_type,prf_type>, pair<prf_type,vector<prf_type>>> ciphers) 
-{
-      cout <<"CUCKOO TABLE:"<<index<<" "<< tablenum<<endl;
-      fstream cuckoo1(cuckoo1filenames[index][tablenum].c_str(), ios::binary | ios::out);
-      fstream cuckoo2(cuckoo2filenames[index][tablenum].c_str(), ios::binary | ios::out);
-      int entrySize = pow(2, tablenum);
-      if (cuckoo1.fail()) 
-      {
-          cout <<"Cuckoo Hash Table XX:"<<index<<endl;
-          cerr << "(Error in Cuckoo HT insert: " << strerror(errno)<<")"<<endl;
-      }
-      /*
-       * call the cuckoo hashing algo here, but read file instead
-       * /
-/*
-      unsigned char newRecord[AES_KEY_SIZE];
-      memset(newRecord, 0, AES_KEY_SIZE);
-      std::copy(ciphers.first.begin(), ciphers.first.end(), newRecord);
-      cuckoo1.write((char*) newRecord, AES_KEY_SIZE);
-      for (auto item : ciphers.second) 
-      {
-          unsigned char newRecord[AES_KEY_SIZE];
-          memset(newRecord, 0, AES_KEY_SIZE);
-          std::copy(item.begin(), item.end(), newRecord);
-          cuckoo1.write((char*) newRecord, AES_KEY_SIZE);
-      }
-      */
-      cuckoo1.close();
-}
 
 pair<prf_type, vector<prf_type>> TwoChoiceStorage::insertCuckooHT(int index,int tableNum,int hash,int cuckooID, prf_type keyword, vector<prf_type> fileids)
 {
 	fstream cuckoo;
 	if(cuckooID == 0)
-      	    cuckoo.open(cuckoo1filenames[index][tableNum].c_str(), ios::binary | ios::out);
-	if(cuckooID == 1)
-            cuckoo.open(cuckoo2filenames[index][tableNum].c_str(), ios::binary | ios::out);
+      	    cuckoo.open(cuckoo1filenames[index][tableNum].c_str(), ios::binary | ios::out | ios::in);
+      	  //cuckoo.open(cuckoo1filenames[index][tableNum].c_str(), ios::binary | ios::out|ios::in |ios::ate);
+	else if(cuckooID == 1)
+            cuckoo.open(cuckoo2filenames[index][tableNum].c_str(), ios::binary | ios::out | ios::in);
+
+	vector<prf_type> results;
+	prf_type keyw;
+        if (cuckoo.fail()) 
+	{
+	    cout <<"ERROR IN FILE READ"<<endl;
+            cerr << "Error in read: " << strerror(errno);
+        }
+
 	int entrySize = pow(2, tableNum);
-        int readPos = hash *(entrySize+1)* KEY_VALUE_SIZE;
+        int readPos = hash *(entrySize+1)* AES_KEY_SIZE;
         cuckoo.seekg(readPos, ios::beg);
         SeekG++;
 	
 	char* oldKey = new char[AES_KEY_SIZE];
-	prf_type keyw;
 	cuckoo.read(oldKey,AES_KEY_SIZE);
+	//cout <<"rp:"<<readPos<<" hash:"<<hash<<" entrySize:"<<entrySize<<endl;
+	//cout <<"index:"<<index<<endl;
         copy(oldKey+0, oldKey+KEY_VALUE_SIZE, keyw.begin());
+	delete oldKey;
         readBytes +=AES_KEY_SIZE ;
 
-	vector<prf_type> results;
 	results.resize(entrySize);
         int readLength = entrySize*AES_KEY_SIZE;
-	cout <<"["<<keyw.data()<<"]"<<endl;
+	//cout <<"["<<keyw.data()<<"]"<<" " <<"["<<nullKey.data()<<"]"<<endl;
         cuckoo.seekg(readPos+AES_KEY_SIZE, ios::beg);
 	if(keyw != nullKey)
 	{
-	    cout <<"storage:insert in CT"<<endl;
             char* keyValues = new char[readLength];
             cuckoo.read(keyValues, readLength);
             readBytes += readLength;
@@ -201,17 +168,31 @@ pair<prf_type, vector<prf_type>> TwoChoiceStorage::insertCuckooHT(int index,int 
 	    {
                 prf_type tmp;
                 std::copy(keyValues + i*AES_KEY_SIZE, keyValues + i * AES_KEY_SIZE, tmp.begin());
-                if (tmp != nullKey)
-	        {
+                //if (tmp != nullKey)
+	        //{
                    results.push_back(tmp);
-                }
+                //}
             }
 	}
 	else
 	{
-            cout << "you can insert in CT"<<endl;
+	    //cuckoo.clear();
+            //cout << "you can insert in CT"<<endl;
+            int readPos = hash *(entrySize+1)* AES_KEY_SIZE;
+            cuckoo.seekg(readPos, ios::beg);
+            SeekG++;
+            unsigned char newRecord[KEY_VALUE_SIZE];
+            memset(newRecord, 0, KEY_VALUE_SIZE);
+            std::copy(keyword.begin(), keyword.end(), newRecord);
+            cuckoo.write((char*) newRecord, AES_KEY_SIZE);
+	    for(auto c : fileids)
+	    {
+                memset(newRecord, 0, KEY_VALUE_SIZE);
+                std::copy(c.begin(), c.end(), newRecord);
+                cuckoo.write((char*) newRecord, AES_KEY_SIZE);
+	    }
 	}
-	//if(keyw!=nullKey) cout <<"NOT NULL"<<endl;
+	cuckoo.close();
 	auto result = make_pair(keyw , results);
 	return result;
 }
@@ -260,6 +241,50 @@ vector<prf_type> TwoChoiceStorage::getStash(int index)
       return results;
 }
 */
+
+vector<prf_type> TwoChoiceStorage::getCuckooHT(int index) 
+{
+      vector<prf_type> results;
+      for(int c = 0; c<2; c++ )
+      {
+	 for(int tn = 0; tn < index; tn++)
+	 {
+	    fstream cuckoo;
+	    if(c == 0)
+      	        cuckoo.open(cuckoo1filenames[index][tn].c_str(), ios::binary | ios::in | ios::ate);
+	    else
+      	        cuckoo.open(cuckoo2filenames[index][tn].c_str(), ios::binary | ios::in | ios::ate);
+      	    if (cuckoo.fail()) 
+           	cerr << "Error in read: " << strerror(errno);
+	    int entryNum = pow(2, (index-tn));
+	    int entrySize = pow(2, tn);
+      	    int size = cuckoo.tellg();
+            cuckoo.seekg(0, ios::beg);
+            char* keyValues = new char[size];
+      	    cuckoo.read(keyValues, size);
+	    for(int e = 0; e< entryNum; e++)
+	    {
+		for(int es = 0; es<=entrySize; es++)
+		{
+		    prf_type entry;
+          	    std::copy(keyValues+(e+1)*es*AES_KEY_SIZE, 
+				keyValues+(e+1)*es*AES_KEY_SIZE+AES_KEY_SIZE, entry.begin());
+		    if(es !=0 && entry != nullKey)
+		    {
+			results.push_back(entry);
+		    } 
+		    if(es == 0 && entry!=nullKey)
+		    	cout <<"=================================["<<entry.data()<<"]"<<endl;
+		}
+	    }
+      	    delete keyValues;
+            cuckoo.close();
+	 }
+      }
+      return results;
+}
+
+
 
 void TwoChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_type> > > ciphers) 
 {
@@ -398,6 +423,76 @@ void TwoChoiceStorage::clear(int index)
 TwoChoiceStorage::~TwoChoiceStorage() {
 }
 
+vector <prf_type> TwoChoiceStorage::cuckooSearch(int index, int tableNum, int h1, int h2)
+{
+    vector<prf_type> results;
+    
+    std::fstream cuckoo1(cuckoo1filenames[index][tableNum].c_str(), ios::binary | ios::in | ios::ate);
+    if (cuckoo1.fail()) 
+    {
+        cerr << "Error in read: " << strerror(errno);
+    }
+    
+    int size = cuckoo1.tellg();
+    int entrySize = pow(2, tableNum);
+    int readPos = h1*entrySize*AES_KEY_SIZE;
+    readPos = readPos+ AES_KEY_SIZE;
+    int readLength = entrySize*AES_KEY_SIZE;
+    cuckoo1.seekg(readPos,ios::beg);
+    SeekG++;
+    char* keyValues = new char[readLength];
+    cuckoo1.read(keyValues, readLength);
+    readBytes += readLength;
+    
+    
+    for (int i = 0; i < readLength / AES_KEY_SIZE; i++) 
+    {
+        prf_type tmp;
+	assert(readPos+i*AES_KEY_SIZE <size);
+        std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
+        if (tmp != nullKey) 
+	{
+            results.push_back(tmp);
+		cout <<"SIZE2:"<<results.size()<<endl;
+        }
+    }
+    cuckoo1.close();
+    
+    delete keyValues;
+    
+    std::fstream cuckoo2(cuckoo2filenames[index][tableNum].c_str(), ios::binary | ios::in | ios:: ate);
+    if (cuckoo2.fail()) 
+    {
+	    cout <<"FAIL FAIL FAIL:"<<endl;
+        cerr << "Error in read: " << strerror(errno);
+    }
+
+    size = cuckoo2.tellg();
+    readPos = h2*entrySize*AES_KEY_SIZE;
+    readPos = readPos+ AES_KEY_SIZE;
+    readLength = entrySize*AES_KEY_SIZE;
+    cuckoo2.seekg(readPos,ios::beg);
+    SeekG++;
+    char* keyValue = new char[readLength];
+    cuckoo2.read(keyValue, readLength);
+    readBytes += readLength;
+    for (int i = 0; i < readLength / AES_KEY_SIZE; i++) 
+    {
+        prf_type tmp;
+	assert(readPos+i*AES_KEY_SIZE <size);
+        std::copy(keyValue + i * AES_KEY_SIZE, keyValue + i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
+        if (tmp != nullKey) 
+	{
+		cout <<"SIZE2:"<<results.size()<<endl;
+            results.push_back(tmp);
+        }
+    }
+    delete keyValue;
+    cuckoo2.close();
+    
+    cout <<"results size:"<<results.size()<<endl;
+    return results;
+}
 vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt) 
 {
 	/*

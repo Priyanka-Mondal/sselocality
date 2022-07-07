@@ -22,11 +22,10 @@ void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, p
 
 pair<prf_type, vector<prf_type>> TwoChoiceServer::insertCuckooHT(int index, int tableNum, int hash, int cuckooID, prf_type keyw, vector<prf_type> fileids)
 {
-	cout <<"server:insert in CT"<<endl;
 	return storage->insertCuckooHT(index, tableNum, hash, cuckooID, keyw, fileids);
 }
 
-vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type hashtoken, int& keywordCnt) 
+vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type hashtoken, int& keywordCnt, int num) 
 {
     keyworkCounters->seekgCount = 0;
     storage->readBytes = 0;
@@ -55,6 +54,8 @@ vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type
         keywordCnt = *(int*) (&(plaintext[0]));
         curToken = hashtoken;
         memset(cntstr, 0, AES_KEY_SIZE);
+	if(keywordCnt > num)
+		keywordCnt = num;
         *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
         keywordMapKey = Utilities::generatePRF(cntstr, curToken.data());
         result = storage->find(dataIndex, keywordMapKey, keywordCnt);
@@ -88,11 +89,34 @@ vector<pair<prf_type, prf_type> > TwoChoiceServer::getAllData(int dataIndex)
     return storage->getAllData(dataIndex);
 }
 
+vector<prf_type> TwoChoiceServer::getCuckooHT(int dataIndex) 
+{
+    return storage->getCuckooHT(dataIndex);
+}
 vector<prf_type> TwoChoiceServer::getStash(int dataIndex) 
 {
     //return storage->getStash(dataIndex);
 }
 
+vector<prf_type> TwoChoiceServer::cuckooSearch(int index, int tableNum, prf_type hashtoken1, prf_type hashtoken2)
+{
+	vector<prf_type> results;
+        unsigned char cntstr[AES_KEY_SIZE];
+	int entryNum = pow(2,(index-tableNum));
+        prf_type mapKey;
+        memset(cntstr, 0, AES_KEY_SIZE);
+        *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+        mapKey = Utilities::generatePRF(cntstr, hashtoken1.data());
+        unsigned char* hash1 = Utilities::sha256((char*) (mapKey.data()), AES_KEY_SIZE);
+    	int h1 = (unsigned int) (*((int*) hash1)) % entryNum;
+
+        mapKey = Utilities::generatePRF(cntstr, hashtoken2.data());
+        unsigned char* hash2 = Utilities::sha256((char*) (mapKey.data()), AES_KEY_SIZE);
+    	int h2 = (unsigned int) (*((int*) hash1)) % entryNum;
+	results = storage->cuckooSearch(index, tableNum, h1, h2);
+	vector<prf_type> results1;
+	return results1;
+}
 void TwoChoiceServer::clear(int index) 
 {
     storage->clear(index);

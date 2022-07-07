@@ -1,4 +1,4 @@
-Total number of keyword-fileID pairs:3193
+Total number of keyword-fileID pairs:201
 ===================RUNNING SDa+TwoChoicePLUSPLUS=====================
 Level:0 number of bins:1 size of each bin:3
 Level:1 number of bins:2 size of each bin:3
@@ -9,15 +9,21 @@ Level:5 number of bins:16 size of each bin:9
 Level:6 number of bins:32 size of each bin:11
 Level:7 number of bins:32 size of each bin:13
 Level:8 number of bins:64 size of each bin:15
-Level:9 number of bins:128 size of each bin:16
-Level:10 number of bins:256 size of each bin:18
-Level:11 number of bins:512 size of each bin:19
-Level:12 number of bins:1024 size of each bin:20
 Start of Static, size of test suits:1
 *************************************************************************
-SIZE of testcases:1
+SIZE of testcases:2
  Total keywords:1/5
  Total keywords:2/5
-server:insert in CT
-[ˆ;ÿ}"]
-storage:insert in CT
+ Total keywords:3/5
+Cuckoo overflow: write in stash:1 index:4 tn:4
+Cuckoo overflow: write in stash:1 index:4 tn:4
+Cuckoo overflow: write in stash:1 index:4 tn:4
+ Total keywords:4/5
+Cuckoo overflow: write in stash:1 index:4 tn:4
+Cuckoo overflow: write in stash:1 index:5 tn:5
+Cuckoo overflow: write in stash:1 index:4 tn:4
+ Total keywords:5/5
+------------------------------------------------------------------------------
+Result of Operations for DB Size 500
+Search for Keyword With [17] Results and [5] Deletions:G&fzw#r
+searching for:G&fzw#r

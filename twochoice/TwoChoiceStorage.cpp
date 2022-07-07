@@ -112,6 +112,7 @@ vector<prf_type> TwoChoiceStorage::getStash(int index)
           cerr << "Error in read: " << strerror(errno);
       int size = file.tellg();
       file.seekg(0, ios::beg);
+      SeekG++;
       char* keyValues = new char[size];
       file.read(keyValues, size);
       file.close();

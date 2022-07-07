@@ -49,6 +49,8 @@ public:
     pair<prf_type, vector<prf_type>> insertCuckooHT(int index, int tableNum, int hash, int cuckooID, prf_type keyw, vector<prf_type> fileids);
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
     vector<prf_type> getStash(int index); 
+    vector<prf_type> getCuckooHT(int index); 
+    vector <prf_type> cuckooSearch(int index, int tableNum, int h1, int h2);
     void clear(int index);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
     virtual ~TwoChoiceStorage();

@@ -121,7 +121,7 @@ int main(int argc, char** argv)
 
 
 
-/*
+
         for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	{
             cout << "------------------------------------------------------------------------------" << endl;
@@ -135,7 +135,7 @@ int main(int argc, char** argv)
                 cout << "Number of return item:[" << res.size()<<"]" << endl;
         }
         cout << "*********************************************************************************" << endl;
-*/
+
     }
     return 0;
 }
