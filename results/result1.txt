@@ -1,4 +1,4 @@
-Total number of keyword-fileID pairs:201
+Total number of keyword-fileID pairs:280
 ===================RUNNING SDa+TwoChoicePLUSPLUS=====================
 Level:0 number of bins:1 size of each bin:3
 Level:1 number of bins:2 size of each bin:3
@@ -21,9 +21,21 @@ Cuckoo overflow: write in stash:1 index:4 tn:4
  Total keywords:4/5
 Cuckoo overflow: write in stash:1 index:4 tn:4
 Cuckoo overflow: write in stash:1 index:5 tn:5
-Cuckoo overflow: write in stash:1 index:4 tn:4
  Total keywords:5/5
+Cuckoo overflow: write in stash:1 index:4 tn:4
+Cuckoo overflow: write in stash:1 index:4 tn:4
+Cuckoo overflow: write in stash:1 index:5 tn:5
+Cuckoo overflow: write in stash:1 index:4 tn:4
+Cuckoo overflow: write in stash:1 index:4 tn:4
 ------------------------------------------------------------------------------
 Result of Operations for DB Size 500
-Search for Keyword With [17] Results and [5] Deletions:G&fzw#r
-searching for:G&fzw#r
+Search for Keyword With [17] Results and [5] Deletions:YqxRqtP
+index:1 searching for:YqxRqtP
+results size:0
+CLIENT:0
+at index:1 SEARCH DONE:YqxRqtP/1
+index:2 searching for:YqxRqtP
+results size:0
+CLIENT:0
+at index:2 SEARCH DONE:YqxRqtP/4
+index:3 searching for:YqxRqtP

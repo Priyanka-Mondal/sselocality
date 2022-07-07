@@ -164,10 +164,10 @@ pair<prf_type, vector<prf_type>> TwoChoiceStorage::insertCuckooHT(int index,int 
             char* keyValues = new char[readLength];
             cuckoo.read(keyValues, readLength);
             readBytes += readLength;
-            for (int i = 0; i < readLength /AES_KEY_SIZE ; i++) 
+            for (int i = 0; i < entrySize ; i++) 
 	    {
                 prf_type tmp;
-                std::copy(keyValues + i*AES_KEY_SIZE, keyValues + i * AES_KEY_SIZE, tmp.begin());
+                std::copy(keyValues + i*AES_KEY_SIZE, keyValues + i * AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
                 //if (tmp != nullKey)
 	        //{
                    results.push_back(tmp);
@@ -433,9 +433,8 @@ vector <prf_type> TwoChoiceStorage::cuckooSearch(int index, int tableNum, int h1
         cerr << "Error in read: " << strerror(errno);
     }
     
-    int size = cuckoo1.tellg();
     int entrySize = pow(2, tableNum);
-    int readPos = h1*entrySize*AES_KEY_SIZE;
+    int readPos = h1*(entrySize+1)*AES_KEY_SIZE;
     readPos = readPos+ AES_KEY_SIZE;
     int readLength = entrySize*AES_KEY_SIZE;
     cuckoo1.seekg(readPos,ios::beg);
@@ -444,11 +443,9 @@ vector <prf_type> TwoChoiceStorage::cuckooSearch(int index, int tableNum, int h1
     cuckoo1.read(keyValues, readLength);
     readBytes += readLength;
     
-    
     for (int i = 0; i < readLength / AES_KEY_SIZE; i++) 
     {
         prf_type tmp;
-	assert(readPos+i*AES_KEY_SIZE <size);
         std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
         if (tmp != nullKey) 
 	{
@@ -467,8 +464,7 @@ vector <prf_type> TwoChoiceStorage::cuckooSearch(int index, int tableNum, int h1
         cerr << "Error in read: " << strerror(errno);
     }
 
-    size = cuckoo2.tellg();
-    readPos = h2*entrySize*AES_KEY_SIZE;
+    readPos = h2*(entrySize+1)*AES_KEY_SIZE;
     readPos = readPos+ AES_KEY_SIZE;
     readLength = entrySize*AES_KEY_SIZE;
     cuckoo2.seekg(readPos,ios::beg);
@@ -479,7 +475,6 @@ vector <prf_type> TwoChoiceStorage::cuckooSearch(int index, int tableNum, int h1
     for (int i = 0; i < readLength / AES_KEY_SIZE; i++) 
     {
         prf_type tmp;
-	assert(readPos+i*AES_KEY_SIZE <size);
         std::copy(keyValue + i * AES_KEY_SIZE, keyValue + i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
         if (tmp != nullKey) 
 	{

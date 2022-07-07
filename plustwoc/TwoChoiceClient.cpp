@@ -201,8 +201,8 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
         *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
         mapKey = Utilities::generatePRF(cntstr, K.data());
         prf_type valueTmp, totalTmp;
-        *(int*) (&(valueTmp[0])) = newsize;//pair.second.size(); 
-        //*(int*) (&(valueTmp[0])) = pair.second.size(); 
+        //*(int*) (&(valueTmp[0])) = newsize;//pair.second.size(); 
+        *(int*) (&(valueTmp[0])) = pair.second.size(); 
         mapValue = Utilities::encode(valueTmp.data(), K.data());
         keywordCntCiphers[mapKey] = mapValue; 
        
@@ -296,7 +296,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 
 vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned char* key) 
 {
-	cout<<"searching for:"<<keyword<<endl;
+    cout<<"index:"<<index<<" searching for:"<<keyword<<endl;
     double searchPreparation = 0, searchDecryption = 0;
     int flag = 0;
     if (profile) 
@@ -336,20 +336,6 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
        	    			flag++;
        	 		}
        		}
-		if(flag !=0 && cuckooCiphers.size()>0)//found in one superBin => NOT found in the other
-		{
-       			for (auto item : cuckooCiphers) 
-       			{
-       		 		prf_type plaintext;
-       		 		Utilities::decode(item, plaintext, key);
-       		 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-       				{
-       		     			finalRes.push_back(plaintext);
-       		    			flag++;
-       		 		}
-				cout <<"cuckoo data:"<<plaintext.data()<<endl;
-       			}
-		}
        	}
     totalCommunication += (ciphers.size() + cuckooCiphers.size())* sizeof(prf_type);
     }
@@ -362,7 +348,20 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
         prf_type hashtoken2 = Utilities::encode(newkeyword, key);
         cuckooCiphers = server->cuckooSearch(index, tableNum, hashtoken1, hashtoken2);
 	cout <<"CLIENT:"<<cuckooCiphers.size()<<endl;
-    cout<<"ai index:"<<index <<" SEARCH DONE:"<<keyword<<"/"<<finalRes.size()<<endl;
+	if(cuckooCiphers.size()>0)//found in one superBin => NOT found in the other
+        {
+       		for (auto item : cuckooCiphers) 
+       		{
+        		prf_type plaintext;
+        		Utilities::decode(item, plaintext, key);
+        		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+       			{
+            			finalRes.push_back(plaintext);
+        		}
+       			cout <<"cuckoo data:"<<plaintext.data()<<endl;
+       		}
+        }
+    cout<<"at index:"<<index <<" SEARCH DONE:"<<keyword<<"/"<<finalRes.size()<<endl;
     return finalRes;
 }
 
