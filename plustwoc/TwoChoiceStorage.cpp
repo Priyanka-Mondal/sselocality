@@ -11,11 +11,12 @@ TwoChoiceStorage::TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddr
     memset(nullKey.data(), 0, AES_KEY_SIZE);
     for (int i = 0; i < dataIndex; i++) 
     {
-        int curNumberOfBins = 
-	     i>3 ? ((int)ceil((float) (pow(2,i)/((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i))))))))) : pow(2,i);
-	//in twochoice they assume #of Bins in power of 2
+        //int curNumberOfBins = 
+	  //   i>3 ? ((int)ceil((float) (pow(2,i)/((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i))))))))) : pow(2,i);
+        int curNumberOfBins = i > 4 ? ((int) ceil((float) pow(2, i) / (log2(log2(log2(pow(2,i))))))) : pow(2,i);
 	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins))); 
-        int curSizeOfEachBin = i > 3 ? ceil(((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*3)) : 3;
+        //int curSizeOfEachBin = i > 3 ? 3*ceil(((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i))))))) : 3;
+        int curSizeOfEachBin = i > 4 ? 3*ceil((log2(log2(log2(pow(2,i)))))) : 3;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 	cout<<"Level:"<<i<<" number of bins:"<<curNumberOfBins<<" size of each bin:"<<curSizeOfEachBin<<endl;
@@ -186,6 +187,21 @@ pair<prf_type, vector<prf_type>> TwoChoiceStorage::insertCuckooHT(int index,int 
 }
 
 
+
+void TwoChoiceStorage::insertCuckooStash(int index, int tableNum, vector<prf_type> ctCiphers)
+{
+      fstream file(stashfilenames[index][tableNum].c_str(), ios::binary | ios::out | ios::ate);
+      if (file.fail()) 
+          cerr << "(Error in Cuckoo Stash insert: " << strerror(errno)<<")"<<endl;
+      for (auto item : ctCiphers) 
+      {
+          unsigned char newRecord[AES_KEY_SIZE];
+          memset(newRecord, 0, AES_KEY_SIZE);
+          std::copy(item.begin(), item.end(), newRecord);
+          file.write((char*) newRecord, AES_KEY_SIZE);
+      }
+      file.close();
+}
 void TwoChoiceStorage::insertStash(int index, vector<prf_type> ciphers) 
 {
       fstream file(stashes[index].c_str(), ios::binary | ios::out);
@@ -233,9 +249,9 @@ vector<prf_type> TwoChoiceStorage::getStash(int index)
 vector<prf_type> TwoChoiceStorage::getCuckooHT(int index) 
 {
       vector<prf_type> results;
-      for(int c = 0; c<2; c++ )
+      for(int tn = 0; tn < index; tn++)
       {
-	 for(int tn = 0; tn < index; tn++)
+         for(int c = 0; c<2; c++ )
 	 {
 	    fstream cuckoo(cuckoofilenames[index][tn][c].c_str(), ios::binary | ios::in | ios::ate);
       	    if (cuckoo.fail()) 
@@ -264,6 +280,25 @@ vector<prf_type> TwoChoiceStorage::getCuckooHT(int index)
       	    delete keyValues;
             cuckoo.close();
 	 }
+          fstream file(stashfilenames[index][tn].c_str(), ios::binary | ios::in | ios::ate);
+          if (file.fail()) 
+              cerr << "Error in read: " << strerror(errno);
+          int size = file.tellg();
+          file.seekg(0, ios::beg);
+          char* keyValues = new char[size];
+          file.read(keyValues, size);
+          file.close();
+
+          for (int i = 0; i < size/AES_KEY_SIZE ; i++) 
+          {
+              prf_type tmp;
+              std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
+              if (tmp != nullKey) 
+              {
+                  results.push_back(tmp);
+              }
+          }
+          delete keyValues;
       }
       return results;
 }
@@ -429,136 +464,107 @@ vector <prf_type> TwoChoiceStorage::cuckooSearch(int index, int tableNum, int h[
         }
         cuckoo.close();
    }
-   //cout <<"results size:"<<results.size()<<endl;
+      fstream file(stashfilenames[index][tableNum].c_str(), ios::binary | ios::in | ios::ate);
+      if (file.fail()) 
+          cerr << "Error in read: " << strerror(errno);
+      int size = file.tellg();
+      file.seekg(0, ios::beg);
+      char* keyValues = new char[size];
+      file.read(keyValues, size);
+      file.close();
+
+      for (int i = 0; i < size/AES_KEY_SIZE ; i++) 
+      {
+          prf_type tmp;
+          std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
+          if (tmp != nullKey) 
+          {
+              results.push_back(tmp);
+          }
+      }
+      delete keyValues;
    return results;
 }
 vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt) 
 {
-	/*
-    if (inMemoryStorage) 
-    {
-        vector<prf_type> results;
-
-        unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
-        if (cnt >= numberOfBins[index]) {
-            for (int i = 0; i < numberOfBins[index] * sizeOfEachBin[index]; i++) 
-	    {
-                if (data[index][i].first != nullKey) 
-		{
-                    results.push_back(data[index][i].second);
-                }
-            }
-        } 
-	else 
-	{
-            int pos = (unsigned int) (*((int*) hash)) % numberOfBins[index];
-            int readPos = pos * sizeOfEachBin[index];
-            int fileLength = numberOfBins[index] * sizeOfEachBin[index];
-            int remainder = fileLength - readPos;
-            int totalReadLength = cnt * sizeOfEachBin[index];
-            int readLength = 0;
-            if (totalReadLength > remainder) 
-	    {
-                readLength = remainder;
-                totalReadLength -= remainder;
-            } else {
-                readLength = totalReadLength;
-                totalReadLength = 0;
-            }
-            for (int i = 0; i < readLength; i++) {
-                if (data[index][i + readPos].first != nullKey) {
-                    results.push_back(data[index][i + readPos].second);
-                }
-            }
-            if (totalReadLength > 0) {
-                readLength = totalReadLength;
-                for (int i = 0; i < readLength; i++) {
-                    if (data[index][i].first != nullKey) {
-                        results.push_back(data[index][i].second);
-                    }
-                }
-            }
-        }
-        return results;
-    } else {*/
-            vector<prf_type> results;
-            std::fstream file(filenames[index].c_str(), ios::binary | ios::in);
-            if (file.fail()) 
-                cerr << "Error in read: " << strerror(errno);
-            unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
-            if (cnt >= numberOfBins[index]) 
-	    {
-                //read everything
-                int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;
-                char* keyValues = new char[fileLength];
-                file.read(keyValues, fileLength);
-                SeekG++;
-                readBytes += fileLength;
-                for (int i = 0; i < numberOfBins[index] * sizeOfEachBin[index]; i++) {
-                    prf_type tmp, restmp;
-                    //                    std::copy(keyValues + i*KEY_VALUE_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
-                    std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValues + i * KEY_VALUE_SIZE + (2 * AES_KEY_SIZE), restmp.begin());
-                    if (restmp != nullKey) {
-                        results.push_back(restmp);
-                    }
-                }
-            } 
-	    else 
-	    {
-        	int superBins = ceil((float) numberOfBins[index]/cnt); 
-                int pos = (unsigned int) (*((int*) hash)) % superBins; //numberOfBins[index];
-                int readPos = pos *cnt* KEY_VALUE_SIZE * sizeOfEachBin[index];
-                int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;
-                int remainder = fileLength - readPos;
-                int totalReadLength = cnt * KEY_VALUE_SIZE * sizeOfEachBin[index];
-                int readLength = 0;
-                if (totalReadLength > remainder) 
-		{
-                    readLength = remainder;
-                    totalReadLength -= remainder;
-                } 
-		else 
-		{
-                    readLength = totalReadLength;
-                    totalReadLength = 0;
-                }
-                file.seekg(readPos, ios::beg);
-                SeekG++;
-                char* keyValues = new char[readLength];
-                file.read(keyValues, readLength);
-                readBytes += readLength;
-                for (int i = 0; i < readLength / KEY_VALUE_SIZE; i++) 
-		{
-                    prf_type tmp, restmp;
-                    std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, 
-				    keyValues + i * KEY_VALUE_SIZE + (2 * AES_KEY_SIZE), restmp.begin());
-                    if (restmp != nullKey) 
-		    {
-                        results.push_back(restmp);
-                    }
-                }
-                if (totalReadLength > 0) 
-		{
-                    readLength = totalReadLength;
-                    file.seekg(0, ios::beg);
-                    char* keyValues = new char[readLength];
-                    file.read(keyValues, readLength);
-                    readBytes += readLength;
-                    SeekG++;
-                    for (int i = 0; i < readLength / KEY_VALUE_SIZE; i++) 
-		    {
-                        prf_type tmp, restmp;
-                        std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, 
-				keyValues + i * KEY_VALUE_SIZE + (2 * AES_KEY_SIZE), restmp.begin());
-                        if (restmp != nullKey) 
-			{
-                            results.push_back(restmp);
-                        }
-                    }
-                }
-            }
-            file.close();
-            return results;
+     vector<prf_type> results;
+     std::fstream file(filenames[index].c_str(), ios::binary | ios::in);
+     if (file.fail()) 
+         cerr << "Error in read: " << strerror(errno);
+     unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
+     if (cnt >= numberOfBins[index]) 
+     {
+         //read everything
+         int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;
+         char* keyValues = new char[fileLength];
+         file.read(keyValues, fileLength);
+         SeekG++;
+         readBytes += fileLength;
+         for (int i = 0; i < numberOfBins[index] * sizeOfEachBin[index]; i++) {
+             prf_type tmp, restmp;
+             //                    std::copy(keyValues + i*KEY_VALUE_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
+             std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValues + i * KEY_VALUE_SIZE + (2 * AES_KEY_SIZE), restmp.begin());
+             if (restmp != nullKey) {
+                 results.push_back(restmp);
+             }
+         }
+     } 
+     else 
+     {
+         int superBins = ceil((float) numberOfBins[index]/cnt); 
+         int pos = (unsigned int) (*((int*) hash)) % superBins; //numberOfBins[index];
+         int readPos = pos *cnt* KEY_VALUE_SIZE * sizeOfEachBin[index];
+         int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;
+         int remainder = fileLength - readPos;
+         int totalReadLength = cnt * KEY_VALUE_SIZE * sizeOfEachBin[index];
+         int readLength = 0;
+         if (totalReadLength > remainder) 
+         {
+             readLength = remainder;
+             totalReadLength -= remainder;
+         } 
+         else 
+         {
+             readLength = totalReadLength;
+             totalReadLength = 0;
+         }
+         file.seekg(readPos, ios::beg);
+         SeekG++;
+         char* keyValues = new char[readLength];
+         file.read(keyValues, readLength);
+         readBytes += readLength;
+         for (int i = 0; i < readLength / KEY_VALUE_SIZE; i++) 
+         {
+             prf_type tmp, restmp;
+             std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, 
+         		    keyValues + i * KEY_VALUE_SIZE + (2 * AES_KEY_SIZE), restmp.begin());
+             if (restmp != nullKey) 
+             {
+                 results.push_back(restmp);
+             }
+         }
+         if (totalReadLength > 0) 
+         {
+             readLength = totalReadLength;
+             file.seekg(0, ios::beg);
+             char* keyValues = new char[readLength];
+             file.read(keyValues, readLength);
+             readBytes += readLength;
+             SeekG++;
+             for (int i = 0; i < readLength / KEY_VALUE_SIZE; i++) 
+             {
+                 prf_type tmp, restmp;
+                 std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, 
+         		keyValues + i * KEY_VALUE_SIZE + (2 * AES_KEY_SIZE), restmp.begin());
+                 if (restmp != nullKey) 
+         	{
+                     results.push_back(restmp);
+                 }
+             }
+         }
+     }
+     file.close();
+     return results;
 }
 
 

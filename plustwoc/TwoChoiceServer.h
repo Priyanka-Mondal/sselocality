@@ -23,6 +23,7 @@ public:
     vector<prf_type> getStash(int dataIndex);
     pair<prf_type, vector<prf_type>> insertCuckooHT(int index, int tableNum, int hash, int cuckooID, prf_type keyw, vector<prf_type> fileids);
     vector<prf_type> cuckooSearch(int index, int tableNum, prf_type hashtoken1, prf_type hashtoken2);
+    void insertCuckooStash(int index, int tableNum, vector<prf_type> ctCiphers);
 };
 
 #endif /* TWOCHOICESERVER_H */

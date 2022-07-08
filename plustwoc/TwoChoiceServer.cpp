@@ -97,6 +97,10 @@ vector<prf_type> TwoChoiceServer::getStash(int dataIndex)
 {
     return storage->getStash(dataIndex);
 }
+void TwoChoiceServer::insertCuckooStash(int index, int tableNum, vector<prf_type> ctCiphers)
+{
+    storage->insertCuckooStash(index, tableNum, ctCiphers);
+}
 
 vector<prf_type> TwoChoiceServer::cuckooSearch(int index, int tableNum, prf_type hashtoken1, prf_type hashtoken2)
 {

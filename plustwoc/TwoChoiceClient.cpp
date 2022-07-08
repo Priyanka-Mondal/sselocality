@@ -22,10 +22,12 @@ TwoChoiceClient::TwoChoiceClient(int numOfDataSets, bool inMemory, bool overwrit
     for (int i = 0; i < numOfDataSets; i++) //why not <=
     {
         exist.push_back(false);
-        int curNumberOfBins = i > 3 ? ((int) ceil((float) pow(2, i) / (log2(log2(pow(2,i)))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
+        int curNumberOfBins = i > 4 ? ((int) ceil((float) pow(2, i) / (log2(log2(log2(pow(2,i))))))) : pow(2,i);
 	//in twochoice they assume #of Bins in power of 2
 	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins)));
-     int curSizeOfEachBin = i > 3 ? ceil((log2(log2(pow(2,i)))*(log2(log2(log2(pow(2,i)))))*3)) : 3;
+     //int curSizeOfEachBin = i > 3 ? 3*ceil((log2(log2(pow(2,i)))*(log2(log2(log2(pow(2,i))))))) : 3;
+     int curSizeOfEachBin = i > 4 ? 3*ceil((log2(log2(log2(pow(2,i)))))) : 3;
+
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
     }
@@ -88,12 +90,34 @@ void TwoChoiceClient::writeToStash(int pss, int mpl, vector<prf_type> fileids, u
 	}
 }
 
+
+void TwoChoiceClient::writeToCuckooStash(vector<prf_type> fileids,int cuckooID,int cnt,int index, int tableNum, unsigned char* key)
+{
+	int entrySize = pow(2, tableNum);
+	vector<prf_type> ctCiphers;
+	for (auto c : fileids) 
+	{
+            prf_type value;
+            value = Utilities::encode(c.data(), key);
+            ctCiphers.push_back(value);
+	}
+	if(fileids.size()<entrySize)
+	{
+    	    prf_type dummy;
+    	    memset(dummy.data(), 0, AES_KEY_SIZE);
+	    for(int i = fileids.size(); i<entrySize ; i++)
+		ctCiphers.push_back(dummy);
+	}
+	server->insertCuckooStash(index,tableNum,ctCiphers);
+}
+
 void TwoChoiceClient::place(string keyword,vector<prf_type> fileids,int cuckooID,int cnt,int index, int tableNum, unsigned char* key)
 {
 	cout <<index<<"/"<<tableNum<<"/"<<cnt<<endl;
 	if(cnt == (pow(2,index-tableNum))+1) // check this condition
 	{
 	    cout <<"Cuckoo overflow: write in suckoo stash:"<<cnt<<" index:"<<index<<" tn:"<<tableNum<<endl;
+	    writeToCuckooStash(fileids, cuckooID, cnt, index, tableNum, key);
 	    return;
 	}
 	int entrySize = pow(2, tableNum);
@@ -220,38 +244,38 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
     
 	if(fullness[cipherIndex]<sizeOfEachBin[index])
 	{
-	for (unsigned int i = 0; i < pss; i++) 
-	{
-            prf_type mapKey, mapValue;
-            unsigned char cntstr[AES_KEY_SIZE];
-            memset(cntstr, 0, AES_KEY_SIZE);
-            *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
-            mapKey = Utilities::generatePRF(cntstr, K.data());
-            mapValue = Utilities::encode(pair.second[i].data(), key);
-
-            auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
-            ciphers[cipherIndex].push_back(p);
-
-	    if(fullness.find(cipherIndex) == fullness.end())
-		    fullness[cipherIndex] = 1;
-	    else
-	    	    fullness[cipherIndex] = fullness[cipherIndex]+1;
-            cipherIndex++;
-        }
-	for(int i = pss; i<newsize; i++)
-	{
-    		prf_type dummy;
-    		memset(dummy.data(), 0, AES_KEY_SIZE);
-    		auto dummypair = std::pair<prf_type, prf_type>(dummy, dummy);
-            	ciphers[cipherIndex].push_back(dummypair);
-	    	fullness[cipherIndex] = fullness[cipherIndex]+1;
-            	cipherIndex++;
-	}
-    }
-    else
-    {
-	    writeToCuckooHT(index, newsize,pair.first,pair.second, key);
-    }
+        	for (unsigned int i = 0; i < pss; i++) 
+        	{
+                    prf_type mapKey, mapValue;
+                    unsigned char cntstr[AES_KEY_SIZE];
+                    memset(cntstr, 0, AES_KEY_SIZE);
+                    *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
+                    mapKey = Utilities::generatePRF(cntstr, K.data());
+                    mapValue = Utilities::encode(pair.second[i].data(), key);
+        
+                    auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
+                    ciphers[cipherIndex].push_back(p);
+        
+        	    if(fullness.find(cipherIndex) == fullness.end())
+        		    fullness[cipherIndex] = 1;
+        	    else
+        	    	    fullness[cipherIndex] = fullness[cipherIndex]+1;
+                    cipherIndex++;
+                }
+        	for(int i = pss; i<newsize; i++)
+        	{
+            		prf_type dummy;
+            		memset(dummy.data(), 0, AES_KEY_SIZE);
+            		auto dummypair = std::pair<prf_type, prf_type>(dummy, dummy);
+                    	ciphers[cipherIndex].push_back(dummypair);
+        	    	fullness[cipherIndex] = fullness[cipherIndex]+1;
+                    	cipherIndex++;
+        	}
+         }
+         else
+         {
+	        writeToCuckooHT(index, newsize,pair.first,pair.second, key);
+         }
     }
     prf_type dummy;
     memset(dummy.data(), 0, AES_KEY_SIZE);
@@ -349,7 +373,7 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
         newkeyword = keyword;
         newkeyword = newkeyword.append("1");
         prf_type hashtoken2 = Utilities::encode(newkeyword, key);
-        cuckooCiphers = server->cuckooSearch(index, tableNum, hashtoken1, hashtoken2);
+        cuckooCiphers = server->cuckooSearch(index, tableNum, hashtoken1, hashtoken2); // also searche suckoo stash
         if(cuckooCiphers.size()>0)
         {
         	for (auto item : cuckooCiphers) 
@@ -373,7 +397,7 @@ vector<prf_type> TwoChoiceClient::getAllData(int index, unsigned char* key)
     vector<prf_type> finalRes = vector<prf_type>();
     auto ciphers = server->getAllData(index);
     vector<prf_type> stashCiphers = server->getStash(index);
-    vector<prf_type> cuckooCiphers = server->getCuckooHT(index);
+    vector<prf_type> cuckooCiphers = server->getCuckooHT(index); // also fetches the cuckoo stash
 
     for (auto cipher : ciphers) 
     {
