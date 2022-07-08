@@ -167,7 +167,7 @@ vector<int> Amortized::search(string keyword)
     {
         prf_type decodedString = *i;
         int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
-        remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
+        remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1); //del gives -1
     }
     for (auto const& cur : remove) 
     {

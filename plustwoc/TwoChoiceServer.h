@@ -4,10 +4,11 @@
 #include "TwoChoiceStorage.h"
 #include "Storage.h"
 
-class TwoChoiceServer {
+class TwoChoiceServer 
+{
 private:
     TwoChoiceStorage* storage;
-    Storage* keyworkCounters;
+    Storage* keywordCounters;
     void getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result);
     int numberOfBins, sizeOfEachBin;
     bool profile = false;
@@ -21,7 +22,7 @@ public:
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
     vector<prf_type> getCuckooHT(int dataIndex);
     vector<prf_type> getStash(int dataIndex);
-    pair<prf_type, vector<prf_type>> insertCuckooHT(int index, int tableNum, int hash, int cuckooID, prf_type keyw, vector<prf_type> fileids);
+    pair<prf_type, vector<prf_type>> insertCuckooHT(int index, int tableNum, int cuckooID, int hash, prf_type keyw, vector<prf_type> fileids);
     vector<prf_type> cuckooSearch(int index, int tableNum, prf_type hashtoken1, prf_type hashtoken2);
     void insertCuckooStash(int index, int tableNum, vector<prf_type> ctCiphers);
 };
