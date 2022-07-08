@@ -72,7 +72,7 @@ bool TwoChoiceStorage::setup(bool overwrite)
 		    {
                         cerr << "Error: " << strerror(errno);
                     }
-                    int maxSize = numberOfBins[i] * sizeOfEachBin[i];
+                    int maxSize = pow(2,i);//numberOfBins[i] * sizeOfEachBin[i];
                     for (int j = 0; j < maxSize; j++) 
 		    {
                         sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
@@ -247,6 +247,7 @@ void TwoChoiceStorage::clear(int index)
             fstream sfile(stashfilenames[index].c_str(), std::ios::binary | std::ofstream::out);
             if (sfile.fail()) 
                 cerr << "Error: " << strerror(errno);
+	    maxSize = pow(2,index);
             for (int j = 0; j < maxSize; j++) 
                 sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
             sfile.close();
