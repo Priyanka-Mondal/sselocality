@@ -135,6 +135,7 @@ pair<prf_type, vector<prf_type>> TwoChoiceStorage::insertCuckooHT(int index,int 
             cuckoo.open(cuckoo2filenames[index][tableNum].c_str(), ios::binary | ios::out | ios::in);
 
 	vector<prf_type> results;
+	results.resize(0);
 	prf_type keyw;
         if (cuckoo.fail()) 
 	{
@@ -426,7 +427,9 @@ TwoChoiceStorage::~TwoChoiceStorage() {
 vector <prf_type> TwoChoiceStorage::cuckooSearch(int index, int tableNum, int h1, int h2)
 {
     vector<prf_type> results;
+    results.resize(0);
     
+   /* 
     std::fstream cuckoo1(cuckoo1filenames[index][tableNum].c_str(), ios::binary | ios::in | ios::ate);
     if (cuckoo1.fail()) 
     {
@@ -456,7 +459,6 @@ vector <prf_type> TwoChoiceStorage::cuckooSearch(int index, int tableNum, int h1
     cuckoo1.close();
     
     delete keyValues;
-    
     std::fstream cuckoo2(cuckoo2filenames[index][tableNum].c_str(), ios::binary | ios::in | ios:: ate);
     if (cuckoo2.fail()) 
     {
@@ -484,7 +486,7 @@ vector <prf_type> TwoChoiceStorage::cuckooSearch(int index, int tableNum, int h1
     }
     delete keyValue;
     cuckoo2.close();
-    
+    */
     cout <<"results size:"<<results.size()<<endl;
     return results;
 }
