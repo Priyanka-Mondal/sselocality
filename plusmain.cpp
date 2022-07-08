@@ -71,7 +71,7 @@ int main(int argc, char** argv)
             for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
 	    {
 		key++;
-		cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
+		//cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
 		int j;
                 for (j = 0; j < cur->second.size(); j++) 
 		{
@@ -130,9 +130,10 @@ int main(int argc, char** argv)
                 Utilities::startTimer(500);
                 vector<int> res = client.search(testCases[i].testKeywords[j]);
                 time = Utilities::stopTimer(500);
-                cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
-                cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
+                //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
+                //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
                 cout << "Number of return item:[" << res.size()<<"]" << endl;
+		assert(testCases[i].Qs[j]-testCases[i].delNumber[j] == res.size());
         }
         cout << "*********************************************************************************" << endl;
 

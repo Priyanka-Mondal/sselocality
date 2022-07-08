@@ -25,9 +25,9 @@ private:
     bool inMemoryStorage;
     bool profile = false;
     vector<string> filenames;
+    vector<string> stashes;
     vector<vector<string>> stashfilenames;
-    vector<vector<string>> cuckoo1filenames;
-    vector<vector<string>> cuckoo2filenames;
+    vector<vector<vector<string>>> cuckoofilenames;
     prf_type nullKey;
     string fileAddressPrefix = "/tmp/";
     int dataIndex;
@@ -50,7 +50,7 @@ public:
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
     vector<prf_type> getStash(int index); 
     vector<prf_type> getCuckooHT(int index); 
-    vector <prf_type> cuckooSearch(int index, int tableNum, int h1, int h2);
+    vector <prf_type> cuckooSearch(int index, int tableNum, int h[2]);
     void clear(int index);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
     virtual ~TwoChoiceStorage();
