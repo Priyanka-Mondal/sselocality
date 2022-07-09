@@ -10,18 +10,22 @@ using namespace std;
 
 DeAmortized::DeAmortized(bool deleteFiles, int keyworsSize, int N) 
 {
-/*
-    	this->deleteFiles = deleteFiles;
+	cout <<"=====================Running SDd+OneChoiceAllocation======================"<<endl;
+   	this->deleteFiles = deleteFiles;
     l = ceil(log2(N));
     L = new DeAmortizedBASClient(l);
-    for (int j = 0; j < 4; j++) {
+
+    for (int j = 0; j < 4; j++) 
+	{
         keys.push_back(vector<unsigned char*> ());
-        for (int i = 0; i < l; i++) {
+        for (int i = 0; i < l; i++) 
+		{
             unsigned char* tmpKey = new unsigned char[16];
             keys[j].push_back(tmpKey);
         }
     }
-    for (int i = 0; i < l; i++) {
+    for (int i = 0; i < l; i++) 
+	{
         cnt.push_back(0);
         bytes<Key> key{0};
         OMAP* omap = new OMAP(max((int) pow(2, i), 4), key);
@@ -29,25 +33,29 @@ DeAmortized::DeAmortized(bool deleteFiles, int keyworsSize, int N)
         setupOMAPS.push_back(map<Bid, string>());
         setupOMAPSDummies.push_back(0);
     }
-    for (int i = 0; i < localSize; i++) {
+    for (int i = 0; i < localSize; i++) 
+	{
         localmap.push_back(map<string, string>());
     }
-    for (int j = 0; j < 4; j++) {
+    for (int j = 0; j < 4; j++) 
+	{
         vector< unordered_map<string, prf_type> > curVec;
-        for (int i = 0; i < localSize; i++) {
+        for (int i = 0; i < localSize; i++) 
+		{
             curVec.push_back(unordered_map<string, prf_type>());
         }
         data.push_back(curVec);
     }
-    */
 }
 
-DeAmortized::~DeAmortized() {
-}
-/*
-void DeAmortized::update(OP op, string keyword, int ind, bool setup) {
-    if (!setup) {
-        for (int i = 0; i < l; i++) {
+DeAmortized::~DeAmortized() {}
+
+void DeAmortized::update(OP op, string keyword, int ind, bool setup) 
+{
+    if (!setup) 
+	{
+        for (int i = 0; i < l; i++) 
+		{
             omaps[i]->treeHandler->oram->totalRead = 0;
             omaps[i]->treeHandler->oram->totalWrite = 0;
         }
@@ -55,12 +63,17 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup) {
         totalUpdateCommSize = 0;
     }
     updateCounter++;
-    for (int i = l - 1; i > 0; i--) {
-        if ((i > localSize && L->exist[0][i - 1] && L->exist[1][i - 1]) || (i <= localSize && data[0][i - 1].size() > 0 && data[1][i - 1].size() > 0)) {
+    for (int i = l - 1; i > 0; i--) 
+	{
+        if ((i > localSize && L->exist[0][i - 1] && L->exist[1][i - 1]) || (i <= localSize && data[0][i - 1].size() > 0 && data[1][i - 1].size() > 0)) 
+		{
             prf_type x;
-            if (cnt[i] < pow(2, i - 1)) {
+            if (cnt[i] < pow(2, i - 1)) 
+			{
                 x = (i <= localSize ? getElementAt(0, i - 1, cnt[i]) : L->get(0, i - 1, cnt[i], keys[0][i - 1]));
-            } else {
+            } 
+			else 
+			{
                 x = (i <= localSize ? getElementAt(1, i - 1, cnt[i] % (int) pow(2, i - 1)) : L->get(1, i - 1, cnt[i] % (int) pow(2, i - 1), keys[1][i - 1]));
             }
             cnt[i]++;
@@ -69,51 +82,78 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup) {
             string c;
             c = (i < localSize ? (localmap[i].count(curKeyword + "-" + to_string(upCnt)) == 0 ? "" : localmap[i][curKeyword + "-" + to_string(upCnt)])
                     : (setup ? (setupOMAPS[i].count(getBid(curKeyword, upCnt)) == 0 ? "" : setupOMAPS[i][getBid(curKeyword, upCnt)]) : omaps[i]->incrementCnt(getBid(curKeyword, upCnt))));
-            if (c == "") {
-                if (i < localSize) {
+            
+			if (c == "") 
+			{
+                if (i < localSize) 
+				{
                     localmap[i][curKeyword + "-" + to_string(upCnt)] = "1";
-                } else {
-                    if (setup) {
+                } 
+				else 
+				{
+                    if (setup) 
+					{
                         setupOMAPS[i][getBid(curKeyword, upCnt)] = "1"; //The else condition is satisfied by omaps[i]->incrementCnt
                     }
                 }
                 c = "1";
-            } else {
+            } 
+			else 
+			{
                 c = to_string(stoi(c) + 1);
-                if (i < localSize) {
+                if (i < localSize) 
+				{
                     localmap[i][curKeyword + "-" + to_string(upCnt)] = c;
-                } else {
-                    if (setup) {
+                } 
+				else 
+				{
+                    if (setup) 
+					{
                         setupOMAPS[i][getBid(curKeyword, upCnt)] = c; //The else condition is satisfied by omaps[i]->incrementCnt
                     }
                 }
             }
 
-            if (i < localSize) {
+            if (i < localSize) 
+			{
                 data[3][i][curKeyword + "-" + c] = x;
-            } else {
+            } 
+			else 
+			{
                 L->add(3, i, pair<string, prf_type>(curKeyword, x), stoi(c), keys[3][i]);
             }
 
             if ((i >= localSize && L->size(3, i) == pow(2, i)) || (i < localSize && data[3][i].size() == pow(2, i))) {
-                if (i <= localSize) {
-                    if (i == localSize) {
-                        if (setup) {
+                if (i <= localSize) 
+				{
+                    if (i == localSize) 
+					{
+                        if (setup) 
+						{
                             setupOMAPSDummies[i] = upCnt;
-                        } else {
+                        } 
+						else 
+						{
                             omaps[i]->setDummy(upCnt);
                         }
-                    } else {
+                    } 
+					else 
+					{
                         localmap[i].erase(curKeyword + "-" + to_string(upCnt));
                     }
                     data[0][i - 1].clear();
                     data[1][i - 1].clear();
                     data[0][i - 1].insert(data[2][i - 1].begin(), data[2][i - 1].end());
                     data[2][i - 1].clear();
-                } else {
-                    if (setup) {
+                } 
+				else 
+				{
+                    if (setup) 
+					{
                         setupOMAPSDummies[i] = upCnt;
-                    } else {
+                    } 
+					else 
+					{
                         omaps[i]->setDummy(upCnt);
                     }
                     L->destry(0, i - 1);
@@ -125,45 +165,57 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup) {
                 memcpy(keys[0][i - 1], keys[2][i - 1], 16);
                 cnt[i] = 0;
                 if ((i >= localSize && L->exist[0][i] == false) || (i < localSize && data[0][i].size() == 0)) {
-                    if (i < localSize) {
+                    if (i < localSize) 
+					{
                         data[0][i].clear();
                         data[0][i].insert(data[3][i].begin(), data[3][i].end());
                         data[3][i].clear();
-                    } else {
+                    } 
+					else 
+					{
                         L->copy(3, i, 0, i);
                         L->destry(3, i);
                     }
                     memcpy(keys[0][i], keys[3][i], 16);
-                } else if ((i >= localSize && L->exist[1][i] == false) || (i < localSize && data[1][i].size() == 0)) {
-                    if (i < localSize) {
+                } 
+				else if ((i >= localSize && L->exist[1][i] == false) || (i < localSize && data[1][i].size() == 0)) {
+                    if (i < localSize) 
+					{
                         data[1][i].clear();
                         data[1][i].insert(data[3][i].begin(), data[3][i].end());
                         data[3][i].clear();
-                    } else {
+                    } 
+					else 
+					{
                         L->copy(3, i, 1, i);
                         L->destry(3, i);
                     }
                     memcpy(keys[1][i], keys[3][i], 16);
-                } else if ((i >= localSize && L->exist[2][i] == false) || (i < localSize && data[2][i].size() == 0)) {
-                    if (i < localSize) {
+                } 
+				else if ((i >= localSize && L->exist[2][i] == false) || (i < localSize && data[2][i].size() == 0)) {
+                    if (i < localSize) 
+					{
                         data[2][i].clear();
                         data[2][i].insert(data[3][i].begin(), data[3][i].end());
                         data[3][i].clear();
-                    } else {
+                    } 
+					else 
+					{
                         L->copy(3, i, 2, i);
                         L->destry(3, i);
                     }
                     memcpy(keys[2][i], keys[3][i], 16);
                 }
-                if (i >= localSize) {
-                    for (int j = 0; j < 16; j++) {
+                if (i >= localSize) 
+				{
+                    for (int j = 0; j < 16; j++) 
+					{
                         keys[3][i][j] = (unsigned char) rand() % 256;
                     }
                 }
             }
         }
     }
-
     prf_type value;
     std::fill(value.begin(), value.end(), 0);
     std::copy(keyword.begin(), keyword.end(), value.begin());
@@ -172,24 +224,50 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup) {
 
     data[3][0][keyword + "-1"] = value;
 
-    if (data[0][0].size() == 0) {
+    if (data[0][0].size() == 0) 
+	{
         data[0][0].insert(data[3][0].begin(), data[3][0].end());
         data[3][0].clear();
-    } else if (data[1][0].size() == 0) {
+    } 
+	else if (data[1][0].size() == 0) 
+	{
         data[1][0].insert(data[3][0].begin(), data[3][0].end());
         data[3][0].clear();
-    } else {
+    } 
+	else 
+	{
         data[2][0].insert(data[3][0].begin(), data[3][0].end());
         data[3][0].clear();
     }
-    if (!setup) {
-        for (int i = 0; i < l; i++) {
+    if (!setup) 
+	{
+        for (int i = 0; i < l; i++) 
+		{
             totalUpdateCommSize += (omaps[i]->treeHandler->oram->totalRead + omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
         }
         totalUpdateCommSize += L->totalCommunication;
     }
 }
 
+Bid DeAmortized::getBid(string input, int cnt) 
+{
+    std::array< uint8_t, ID_SIZE> value;
+    std::fill(value.begin(), value.end(), 0);
+    std::copy(input.begin(), input.end(), value.begin());
+    *(int*) (&value[AES_KEY_SIZE - 4]) = cnt;
+    Bid res(value);
+    return res;
+}
+
+prf_type DeAmortized::getElementAt(int instance, int index, int pos) 
+{
+    auto iter = data[instance][index].begin();
+    for (int i = 0; i < pos; i++) {
+        iter++;
+    }
+    return (*iter).second;
+}
+/*
 vector<int> DeAmortized::search(string keyword) {
     for (int i = 0; i < l; i++) {
         omaps[i]->treeHandler->oram->totalRead = 0;
@@ -272,22 +350,6 @@ void DeAmortized::getAESRandomValue(unsigned char* keyword, int op, int srcCnt, 
     sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
 }
 
-Bid DeAmortized::getBid(string input, int cnt) {
-    std::array< uint8_t, ID_SIZE> value;
-    std::fill(value.begin(), value.end(), 0);
-    std::copy(input.begin(), input.end(), value.begin());
-    *(int*) (&value[AES_KEY_SIZE - 4]) = cnt;
-    Bid res(value);
-    return res;
-}
-
-prf_type DeAmortized::getElementAt(int instance, int index, int pos) {
-    auto iter = data[instance][index].begin();
-    for (int i = 0; i < pos; i++) {
-        iter++;
-    }
-    return (*iter).second;
-}
 
 void DeAmortized::endSetup() {
     for (unsigned int i = 0; i < setupOMAPS.size(); i++) {

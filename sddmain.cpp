@@ -8,10 +8,6 @@ using namespace std;
 
 int main(int argc, char** argv) 
 {
-    // create a disk_config structure.
-    // add disk to config
-    //stxxl::config * cfg = stxxl::config::get_instance();
-    //cfg->add_disk(stxxl::disk_config("disk=/tmp/stxxl.tmp, 10 GiB, syscall unlink"));
     vector<TC<int> > testCases;
     vector<string> testKeywords;
     uint keywordLength = 7;
@@ -55,8 +51,8 @@ int main(int argc, char** argv)
         }
         file.close();
     }
+    DeAmortized client(true, 120, 100000); // only one test is performed for now
     /*
-    DeAmortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
     client.endSetup(testCases[0].N);
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;
     cout <<"*************************************************************************"<<endl;

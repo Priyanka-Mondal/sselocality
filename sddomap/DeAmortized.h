@@ -11,8 +11,8 @@
 #include <sstream>
 #include "Utilities.h"
 #include "AES.hpp"
-//#include "DeAmortizedBASClient.h"
-//#include "OMAP.h"
+#include "DeAmortizedSClient.h"
+#include "OMAP.h"
 //#include "mitra/Server.h"
 //#include <boost/algorithm/string/split.hpp>
 //#include <boost/algorithm/string/classification.hpp>
@@ -42,7 +42,7 @@ private:
     vector<vector< unordered_map<string, prf_type> > > data; //OLDEST, OLDER, OLD, NEW;
     vector<map<string, string> > localmap;
     int updateCounter = 0;
-    int localSize = 10;
+    int localSize = 1;
     int l;
     prf_type getElementAt(int instance, int index, int pos);
     double totalUpdateCommSize;
@@ -56,7 +56,6 @@ public:
     void endSetup();
     double getTotalSearchCommSize() const;
     double getTotalUpdateCommSize() const;
-
 };
 
 #endif /* BAS_H */

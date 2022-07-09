@@ -39,7 +39,7 @@ vector<prf_type> DeAmortizedBASServer::search(int instance, int dataIndex, prf_t
 
 void DeAmortizedBASServer::getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result) {
     *(int*) (&keyword[AES_KEY_SIZE - 4]) = cnt;
-    sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
+    //sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
 }
 
 vector<prf_type> DeAmortizedBASServer::getAllData(int instance, int dataIndex) {

@@ -92,9 +92,10 @@ SDDOOBJECTFILES= \
 	${SDDOOBJECTDIR}/OMAP.o \
 	${SDDOOBJECTDIR}/ORAM.o \
 	${SDDOOBJECTDIR}/AVLTree.o \
-	${SDDOOBJECTDIR}/DeAmortizedBASClient.o \
-	${SDDOOBJECTDIR}/DeAmortizedBASServer.o \
-	${OBJECTDIR}/sddomain.o 
+	${SDDOOBJECTDIR}/OneChoiceClient.o \
+	${SDDOOBJECTDIR}/OneChoiceServer.o \
+	${SDDOOBJECTDIR}/OneChoiceStorage.o \
+	${OBJECTDIR}/sddmain.o 
 	
 	#${OBJECTDIR}/${SDDO}/OneChoiceClient.o \
 	${OBJECTDIR}/${SDDO}/Server.o \
@@ -267,15 +268,15 @@ ${SDDOOBJECTDIR}/DeAmortized.o: ${SDDO}/DeAmortized.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/DeAmortized.o ${SDDO}/DeAmortized.cpp
 
-${SDDOOBJECTDIR}/DeAmortizedBASClient.o: ${SDDO}/DeAmortizedBASClient.cpp
+${SDDOOBJECTDIR}/OneChoiceClient.o: ${SDDO}/OneChoiceClient.cpp
 	${MKDIR} -p ${OBJECTDIR}/${SDDO}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/DeAmortizedBASClient.o ${SDDO}/DeAmortizedBASClient.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/OneChoiceClient.o ${SDDO}/OneChoiceClient.cpp
 
-${SDDOOBJECTDIR}/DeAmortizedBASServer.o: ${SDDO}/DeAmortizedBASServer.cpp
+${SDDOOBJECTDIR}/OneChoiceServer.o: ${SDDO}/OneChoiceServer.cpp
 	${MKDIR} -p ${OBJECTDIR}/${SDDO}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/${SDDO}/DeAmortizedBASServer.o ${SDDO}/DeAmortizedBASServer.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/OneChoiceServer.o ${SDDO}/OneChoiceServer.cpp
 
 ${SDDOOBJECTDIR}/Utilities.o: ${SDDO}/Utilities.cpp
 	${MKDIR} -p ${OBJECTDIR}/${SDDO}
@@ -287,10 +288,10 @@ ${SDDOOBJECTDIR}/logger.o: ${SDDO}/logger.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${SDDO}/logger.o ${SDDO}/logger.cpp
 
-${OBJECTDIR}/sddomain.o: sddomain.cpp
+${OBJECTDIR}/sddmain.o: sddmain.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sddomain.o sddomain.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sddmain.o sddmain.cpp
 
 ${OBJECTDIR}/${SDDO}/utils.o: ${SDDO}/utils.cpp
 	${MKDIR} -p ${OBJECTDIR}/${SDDO}

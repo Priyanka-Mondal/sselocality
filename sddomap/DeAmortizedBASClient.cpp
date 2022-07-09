@@ -80,7 +80,8 @@ void DeAmortizedBASClient::destry(int instance, int index) {
 
 void DeAmortizedBASClient::getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result) {
     *(int*) (&keyword[AES_KEY_SIZE - 4]) = cnt;
-    sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
+    //sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
+	
 }
 
 void DeAmortizedBASClient::copy(int fromInstance, int fromIndex, int toInstance, int toIndex) {

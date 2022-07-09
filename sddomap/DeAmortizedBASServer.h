@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <array>
+#include<unordered_map>
 //#include "Server.h"
 #include <iostream>
 #include <sstream>
@@ -13,7 +14,7 @@
 //#include <boost/algorithm/string/classification.hpp>
 //#include <sse/crypto/hash.hpp>
 #include "Types.hpp"
-
+/*
 struct PRFHasher {
 
     std::size_t operator()(const prf_type &key) const {
@@ -25,7 +26,7 @@ struct PRFHasher {
         return result;
     }
 };
-
+*/
 class EachSet {
 public:
     unordered_map<prf_type, prf_type, PRFHasher> setData;
