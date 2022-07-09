@@ -8,10 +8,8 @@
 #include "Server.h"
 #include <iostream>
 #include <sstream>
-#include "Server.h"
 #include "Utilities.h"
 #include "AmortizedBASClient.h"
-//#include "OneChoiceClient.h"
 #include "TwoChoiceClient.h"
 #include "AES.hpp"
 #include <set>

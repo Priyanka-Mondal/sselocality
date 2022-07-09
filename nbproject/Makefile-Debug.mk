@@ -28,6 +28,7 @@ CND_DISTDIR=dist
 CND_BUILDDIR=build
 TWO_CHOICE=twochoice
 PLUS_TWO=plustwoc
+SDDO=sddomap
 
 # Include project Makefile
 include Makefile
@@ -36,6 +37,7 @@ include Makefile
 OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 TWOOBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}
 PLUSOBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/${PLUS_TWO}
+SDDOOBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/${SDDO}
 
 
 # Object Files
@@ -59,8 +61,8 @@ PLUSOBJECTFILES= \
 	${OBJECTDIR}/${PLUS_TWO}/TwoChoiceClient.o \
 	${OBJECTDIR}/${PLUS_TWO}/TwoChoiceServer.o \
 	${OBJECTDIR}/${PLUS_TWO}/TwoChoiceStorage.o \
-	${OBJECTDIR}/${PLUS_TWO}/Server.o \
 	${OBJECTDIR}/${PLUS_TWO}/Storage.o \
+	${OBJECTDIR}/${PLUS_TWO}/Server.o \
 	${OBJECTDIR}/${PLUS_TWO}/Utilities.o \
 	${OBJECTDIR}/${PLUS_TWO}/logger.o \
 	${OBJECTDIR}/${PLUS_TWO}/utils.o \
@@ -76,6 +78,30 @@ PLUSOBJECTFILES= \
 	${OBJECTDIR}/OneChoiceServer.o \
 	${OBJECTDIR}/OneChoiceStorage.o \
 	${OBJECTDIR}/RAMStore.o \
+
+
+#sddomap object files
+SDDOOBJECTFILES= \
+	${OBJECTDIR}/${SDDO}/AES.o \
+	${OBJECTDIR}/${SDDO}/DeAmortized.o \
+	${OBJECTDIR}/${SDDO}/Utilities.o \
+	${OBJECTDIR}/${SDDO}/utils.o \
+	${OBJECTDIR}/${SDDO}/logger.o \
+	${SDDOOBJECTDIR}/RAMStore.o \
+	${SDDOOBJECTDIR}/Bid.o \
+	${SDDOOBJECTDIR}/OMAP.o \
+	${SDDOOBJECTDIR}/ORAM.o \
+	${SDDOOBJECTDIR}/AVLTree.o \
+	${SDDOOBJECTDIR}/DeAmortizedBASClient.o \
+	${SDDOOBJECTDIR}/DeAmortizedBASServer.o \
+	${OBJECTDIR}/sddomain.o 
+	
+	#${OBJECTDIR}/${SDDO}/OneChoiceClient.o \
+	${OBJECTDIR}/${SDDO}/Server.o \
+	${OBJECTDIR}/${SDDO}/OneChoiceServer.o \
+	${OBJECTDIR}/${SDDO}/OneChoiceStorage.o \
+	${OBJECTDIR}/${SDDO}/Storage.o \
+
 # C Compiler Flags
 CFLAGS=
 
@@ -96,6 +122,7 @@ LDLIBSOPTIONS=-lcrypto -lssl #-lstxxl_debug
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/twochoice-sda
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${PLUS_TWO}/plustwo-sda
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${SDDO}/onechoice-sdd
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/twochoice-sda: ${TWOOBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}
@@ -104,6 +131,13 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/twochoice-sda: ${TWOOBJ
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${PLUS_TWO}/plustwo-sda: ${PLUSOBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${PLUS_TWO}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${PLUS_TWO}/plustwo-sda ${PLUSOBJECTFILES} ${LDLIBSOPTIONS} -lpthread
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${SDDO}/onechoice-sdd: ${SDDOOBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${SDDO}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${SDDO}/onechoice-sdd ${SDDOOBJECTFILES} ${LDLIBSOPTIONS} -lpthread
+
+
+
 
 ${OBJECTDIR}/${TWO_CHOICE}/AES.o: ${TWO_CHOICE}/AES.cpp
 	${MKDIR} -p ${OBJECTDIR}/${TWO_CHOICE}
@@ -221,16 +255,77 @@ ${OBJECTDIR}/${PLUS_TWO}/utils.o: ${PLUS_TWO}/utils.cpp
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${PLUS_TWO}/utils.o ${PLUS_TWO}/utils.cpp
 
 
+#####SDd+OMAP+1choice######################################################
 
-#${OBJECTDIR}/RAMStore.o: RAMStore.cpp
-#	${MKDIR} -p ${OBJECTDIR}
-#	${RM} "$@.d"
-#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RAMStore.o RAMStore.cpp
-#
-#${OBJECTDIR}/AVLTree.o: ${TWO_CHOICE}/AVLTree.cpp
-#	${MKDIR} -p ${OBJECTDIR}
-#	${RM} "$@.d"
-#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AVLTree.o ${TWO_CHOICE}/AVLTree.cpp
+${SDDOOBJECTDIR}/AES.o: ${SDDO}/AES.cpp
+	${MKDIR} -p ${SDDOOBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/AES.o ${SDDO}/AES.cpp
+
+${SDDOOBJECTDIR}/DeAmortized.o: ${SDDO}/DeAmortized.cpp
+	${MKDIR} -p ${SDDOOBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/DeAmortized.o ${SDDO}/DeAmortized.cpp
+
+${SDDOOBJECTDIR}/DeAmortizedBASClient.o: ${SDDO}/DeAmortizedBASClient.cpp
+	${MKDIR} -p ${OBJECTDIR}/${SDDO}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/DeAmortizedBASClient.o ${SDDO}/DeAmortizedBASClient.cpp
+
+${SDDOOBJECTDIR}/DeAmortizedBASServer.o: ${SDDO}/DeAmortizedBASServer.cpp
+	${MKDIR} -p ${OBJECTDIR}/${SDDO}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/${SDDO}/DeAmortizedBASServer.o ${SDDO}/DeAmortizedBASServer.cpp
+
+${SDDOOBJECTDIR}/Utilities.o: ${SDDO}/Utilities.cpp
+	${MKDIR} -p ${OBJECTDIR}/${SDDO}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/Utilities.o ${SDDO}/Utilities.cpp
+
+${SDDOOBJECTDIR}/logger.o: ${SDDO}/logger.cpp
+	${MKDIR} -p ${OBJECTDIR}/${SDDO}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${SDDO}/logger.o ${SDDO}/logger.cpp
+
+${OBJECTDIR}/sddomain.o: sddomain.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sddomain.o sddomain.cpp
+
+${OBJECTDIR}/${SDDO}/utils.o: ${SDDO}/utils.cpp
+	${MKDIR} -p ${OBJECTDIR}/${SDDO}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${SDDO}/utils.o ${SDDO}/utils.cpp
+
+
+${SDDOOBJECTDIR}/Bid.o: ${SDDO}/Bid.cpp
+	${MKDIR} -p ${SDDOOBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/Bid.o ${SDDO}/Bid.cpp
+
+
+${SDDOOBJECTDIR}/RAMStore.o: ${SDDO}/RAMStore.cpp
+	${MKDIR} -p ${SDDOOBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/RAMStore.o ${SDDO}/RAMStore.cpp
+
+${SDDOOBJECTDIR}/AVLTree.o: ${SDDO}/AVLTree.cpp
+	${MKDIR} -p ${SDDOOBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/AVLTree.o ${SDDO}/AVLTree.cpp
+
+${SDDOOBJECTDIR}/OMAP.o: ${SDDO}/OMAP.cpp
+	${MKDIR} -p ${SDDOOBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/OMAP.o ${SDDO}/OMAP.cpp
+
+
+${SDDOOBJECTDIR}/ORAM.o: ${SDDO}/ORAM.cpp
+	${MKDIR} -p ${SDDOOBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/ORAM.o ${SDDO}/ORAM.cpp
+
+
 #${OBJECTDIR}/AmortizedBASClient.o: AmortizedBASClient.cpp
 #	${MKDIR} -p ${OBJECTDIR}
 #	${RM} "$@.d"
@@ -246,15 +341,6 @@ ${OBJECTDIR}/${PLUS_TWO}/utils.o: ${PLUS_TWO}/utils.cpp
 #	${RM} "$@.d"
 #	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Bid.o Bid.cpp
 #
-#${OBJECTDIR}/OMAP.o: OMAP.cpp
-#	${MKDIR} -p ${OBJECTDIR}
-#	${RM} "$@.d"
-#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/OMAP.o OMAP.cpp
-#
-#${OBJECTDIR}/ORAM.o: ORAM.cpp
-#	${MKDIR} -p ${OBJECTDIR}
-#	${RM} "$@.d"
-#	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ORAM.o ORAM.cpp
 #
 #${OBJECTDIR}/OneChoiceClient.o: OneChoiceClient.cpp
 #	${MKDIR} -p ${OBJECTDIR}

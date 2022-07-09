@@ -5,7 +5,6 @@ compile:
 	make
 
 
-
 execute:
 	./mt.sh (for small test)
 
