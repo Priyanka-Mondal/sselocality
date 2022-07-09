@@ -3,30 +3,26 @@
 
 #include <string>
 #include <map>
-#include <unordered_map>
 #include <vector>
 #include <array>
-//#include "Server.h"
+#include "Server.h"
 #include <iostream>
 #include <sstream>
-#include "Utilities.h"
-#include "AES.hpp"
-#include "OneChoiceClient.h"
+#include "mitra/Server.h"
+#include "utils/Utilities.h"
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <sse/crypto/hash.hpp>
+#include "DeAmortizedBASClient.h"
 #include "OMAP.h"
-//#include "mitra/Server.h"
-//#include <boost/algorithm/string/split.hpp>
-//#include <boost/algorithm/string/classification.hpp>
-//#include <sse/crypto/hash.hpp>
 
 using namespace std;
 
-enum OP 
-{
+enum OP {
     INS, DEL
 };
 
-class DeAmortized 
-{
+class DeAmortized {
 private:
     inline prf_type bitwiseXOR(int input1, int op, prf_type input2);
     inline prf_type bitwiseXOR(prf_type input1, prf_type input2);
@@ -35,15 +31,14 @@ private:
     bool deleteFiles;
     vector< vector<unsigned char*> > keys;
     vector<int> cnt;
-	prf_type nullKey;
     vector<OMAP*> omaps;
     vector< map<Bid, string> > setupOMAPS;
     vector<int> setupOMAPSDummies;
-    OneChoiceClient* L;
+    DeAmortizedBASClient* L;
     vector<vector< unordered_map<string, prf_type> > > data; //OLDEST, OLDER, OLD, NEW;
     vector<map<string, string> > localmap;
     int updateCounter = 0;
-    int localSize = 1;
+    int localSize = 10;
     int l;
     prf_type getElementAt(int instance, int index, int pos);
     double totalUpdateCommSize;
@@ -57,6 +52,7 @@ public:
     void endSetup();
     double getTotalSearchCommSize() const;
     double getTotalUpdateCommSize() const;
+
 };
 
 #endif /* BAS_H */

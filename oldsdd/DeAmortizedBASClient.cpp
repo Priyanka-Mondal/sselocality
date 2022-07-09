@@ -1,29 +1,33 @@
 #include "DeAmortizedBASClient.h"
-//#include <sse/crypto/prg.hpp>
+#include <sse/crypto/prg.hpp>
 
-DeAmortizedBASClient::~DeAmortizedBASClient() 
-{
+DeAmortizedBASClient::~DeAmortizedBASClient() {
     delete server;
 }
 
-DeAmortizedBASClient::DeAmortizedBASClient(int numOfDataSets) {
+DeAmortizedBASClient::DeAmortizedBASClient(int numOfDataSets) 
+{
     server = new DeAmortizedBASServer(numOfDataSets);
-    for (int j = 0; j < 4; j++) {
+    for (int j = 0; j < 4; j++) 
+	{
         exist.push_back(vector<bool>());
-        for (int i = 0; i < numOfDataSets; i++) {
+        for (int i = 0; i < numOfDataSets; i++) 
+		{
             exist[j].push_back(false);
         }
     }
 }
 
-void DeAmortizedBASClient::setup(int instance, int index, vector<pair<string, prf_type> >pairs, unsigned char* key) {
+void DeAmortizedBASClient::setup(int instance, int index, vector<pair<string, prf_type> >pairs, unsigned char* key) 
+{
     server->clear(instance, index);
     exist[instance][index] = true;
     map<string, prf_type> K1;
     map<string, int> CNT;
     map<prf_type, prf_type> ciphers;
     for (auto pair : pairs) {
-        if (CNT.count(pair.first) == 0) {
+        if (CNT.count(pair.first) == 0) 
+		{
             K1[pair.first] = Utilities::encode(pair.first + "-1", key);
             CNT[pair.first] = 1;
         }
@@ -80,8 +84,7 @@ void DeAmortizedBASClient::destry(int instance, int index) {
 
 void DeAmortizedBASClient::getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result) {
     *(int*) (&keyword[AES_KEY_SIZE - 4]) = cnt;
-    //sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
-	
+    sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
 }
 
 void DeAmortizedBASClient::copy(int fromInstance, int fromIndex, int toInstance, int toIndex) {

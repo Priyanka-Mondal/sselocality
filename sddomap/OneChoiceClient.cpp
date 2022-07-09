@@ -1,31 +1,38 @@
 #include "OneChoiceClient.h"
 
-OneChoiceClient::~OneChoiceClient() {
+OneChoiceClient::~OneChoiceClient() 
+{
     delete server;
 }
 
-OneChoiceClient::OneChoiceClient(int numOfDataSets, bool inMemory, bool overwrite, bool profile) {
+OneChoiceClient::OneChoiceClient(int numOfDataSets, bool inMemory, bool overwrite, bool profile) 
+{
     this->profile = profile;
     server = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
-    for (int i = 0; i < numOfDataSets; i++) {
-        exist.push_back(false);
-        //        int curNumberOfBins = total > 1 ? (int) ceil((float) total / (float) i) : total;
-        int curNumberOfBins = i > 0 ? (int) ceil((float) pow(2, i + 1) / (float) (log2(pow(2, i + 1)) * log2(log2(pow(2, i + 1))))) : 1;
-        //        int curSizeOfEachBin = i > 0 ? i : 1;
-        int curSizeOfEachBin = i > 0 ? (log2(pow(2, i + 1)) * log2(log2(pow(2, i + 1))))*3 : 1;
+    for (int i = 0; i < numOfDataSets; i++) 
+	{
+		exist[i].resize(0);
+		for(int j=0; j<4 j++)
+        	exist[i].push_back(false);
+        int curNumberOfBins = i > 0 ? 
+			(int) ceil((float) pow(2, i+1)/(float)(log2(pow(2, i+1))*log2(log2(pow(2, i+1))))):1;
+        int curSizeOfEachBin = i > 0 ? (log2(pow(2, i+1))*log2(log2(pow(2, i+1))))*3:1;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
     }
 }
 
-void OneChoiceClient::setup(int index, unordered_map<string, vector<prf_type> > pairs, unsigned char* key) {
+void OneChoiceClient::setup(int index, unordered_map<string, vector<prf_type> > pairs, unsigned char* key) 
+{
     exist[index] = true;
     vector<vector<pair<prf_type, prf_type> > > ciphers;
-    for (int i = 0; i < numberOfBins[index]; i++) {
+    for (int i = 0; i < numberOfBins[index]; i++) 
+	{
         ciphers.push_back(vector<pair<prf_type, prf_type> >());
     }
     map<prf_type, prf_type> keywprdCntCiphers;
-    for (auto pair : pairs) {
+    for (auto pair : pairs) 
+	{
         prf_type K1 = Utilities::encode(pair.first, key);
         prf_type mapKey, mapValue;
         unsigned char cntstr[AES_KEY_SIZE];
@@ -69,7 +76,8 @@ void OneChoiceClient::setup(int index, unordered_map<string, vector<prf_type> > 
     for (int i = 0; i < AES_KEY_SIZE; i++) {
         randomKey[i] = rand();
     }
-    for (int i = keywprdCntCiphers.size(); i < pow(2, index); i++) {
+    for (int i = keywprdCntCiphers.size(); i < pow(2, index); i++) 
+	{
         unsigned char cntstr[AES_KEY_SIZE];
         memset(cntstr, 0, AES_KEY_SIZE);
         *(int*) (&(cntstr[AES_KEY_SIZE - 9])) = rand();

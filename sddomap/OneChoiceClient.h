@@ -28,7 +28,7 @@ public:
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;
 
-    vector<bool> exist;
+    vector<vector<bool>> exist;
     void destry(int index);
     void setup(int index, unordered_map<string, vector<prf_type> >pairs, unsigned char* key);
     vector<prf_type> search(int index, string keyword, unsigned char* key);

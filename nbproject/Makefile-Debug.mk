@@ -95,6 +95,7 @@ SDDOOBJECTFILES= \
 	${SDDOOBJECTDIR}/OneChoiceClient.o \
 	${SDDOOBJECTDIR}/OneChoiceServer.o \
 	${SDDOOBJECTDIR}/OneChoiceStorage.o \
+	${SDDOOBJECTDIR}/${PLUS_TWO}/Storage.o \
 	${OBJECTDIR}/sddmain.o 
 	
 	#${OBJECTDIR}/${SDDO}/OneChoiceClient.o \
@@ -278,6 +279,16 @@ ${SDDOOBJECTDIR}/OneChoiceServer.o: ${SDDO}/OneChoiceServer.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/OneChoiceServer.o ${SDDO}/OneChoiceServer.cpp
 
+${SDDOOBJECTDIR}/OneChoiceStorage.o: ${SDDO}/OneChoiceStorage.cpp
+	${MKDIR} -p ${OBJECTDIR}/${SDDO}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/OneChoiceStorage.o ${SDDO}/OneChoiceStorage.cpp
+
+${SDDOOBJECTDIR}/Storage.o: ${SDDO}/Storage.cpp
+	${MKDIR} -p ${OBJECTDIR}/${SDDO}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/Storage.o ${SDDO}/Storage.cpp
+
 ${SDDOOBJECTDIR}/Utilities.o: ${SDDO}/Utilities.cpp
 	${MKDIR} -p ${OBJECTDIR}/${SDDO}
 	${RM} "$@.d"
@@ -297,7 +308,6 @@ ${OBJECTDIR}/${SDDO}/utils.o: ${SDDO}/utils.cpp
 	${MKDIR} -p ${OBJECTDIR}/${SDDO}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${SDDO}/utils.o ${SDDO}/utils.cpp
-
 
 ${SDDOOBJECTDIR}/Bid.o: ${SDDO}/Bid.cpp
 	${MKDIR} -p ${SDDOOBJECTDIR}

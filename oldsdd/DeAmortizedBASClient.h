@@ -4,20 +4,19 @@
 #include <map>
 #include <vector>
 #include <array>
-//#include "Server.h"
+#include "Server.h"
 #include <iostream>
 #include <sstream>
-//#include "mitra/Server.h"
-//#include "utils/Utilities.h"
-//#include <boost/algorithm/string/split.hpp>
-//#include <boost/algorithm/string/classification.hpp>
-//#include <sse/crypto/hash.hpp>
+#include "mitra/Server.h"
+#include "utils/Utilities.h"
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <sse/crypto/hash.hpp>
 #include "DeAmortizedBASServer.h"
 
 using namespace std;
 
-class DeAmortizedBASClient 
-{
+class DeAmortizedBASClient {
 private:
     DeAmortizedBASServer* server;
     void getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result);

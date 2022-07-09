@@ -1,11 +1,12 @@
 #include "DeAmortizedBASServer.h"
 #include <string.h>
-//#include <sse/crypto/prg.hpp>
+#include <sse/crypto/prg.hpp>
 
 DeAmortizedBASServer::DeAmortizedBASServer(int dataIndex) {
     for (int j = 0; j < 4; j++) {
         data.push_back(vector<EachSet*>());
-        for (int i = 0; i < dataIndex; i++) {
+        for (int i = 0; i < dataIndex; i++) 
+		{
             EachSet* curData = new EachSet();
             data[j].push_back(curData);
         }
@@ -39,7 +40,7 @@ vector<prf_type> DeAmortizedBASServer::search(int instance, int dataIndex, prf_t
 
 void DeAmortizedBASServer::getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result) {
     *(int*) (&keyword[AES_KEY_SIZE - 4]) = cnt;
-    //sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
+    sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
 }
 
 vector<prf_type> DeAmortizedBASServer::getAllData(int instance, int dataIndex) {
@@ -54,7 +55,8 @@ void DeAmortizedBASServer::clear(int instance, int index) {
     data[instance][index] = new EachSet();
 }
 
-void DeAmortizedBASServer::copy(int fromInstance, int fromIndex, int toInstance, int toIndex) {
+void DeAmortizedBASServer::copy(int fromInstance, int fromIndex, int toInstance, int toIndex) 
+{
     delete data[toInstance][toIndex];
     data[toInstance][toIndex] = data[fromInstance][fromIndex];
 }
@@ -63,9 +65,11 @@ int DeAmortizedBASServer::size(int instance, int index) {
     return data[instance][index]->setData.size();
 }
 
-prf_type DeAmortizedBASServer::get(int instance, int index, int pos) {
+prf_type DeAmortizedBASServer::get(int instance, int index, int pos) 
+{
     auto iter = data[instance][index]->setData.begin();
-    for (int i = 0; i < pos; i++) {
+    for (int i = 0; i < pos; i++) 
+	{
         iter++;
     }
     return (*iter).second;
