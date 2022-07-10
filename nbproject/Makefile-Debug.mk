@@ -95,7 +95,7 @@ SDDOOBJECTFILES= \
 	${SDDOOBJECTDIR}/OneChoiceClient.o \
 	${SDDOOBJECTDIR}/OneChoiceServer.o \
 	${SDDOOBJECTDIR}/OneChoiceStorage.o \
-	${SDDOOBJECTDIR}/${PLUS_TWO}/Storage.o \
+	${SDDOOBJECTDIR}/Storage.o \
 	${OBJECTDIR}/sddmain.o 
 	
 	#${OBJECTDIR}/${SDDO}/OneChoiceClient.o \

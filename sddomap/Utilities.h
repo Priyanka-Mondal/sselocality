@@ -84,8 +84,8 @@ public:
     std::vector<uint> delNumber;
     std::vector<std::string> keywords;
     std::vector<std::string> testKeywords;
-    std::vector<std::pair<std::string, std::vector<T>>> filePairs;
-    //std::map<std::string, std::vector<T> > filePairs;
+    //std::vector<std::pair<std::string, std::vector<T>>> filePairs;
+    std::map<std::string, std::vector<T> > filePairs;
 };
 
 class Utilities 
@@ -245,7 +245,7 @@ public:
         //        }
     };
 
-
+/*
     template <typename T>
 static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed, bool overwrite, vector<string> testKeywords)	
     {
@@ -314,8 +314,8 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
 	cout <<"Total number of keyword-fileID pairs:"<< totalPairNumber<<endl;
         }
 	//delete queries are not added here
-    };
-    /*
+    };*/
+    
     template <typename T>
     static void generateTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed) 
     {
@@ -434,7 +434,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
             }
         }
     };
-    */
+    
 
     virtual ~Utilities();
 };

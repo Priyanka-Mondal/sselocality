@@ -1,15 +1,18 @@
 #include "OneChoiceStorage.h"
 #include<string.h>
 
-OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) {
+OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) 
+{
     this->inMemoryStorage = inMemory;
     this->fileAddressPrefix = fileAddressPrefix;
     this->dataIndex = dataIndex;
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-    for (int i = 0; i < dataIndex; i++) {
-        int curNumberOfBins = i > 0 ? (int) ceil((float) pow(2, i + 1) / (float) (log2(pow(2, i + 1)) * log2(log2(pow(2, i + 1))))) : 1;
-        int curSizeOfEachBin = i > 0 ? (log2(pow(2, i + 1)) * log2(log2(pow(2, i + 1))))*3 : 1;
+    for (int i = 0; i <= dataIndex; i++) 
+	{
+        int curNumberOfBins = i > 1 ? 
+			(int) ceil((float) pow(2, i)/(float)(log2(pow(2, i))*log2(log2(pow(2,i))))) : 1;
+        int curSizeOfEachBin = i > 1 ? (log2(pow(2, i)) * log2(log2(pow(2, i))))*3 : 3;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
         printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
@@ -17,59 +20,53 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
 
 }
 
-bool OneChoiceStorage::setup(bool overwrite) {
-    if (inMemoryStorage) {
-        for (int i = 0; i < dataIndex; i++) {
+bool OneChoiceStorage::setup(bool overwrite) 
+{
+    if (inMemoryStorage) 
+	{
+        for (int i = 0; i < dataIndex; i++) 
+		{
             vector<pair<prf_type, prf_type> > curData;
             data.push_back(curData);
         }
-    } else {
-	/*    
-        if (USE_XXL) {
-            diskData = new stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru >::result*[dataIndex];
-            for (int i = 0; i < dataIndex; i++) {
-                diskData[i] = new stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru>::result();
-            }
-        } else {*/
-            for (int i = 0; i < dataIndex; i++) {
-                string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
-                filenames.push_back(filename);
-                fstream testfile(filename.c_str(), std::ofstream::in);
-                if (testfile.fail() || overwrite) {
-                    testfile.close();
-                    fstream file(filename.c_str(), std::ofstream::out);
-                    if (file.fail()) {
-                        cerr << "Error: " << strerror(errno);
-                    }
-
-                    int maxSize = numberOfBins[i] * sizeOfEachBin[i];
-                    for (int j = 0; j < maxSize; j++) {
-                        file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                        file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                    }
-                    file.close();
-                }
-            }
-       // }
+    } 
+	else
+	{
+		filenames.resize(dataIndex+1);
+        for (int i = 0; i <= dataIndex; i++) 
+		{
+			filenames[i].resize(3);
+			for(int j=0; j<3; j++)
+			{
+           		string filename = fileAddressPrefix + "SDD-" + to_string(i)+"-"+to_string(j) + ".dat";
+           		filenames[i].push_back(filename);
+           		fstream testfile(filename.c_str(), std::ofstream::in);
+           		if (testfile.fail() || overwrite) 
+		   		{
+           		    testfile.close();
+           		    fstream file(filename.c_str(), std::ofstream::out);
+           		    if (file.fail()) 
+           		        cerr << "Error: " << strerror(errno);
+           		    int maxSize = numberOfBins[i] * sizeOfEachBin[i];
+           		    for (int k = 0; k < maxSize; k++) 
+		   			{
+           		        file.write((char*) nullKey.data(), AES_KEY_SIZE);
+           		        file.write((char*) nullKey.data(), AES_KEY_SIZE);
+           		    }
+           		    file.close();
+           		}
+        	}
+		}
     }
 
 }
-
+/*
 void OneChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_type> > > ciphers) {
     if (inMemoryStorage) {
         for (auto item : ciphers) {
             data[index].insert(data[index].end(), item.begin(), item.end());
         }
     } else {
-	    /*
-        if (USE_XXL) {
-            for (auto item : ciphers) {
-                for (auto pair : item) {
-                    diskData[index]->push_back(pair);
-                }
-
-            }
-        } else {*/
             fstream file(filenames[index].c_str(), ios::binary | ios::out);
             if (file.fail()) {
                 cerr << "Error in insert: " << strerror(errno);
@@ -87,7 +84,8 @@ void OneChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_ty
         //}
     }
 }
-
+*/
+/*
 vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index) {
     if (inMemoryStorage) {
         vector<pair<prf_type, prf_type> > results;
@@ -98,15 +96,6 @@ vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index) {
         }
         return results;
     } else {
-        /*if (USE_XXL) {
-            vector<pair<prf_type, prf_type> > results;
-            for (int i = 0; i < diskData[index]->size(); i++) {
-                if (diskData[index]->at(i).first != nullKey) {
-                    results.push_back(diskData[index]->at(i));
-                }
-            }
-            return results;
-        } else {*/
             vector<pair<prf_type, prf_type> > results;
             fstream file(filenames[index].c_str(), ios::binary | ios::in | ios::ate);
             if (file.fail()) {
@@ -133,15 +122,19 @@ vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index) {
         //}
     }
 }
+*/
+vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int start, int end)
+{
+	vector<prf_type> results;
+	return results;
+}
 
-void OneChoiceStorage::clear(int index) {
+void OneChoiceStorage::clear(int index, int instance) 
+{
     if (inMemoryStorage) {
         data[index].clear();
     } else {
-        /*if (USE_XXL) {
-            diskData[index]->clear();
-        } else {*/
-            fstream file(filenames[index].c_str(), std::ios::binary | std::ofstream::out);
+            fstream file(filenames[index][instance].c_str(), std::ios::binary | std::ofstream::out);
             if (file.fail()) {
                 cerr << "Error: " << strerror(errno);
             }
@@ -157,7 +150,7 @@ void OneChoiceStorage::clear(int index) {
 
 OneChoiceStorage::~OneChoiceStorage() {
 }
-
+/*
 vector<prf_type> OneChoiceStorage::find(int index, prf_type mapKey, int cnt) {
     if (inMemoryStorage) {
         vector<prf_type> results;
@@ -199,46 +192,6 @@ vector<prf_type> OneChoiceStorage::find(int index, prf_type mapKey, int cnt) {
         }
         return results;
     } else {
-        /*if (USE_XXL) {
-            vector<prf_type> results;
-
-            unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
-            if (cnt >= numberOfBins[index]) {
-                for (int i = 0; i < numberOfBins[index] * sizeOfEachBin[index]; i++) {
-                    if (diskData[index]->at(i).first != nullKey) {
-                        results.push_back(diskData[index]->at(i).second);
-                    }
-                }
-            } else {
-                int pos = (unsigned int) (*((int*) hash)) % numberOfBins[index];
-                int readPos = pos * sizeOfEachBin[index];
-                int fileLength = numberOfBins[index] * sizeOfEachBin[index];
-                int remainder = fileLength - readPos;
-                int totalReadLength = cnt * sizeOfEachBin[index];
-                int readLength = 0;
-                if (totalReadLength > remainder) {
-                    readLength = remainder;
-                    totalReadLength -= remainder;
-                } else {
-                    readLength = totalReadLength;
-                    totalReadLength = 0;
-                }
-                for (int i = 0; i < readLength; i++) {
-                    if (diskData[index]->at(i + readPos).first != nullKey) {
-                        results.push_back(diskData[index]->at(i + readPos).second);
-                    }
-                }
-                if (totalReadLength > 0) {
-                    readLength = totalReadLength;
-                    for (int i = 0; i < readLength; i++) {
-                        if (diskData[index]->at(i).first != nullKey) {
-                            results.push_back(diskData[index]->at(i).second);
-                        }
-                    }
-                }
-            }
-            return results;
-        } else {*/
             vector<prf_type> results;
 
             std::fstream file(filenames[index].c_str(), ios::binary | ios::in);
@@ -310,3 +263,4 @@ vector<prf_type> OneChoiceStorage::find(int index, prf_type mapKey, int cnt) {
         //}
     }
 }
+*/

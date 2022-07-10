@@ -24,7 +24,7 @@ class OneChoiceStorage {
 private:
     bool inMemoryStorage;
     bool profile = false;
-    vector<string> filenames;
+    vector<vector<string>> filenames;
     prf_type nullKey;
     string fileAddressPrefix = "/tmp/";
     int dataIndex;
@@ -41,9 +41,10 @@ public:
     bool setup(bool overwrite);
     void insertAll(int dataIndex, vector<vector< pair<prf_type, prf_type> > > ciphers);
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
-    void clear(int index);
+    void clear(int index, int instance);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
     virtual ~OneChoiceStorage();
+    vector<prf_type> getElements(int index, int instance, int start, int end);
 
 
 };

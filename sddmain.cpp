@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     
     if (overwrite) 
     {
-        Utilities::generateTwoChoiceTestCases(testCases, keywordLength, time(NULL),overwrite, testKeywords);
+        Utilities::generateTestCases(testCases, keywordLength, time(NULL), testKeywords);
         fstream file("/tmp/search.txt", std::ofstream::out);
         if (file.fail()) 
             cerr << "Error: " << strerror(errno);
@@ -51,32 +51,33 @@ int main(int argc, char** argv)
         }
         file.close();
     }
-    DeAmortized client(true, 120, 100000); // only one test is performed for now
-    /*
-    client.endSetup(testCases[0].N);
+    //DeAmortized client(false, 7, 1000); // only one test is performed for now
+    DeAmortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
+    
+    //client.endSetup();
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;
     cout <<"*************************************************************************"<<endl;
-    */
-   /* 
+   
+    
     for (uint i = 0; i < testCases.size(); i++) 
     {
-	cout <<"SIZE of testcases:"<<testCases[i].Qs.size()<<endl;
+		cout <<"SIZE of testcases:"<<testCases[i].Qs.size()<<endl;
         int cnt = 0;
         double time = 0;
         if (overwrite) 
-	{
-	    int key = 0;
-            for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
-	    {
-		key++;
-		//cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
-		int j;
-                for (j = 0; j < cur->second.size(); j++) 
 		{
+	    	int key = 0;
+            for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
+	    	{
+				key++;
+				//cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
+				int j;
+                for (j = 0; j < cur->second.size(); j++) 
+				{
                     client.update(OP::INS, cur->first, cur->second[j], true);
                     cnt++;
-                    if (cnt % 1000 == 0) 
-		    {
+                    if (cnt % 500 == 0) 
+		    		{
                       cout << "Initial Insertions:" << cnt << "/" << to_string(testCases[i].N) << endl;
                     }
                 }
@@ -84,6 +85,8 @@ int main(int argc, char** argv)
             }
 	    
             cnt = 0;
+		
+			/*
             for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 auto item = testCases[i].filePairs[j].second;
@@ -135,7 +138,8 @@ int main(int argc, char** argv)
         }
         cout << "*********************************************************************************" << endl;
 
-    }
 */
+    }
+}
     return 0;
 }
