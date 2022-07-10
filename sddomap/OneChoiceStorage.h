@@ -43,6 +43,7 @@ public:
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex, int instance);
     void clear(int index, int instance);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
+    vector<prf_type> searchBin(int index, int instance, int bin);
     virtual ~OneChoiceStorage();
     vector<prf_type> getElements(int index, int instance, int start, int end);
 	void copy(int index, int toInstance, int fromInstance);

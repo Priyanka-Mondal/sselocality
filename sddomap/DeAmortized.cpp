@@ -73,29 +73,30 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				L->getBin(i-1, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][1]);
 			}
 			else if ((ceil(t*pow(2,j)/s)) <= cnt[i] && cnt[i] < ((ceil(t*pow(2,j)/s))+(ceil(mi/s))))
-				L->addDummy(i, cnt[i]-ceil((t*pow(2,j)/s)+ceil(mi/s)), updateCounter);
-			else if (ceil(t*pow(2,j)+mi) <= cnt[i] < pow(2,j))
-				L->bitonicSort(i);
+				L->addDummy(i, (cnt[i]-ceil((t*pow(2,j)/s))-ceil(mi/s)), updateCounter);
+			else if ((ceil(t*pow(2,j)/s)+ceil(mi/s)) <= cnt[i] < pow(2,j))
+				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
+				L->nonOblSort(i);
 		
 			cnt[i]=cnt[i]+1;
 			if(cnt[i]= pow(2,j))
 			{
 				L->resize(i,3*pow(2,j));
-				L->copy(i-1,0,2); 
+				L->move(i-1,0,2); 
 				L->destroy(i-1,1);
 				if(!(L->exist[i][0]))
 				{
-					L->copy(i,0,3);
+					L->copy(i,0);
 					updateKey(i,0,3);
 				}
 				else if(!(L->exist[i][1]))
 				{
-					L->copy(i,1,3);
+					L->copy(i,1);
 					updateKey(i,1,3);
 				}
 				else
 				{
-					L->copy(i,2,i);
+					L->copy(i,2);
 					updateKey(i,2,3);
 				}
     	    	unsigned char* newKey = new unsigned char[16];
@@ -105,30 +106,32 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			}
 		}
 	}
-    prf_type value;
+    prf_type value, keyv;
     std::fill(value.begin(), value.end(), 0);
     std::copy(keyword.begin(), keyword.end(), value.begin());//keyword
-    *(int*) (&(value.data()[AES_KEY_SIZE - 5])) = ind;//fileid
-    value.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
-	value.data()[AES_KEY_SIZE - 7] = (byte) (0); // bin
-	L->append(0, value);
+    std::fill(keyv.begin(), keyv.end(), 0);
+    std::copy(keyword.begin(), keyword.end(), keyv.begin());//keyword
+    *(int*) (&(keyv.data()[AES_KEY_SIZE - 5])) = ind;//fileid
+    keyv.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
+	keyv.data()[AES_KEY_SIZE - 7] = (byte) (0); // bin
+	L->append(0, make_pair(value, keyv));
 
 	cnt[0]=cnt[0]+1;
 	if(cnt[0]==B)
 	{
 		if(!(L->exist[0][0]))
 		{
-			L->copy(0,0,0);
+			L->copy(0,0);
 			updateKey(0,0,3);
 		}
 		else if(!(L->exist[0][1]))
 		{
-			L->copy(0,1,0);
+			L->copy(0,1);
 			updateKey(0,1,3);
 		}
 		else
 		{
-			L->copy(0,2,0);
+			L->copy(0,2);
 			updateKey(0,2,3);
 		}
        	unsigned char* newKey = new unsigned char[16];
@@ -147,31 +150,21 @@ int DeAmortized::numberOfBins(int i)
 }
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
 {
-	//cout <<"updateKey:"<<index<<" to:"<<toInstance<<" from:"<<fromInstance<<endl;
 	keys[index][toInstance] = keys[index][fromInstance];
 }
-/*
-Bid DeAmortized::getBid(string input, int cnt) 
-{
-    std::array< uint8_t, ID_SIZE> value;
-    std::fill(value.begin(), value.end(), 0);
-    std::copy(input.begin(), input.end(), value.begin());
-    *(int*) (&value[AES_KEY_SIZE - 4]) = cnt;
-    Bid res(value);
-    return res;
-}
-*/
+
 prf_type DeAmortized::getElementAt(int instance, int index, int pos) 
 {
     auto iter = data[instance][index].begin();
-    for (int i = 0; i < pos; i++) {
+    for (int i = 0; i < pos; i++) 
         iter++;
-    }
     return (*iter).second;
 }
-/*
-vector<int> DeAmortized::search(string keyword) {
-    for (int i = 0; i < l; i++) {
+
+vector<int> DeAmortized::search(string keyword) 
+{
+    for (int i = 0; i < l; i++) 
+	{
         omaps[i]->treeHandler->oram->totalRead = 0;
         omaps[i]->treeHandler->oram->totalWrite = 0;
     }
@@ -179,49 +172,65 @@ vector<int> DeAmortized::search(string keyword) {
     totalSearchCommSize = 0;
     vector<int> finalRes;
     vector<prf_type> encIndexes;
-    for (int j = 0; j < 3; j++) {
-        for (int i = 0; i < localSize; i++) {
-            if (data[j][i].size() > 0) {
+    for (int j = 0; j < 3; j++) 
+	{
+        for (int i = 0; i < localSize; i++) 
+		{
+            if (data[j][i].size() > 0) 
+			{
                 int curCounter = 1;
                 bool exist = true;
-                do {
-                    if (data[j][i].count(keyword + "-" + to_string(curCounter)) != 0) {
+                do 
+				{
+                    if (data[j][i].count(keyword + "-" + to_string(curCounter)) != 0) 
+					{
                         encIndexes.push_back(data[j][i][keyword + "-" + to_string(curCounter)]);
                         curCounter++;
-                    } else {
+                    } 
+					else 
+					{
                         exist = false;
                     }
-                } while (exist);
+                } 
+				while (exist);
             }
         }
     }
-    for (int j = 0; j < 3; j++) {
-        for (int i = localSize; i < l; i++) {
-            if (L->exist[j][i]) {
-                auto tmpRes = L->search(j, i, keyword, keys[j][i]);
+    for (int i = localSize; i < lb; i++) 
+	{
+    	for (int j = 0; j < 3; j++) 
+		{
+            if (L->exist[i][j]) 
+			{
+                auto tmpRes = L->search(i, j, keyword, keys[i][j]);
                 encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
             }
         }
     }
 
     map<int, int> remove;
-    for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) {
+    for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
+	{
         prf_type decodedString = *i;
         int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
         remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
     }
-    for (auto const& cur : remove) {
-        if (cur.second < 0) {
+    for (auto const& cur : remove) 
+	{
+        if (cur.second < 0) 
+		{
             finalRes.emplace_back(cur.first);
         }
     }
-    for (int i = 0; i < l; i++) {
-        totalSearchCommSize += (omaps[i]->treeHandler->oram->totalRead + omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
+    for (int i = 0; i < l; i++) 
+	{
+        totalSearchCommSize += (omaps[i]->treeHandler->oram->totalRead + 
+				omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
     }
     totalSearchCommSize += L->totalCommunication;
     return finalRes;
 }
-
+/*
 prf_type DeAmortized::bitwiseXOR(int input1, int op, prf_type input2) {
     prf_type result;
     result[3] = input2[3] ^ ((input1 >> 24) & 0xFF);
@@ -253,8 +262,10 @@ void DeAmortized::getAESRandomValue(unsigned char* keyword, int op, int srcCnt, 
 }
 
 
-void DeAmortized::endSetup() {
-    for (unsigned int i = 0; i < setupOMAPS.size(); i++) {
+void DeAmortized::endSetup() 
+{
+    for (unsigned int i = 0; i < setupOMAPS.size(); i++) 
+	{
         omaps[i]->setDummy(setupOMAPSDummies[i]);
         omaps[i]->setupInsert(setupOMAPS[i]);
     }
