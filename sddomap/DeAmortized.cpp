@@ -12,7 +12,7 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 {
 	cout <<"=====================Running SDd+OneChoiceAllocation======================"<<endl;
    	this->deleteFiles = deleteFiles;
-	B = 1;
+	//B = 1;
     l = ceil(log2(N));
     b = ceil(log2(B));
 	lb = l-b;
@@ -73,7 +73,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				L->getBin(i-1, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][1]);
 			}
 			else if ((ceil(t*pow(2,j)/s)) <= cnt[i] && cnt[i] < ((ceil(t*pow(2,j)/s))+(ceil(mi/s))))
-				L->addDummy(cnt[i]-ceil(t*pow(2,j)+mi),i);
+				L->addDummy(i, cnt[i]-ceil((t*pow(2,j)/s)+ceil(mi/s)), updateCounter);
 			else if (ceil(t*pow(2,j)+mi) <= cnt[i] < pow(2,j))
 				L->bitonicSort(i);
 		

@@ -26,7 +26,7 @@ public:
 	void destroy(int index, int instance);
 	void resize(int index, int size);
 	vector<prf_type> getElements(int index, int instance, int start, int end);
-	void addDummy(int count, int index);
+	void addDummy(int index, int count, int updateCounter);
 	void bitonicSort(int index);
 };
 

@@ -60,33 +60,35 @@ bool OneChoiceStorage::setup(bool overwrite)
     }
 
 }
-/*
-void OneChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_type> > > ciphers) {
+
+void OneChoiceStorage::insertAll(int index, int instance, vector< pair<prf_type, prf_type> > ciphers) 
+{
     if (inMemoryStorage) {
-        for (auto item : ciphers) {
-            data[index].insert(data[index].end(), item.begin(), item.end());
-        }
+        //for (auto item : ciphers) {
+          //  data[index].insert(data[index].end(), item.begin(), item.end());
+        //}
     } else {
-            fstream file(filenames[index].c_str(), ios::binary | ios::out);
+            fstream file(filenames[index][instance].c_str(), ios::binary | ios::out);
             if (file.fail()) {
                 cerr << "Error in insert: " << strerror(errno);
             }
-            for (auto item : ciphers) {
-                for (auto pair : item) {
+            for (auto pair : ciphers) {
+                //for (auto pair : item) {
                     unsigned char newRecord[KEY_VALUE_SIZE];
                     memset(newRecord, 0, KEY_VALUE_SIZE);
                     std::copy(pair.first.begin(), pair.first.end(), newRecord);
                     std::copy(pair.second.begin(), pair.second.end(), newRecord + AES_KEY_SIZE);
                     file.write((char*) newRecord, 2 * AES_KEY_SIZE);
-                }
+                //}
             }
             file.close();
         //}
     }
 }
-*/
-/*
-vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index) {
+
+
+vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index, int instance) 
+{
     if (inMemoryStorage) {
         vector<pair<prf_type, prf_type> > results;
         for (int i = 0; i < data[index].size(); i++) {
@@ -97,7 +99,7 @@ vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index) {
         return results;
     } else {
             vector<pair<prf_type, prf_type> > results;
-            fstream file(filenames[index].c_str(), ios::binary | ios::in | ios::ate);
+            fstream file(filenames[index][instance].c_str(), ios::binary | ios::in | ios::ate);
             if (file.fail()) {
                 cerr << "Error in read: " << strerror(errno);
             }
@@ -122,7 +124,7 @@ vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index) {
         //}
     }
 }
-*/
+
 vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int start, int end)
 {
 	vector<prf_type> results;

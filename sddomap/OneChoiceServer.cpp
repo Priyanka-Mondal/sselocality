@@ -65,11 +65,12 @@ void OneChoiceServer::clear(int index, int instance)
 
 void OneChoiceServer::copy(int index, int toInstance, int fromInstance)
 {
-	//storage
+	vector<pair<prf_type, prf_type>> data = storage->getAllData(index, fromInstance);
+	storage->insertAll(index, toInstance, data);
 }
-void OneChoiceServer::append(int instance, prf_type keyVal)
+void OneChoiceServer::append(int index, prf_type keyVal)
 {
-	// here
+	NEW[index].push_back(keyVal);
 }
 void OneChoiceServer::destroy(int index, int instance)
 {
@@ -77,15 +78,11 @@ void OneChoiceServer::destroy(int index, int instance)
 }
 void OneChoiceServer::resize(int index, int size)
 {
-	//here
+	NEW[index].resize(size);
 }
 vector<prf_type> OneChoiceServer::getElements(int index, int instance, int start, int end)
 {
 	return storage->getElements(index, instance, start, end);
-}
-void OneChoiceServer::addDummy(int count, int index)
-{
-	//here
 }
 void OneChoiceServer::bitonicSort(int index)
 {

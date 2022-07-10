@@ -7,6 +7,9 @@
 
 #define USE_XXL 0
 
+#define B 1
+#define S 2
+
 // The main type for passing around raw file data
 #define ID_SIZE 16
 

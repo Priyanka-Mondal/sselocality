@@ -44,8 +44,8 @@ private:
     int updateCounter = 0;
     int localSize = 0;
     int l;
-	int s = 2;
-	int B, b, lb;
+	int s = S;
+	int b, lb;
     prf_type getElementAt(int instance, int index, int pos);
     double totalUpdateCommSize;
     double totalSearchCommSize;

@@ -39,12 +39,13 @@ public:
     int SeekG = 0;
     OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
-    void insertAll(int dataIndex, vector<vector< pair<prf_type, prf_type> > > ciphers);
-    vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
+    void insertAll(int dataIndex, int instance, vector< pair<prf_type, prf_type> > ciphers);
+    vector<pair<prf_type, prf_type> > getAllData(int dataIndex, int instance);
     void clear(int index, int instance);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
     virtual ~OneChoiceStorage();
     vector<prf_type> getElements(int index, int instance, int start, int end);
+	void copy(int index, int toInstance, int fromInstance);
 
 
 };

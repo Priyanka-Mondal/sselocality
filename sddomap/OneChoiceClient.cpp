@@ -9,13 +9,16 @@ OneChoiceClient::OneChoiceClient(int N, vector<OMAP*> omaps,
 		bool inMemory, bool overwrite, bool profile) 
 {
     this->profile = profile;
-	int numOfIndices = ceil((float)log2(N));
+	int l = ceil((float)log2(N));
     memset(nullKey.data(), 0, AES_KEY_SIZE);
+	int b = ceil((float)log2(B));
+	int numOfIndices = l - b;
     for (int i = 0; i <=numOfIndices; i++) 
 	{
+		int j = i + b;
         int curNumberOfBins = i > 1 ? 
-			(int) ceil((float) pow(2, i)/(float)(log2(pow(2, i))*log2(log2(pow(2, i))))):1;
-        int curSizeOfEachBin = i > 1 ? 3*(log2(pow(2, i))*log2(log2(pow(2, i)))):3;
+			(int) ceil((float) pow(2, j)/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))):1;
+        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*log2(log2(pow(2, j)))):3;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
     }
@@ -137,9 +140,10 @@ vector<prf_type> OneChoiceClient::search(int index, string keyword, unsigned cha
         }
     }
 
-    if (profile) {
+    if (profile) 
+	{
         searchDecryption = Utilities::stopTimer(65);
-        printf("search decryption time:%f for decrypting:%d ciphers\n", searchDecryption, ciphers.size());
+        cout<<"search decryption time:"<<searchDecryption<<" for decrypting:"<<ciphers.size()<<" ciphers"<<endl;
     }
     totalCommunication += ciphers.size() * sizeof (prf_type) + sizeof (prf_type);
     return finalRes;
@@ -165,7 +169,6 @@ void OneChoiceClient::copy(int index, int toInstance, int fromInstance)
 }
 void OneChoiceClient::append(int instance, prf_type keyVal)
 {
-	// convert input to prf_type;
 	server->append(instance, keyVal);
 }
 void OneChoiceClient::destroy(int index, int instance)
@@ -204,6 +207,32 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 		omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
 	}
 }
+void OneChoiceClient::addDummy(int index, int count, int updateCounter)
+{
+    int upCnt = (int)ceil((updateCounter-(6*pow(2, index-1)-2))/pow(2, index))+1; //???????
+	for(int t = 0; t<S; t++)
+	{
+		int bin = count*S+t;
+		if(bin < numberOfBins[index])
+		{
+			int cbin = stoi(omaps[index]->find(getBid(to_string(bin),upCnt)));
+			for(int k = cbin; k<3*sizeOfEachBin[index]; k++)
+			{
+				prf_type value;
+	    		std::fill(value.begin(), value.end(), 0);
+				value.data()[AES_KEY_SIZE - 7] = (byte) (bin); // bin
+				server->append(index, value);
+			}
+			for(int k = 0; k<cbin ; k++)
+			{
+				prf_type value;
+				value.data()[AES_KEY_SIZE - 7] = (byte) (0); // bin
+				server->append(index, value);
+			}
+		}
+	}
+	//if(count ) add more dummy for bitonic sort
+}
 
 Bid OneChoiceClient::getBid(string input, int cnt) 
 {
@@ -225,10 +254,6 @@ int OneChoiceClient::map(string w, int cnt, int index, unsigned char* key)
     unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
     int bin = (unsigned int) (*((int*) hash)) % numberOfBins[index];
 	return bin;
-}
-void OneChoiceClient::addDummy(int count, int index)
-{
-	server->addDummy(count, index);
 }
 void OneChoiceClient::bitonicSort(int index)
 {

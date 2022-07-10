@@ -43,7 +43,7 @@ public:
 	void destroy(int index, int instance);
 	void resize(int index, int size);
 	void getBin(int index, int instance, int start, int end, int updateCounter, unsigned char* key);
-	void addDummy(int count, int index);
+	void addDummy(int index, int count, int updateCounter);
 	void bitonicSort(int index);
     int map(string w, int cnt, int index, unsigned char* key);
     Bid getBid(string str, int cnt);
