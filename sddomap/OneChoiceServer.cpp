@@ -9,7 +9,7 @@ OneChoiceServer::OneChoiceServer(int dataIndex, vector<OMAP*> omaps, bool inMemo
     keyworkCounters = new Storage(inMemory, dataIndex, "/tmp/keyword-", profile);
     keyworkCounters->setup(overwrite);
 	for(int n=0; n<=dataIndex; n++)
-    	NEW.push_back(vector<pair<prf_type, prf_type> >());
+    	NEW.push_back(vector<prf_type>());
 }
 
 OneChoiceServer::~OneChoiceServer() {}
@@ -64,7 +64,7 @@ vector<prf_type> OneChoiceServer::search(int dataIndex, int instance, int bin)
     return result;
 }
 
-vector<pair<prf_type, prf_type> > OneChoiceServer::getAllData(int dataIndex, int instance) 
+vector<prf_type> OneChoiceServer::getAllData(int dataIndex, int instance) 
 {
     return storage->getAllData(dataIndex, instance);
 }
@@ -77,17 +77,18 @@ void OneChoiceServer::clear(int index, int instance)
 
 void OneChoiceServer::move(int index, int toInstance, int fromInstance)
 {
-	vector<pair<prf_type, prf_type>> data;
+	vector<prf_type> data;
    	data = storage->getAllData(index, fromInstance);
 	storage->insertAll(index, toInstance, data);
 }
 
 void OneChoiceServer::copy(int index, int toInstance)
 {
+	//cout <<"NEW[index].size():"<<NEW[index].size()<<endl;
 	storage->insertAll(index, toInstance, NEW[index]);
 }
 
-void OneChoiceServer::append(int index, pair<prf_type, prf_type> keyVal)
+void OneChoiceServer::append(int index, prf_type keyVal)
 {
 	NEW[index].push_back(keyVal);
 }
@@ -106,11 +107,11 @@ vector<prf_type> OneChoiceServer::getElements(int index, int instance, int start
 {
 	return storage->getElements(index, instance, start, end);
 }
-vector<pair<prf_type, prf_type>> OneChoiceServer::getNEW(int index)
+vector< prf_type> OneChoiceServer::getNEW(int index)
 {
 	return NEW[index];
 }
-void OneChoiceServer::putNEW(int index, vector<pair<prf_type, prf_type>> sorted)
+void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)
 {
 	NEW[index].resize(0);
 	NEW[index].resize(sorted.size());

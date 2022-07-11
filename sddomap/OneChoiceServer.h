@@ -12,7 +12,7 @@ private:
     void getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result);
     int numberOfBins, sizeOfEachBin;
     bool profile = false;
-	vector<vector<pair<prf_type,prf_type>>> NEW;
+	vector<vector<prf_type>> NEW;
 
 public:
     OneChoiceServer(int dataIndex, vector<OMAP*> omaps, bool inMemory, bool overwrite, bool profile);
@@ -21,16 +21,16 @@ public:
     void storeCiphers(int dataIndex, int instance, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters);
     //vector<prf_type> search(int dataIndex, int instance, prf_type token, int & keywordCnt);
     vector<prf_type> search(int dataIndex, int instance, int bin);
-    vector<pair<prf_type, prf_type> > getAllData(int dataIndex, int instance);
+    vector<prf_type> getAllData(int dataIndex, int instance);
 	void move(int index, int toInstance, int fromInstance);
 	void copy(int index, int toInstance);
-	void append(int instance, pair<prf_type,prf_type> keyVal);
+	void append(int instance, prf_type keyVal);
 	void destroy(int index, int instance);
 	void resize(int index, int size);
 	vector<prf_type> getElements(int index, int instance, int start, int end);
 	void addDummy(int index, int count, int updateCounter);
-	vector<pair<prf_type, prf_type>> getNEW(int index);
-	void putNEW(int index, vector<pair<prf_type, prf_type>>);
+	vector<prf_type> getNEW(int index);
+	void putNEW(int index, vector<prf_type>);
 	void bitonicSort(int index);
 };
 

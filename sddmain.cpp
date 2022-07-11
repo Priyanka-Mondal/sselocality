@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 {
     vector<TC<int> > testCases;
     vector<string> testKeywords;
-    uint keywordLength = 7;
+    uint keywordLength = 6;
     bool inMemory, overwrite;
     string filename = "configs/config.txt";
     if (argc == 2) 
@@ -69,7 +69,7 @@ int main(int argc, char** argv)
         for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
 	   	{
 			key++;
-			//cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
+			cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<"|"<<cur->first<<endl;
 			int j;
     	    for (j = 0; j < cur->second.size(); j++) 
 			{

@@ -12,7 +12,7 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
 	{
         int curNumberOfBins = i > 1 ? 
 			(int) ceil((float) pow(2, i)/(float)(log2(pow(2, i))*log2(log2(pow(2,i))))) : 1;
-        int curSizeOfEachBin = i > 1 ? (log2(pow(2, i)) * log2(log2(pow(2, i))))*3 : 3;
+        int curSizeOfEachBin = i > 1 ? (log2(pow(2, i)) * log2(log2(pow(2, i))))*3 : pow(2,i);
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
         printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
@@ -51,7 +51,7 @@ bool OneChoiceStorage::setup(bool overwrite)
            		    for (int k = 0; k < maxSize; k++) 
 		   			{
            		        file.write((char*) nullKey.data(), AES_KEY_SIZE);
-           		        file.write((char*) nullKey.data(), AES_KEY_SIZE);
+           		        //file.write((char*) nullKey.data(), AES_KEY_SIZE);
            		    }
            		    file.close();
            		}
@@ -61,7 +61,7 @@ bool OneChoiceStorage::setup(bool overwrite)
 
 }
 
-void OneChoiceStorage::insertAll(int index, int instance, vector< pair<prf_type, prf_type> > ciphers) 
+void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphers) 
 {
     if (inMemoryStorage) 
 	{
@@ -74,14 +74,13 @@ void OneChoiceStorage::insertAll(int index, int instance, vector< pair<prf_type,
             fstream file(filenames[index][instance].c_str(), ios::binary | ios::out);
             if (file.fail()) 
                 cerr << "Error in insert: " <<strerror(errno)<<endl;
-            for (auto pair : ciphers) 
+            for (auto ci : ciphers) 
 			{
                 //for (auto pair : item) {
-                    unsigned char newRecord[KEY_VALUE_SIZE];
-                    memset(newRecord, 0, KEY_VALUE_SIZE);
-                    std::copy(pair.first.begin(), pair.first.end(), newRecord);
-                    std::copy(pair.second.begin(), pair.second.end(), newRecord + AES_KEY_SIZE);
-                    file.write((char*) newRecord, 2 * AES_KEY_SIZE);
+                    unsigned char newRecord[AES_KEY_SIZE];
+                    memset(newRecord, 0, AES_KEY_SIZE);
+                    std::copy(ci.begin(), ci.end(), newRecord);
+                    file.write((char*) newRecord, AES_KEY_SIZE);
                 //}
             }
             file.close();
@@ -89,21 +88,22 @@ void OneChoiceStorage::insertAll(int index, int instance, vector< pair<prf_type,
 }
 
 
-vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index, int instance) 
+vector<prf_type> OneChoiceStorage::getAllData(int index, int instance) 
 {
     if (inMemoryStorage) 
 	{
-        vector<pair<prf_type, prf_type> > results;
-        for (int i = 0; i < data[index].size(); i++) 
+		
+        vector<prf_type> results;
+        /*for (int i = 0; i < data[index].size(); i++) 
 		{
             if (data[index][i].first != nullKey) 
                 results.push_back(data[index][i]);
-        }
+        }*/
         return results;
     } 
 	else 
 	{
-            vector<pair<prf_type, prf_type> > results;
+            vector<prf_type> results;
             fstream file(filenames[index][instance].c_str(), ios::binary | ios::in | ios::ate);
             if (file.fail()) 
                 cerr << "Error in read: " << strerror(errno);
@@ -113,16 +113,15 @@ vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index, int in
             file.read(keyValues, size);
             file.close();
 
-            for (int i = 0; i < size / KEY_VALUE_SIZE; i++) 
+            for (int i = 0; i < size / AES_KEY_SIZE; i++) 
 			{
-                prf_type tmp, restmp;
-                std::copy(keyValues + i*KEY_VALUE_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
-                std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
-                if (tmp != nullKey) {
-                    results.push_back(pair<prf_type, prf_type>(tmp, restmp));
-                }
+                prf_type tmp;
+                std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
+                //if (tmp != nullKey) 
+				//{
+                    results.push_back(tmp);
+                //}
             }
-
             delete keyValues;
             return results;
     }
@@ -134,19 +133,18 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
     fstream file(filenames[index][instance].c_str(), ios::binary | ios::in | ios::ate);
     if (file.fail()) 
         cerr << "Error in getElements: " << strerror(errno);
-    int seek = KEY_VALUE_SIZE*start;
+    int seek = AES_KEY_SIZE*start;
     file.seekg(seek, ios::beg);
 	SeekG++;
-	int readLength = (end-start)*KEY_VALUE_SIZE;
+	int readLength = (end-start)*AES_KEY_SIZE;
     char* keyValues = new char[readLength];
     file.read(keyValues, readLength);
     file.close();
 
-    for (int i = 0; i < readLength/KEY_VALUE_SIZE; i++) 
+    for (int i = 0; i < readLength/AES_KEY_SIZE; i++) 
 	{
-        prf_type tmp, restmp;
-        std::copy(keyValues + i*KEY_VALUE_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
-        std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
+        prf_type restmp;
+        std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, restmp.begin());
         //if (tmp != nullKey) {
             results.push_back(restmp);
         //}
@@ -169,7 +167,7 @@ void OneChoiceStorage::clear(int index, int instance)
         for (int j = 0; j < maxSize; j++) 
 		{
             file.write((char*) nullKey.data(), AES_KEY_SIZE);
-            file.write((char*) nullKey.data(), AES_KEY_SIZE);
+            //file.write((char*) nullKey.data(), AES_KEY_SIZE);
         }
         file.close();
     }
@@ -183,11 +181,12 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     std::fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
-    int readPos = bin * KEY_VALUE_SIZE * sizeOfEachBin[index];
-    int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;
+	cout <<filenames[index][instance].c_str()<<endl;
+    int readPos = bin * AES_KEY_SIZE * sizeOfEachBin[index];
+    int fileLength = numberOfBins[index] * sizeOfEachBin[index] * AES_KEY_SIZE;
     int remainder = fileLength - readPos;
     //int totalReadLength = cnt * KEY_VALUE_SIZE * sizeOfEachBin[index];
-    int totalReadLength = KEY_VALUE_SIZE * sizeOfEachBin[index];
+    int totalReadLength = AES_KEY_SIZE * sizeOfEachBin[index];
     int readLength = 0;
     if (totalReadLength > remainder) 
 	{
@@ -204,10 +203,10 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     char* keyValues = new char[readLength];
     file.read(keyValues, readLength);
     readBytes += readLength;
-    for (int i = 0; i < readLength / KEY_VALUE_SIZE; i++) 
+    for (int i = 0; i < readLength / AES_KEY_SIZE; i++) 
 	{
-        prf_type tmp, restmp;
-        std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValues + i * KEY_VALUE_SIZE + (2 * AES_KEY_SIZE), restmp.begin());
+        prf_type restmp;
+        std::copy(keyValues + i * AES_KEY_SIZE, keyValues + i * AES_KEY_SIZE+AES_KEY_SIZE, restmp.begin());
         if (restmp != nullKey) 
 		{
             results.push_back(restmp);

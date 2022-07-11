@@ -40,11 +40,11 @@ public:
     vector<prf_type> getAllData(int index, int instance, unsigned char* key);
 	void move(int index, int toInstance, int fromInstance);
 	void copy(int index, int toInstance);
-	void append(int instance, pair<prf_type, prf_type> keyVal);
+	void append(int instance, prf_type keyVal, unsigned char* key);
 	void destroy(int index, int instance);
 	void resize(int index, int size);
 	void getBin(int index, int instance, int start, int end, int updateCounter, unsigned char* key);
-	void addDummy(int index, int count, int updateCounter);
+	void addDummy(int index, int count, int updateCounter, unsigned char* key);
 	void bitonicSort(int step, int index, int counter);
 	void nonOblSort(int index);
     int map(string w, int cnt, int index, unsigned char* key);

@@ -305,45 +305,45 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
 	vector<prf_type> stashCiphers;
 	for(int s = 1 ;s<=2; s++)
 	{
-	string newkeyword = keyword;
-	if(s==1) 
-	{
-		  newkeyword = newkeyword.append("1");
-			  hashtoken = Utilities::encode(newkeyword, key);
-	}
-	else if(s==2)
-	{
-		  newkeyword = keyword;
-		  newkeyword = newkeyword.append("2");
-			  hashtoken = Utilities::encode(newkeyword, key);
-	}
+		string newkeyword = keyword;
+		if(s==1) 
+		{
+			  newkeyword = newkeyword.append("1");
+				  hashtoken = Utilities::encode(newkeyword, key);
+		}
+		else if(s==2)
+		{
+			  newkeyword = keyword;
+			  newkeyword = newkeyword.append("2");
+				  hashtoken = Utilities::encode(newkeyword, key);
+		}
 		ciphers = server->search(index, token, hashtoken, keywordCnt, numberOfBins[index]);
-	stashCiphers = server->getStash(index);
-	   	if(flag == 0)
-	   	{
-	   		for (auto item : ciphers) 
-	   		{
-	   	 		prf_type plaintext;
-	   	 		Utilities::decode(item, plaintext, key);
-	   	 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-	   			{
-	   		 			finalRes.push_back(plaintext);
-	   					flag++;
-	   	 		}
-	   		}
-	   	}
+		stashCiphers = server->getStash(index);
+		if(flag == 0)
+		{
+			for (auto item : ciphers) 
+			{
+		 		prf_type plaintext;
+		 		Utilities::decode(item, plaintext, key);
+		 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+				{
+			 			finalRes.push_back(plaintext);
+						flag++;
+		 		}
+			}
+		}
 		if(flag !=0)//found in one superBin will imply NOT found in the other
 		{
-	   			for (auto item : stashCiphers) 
-	   			{
-	   		 		prf_type plaintext;
-	   		 		Utilities::decode(item, plaintext, key);
-	   		 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-	   				{
-	   			 			finalRes.push_back(plaintext);
-	   						flag++;
-	   		 		}
-	   			}
+			for (auto item : stashCiphers) 
+			{
+				prf_type plaintext;
+				Utilities::decode(item, plaintext, key);
+				if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+				{
+			 			finalRes.push_back(plaintext);
+						flag++;
+				}
+			}
 		}
 		totalCommunication += ciphers.size()* sizeof(prf_type);
 	}

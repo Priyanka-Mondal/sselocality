@@ -39,8 +39,8 @@ public:
     int SeekG = 0;
     OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
-    void insertAll(int dataIndex, int instance, vector< pair<prf_type, prf_type> > ciphers);
-    vector<pair<prf_type, prf_type> > getAllData(int dataIndex, int instance);
+    void insertAll(int dataIndex, int instance, vector<prf_type> ciphers);
+    vector<prf_type> getAllData(int dataIndex, int instance);
     void clear(int index, int instance);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
     vector<prf_type> searchBin(int index, int instance, int bin);

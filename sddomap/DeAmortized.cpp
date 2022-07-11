@@ -17,13 +17,13 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
     b = ceil(log2(B));
 	lb = l-b;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-    for (int j = 0; j < 4; j++) 
+    for (int i = 0; i < lb; i++) 
 	{
         keys.push_back(vector<unsigned char*> ());
-        for (int i = 0; i < l; i++) 
+    	for (int j = 0; j < 4; j++) 
 		{
             unsigned char* tmpKey = new unsigned char[16];
-            keys[j].push_back(tmpKey);
+            keys[i].push_back(tmpKey);
         }
     }
     for (int i = 0; i <=lb; i++) 
@@ -61,7 +61,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	{
 		int j = b+i;
 		int mi = numberOfBins(j); // for now
-		if(L->exist[i][0] && L->exist[i][1])
+		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
 			if(i>1)
 				t = 3;
@@ -71,31 +71,37 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			{
 				L->getBin(i-1, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][0]);
 				L->getBin(i-1, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][1]);
+				cout<<"OLDEST/ER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 			}
-			else if ((ceil(t*pow(2,j)/s)) <= cnt[i] && cnt[i] < ((ceil(t*pow(2,j)/s))+(ceil(mi/s))))
-				L->addDummy(i, (cnt[i]-ceil((t*pow(2,j)/s))-ceil(mi/s)), updateCounter);
-			else if ((ceil(t*pow(2,j)/s)+ceil(mi/s)) <= cnt[i] < pow(2,j))
+			else if (((t*pow(2,j)/s)) <= cnt[i] && cnt[i] < (((t*pow(2,j)/s))+(ceil(mi/s))))
+				L->addDummy(i, (cnt[i]-((t*pow(2,j)/s))-ceil(mi/s)), updateCounter, keys[i][0]);
+			else if (((t*pow(2,j)/s)+ceil(mi/s)) <= cnt[i] < pow(2,j))
 				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
 				L->nonOblSort(i);
 		
 			cnt[i]=cnt[i]+1;
-			if(cnt[i]= pow(2,j))
+				cout<<"j:"<<j<<" i:"<<i<<" cnt[i]:"<<cnt[i]<<endl;
+			if(cnt[i]== pow(2,j))
 			{
 				L->resize(i,3*pow(2,j));
 				L->move(i-1,0,2); 
+				cout<<"OLD["<<i-1<<"] to OLDEST["<<i-1<<"]"<<endl;
 				L->destroy(i-1,1);
 				if(!(L->exist[i][0]))
 				{
+					cout<<"NEW["<<i<<"] to OLDEST["<<i<<"]"<<endl;
 					L->copy(i,0);
 					updateKey(i,0,3);
 				}
 				else if(!(L->exist[i][1]))
 				{
+					cout<<"NEW["<<i<<"] to OLDER["<<i<<"]"<<endl;
 					L->copy(i,1);
 					updateKey(i,1,3);
 				}
 				else
 				{
+					cout<<"NEW["<<i<<"] to OLD["<<i<<"]"<<endl;
 					L->copy(i,2);
 					updateKey(i,2,3);
 				}
@@ -106,31 +112,32 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			}
 		}
 	}
-    prf_type value, keyv;
-    std::fill(value.begin(), value.end(), 0);
-    std::copy(keyword.begin(), keyword.end(), value.begin());//keyword
-    std::fill(keyv.begin(), keyv.end(), 0);
-    std::copy(keyword.begin(), keyword.end(), keyv.begin());//keyword
-    *(int*) (&(keyv.data()[AES_KEY_SIZE - 5])) = ind;//fileid
-    keyv.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
-	keyv.data()[AES_KEY_SIZE - 7] = (byte) (0); // bin
-	L->append(0, make_pair(value, keyv));
+    prf_type keyVal;
+    std::fill(keyVal.begin(), keyVal.end(), 0);
+    std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 4])) = ind;//fileid
+    keyVal.data()[AES_KEY_SIZE - 5] = (byte) (op == OP::INS ? 0 : 1);//op
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 9])) = 0;//bin
+	L->append(0, keyVal, keys[0][3]);
 
 	cnt[0]=cnt[0]+1;
 	if(cnt[0]==B)
 	{
 		if(!(L->exist[0][0]))
 		{
+			cout<<"NEW[0] to OLDEST[0]"<<endl;
 			L->copy(0,0);
 			updateKey(0,0,3);
 		}
 		else if(!(L->exist[0][1]))
 		{
+			cout<<"NEW[0] to OLDER[0]"<<endl;
 			L->copy(0,1);
 			updateKey(0,1,3);
 		}
 		else
 		{
+			cout<<"NEW[0] to OLD[0]"<<endl;
 			L->copy(0,2);
 			updateKey(0,2,3);
 		}
@@ -202,6 +209,7 @@ vector<int> DeAmortized::search(string keyword)
 		{
             if (L->exist[i][j]) 
 			{
+				cout <<"searching at["<< i<<"]["<<j<<"]"<<endl;
                 auto tmpRes = L->search(i, j, keyword, keys[i][j]);
                 encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
             }
@@ -212,8 +220,8 @@ vector<int> DeAmortized::search(string keyword)
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
 	{
         prf_type decodedString = *i;
-        int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
-        remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
+        int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 4]));
+        remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 5]) - 1);
     }
     for (auto const& cur : remove) 
 	{
