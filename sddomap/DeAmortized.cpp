@@ -74,8 +74,8 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				cout<<"OLDEST/ER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 			}
 			else if (((t*pow(2,j)/s)) <= cnt[i] && cnt[i] < (((t*pow(2,j)/s))+(ceil(mi/s))))
-				L->addDummy(i, (cnt[i]-((t*pow(2,j)/s))-ceil(mi/s)), updateCounter, keys[i][3]);
-			else if (((t*pow(2,j)/s)+ceil(mi/s)) <= cnt[i] < pow(2,j))
+				L->addDummy(i, (cnt[i]-((t*pow(2,j)/s))), updateCounter, keys[i][3]);
+			else if (((t*pow(2,j)/s)+ceil(mi/s)) <= cnt[i] && cnt[i] <= pow(2,j))
 				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
 				L->nonOblSort(i, keys[i][3]);
 		
