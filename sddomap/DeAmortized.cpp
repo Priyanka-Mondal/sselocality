@@ -69,15 +69,15 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				t = 1;
 			if(cnt[i] <(ceil(t*pow(2,j)/s)))
 			{
-				L->getBin(i-1, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][0]);
-				L->getBin(i-1, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][1]);
+				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][0], keys[i][3]);
+				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][1], keys[i][3]);
 				cout<<"OLDEST/ER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 			}
 			else if (((t*pow(2,j)/s)) <= cnt[i] && cnt[i] < (((t*pow(2,j)/s))+(ceil(mi/s))))
-				L->addDummy(i, (cnt[i]-((t*pow(2,j)/s))-ceil(mi/s)), updateCounter, keys[i][0]);
+				L->addDummy(i, (cnt[i]-((t*pow(2,j)/s))-ceil(mi/s)), updateCounter, keys[i][3]);
 			else if (((t*pow(2,j)/s)+ceil(mi/s)) <= cnt[i] < pow(2,j))
 				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
-				L->nonOblSort(i);
+				L->nonOblSort(i, keys[i][3]);
 		
 			cnt[i]=cnt[i]+1;
 				cout<<"j:"<<j<<" i:"<<i<<" cnt[i]:"<<cnt[i]<<endl;

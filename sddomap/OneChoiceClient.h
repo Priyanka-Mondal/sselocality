@@ -43,10 +43,10 @@ public:
 	void append(int instance, prf_type keyVal, unsigned char* key);
 	void destroy(int index, int instance);
 	void resize(int index, int size);
-	void getBin(int index, int instance, int start, int end, int updateCounter, unsigned char* key);
+	void getBin(int newindex, int instance, int start, int end, int updateCounter, unsigned char* key1, unsigned char* key2);
 	void addDummy(int index, int count, int updateCounter, unsigned char* key);
 	void bitonicSort(int step, int index, int counter);
-	void nonOblSort(int index);
+	void nonOblSort(int index, unsigned char* key);
     int map(string w, int cnt, int index, unsigned char* key);
     Bid getBid(string str, int cnt);
 };
