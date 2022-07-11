@@ -32,6 +32,7 @@ public:
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;
 	prf_type nullKey;
+	vector<int> numNEW;
 
     vector<vector<bool>> exist;
     void destry(int index);

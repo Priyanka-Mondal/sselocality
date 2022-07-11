@@ -31,6 +31,7 @@ OneChoiceClient::OneChoiceClient(int N, vector<OMAP*> omaps,
 		{
             exist[i].push_back(false);
         }
+		numNEW[i] = 0;
     }
 	exist[0][3] = true;
     server = new OneChoiceServer(numOfIndices, omaps, inMemory, overwrite, profile);
@@ -186,6 +187,7 @@ void OneChoiceClient::copy(int index, int toInstance)
 {
 	server->copy(index, toInstance);
 	exist[index][toInstance] = true;
+	numNEW[index] = numNEW[index] + 1;
 }
 
 void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
