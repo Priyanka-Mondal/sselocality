@@ -225,7 +225,7 @@ void ORAM::Access(Bid bid, Node*& node) {
 
 Node* ORAM::ReadNodeFromCache(Bid bid) {
     if (bid == 0) {
-        throw runtime_error("Node id is not set");
+        throw runtime_error("Node id is not set:Read");
     }
     if (cache.count(bid) == 0) {
         throw runtime_error("Node not found in the cache");
@@ -255,8 +255,9 @@ Node* ORAM::ReadNode(Bid bid, int lastLeaf, int newLeaf) {
 }
 
 int ORAM::WriteNode(Bid bid, Node* node) {
-    if (bid == 0) {
-        throw runtime_error("Node id is not set");
+    if (bid == 0) 
+	{
+        throw runtime_error("Node id is not set:Write");
     }
     if (cache.count(bid) == 0) {
         modified.insert(bid);

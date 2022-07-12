@@ -82,9 +82,10 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			}
 			if(cnt[i] <(ceil(t*(by(pow(2,j),s)))))
 			{
-				cout <<"s:"<<s<<" index:"<<i<<" cnt:"<<cnt[i]<<" ceil:"<<(ceil(t*(by(pow(2,j),s))))<<endl;
-				cout<<"OLDEST/ER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
+				//cout <<"s:"<<s<<" index:"<<i<<" cnt:"<<cnt[i]<<" ceil:"<<(ceil(t*(by(pow(2,j),s))))<<endl;
+				//cout<<"OLDEST["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);
+				//cout<<"OLDER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][1], keys[i][3]);
 			}
 			else if ((ceil((float)t*by(pow(2,j),s)))<=cnt[i] && 
@@ -95,28 +96,29 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
 		
 			cnt[i]=cnt[i]+1;
-			cout <<"cnt["<<i<<"] increased to:"<<cnt[i]<<endl;
+			//cout <<"cnt["<<i<<"] increased to:"<<cnt[i]<<endl;
 			if(cnt[i]== pow(2,j))
 			{
 				L->resize(i,3*pow(2,j));
 				L->move(i-1,0,2); 
-				cout<<"OLD["<<i-1<<"] to OLDEST["<<i-1<<"]"<<endl;
+				updateKey(i-1,0,2);
+				//cout<<"OLD["<<i-1<<"] to OLDEST["<<i-1<<"]"<<endl;
 				L->destroy(i-1,1);
 				if(!(L->exist[i][0]))
 				{
-					cout<<"NEW["<<i<<"] to OLDEST["<<i<<"]"<<endl;
+				//	cout<<"NEW["<<i<<"] to OLDEST["<<i<<"]"<<endl;
 					L->copy(i,0);
 					updateKey(i,0,3);
 				}
 				else if(!(L->exist[i][1]))
 				{
-					cout<<"NEW["<<i<<"] to OLDER["<<i<<"]"<<endl;
+				//	cout<<"NEW["<<i<<"] to OLDER["<<i<<"]"<<endl;
 					L->copy(i,1);
 					updateKey(i,1,3);
 				}
 				else
 				{
-					cout<<"NEW["<<i<<"] to OLD["<<i<<"]"<<endl;
+				//	cout<<"NEW["<<i<<"] to OLD["<<i<<"]"<<endl;
 					L->copy(i,2);
 					updateKey(i,2,3);
 				}
@@ -134,7 +136,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
     keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
     *(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = 0;//bin
 	L->append(0, keyVal, keys[0][3]);
-	cout <<"at NEW[0]"<<endl;
+	//cout <<"at NEW[0]"<<endl;
 	cnt[0]=cnt[0]+1;
 	if(cnt[0]==B)
 	{

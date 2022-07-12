@@ -228,14 +228,16 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 	{
         prf_type plaintext;
 		cout <<"[ "<<c.data() <<" ]"<<endl;
-		sleep(1);
         Utilities::decode(c, plaintext, key1);
         prf_type decodedString = plaintext;
         int ind = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
-		cout <<"ind:"<<ind<<endl;
         int op = ((byte) decodedString.data()[AES_KEY_SIZE - 6]); 
         string w((char*) plaintext.data());
-		int cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
+		int cnt=0;
+		if(w=="") 
+			w="dummy";
+		if(w!="")
+			cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
 		int bin = map(w, cnt, index, key2);		
     	prf_type keyVal;
     	std::fill(keyVal.begin(), keyVal.end(), 0);
@@ -243,8 +245,6 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
     	*(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
     	keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op);//op
     	*(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = bin;//bin
-		//prf_type encKeyVal = Utilities::encode(keyVal.data(), key2);
-		//server->append(index, encKeyVal);
 		append(index, keyVal, key2);
 		omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
 	}
@@ -274,6 +274,7 @@ void OneChoiceClient::addDummy(int index, int count, int updateCounter, unsigned
 				cbin = 0;
 			else 
 				cbin = stoi(cb);
+			cout <<"cbin:"<<cbin<<endl;
 			for(int k = cbin; k<3*sizeOfEachBin[index]; k++)
 			{
 				prf_type value;
@@ -285,7 +286,7 @@ void OneChoiceClient::addDummy(int index, int count, int updateCounter, unsigned
 			{
 				prf_type value;
 	    		std::fill(value.begin(), value.end(), 0);
-    			*(int*) (&(value.data()[AES_KEY_SIZE - 10])) = 99999;//bin
+    			*(int*) (&(value.data()[AES_KEY_SIZE - 10])) = 999999;//bin
 				append(index, value, key);
 			}
 		}
@@ -304,6 +305,9 @@ Bid OneChoiceClient::getBid(string input, int cnt)
 }
 int OneChoiceClient::map(string w, int cnt, int index, unsigned char* key)
 {
+	if(w=="dummy")
+		return 999999;
+
     prf_type K = Utilities::encode(w, key);
     prf_type mapKey, mapValue;
     unsigned char cntstr[AES_KEY_SIZE];
