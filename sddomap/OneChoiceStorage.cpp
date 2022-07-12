@@ -137,6 +137,15 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
     file.seekg(seek, ios::beg);
 	SeekG++;
 	int readLength = (end-start)*AES_KEY_SIZE;
+	int size = numberOfBins[index]*sizeOfEachBin[index]*AES_KEY_SIZE;
+	int remainder = size - seek;
+	//cout <<"index:"<<index<<endl;
+	//cout <<"start:"<<start<<" end:"<<end<<" seek:"<< seek<<endl;
+	//cout<<"rem:"<<remainder<<" size:"<<size<< "read len:"<<readLength<<endl;
+	if(readLength > remainder)
+		readLength = remainder;
+	if(remainder <0)
+		readLength = 0;
     char* keyValues = new char[readLength];
     file.read(keyValues, readLength);
     file.close();

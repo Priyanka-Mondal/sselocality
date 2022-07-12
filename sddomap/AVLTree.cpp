@@ -108,7 +108,8 @@ int AVLTree::getBalance(Node* N) {
 
 Bid AVLTree::insert(Bid rootKey, int& pos, Bid key, string value) {
     /* 1. Perform the normal BST rotation */
-    if (rootKey == 0 || (*(int*) (&rootKey.id.data()[ID_SIZE - 4])) <= dummyValue) {
+    if (rootKey == 0 || (*(int*) (&rootKey.id.data()[ID_SIZE - 4])) <= dummyValue) 
+	{
         Node* nnode = newNode(key, value);
         pos = oram->WriteNode(key, nnode);
         return nnode->key;
@@ -302,11 +303,16 @@ string AVLTree::incrementCnt(Node* head, Bid key)
     if (head == NULL || head->key == 0 || (*(int*) (&head->key.id.data()[ID_SIZE - 4])) <= dummyValue)
         return "";
     head = oram->ReadNode(head->key, head->pos, head->pos);
-    if (head->key > key) {
+    if (head->key > key) 
+	{
         return incrementCnt(oram->ReadNode(head->leftID, head->leftPos, head->leftPos), key);
-    } else if (head->key < key) {
+    } 
+	else if (head->key < key) 
+	{
         return incrementCnt(oram->ReadNode(head->rightID, head->rightPos, head->rightPos), key);
-    } else {
+    } 
+	else 
+	{
         string res(head->value.begin(), head->value.end());
         int cnt = stoi(res);
         string newval = to_string(cnt + 1);

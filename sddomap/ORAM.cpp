@@ -211,6 +211,8 @@ void ORAM::Access(Bid bid, Node*& node, int lastLeaf, int newLeaf) {
             leafList.push_back(lastLeaf);
         }
     }
+	else
+		cout <<"READ NULL"<<endl;
 }
 
 void ORAM::Access(Bid bid, Node*& node) {
@@ -235,18 +237,24 @@ Node* ORAM::ReadNodeFromCache(Bid bid) {
     }
 }
 
-Node* ORAM::ReadNode(Bid bid, int lastLeaf, int newLeaf) {
-    if (bid == 0) {
+Node* ORAM::ReadNode(Bid bid, int lastLeaf, int newLeaf) 
+{
+    if (bid == 0) 
+	{
         return NULL;
     }
-    if (cache.count(bid) == 0 || find(leafList.begin(), leafList.end(), lastLeaf) == leafList.end()) {
+    if (cache.count(bid) == 0 || find(leafList.begin(), leafList.end(), lastLeaf) == leafList.end()) 
+	{
         Node* node;
         Access(bid, node, lastLeaf, newLeaf);
-        if (node != NULL) {
+        if (node != NULL) 
+		{
             modified.insert(bid);
         }
         return node;
-    } else {
+    } 
+	else 
+	{
         modified.insert(bid);
         Node* node = cache[bid];
         node->pos = newLeaf;
@@ -254,7 +262,8 @@ Node* ORAM::ReadNode(Bid bid, int lastLeaf, int newLeaf) {
     }
 }
 
-int ORAM::WriteNode(Bid bid, Node* node) {
+int ORAM::WriteNode(Bid bid, Node* node) 
+{
     if (bid == 0) 
 	{
         throw runtime_error("Node id is not set:Write");
@@ -309,7 +318,7 @@ void ORAM::finilize(bool find, Bid& rootKey, int& rootPos) {
     /**
      *  For general case, the following code extracts the maximum height in the stash. But,
      *  we assume that the use does not insert more than OMAP capacity to increase the performance
-      
+    */  
       
         int maxHeight = 1;
         for (auto t : cache) {
@@ -317,9 +326,10 @@ void ORAM::finilize(bool find, Bid& rootKey, int& rootPos) {
                 maxHeight = t.second->height;
             }
         }
-     */
+     
 
-    for (int i = 1; i <= maxHeightOfAVLTree; i++) {
+    //for (int i = 1; i <= maxHeightOfAVLTree; i++) {
+    for (int i = 1; i <= maxHeight; i++) {
         for (auto t : cache) {
             if (t.second != NULL && t.second->height == i) {
                 Node* tmp = t.second;

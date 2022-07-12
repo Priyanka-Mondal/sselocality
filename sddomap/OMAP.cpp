@@ -12,9 +12,8 @@ OMAP::~OMAP() {
 
 string OMAP::find(Bid key) {
     if (rootKey == 0) {
-        return "";
+        return "0";
     }
-	cout <<"in omap find"<<endl;
     treeHandler->startOperation();
     Node* node = new Node();
     node->key = rootKey;
@@ -26,6 +25,8 @@ string OMAP::find(Bid key) {
         res = res.c_str();
     }
     treeHandler->finishOperation(true, rootKey, rootPos);
+	if(res =="")
+		res ="0";
     return res;
 }
 
@@ -113,7 +114,9 @@ string OMAP::incrementCnt(Bid key)
     if (res == "") 
 	{
         string value = "1";
+	//cout <<"res0:["<<res<<"]"<<endl;
         rootKey = treeHandler->insert(rootKey, rootPos, key, value);
+	//cout <<"res1:["<<res<<"]"<<endl;
 		res ="0";
     }
     treeHandler->finishOperation(false, rootKey, rootPos);

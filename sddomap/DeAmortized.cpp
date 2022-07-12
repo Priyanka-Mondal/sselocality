@@ -70,7 +70,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		int mi = numberOfBins(j); // for now
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
-			if(i>1)
+			if(i-1>1)
 			{
 				t = 3;
 				s = 6;
@@ -84,6 +84,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			{
 				//cout <<"s:"<<s<<" index:"<<i<<" cnt:"<<cnt[i]<<" ceil:"<<(ceil(t*(by(pow(2,j),s))))<<endl;
 				//cout<<"OLDEST["<<i-1<<"] to NEW["<<i<<"]"<<endl;
+				cout<<"cnt["<<i<<"]"<<cnt[i]<<endl;
 				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);
 				//cout<<"OLDER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][1], keys[i][3]);
