@@ -297,7 +297,8 @@ int AVLTree::sortedArrayToBST(int start, int end, int& pos, Bid& node) {
     return root->height;
 }
 
-string AVLTree::incrementCnt(Node* head, Bid key) {
+string AVLTree::incrementCnt(Node* head, Bid key) 
+{
     if (head == NULL || head->key == 0 || (*(int*) (&head->key.id.data()[ID_SIZE - 4])) <= dummyValue)
         return "";
     head = oram->ReadNode(head->key, head->pos, head->pos);

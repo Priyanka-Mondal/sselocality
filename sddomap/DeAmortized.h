@@ -37,7 +37,6 @@ private:
 	prf_type nullKey;
     //vector< map<Bid, string> > setupOMAPS;
     //vector<int> setupOMAPSDummies;
-    vector<OMAP*> omaps;
     OneChoiceClient* L;
     vector<vector< unordered_map<string, prf_type> > > data; //OLDEST, OLDER, OLD, NEW;
     vector<map<string, string> > localmap;

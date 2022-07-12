@@ -10,46 +10,46 @@ int main(int argc, char** argv)
 {
     vector<TC<int> > testCases;
     vector<string> testKeywords;
-    uint keywordLength = 6;
+    uint keywordLength = 5;
     bool inMemory, overwrite;
     string filename = "configs/config.txt";
     if (argc == 2) 
     {
-    filename = string(argv[1]);
+    	filename = string(argv[1]);
     }
     //    Utilities::readConfigFile(testCases, usehdd, cleaningMode);       //for testing crimes dataset
     Utilities::readConfigFile(argc, argv, filename, testCases, inMemory,overwrite);
     
     if (overwrite) 
     {
-    Utilities::generateTestCases(testCases, keywordLength, time(NULL), testKeywords);
-    fstream file("/tmp/search.txt", std::ofstream::out);
-    if (file.fail()) 
-        cerr << "Error: " << strerror(errno);
-    for (int j = 0; j < testCases.size(); j++) 
-	{
-        for (int z = 0; z < testCases[j].Qs.size(); z++) 
-        file << testCases[j].testKeywords[z] << endl;
-    }
-    file.close();
+		Utilities::generateTestCases(testCases, keywordLength, time(NULL), testKeywords);
+		fstream file("/tmp/search.txt", std::ofstream::out);
+		if (file.fail()) 
+		    cerr << "Error: " << strerror(errno);
+		for (int j = 0; j < testCases.size(); j++) 
+		{
+		    for (int z = 0; z < testCases[j].Qs.size(); z++) 
+		    file << testCases[j].testKeywords[z] << endl;
+		}
+		file.close();
     } 
     else 
     {
-    fstream file("/tmp/search.txt", std::ofstream::in);
-    if (file.fail()) 
-        cerr << "Error in read: " << strerror(errno);
-    for (int i = 0; i < testCases.size(); i++) 
-	{
-        for (int z = 0; z < testCases[i].Qs.size(); z++) 
-	    {
-        string tmp;
-        getline(file, tmp);
-		testCases[i].testKeywords.push_back(tmp);
-        testKeywords.push_back(tmp);
-		cout <<"Reading test keyword: ["<<tmp<<"]"<<endl;
-        }
-    }
-    file.close();
+    	fstream file("/tmp/search.txt", std::ofstream::in);
+    	if (file.fail()) 
+    	    cerr << "Error in read: " << strerror(errno);
+    	for (int i = 0; i < testCases.size(); i++) 
+		{
+    	    for (int z = 0; z < testCases[i].Qs.size(); z++) 
+		    {
+    	    	string tmp;
+    	    	getline(file, tmp);
+				testCases[i].testKeywords.push_back(tmp);
+    	    	testKeywords.push_back(tmp);
+				cout <<"Reading test keyword: ["<<tmp<<"]"<<endl;
+    	    }
+    	}
+    	file.close();
     }
     DeAmortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
     
@@ -68,11 +68,11 @@ int main(int argc, char** argv)
 	   	int key = 0;
         for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
 	   	{
-			key++;
-			cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<"|"<<cur->first<<endl;
 			int j;
     	    for (j = 0; j < cur->second.size(); j++) 
 			{
+			key++;
+			cout <<" inserting keywords:"<<key<<"/"<<testCases[i].N<<endl;
         	    client.update(OP::INS, cur->first, cur->second[j], true);
             	cnt++;
             	if (cnt % 500 == 0) 

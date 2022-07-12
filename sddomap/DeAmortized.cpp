@@ -30,8 +30,8 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 	{
         cnt.push_back(0);
         bytes<Key> key{0};
-        OMAP* omap = new OMAP(max((int) pow(2, i), 4), key);
-        omaps.push_back(omap);
+        //OMAP* omap = new OMAP(max((int) pow(2, i+1), 8), key);
+        //omaps.push_back(omap);
         //setupOMAPS.push_back(map<Bid, string>());
         //setupOMAPSDummies.push_back(0);
     }
@@ -48,15 +48,22 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
         }
         data.push_back(curVec);
     }
-    L = new OneChoiceClient(N, omaps, inMemory, overwrite, true);
+    L = new OneChoiceClient(N, inMemory, overwrite, true);
 }
 
 DeAmortized::~DeAmortized() {}
+
+float by(int a, int b)
+{
+	float d = ((float)a/(float)b);
+	return d;
+}
 
 void DeAmortized::update(OP op, string keyword, int ind, bool setup) 
 {
 	//int s = 2; // for now choose wisely and make sure to not overflow 
 	int t;
+	int s; 
 	for(int i=lb; i>0; i--)
 	{
 		int j = b+i;
@@ -64,23 +71,31 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
 			if(i>1)
-				t = 3;
-			else 
-				t = 1;
-			if(cnt[i] <(ceil(t*pow(2,j)/s)))
 			{
-				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][0], keys[i][3]);
-				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2)-1, updateCounter, keys[i-1][1], keys[i][3]);
-				cout<<"OLDEST/ER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
+				t = 3;
+				s = 6;
 			}
-			else if (((t*pow(2,j)/s)) <= cnt[i] && cnt[i] < (((t*pow(2,j)/s))+(ceil(mi/s))))
-				L->addDummy(i, (cnt[i]-((t*pow(2,j)/s))), updateCounter, keys[i][3]);
-			else if (((t*pow(2,j)/s)+ceil(mi/s)) <= cnt[i] && cnt[i] <= pow(2,j))
-				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
+			else 
+			{
+				t = 1;
+				s = 2;
+			}
+			if(cnt[i] <(ceil(t*(by(pow(2,j),s)))))
+			{
+				cout <<"s:"<<s<<" index:"<<i<<" cnt:"<<cnt[i]<<" ceil:"<<(ceil(t*(by(pow(2,j),s))))<<endl;
+				cout<<"OLDEST/ER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
+				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);
+				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][1], keys[i][3]);
+			}
+			else if ((ceil((float)t*by(pow(2,j),s)))<=cnt[i] && 
+					  cnt[i]<((ceil((float)t*by(pow(2,j),s)))+(ceil(by(mi,s)))))
+				L->addDummy(i, (cnt[i]-(ceil((float)t*by(pow(2,j),s)))), updateCounter, keys[i][3]);
+			else if (((ceil((float)t*by(pow(2,j),s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
 				L->nonOblSort(i, keys[i][3]);
+				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
 		
 			cnt[i]=cnt[i]+1;
-				cout<<"j:"<<j<<" i:"<<i<<" cnt[i]:"<<cnt[i]<<endl;
+			cout <<"cnt["<<i<<"] increased to:"<<cnt[i]<<endl;
 			if(cnt[i]== pow(2,j))
 			{
 				L->resize(i,3*pow(2,j));
@@ -115,11 +130,11 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
     prf_type keyVal;
     std::fill(keyVal.begin(), keyVal.end(), 0);
     std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
-    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 4])) = ind;//fileid
-    keyVal.data()[AES_KEY_SIZE - 5] = (byte) (op == OP::INS ? 0 : 1);//op
-    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 9])) = 0;//bin
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
+    keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = 0;//bin
 	L->append(0, keyVal, keys[0][3]);
-
+	cout <<"at NEW[0]"<<endl;
 	cnt[0]=cnt[0]+1;
 	if(cnt[0]==B)
 	{
@@ -145,8 +160,10 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
        	memset(newKey, 0, 16);
        	keys[0][3] = newKey;
 		cnt[0] = 0;
+		cout <<"cnt[0] reset"<<endl;
 	}
     updateCounter++;
+	cout <<"-----------------------------------"<<endl;
 }
 
 int DeAmortized::numberOfBins(int i)
@@ -158,6 +175,7 @@ int DeAmortized::numberOfBins(int i)
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
 {
 	keys[index][toInstance] = keys[index][fromInstance];
+	cout <<"key["<<index<<"]["<<fromInstance<<"] to key["<<index<<"]["<<toInstance<<"]"<<endl;
 }
 
 prf_type DeAmortized::getElementAt(int instance, int index, int pos) 
@@ -172,8 +190,8 @@ vector<int> DeAmortized::search(string keyword)
 {
     for (int i = 0; i < l; i++) 
 	{
-        omaps[i]->treeHandler->oram->totalRead = 0;
-        omaps[i]->treeHandler->oram->totalWrite = 0;
+        //omaps[i]->treeHandler->oram->totalRead = 0;
+        //omaps[i]->treeHandler->oram->totalWrite = 0;
     }
     L->totalCommunication = 0;
     totalSearchCommSize = 0;
@@ -232,8 +250,8 @@ vector<int> DeAmortized::search(string keyword)
     }
     for (int i = 0; i < l; i++) 
 	{
-        totalSearchCommSize += (omaps[i]->treeHandler->oram->totalRead + 
-				omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
+        //totalSearchCommSize += (omaps[i]->treeHandler->oram->totalRead + 
+		//		omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
     }
     totalSearchCommSize += L->totalCommunication;
     return finalRes;

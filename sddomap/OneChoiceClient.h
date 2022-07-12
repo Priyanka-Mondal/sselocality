@@ -27,7 +27,7 @@ private:
 
 public:
     virtual ~OneChoiceClient();
-    OneChoiceClient(int maxUpdate, vector<OMAP*> omaps, bool inMemory, bool overwrite, bool profile);
+    OneChoiceClient(int maxUpdate, bool inMemory, bool overwrite, bool profile);
     int totalCommunication = 0;
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;

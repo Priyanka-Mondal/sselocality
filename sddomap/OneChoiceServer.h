@@ -10,12 +10,12 @@ private:
     OneChoiceStorage* storage;
     Storage* keyworkCounters;
     void getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result);
-    int numberOfBins, sizeOfEachBin;
+    int numberOfBins, sizeOfEachBin, dataIndex;
     bool profile = false;
 	vector<vector<prf_type>> NEW;
 
 public:
-    OneChoiceServer(int dataIndex, vector<OMAP*> omaps, bool inMemory, bool overwrite, bool profile);
+    OneChoiceServer(int dataIndex, bool inMemory, bool overwrite, bool profile);
     void clear(int index, int instance);
     virtual ~OneChoiceServer();
     void storeCiphers(int dataIndex, int instance, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters);
@@ -32,6 +32,7 @@ public:
 	vector<prf_type> getNEW(int index);
 	void putNEW(int index, vector<prf_type>);
 	void bitonicSort(int index);
+    int getNEWsize(int index);
 };
 
 #endif /* ONECHOICESERVER_H */

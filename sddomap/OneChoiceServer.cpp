@@ -1,9 +1,10 @@
 #include "OneChoiceServer.h"
 #include <string.h>
 
-OneChoiceServer::OneChoiceServer(int dataIndex, vector<OMAP*> omaps, bool inMemory, bool overwrite, bool profile) 
+OneChoiceServer::OneChoiceServer(int dataIndex, bool inMemory, bool overwrite, bool profile) 
 {
     this->profile = profile;
+	this->dataIndex = dataIndex;
     storage = new OneChoiceStorage(inMemory, dataIndex, "/tmp/", profile);
     storage->setup(overwrite);
     keyworkCounters = new Storage(inMemory, dataIndex, "/tmp/keyword-", profile);
@@ -87,11 +88,17 @@ void OneChoiceServer::copy(int index, int toInstance)
 	//cout <<"NEW[index].size():"<<NEW[index].size()<<endl;
 	storage->insertAll(index, toInstance, NEW[index]);
 	NEW[index].resize(0);
+	cout <<"reset NEW["<<index<<"] to "<<NEW[index].size()<<endl;
 }
 
 void OneChoiceServer::append(int index, prf_type keyVal)
 {
 	NEW[index].push_back(keyVal);
+}
+
+int OneChoiceServer::getNEWsize(int index)
+{
+	return NEW[index].size();
 }
 
 void OneChoiceServer::destroy(int index, int instance)

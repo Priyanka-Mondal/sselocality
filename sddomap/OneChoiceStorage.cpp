@@ -12,7 +12,7 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
 	{
         int curNumberOfBins = i > 1 ? 
 			(int) ceil((float) pow(2, i)/(float)(log2(pow(2, i))*log2(log2(pow(2,i))))) : 1;
-        int curSizeOfEachBin = i > 1 ? (log2(pow(2, i)) * log2(log2(pow(2, i))))*3 : pow(2,i);
+        int curSizeOfEachBin = i > 1 ? 3*(log2(pow(2, i)) * ceil(log2(log2(pow(2, i))))) : pow(2,i);
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
         printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
@@ -145,7 +145,7 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
 	{
         prf_type restmp;
         std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, restmp.begin());
-        //if (tmp != nullKey) {
+        //if (restmp != nullKey) {
             results.push_back(restmp);
         //}
     }

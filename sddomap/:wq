@@ -102,19 +102,16 @@ void OMAP::setDummy(int i) {
     treeHandler->dummyValue = i;
 }
 
-string OMAP::incrementCnt(Bid key) 
-{
+string OMAP::incrementCnt(Bid key) {
     string res = "";
     treeHandler->startOperation();
     Node* node = new Node();
     node->key = rootKey;
     node->pos = rootPos;
     res = treeHandler->incrementCnt(node, key);
-    if (res == "") 
-	{
+    if (res == "") {
         string value = "1";
         rootKey = treeHandler->insert(rootKey, rootPos, key, value);
-		res ="0";
     }
     treeHandler->finishOperation(false, rootKey, rootPos);
     return res;
