@@ -35,6 +35,8 @@ private:
     vector< vector<unsigned char*> > keys;
     vector<int> cnt;
 	prf_type nullKey;
+    vector<int> numberOfBins;
+    vector<int> sizeOfEachBin;
     //vector< map<Bid, string> > setupOMAPS;
     //vector<int> setupOMAPSDummies;
     OneChoiceClient* L;
@@ -58,7 +60,7 @@ public:
     double getTotalSearchCommSize() const;
     double getTotalUpdateCommSize() const;
     void updateKey(int index, int toInstance , int fromInstance);
-    int numberOfBins(int i);
+    //int numberOfBins(int i);
 };
 
 #endif /* BAS_H */

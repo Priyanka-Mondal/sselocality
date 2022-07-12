@@ -87,6 +87,7 @@ void OneChoiceServer::copy(int index, int toInstance)
 {
 	//cout <<"NEW[index].size():"<<NEW[index].size()<<endl;
 	storage->insertAll(index, toInstance, NEW[index]);
+	NEW[index].clear();
 	NEW[index].resize(0);
 	cout <<"reset NEW["<<index<<"] to "<<NEW[index].size()<<endl;
 }
@@ -94,6 +95,8 @@ void OneChoiceServer::copy(int index, int toInstance)
 void OneChoiceServer::append(int index, prf_type keyVal)
 {
 	NEW[index].push_back(keyVal);
+	//cout <<index<<":"<<NEW[index].size()<<"<="<<6*pow(2,index)<<endl;
+	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
 }
 
 int OneChoiceServer::getNEWsize(int index)
@@ -121,8 +124,8 @@ vector< prf_type> OneChoiceServer::getNEW(int index)
 }
 void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)
 {
-	NEW[index].resize(0);
-	NEW[index].resize(sorted.size());
+	NEW[index].clear();
+	//NEW[index].resize(sorted.size());
 	for(auto n : sorted)
 	{
 		NEW[index].push_back(n);

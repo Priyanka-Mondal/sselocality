@@ -13,10 +13,21 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 	cout <<"=====================Running SDd+OneChoiceAllocation======================"<<endl;
    	this->deleteFiles = deleteFiles;
 	//B = 1;
-    l = ceil(log2(N));
-    b = ceil(log2(B));
+	l = ceil((float)log2(N));
+	b = ceil((float)log2(B));
 	lb = l-b;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
+	int numOfIndices = l - b;
+    for (int i = 0; i <=numOfIndices; i++) 
+	{
+		int j = i + b;
+        int curNumberOfBins = j > 1 ? 
+			(int) ceil((float) pow(2, j)/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
+        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
+        numberOfBins.push_back(curNumberOfBins);
+        sizeOfEachBin.push_back(curSizeOfEachBin);
+        //printf("Index:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
+    }
     for (int i = 0; i < lb; i++) 
 	{
         keys.push_back(vector<unsigned char*> ());
@@ -67,7 +78,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	for(int i=lb; i>0; i--)
 	{
 		int j = b+i;
-		int mi = numberOfBins(j); // for now
+		int mi = numberOfBins[j]; // for now
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
 			if(i-1>1)
@@ -84,7 +95,6 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			{
 				//cout <<"s:"<<s<<" index:"<<i<<" cnt:"<<cnt[i]<<" ceil:"<<(ceil(t*(by(pow(2,j),s))))<<endl;
 				//cout<<"OLDEST["<<i-1<<"] to NEW["<<i<<"]"<<endl;
-				cout<<"cnt["<<i<<"]"<<cnt[i]<<endl;
 				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);
 				//cout<<"OLDER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][1], keys[i][3]);
@@ -100,7 +110,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			//cout <<"cnt["<<i<<"] increased to:"<<cnt[i]<<endl;
 			if(cnt[i]== pow(2,j))
 			{
-				L->resize(i,3*pow(2,j));
+				L->resize(i,numberOfBins[j]*sizeOfEachBin[j]); //j = i+logB
 				L->move(i-1,0,2); 
 				updateKey(i-1,0,2);
 				//cout<<"OLD["<<i-1<<"] to OLDEST["<<i-1<<"]"<<endl;
@@ -163,24 +173,24 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
        	memset(newKey, 0, 16);
        	keys[0][3] = newKey;
 		cnt[0] = 0;
-		cout <<"cnt[0] reset"<<endl;
 	}
     updateCounter++;
 	cout <<"-----------------------------------"<<endl;
 }
-
+/*
 int DeAmortized::numberOfBins(int i)
 {
     int curNumberOfBins = i > 1 ? 
 			(int) ceil((float) pow(2, i)/(float)(log2(pow(2, i))*log2(log2(pow(2, i))))):1;
 	return curNumberOfBins;
 }
+*/
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
 {
 	keys[index][toInstance] = keys[index][fromInstance];
-	cout <<"key["<<index<<"]["<<fromInstance<<"] to key["<<index<<"]["<<toInstance<<"]"<<endl;
+	//cout <<"key["<<index<<"]["<<fromInstance<<"] to key["<<index<<"]["<<toInstance<<"]"<<endl;
 }
-
+/*
 prf_type DeAmortized::getElementAt(int instance, int index, int pos) 
 {
     auto iter = data[instance][index].begin();
@@ -188,7 +198,7 @@ prf_type DeAmortized::getElementAt(int instance, int index, int pos)
         iter++;
     return (*iter).second;
 }
-
+*/
 vector<int> DeAmortized::search(string keyword) 
 {
     for (int i = 0; i < l; i++) 
@@ -200,6 +210,7 @@ vector<int> DeAmortized::search(string keyword)
     totalSearchCommSize = 0;
     vector<int> finalRes;
     vector<prf_type> encIndexes;
+	/*
     for (int j = 0; j < 3; j++) 
 	{
         for (int i = 0; i < localSize; i++) 
@@ -224,7 +235,8 @@ vector<int> DeAmortized::search(string keyword)
             }
         }
     }
-    for (int i = localSize; i < lb; i++) 
+	*/
+    for (int i = localSize; i <= lb; i++) 
 	{
     	for (int j = 0; j < 3; j++) 
 		{
@@ -232,6 +244,7 @@ vector<int> DeAmortized::search(string keyword)
 			{
 				cout <<"searching at["<< i<<"]["<<j<<"]"<<endl;
                 auto tmpRes = L->search(i, j, keyword, keys[i][j]);
+				cout <<"tmpRes size:"<<tmpRes.size()<<endl;
                 encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
             }
         }

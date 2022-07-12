@@ -1,4 +1,5 @@
 #include "OneChoiceStorage.h"
+#include<assert.h>
 #include<string.h>
 
 OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) 
@@ -190,7 +191,7 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     std::fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
-	cout <<filenames[index][instance].c_str()<<endl;
+	//cout <<filenames[index][instance].c_str()<<endl;
     int readPos = bin * AES_KEY_SIZE * sizeOfEachBin[index];
     int fileLength = numberOfBins[index] * sizeOfEachBin[index] * AES_KEY_SIZE;
     int remainder = fileLength - readPos;
@@ -212,10 +213,14 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     char* keyValues = new char[readLength];
     file.read(keyValues, readLength);
     readBytes += readLength;
+	//cout <<"index:"<<index<<" bin:"<<bin<<" sizeOfBin:"<<sizeOfEachBin[index]<<endl;
+	//cout <<"readPos:"<<readPos<<" readLen:"<<readLength<<" totalsize:"<< AES_KEY_SIZE*sizeOfEachBin[index]*numberOfBins[index]<<endl;
+	//cout<<"rem:"<<remainder<<" size:"<<size<< "read len:"<<readLength<<endl;
+	assert(readLength>=AES_KEY_SIZE);
     for (int i = 0; i < readLength / AES_KEY_SIZE; i++) 
 	{
         prf_type restmp;
-        std::copy(keyValues + i * AES_KEY_SIZE, keyValues + i * AES_KEY_SIZE+AES_KEY_SIZE, restmp.begin());
+        std::copy(keyValues+i*AES_KEY_SIZE,keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE,restmp.begin());
         if (restmp != nullKey) 
 		{
             results.push_back(restmp);
