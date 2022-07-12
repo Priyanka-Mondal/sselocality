@@ -241,8 +241,8 @@ vector<int> DeAmortized::search(string keyword)
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
 	{
         prf_type decodedString = *i;
-        int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 4]));
-        remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 5]) - 1);
+        int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
+        remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
     }
     for (auto const& cur : remove) 
 	{

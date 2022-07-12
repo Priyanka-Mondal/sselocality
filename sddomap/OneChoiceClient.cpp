@@ -226,7 +226,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 	for(auto c: ciphers)
 	{
         prf_type plaintext;
-		cout <<"[ "<<c.data() <<" ]"<<endl;
+		//cout <<"[ "<<c.data() <<" ]"<<endl;
         Utilities::decode(c, plaintext, key1);
         prf_type decodedString = plaintext;
         int ind = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
@@ -343,6 +343,7 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
     vector<prf_type> decodedNEWi;	
 	for(auto n : encNEWi)
 	{
+		cout <<"sort:decode "<<index<<endl;
 		prf_type dec;
 	    Utilities::decode(n, dec, key);
 		decodedNEWi.push_back(dec);
@@ -351,10 +352,15 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 	encNEWi.resize(0);
 	for(auto n : decodedNEWi)
 	{
+		cout <<"sort:encode "<<index<<endl;
 		prf_type enc= Utilities::encode(n.data(), key);
 		encNEWi.push_back(enc);
 	}
 	server->putNEW(index, encNEWi);
 */
 }
+Two things to fix:
+why it is not reading a whole of a bin in searchBin
+encryption problem
+sort does not work
 
