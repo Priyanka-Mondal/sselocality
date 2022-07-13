@@ -1,0 +1,5540 @@
+=====================Running SDd+OneChoiceAllocation======================
+Level:0 number of Bins:1 size of bin:1
+Level:1 number of Bins:1 size of bin:2
+Level:2 number of Bins:2 size of bin:6
+Level:3 number of Bins:2 size of bin:18
+Level:4 number of Bins:2 size of bin:24
+Level:5 number of Bins:3 size of bin:45
+Level:6 number of Bins:5 size of bin:54
+Level:7 number of Bins:7 size of bin:63
+Level:8 number of Bins:11 size of bin:72
+Start of Static, size of test suits:1
+*************************************************************************
+SIZE of testcases:1
+ inserting keywords:1/150
+wrote [#EQyT]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:2/150
+wrote [#EQyT]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:3/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:1 [#EQyT]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:1 [#EQyT]cnt:1newcnt:2 newbin:0/0
+wrote [#EQyT]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:4/150
+wrote [#EQyT]
+wrote [#EQyT]
+wrote [#EQyT]
+reset NEW[1] to 0
+wrote [#L4%9]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:5/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:2 [#EQyT]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:2 [#L4%9]cnt:0newcnt:1 newbin:0/0
+wrote [#L4%9]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:6/150
+wrote [#L4%9]
+wrote [#EQyT]
+wrote [#L4%9]
+reset NEW[1] to 0
+wrote [#L4%9]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:7/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:1 [#EQyT]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:1 [#EQyT]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:3 [#L4%9]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:3 [#L4%9]cnt:1newcnt:2 newbin:0/0
+wrote [$FU&K]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:8/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:1 [#EQyT]cnt:2newcnt:3 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:1 [#L4%9]cnt:0newcnt:1 newbin:1/1
+wrote [$FU&K]
+wrote [#L4%9]
+wrote [#L4%9]
+reset NEW[1] to 0
+wrote [$FU&K]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:9/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:4 [$FU&K]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:4 [$FU&K]cnt:1newcnt:2 newbin:0/0
+wrote [$FU&K]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:10/150
+wrote [#L4%9]
+wrote [#L4%9]
+wrote [#EQyT]
+wrote [#EQyT]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [#EQyT]
+wrote [#L4%9]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [$FU&K]
+wrote [$FU&K]
+wrote [$FU&K]
+reset NEW[1] to 0
+wrote [4AYL&]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:11/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:2 [#L4%9]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:2 [$FU&K]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:5 [$FU&K]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:5 [4AYL&]cnt:0newcnt:1 newbin:0/0
+wrote [4AYL&]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:12/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:2 [#L4%9]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:2 [$FU&K]cnt:1newcnt:2 newbin:1/1
+wrote [4AYL&]
+wrote [$FU&K]
+wrote [4AYL&]
+reset NEW[1] to 0
+wrote [4AYL&]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:13/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:6 [4AYL&]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:6 [4AYL&]cnt:1newcnt:2 newbin:0/0
+wrote [5d85d]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:14/150
+wrote [$FU&K]
+wrote [4AYL&]
+wrote [$FU&K]
+wrote [#L4%9]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [#L4%9]
+wrote [$FU&K]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [5d85d]
+wrote [4AYL&]
+wrote [4AYL&]
+reset NEW[1] to 0
+wrote [5d85d]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:15/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:1 [#EQyT]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:1 [#EQyT]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:1 [$FU&K]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:1 [#L4%9]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:3 [$FU&K]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:3 [4AYL&]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:7 [5d85d]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:7 [5d85d]cnt:1newcnt:2 newbin:0/0
+wrote [5d85d]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:16/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:3 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:3 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:3 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:3 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:3 [4AYL&]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:3 [4AYL&]cnt:2newcnt:3 newbin:0/1
+wrote [5d85d]
+wrote [5d85d]
+wrote [5d85d]
+reset NEW[1] to 0
+wrote [9L$xX]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:17/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:1 [#EQyT]cnt:2newcnt:3 newbin:1/1
+index:3 instance:0 upCnt:1 [#L4%9]cnt:1newcnt:2 newbin:1/1
+index:3 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:1 [#L4%9]cnt:2newcnt:3 newbin:0/1
+index:3 instance:1 upCnt:1 [$FU&K]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:8 [5d85d]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:8 [9L$xX]cnt:0newcnt:1 newbin:0/0
+wrote [9L$xX]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:18/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:3 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:3 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:3 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:3 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+wrote [5d85d]
+wrote [5d85d]
+wrote [$FU&K]
+wrote [4AYL&]
+wrote [4AYL&]
+wrote []
+wrote []
+wrote []
+wrote [4AYL&]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [9L$xX]
+wrote [5d85d]
+wrote [9L$xX]
+reset NEW[1] to 0
+wrote [9L$xX]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:19/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:4 [5d85d]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:4 [5d85d]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:9 [9L$xX]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:9 [9L$xX]cnt:1newcnt:2 newbin:0/0
+wrote [@ejoz]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:20/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:4 [5d85d]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:4 [9L$xX]cnt:0newcnt:1 newbin:1/1
+wrote [@ejoz]
+wrote [9L$xX]
+wrote [9L$xX]
+reset NEW[1] to 0
+wrote [@ejoz]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:21/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:10 [@ejoz]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:10 [@ejoz]cnt:1newcnt:2 newbin:0/0
+wrote [@ejoz]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:22/150
+wrote [$FU&K]
+wrote [4AYL&]
+wrote [4AYL&]
+wrote []
+wrote []
+wrote []
+wrote [4AYL&]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [#L4%9]
+wrote [#L4%9]
+wrote [#EQyT]
+wrote [$FU&K]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [#L4%9]
+wrote [#EQyT]
+wrote [$FU&K]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [#EQyT]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [9L$xX]
+wrote [9L$xX]
+wrote [5d85d]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [5d85d]
+wrote [5d85d]
+wrote [9L$xX]
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [@ejoz]
+wrote [@ejoz]
+wrote [@ejoz]
+reset NEW[1] to 0
+wrote [BPz*B]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:23/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:2 [$FU&K]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:2 [4AYL&]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:2 [4AYL&]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:2 [5d85d]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:5 [9L$xX]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:5 [@ejoz]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:11 [@ejoz]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:11 [BPz*B]cnt:0newcnt:1 newbin:0/0
+wrote [BPz*B]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:24/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:5 [9L$xX]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:5 [@ejoz]cnt:1newcnt:2 newbin:0/1
+wrote [BPz*B]
+wrote [@ejoz]
+wrote [BPz*B]
+reset NEW[1] to 0
+wrote [BPz*B]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:25/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:2 [4AYL&]cnt:2newcnt:3 newbin:0/1
+index:3 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:2 [5d85d]cnt:1newcnt:2 newbin:0/1
+index:3 instance:1 upCnt:2 [5d85d]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:2 [9L$xX]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:12 [BPz*B]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:12 [BPz*B]cnt:1newcnt:2 newbin:0/0
+wrote [C7MOT]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:26/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+wrote [@ejoz]
+wrote [BPz*B]
+wrote [9L$xX]
+wrote [@ejoz]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [9L$xX]
+wrote [@ejoz]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [C7MOT]
+wrote [BPz*B]
+wrote [BPz*B]
+reset NEW[1] to 0
+wrote [C7MOT]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:27/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:6 [@ejoz]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:6 [BPz*B]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:13 [C7MOT]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:13 [C7MOT]cnt:1newcnt:2 newbin:0/0
+wrote [C7MOT]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:28/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:6 [BPz*B]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:6 [BPz*B]cnt:2newcnt:3 newbin:1/1
+wrote [C7MOT]
+wrote [C7MOT]
+wrote [C7MOT]
+reset NEW[1] to 0
+wrote [CCm^8]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:29/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:14 [C7MOT]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:14 [CCm^8]cnt:0newcnt:1 newbin:0/0
+wrote [CCm^8]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:30/150
+wrote [9L$xX]
+wrote [@ejoz]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [9L$xX]
+wrote [@ejoz]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [4AYL&]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [5d85d]
+wrote [$FU&K]
+wrote [4AYL&]
+wrote [9L$xX]
+wrote [5d85d]
+wrote [5d85d]
+wrote [4AYL&]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [C7MOT]
+wrote [C7MOT]
+wrote [BPz*B]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [@ejoz]
+wrote [BPz*B]
+wrote [BPz*B]
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [CCm^8]
+wrote [C7MOT]
+wrote [CCm^8]
+reset NEW[1] to 0
+wrote [CCm^8]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:31/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:1 [#L4%9]cnt:0newcnt:1 newbin:0/1
+index:4 instance:0 upCnt:1 [#L4%9]cnt:1newcnt:2 newbin:1/1
+index:4 instance:0 upCnt:1 [#EQyT]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:1 [4AYL&]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:3 [9L$xX]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:3 [@ejoz]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:3 [BPz*B]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:7 [C7MOT]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:7 [C7MOT]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:15 [CCm^8]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:15 [CCm^8]cnt:1newcnt:2 newbin:0/0
+wrote [D3Ev$]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:32/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:1 [$FU&K]cnt:0newcnt:1 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:7 [C7MOT]cnt:2newcnt:3 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:7 [CCm^8]cnt:0newcnt:1 newbin:1/1
+wrote [D3Ev$]
+wrote [CCm^8]
+wrote [CCm^8]
+reset NEW[1] to 0
+wrote [D3Ev$]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:33/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:3 [9L$xX]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:3 [@ejoz]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:3 [@ejoz]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:3 [BPz*B]cnt:1newcnt:2 newbin:0/1
+index:3 instance:1 upCnt:3 [BPz*B]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:16 [D3Ev$]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:16 [D3Ev$]cnt:1newcnt:2 newbin:0/0
+wrote [D3Ev$]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:34/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+wrote [CCm^8]
+wrote [CCm^8]
+wrote [C7MOT]
+wrote [C7MOT]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [C7MOT]
+wrote [CCm^8]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [D3Ev$]
+wrote [D3Ev$]
+wrote [D3Ev$]
+reset NEW[1] to 0
+wrote [HhBdo]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:35/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 [#L4%9]cnt:2newcnt:3 newbin:0/1
+index:4 instance:0 upCnt:1 [#EQyT]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:8 [CCm^8]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:8 [D3Ev$]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:17 [D3Ev$]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:17 [HhBdo]cnt:0newcnt:1 newbin:0/0
+wrote [HhBdo]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:36/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:1 [$FU&K]cnt:1newcnt:2 newbin:1/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:1 [5d85d]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:1 [$FU&K]cnt:2newcnt:3 newbin:0/1
+index:4 instance:1 upCnt:1 [4AYL&]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:8 [CCm^8]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:8 [D3Ev$]cnt:1newcnt:2 newbin:0/1
+wrote [HhBdo]
+wrote [D3Ev$]
+wrote [HhBdo]
+reset NEW[1] to 0
+wrote [HhBdo]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:37/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:1 [9L$xX]cnt:0newcnt:1 newbin:0/1
+index:4 instance:1 upCnt:1 [5d85d]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:1 [5d85d]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:18 [HhBdo]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:18 [HhBdo]cnt:1newcnt:2 newbin:0/0
+wrote [Hxwa@]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:38/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:1 [#EQyT]cnt:2newcnt:3 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:1 [4AYL&]cnt:2newcnt:3 newbin:1/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+index:4 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:0/1
+wrote [C7MOT]
+wrote [C7MOT]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [C7MOT]
+wrote [CCm^8]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [BPz*B]
+wrote []
+wrote []
+wrote [@ejoz]
+wrote [9L$xX]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [@ejoz]
+wrote [BPz*B]
+wrote [BPz*B]
+wrote [@ejoz]
+wrote [9L$xX]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [D3Ev$]
+wrote [HhBdo]
+wrote [CCm^8]
+wrote [D3Ev$]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [CCm^8]
+wrote [D3Ev$]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [Hxwa@]
+wrote [HhBdo]
+wrote [HhBdo]
+reset NEW[1] to 0
+wrote [Hxwa@]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:39/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:4 [C7MOT]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:4 [C7MOT]cnt:1newcnt:2 newbin:1/1
+index:3 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:4 [CCm^8]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:4 [D3Ev$]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:9 [D3Ev$]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:9 [HhBdo]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:19 [Hxwa@]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:19 [Hxwa@]cnt:1newcnt:2 newbin:0/0
+wrote [Hxwa@]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:40/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:9 [HhBdo]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:9 [HhBdo]cnt:2newcnt:3 newbin:1/1
+wrote [Hxwa@]
+wrote [Hxwa@]
+wrote [Hxwa@]
+reset NEW[1] to 0
+wrote [L@sq2]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:41/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:4 [C7MOT]cnt:2newcnt:3 newbin:0/1
+index:3 instance:0 upCnt:4 [CCm^8]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:4 [CCm^8]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:4 [D3Ev$]cnt:1newcnt:2 newbin:0/1
+index:3 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:20 [Hxwa@]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:20 [L@sq2]cnt:0newcnt:1 newbin:0/0
+wrote [L@sq2]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:42/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+wrote [Hxwa@]
+wrote [Hxwa@]
+wrote [HhBdo]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [D3Ev$]
+wrote [HhBdo]
+wrote [HhBdo]
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [L@sq2]
+wrote [Hxwa@]
+wrote [L@sq2]
+reset NEW[1] to 0
+wrote [L@sq2]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:43/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:10 [Hxwa@]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:10 [Hxwa@]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:21 [L@sq2]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:21 [L@sq2]cnt:1newcnt:2 newbin:0/0
+wrote [Lkb9#]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:44/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:10 [Hxwa@]cnt:2newcnt:3 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:10 [L@sq2]cnt:0newcnt:1 newbin:0/1
+wrote [Lkb9#]
+wrote [L@sq2]
+wrote [L@sq2]
+reset NEW[1] to 0
+wrote [Lkb9#]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:45/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:22 [Lkb9#]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:22 [Lkb9#]cnt:1newcnt:2 newbin:0/0
+wrote [Lkb9#]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:46/150
+wrote []
+wrote []
+wrote []
+wrote [BPz*B]
+wrote []
+wrote []
+wrote [@ejoz]
+wrote [9L$xX]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [@ejoz]
+wrote [BPz*B]
+wrote [BPz*B]
+wrote [@ejoz]
+wrote [9L$xX]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [4AYL&]
+wrote [$FU&K]
+wrote [#L4%9]
+wrote [#EQyT]
+wrote [#EQyT]
+wrote [#L4%9]
+wrote [$FU&K]
+wrote [5d85d]
+wrote [9L$xX]
+wrote [5d85d]
+wrote [5d85d]
+wrote [$FU&K]
+wrote []
+wrote [#L4%9]
+wrote [#EQyT]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [4AYL&]
+wrote []
+wrote [4AYL&]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[4] to 0
+wrote [HhBdo]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [D3Ev$]
+wrote [HhBdo]
+wrote [HhBdo]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [D3Ev$]
+wrote []
+wrote []
+wrote [CCm^8]
+wrote [C7MOT]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [C7MOT]
+wrote [CCm^8]
+wrote [C7MOT]
+wrote [D3Ev$]
+wrote [CCm^8]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [L@sq2]
+wrote [L@sq2]
+wrote [Hxwa@]
+wrote [Hxwa@]
+wrote [L@sq2]
+wrote []
+wrote []
+wrote []
+wrote [Hxwa@]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [Lkb9#]
+wrote [Lkb9#]
+wrote [Lkb9#]
+reset NEW[1] to 0
+wrote [M63o&]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:47/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:5 [HhBdo]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:5 [Hxwa@]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:5 [Hxwa@]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:5 [L@sq2]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:11 [L@sq2]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:11 [Lkb9#]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:23 [Lkb9#]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:23 [M63o&]cnt:0newcnt:1 newbin:0/0
+wrote [M63o&]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:48/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:2 [BPz*B]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:2 [D3Ev$]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:11 [L@sq2]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:11 [Lkb9#]cnt:1newcnt:2 newbin:0/1
+wrote [M63o&]
+wrote [Lkb9#]
+wrote [M63o&]
+reset NEW[1] to 0
+wrote [M63o&]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:49/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:2 [@ejoz]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:2 [9L$xX]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:2 [CCm^8]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:2 [C7MOT]cnt:0newcnt:1 newbin:0/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:5 [D3Ev$]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:5 [HhBdo]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:5 [HhBdo]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:5 [Hxwa@]cnt:2newcnt:3 newbin:0/1
+index:3 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:24 [M63o&]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:24 [M63o&]cnt:1newcnt:2 newbin:0/0
+wrote [MSjbS]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:50/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+wrote [Lkb9#]
+wrote [M63o&]
+wrote [L@sq2]
+wrote [Lkb9#]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Lkb9#]
+wrote [L@sq2]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [MSjbS]
+wrote [M63o&]
+wrote [M63o&]
+reset NEW[1] to 0
+wrote [MSjbS]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:51/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:12 [Lkb9#]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:12 [M63o&]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:25 [MSjbS]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:25 [MSjbS]cnt:1newcnt:2 newbin:0/0
+wrote [MSjbS]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:52/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 [C7MOT]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:12 [M63o&]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:12 [M63o&]cnt:2newcnt:3 newbin:0/1
+wrote [MSjbS]
+wrote [MSjbS]
+wrote [MSjbS]
+reset NEW[1] to 0
+wrote [PkRT!]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:53/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:2 [@ejoz]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:2 [BPz*B]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:2 [BPz*B]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:2 [CCm^8]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:2 [C7MOT]cnt:2newcnt:3 newbin:0/1
+index:4 instance:1 upCnt:2 [D3Ev$]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:26 [MSjbS]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:26 [PkRT!]cnt:0newcnt:1 newbin:0/0
+wrote [PkRT!]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:54/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:2 [@ejoz]cnt:2newcnt:3 newbin:1/1
+index:4 instance:0 upCnt:2 [9L$xX]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:2 [CCm^8]cnt:2newcnt:3 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:1/1
+wrote [L@sq2]
+wrote [Lkb9#]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Lkb9#]
+wrote [L@sq2]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [HhBdo]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Hxwa@]
+wrote []
+wrote []
+wrote []
+wrote [L@sq2]
+wrote [Hxwa@]
+wrote [D3Ev$]
+wrote [HhBdo]
+wrote [HhBdo]
+wrote [Hxwa@]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [MSjbS]
+wrote [MSjbS]
+wrote [M63o&]
+wrote [M63o&]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Lkb9#]
+wrote [M63o&]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [PkRT!]
+wrote [MSjbS]
+wrote [PkRT!]
+reset NEW[1] to 0
+wrote [PkRT!]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:55/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:6 [L@sq2]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:6 [Lkb9#]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:6 [M63o&]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:6 [M63o&]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:13 [MSjbS]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:13 [MSjbS]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:27 [PkRT!]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:27 [PkRT!]cnt:1newcnt:2 newbin:0/0
+wrote [QIho6]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:56/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:13 [MSjbS]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:13 [PkRT!]cnt:0newcnt:1 newbin:1/1
+wrote [QIho6]
+wrote [PkRT!]
+wrote [PkRT!]
+reset NEW[1] to 0
+wrote [QIho6]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:57/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:6 [Lkb9#]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:6 [L@sq2]cnt:1newcnt:2 newbin:1/1
+index:3 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:6 [Lkb9#]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:6 [M63o&]cnt:2newcnt:3 newbin:0/1
+index:3 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:28 [QIho6]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:28 [QIho6]cnt:1newcnt:2 newbin:0/0
+wrote [QIho6]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:58/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+wrote [PkRT!]
+wrote [PkRT!]
+wrote [MSjbS]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [MSjbS]
+wrote [MSjbS]
+wrote [PkRT!]
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [QIho6]
+wrote [QIho6]
+wrote [QIho6]
+reset NEW[1] to 0
+wrote [RjedH]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:59/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:14 [PkRT!]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:14 [QIho6]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:29 [QIho6]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:29 [RjedH]cnt:0newcnt:1 newbin:0/0
+wrote [RjedH]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:60/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:14 [PkRT!]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:14 [QIho6]cnt:1newcnt:2 newbin:0/1
+wrote [RjedH]
+wrote [QIho6]
+wrote [RjedH]
+reset NEW[1] to 0
+wrote [RjedH]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:61/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:30 [RjedH]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:30 [RjedH]cnt:1newcnt:2 newbin:0/0
+wrote [SLzMu]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:62/150
+wrote [HhBdo]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Hxwa@]
+wrote []
+wrote []
+wrote []
+wrote [L@sq2]
+wrote [Hxwa@]
+wrote [D3Ev$]
+wrote [HhBdo]
+wrote [HhBdo]
+wrote [Hxwa@]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [@ejoz]
+wrote [BPz*B]
+wrote [CCm^8]
+wrote [C7MOT]
+wrote [D3Ev$]
+wrote [9L$xX]
+wrote []
+wrote [C7MOT]
+wrote []
+wrote []
+wrote []
+wrote [CCm^8]
+wrote [CCm^8]
+wrote [9L$xX]
+wrote [D3Ev$]
+wrote [BPz*B]
+wrote [@ejoz]
+wrote [@ejoz]
+wrote [C7MOT]
+wrote [BPz*B]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[4] to 0
+wrote [MSjbS]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [MSjbS]
+wrote [MSjbS]
+wrote [PkRT!]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [M63o&]
+wrote []
+wrote []
+wrote []
+wrote [Lkb9#]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [M63o&]
+wrote []
+wrote [L@sq2]
+wrote [M63o&]
+wrote [Lkb9#]
+wrote [L@sq2]
+wrote [Lkb9#]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [QIho6]
+wrote [RjedH]
+wrote [PkRT!]
+wrote [QIho6]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [PkRT!]
+wrote [QIho6]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [SLzMu]
+wrote [RjedH]
+wrote [RjedH]
+reset NEW[1] to 0
+wrote [SLzMu]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:63/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 [4AYL&]cnt:0newcnt:1 newbin:1/2
+index:5 instance:0 upCnt:1 [$FU&K]cnt:0newcnt:1 newbin:0/2
+index:5 instance:0 upCnt:1 [#L4%9]cnt:0newcnt:1 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:3 [HhBdo]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:7 [MSjbS]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:7 [PkRT!]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:7 [QIho6]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:15 [QIho6]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:15 [RjedH]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:31 [SLzMu]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:31 [SLzMu]cnt:1newcnt:2 newbin:0/0
+wrote [SLzMu]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:64/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 [#EQyT]cnt:0newcnt:1 newbin:1/2
+index:5 instance:0 upCnt:1 [#EQyT]cnt:1newcnt:2 newbin:2/2
+index:5 instance:0 upCnt:1 [#L4%9]cnt:1newcnt:2 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:3 [M63o&]cnt:0newcnt:1 newbin:0/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:15 [RjedH]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:15 [RjedH]cnt:2newcnt:3 newbin:0/1
+wrote [SLzMu]
+wrote [SLzMu]
+wrote [SLzMu]
+reset NEW[1] to 0
+wrote [Si%C#]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:65/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 [$FU&K]cnt:1newcnt:2 newbin:1/2
+index:5 instance:0 upCnt:1 [5d85d]cnt:0newcnt:1 newbin:2/2
+index:5 instance:0 upCnt:1 [9L$xX]cnt:0newcnt:1 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 [Lkb9#]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:7 [MSjbS]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:7 [MSjbS]cnt:2newcnt:3 newbin:1/1
+index:3 instance:0 upCnt:7 [PkRT!]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:7 [PkRT!]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:7 [QIho6]cnt:1newcnt:2 newbin:0/1
+index:3 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:32 [SLzMu]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:32 [Si%C#]cnt:0newcnt:1 newbin:0/0
+wrote [Si%C#]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:66/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 [5d85d]cnt:1newcnt:2 newbin:0/2
+index:5 instance:0 upCnt:1 [5d85d]cnt:2newcnt:3 newbin:1/2
+index:5 instance:0 upCnt:1 [$FU&K]cnt:2newcnt:3 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+wrote [SLzMu]
+wrote [SLzMu]
+wrote [RjedH]
+wrote [RjedH]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [QIho6]
+wrote [RjedH]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [Si%C#]
+wrote [SLzMu]
+wrote [Si%C#]
+reset NEW[1] to 0
+wrote [Si%C#]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:67/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 [#L4%9]cnt:2newcnt:3 newbin:2/2
+index:5 instance:0 upCnt:1 [#EQyT]cnt:2newcnt:3 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 [@ejoz]cnt:0newcnt:1 newbin:2/2
+index:5 instance:1 upCnt:1 [BPz*B]cnt:0newcnt:1 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:3 [Hxwa@]cnt:0newcnt:1 newbin:0/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:16 [SLzMu]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:16 [SLzMu]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:33 [Si%C#]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:33 [Si%C#]cnt:1newcnt:2 newbin:0/0
+wrote [StQXq]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:68/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 [CCm^8]cnt:0newcnt:1 newbin:1/2
+index:5 instance:1 upCnt:1 [C7MOT]cnt:0newcnt:1 newbin:2/2
+index:5 instance:1 upCnt:1 [D3Ev$]cnt:0newcnt:1 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 [L@sq2]cnt:0newcnt:1 newbin:0/1
+index:4 instance:0 upCnt:3 [Hxwa@]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:3 [M63o&]cnt:1newcnt:2 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 [L@sq2]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:16 [SLzMu]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:16 [Si%C#]cnt:0newcnt:1 newbin:0/1
+wrote [StQXq]
+wrote [Si%C#]
+wrote [Si%C#]
+reset NEW[1] to 0
+wrote [StQXq]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:69/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 [9L$xX]cnt:1newcnt:2 newbin:0/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 [C7MOT]cnt:1newcnt:2 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:3 [D3Ev$]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:3 [HhBdo]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:3 [HhBdo]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:3 [M63o&]cnt:2newcnt:3 newbin:0/1
+index:4 instance:1 upCnt:3 [Lkb9#]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:3 [L@sq2]cnt:2newcnt:3 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:34 [StQXq]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:34 [StQXq]cnt:1newcnt:2 newbin:0/0
+wrote [StQXq]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:70/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:3 [Hxwa@]cnt:2newcnt:3 newbin:0/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:3 [Lkb9#]cnt:2newcnt:3 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:1/1
+wrote [RjedH]
+wrote [RjedH]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [QIho6]
+wrote [RjedH]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [PkRT!]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [QIho6]
+wrote [MSjbS]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [MSjbS]
+wrote [QIho6]
+wrote [MSjbS]
+wrote [PkRT!]
+wrote [PkRT!]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [Si%C#]
+wrote [Si%C#]
+wrote [SLzMu]
+wrote [Si%C#]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [SLzMu]
+wrote [SLzMu]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [StQXq]
+wrote [StQXq]
+wrote [StQXq]
+reset NEW[1] to 0
+wrote [TzcQa]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:71/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 [4AYL&]cnt:1newcnt:2 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 [CCm^8]cnt:1newcnt:2 newbin:2/2
+index:5 instance:1 upCnt:1 [CCm^8]cnt:2newcnt:3 newbin:0/2
+index:5 instance:1 upCnt:1 [9L$xX]cnt:2newcnt:3 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:8 [RjedH]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:8 [RjedH]cnt:1newcnt:2 newbin:1/1
+index:3 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:8 [SLzMu]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:8 [Si%C#]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:17 [Si%C#]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:17 [StQXq]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:35 [StQXq]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:35 [TzcQa]cnt:0newcnt:1 newbin:0/0
+wrote [TzcQa]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:72/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 [4AYL&]cnt:2newcnt:3 newbin:0/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 [D3Ev$]cnt:1newcnt:2 newbin:1/2
+index:5 instance:1 upCnt:1 [BPz*B]cnt:1newcnt:2 newbin:1/2
+index:5 instance:1 upCnt:1 [@ejoz]cnt:1newcnt:2 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:17 [Si%C#]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:17 [StQXq]cnt:1newcnt:2 newbin:0/1
+wrote [TzcQa]
+wrote [StQXq]
+wrote [TzcQa]
+reset NEW[1] to 0
+wrote [TzcQa]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:73/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 [@ejoz]cnt:2newcnt:3 newbin:1/2
+index:5 instance:1 upCnt:1 [C7MOT]cnt:2newcnt:3 newbin:1/2
+index:5 instance:1 upCnt:1 [BPz*B]cnt:2newcnt:3 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:8 [QIho6]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:8 [RjedH]cnt:2newcnt:3 newbin:0/1
+index:3 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:8 [SLzMu]cnt:1newcnt:2 newbin:0/1
+index:3 instance:1 upCnt:8 [SLzMu]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:36 [TzcQa]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:36 [TzcQa]cnt:1newcnt:2 newbin:0/0
+wrote [Up72Y]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:74/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+wrote [StQXq]
+wrote [TzcQa]
+wrote [Si%C#]
+wrote [StQXq]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [StQXq]
+wrote [Si%C#]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [Up72Y]
+wrote [TzcQa]
+wrote [TzcQa]
+reset NEW[1] to 0
+wrote [Up72Y]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:75/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:18 [StQXq]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:18 [TzcQa]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:37 [Up72Y]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:37 [Up72Y]cnt:1newcnt:2 newbin:0/0
+wrote [Up72Y]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:76/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:18 [TzcQa]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:18 [TzcQa]cnt:2newcnt:3 newbin:0/1
+wrote [Up72Y]
+wrote [Up72Y]
+wrote [Up72Y]
+reset NEW[1] to 0
+wrote [VXZRl]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:77/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:38 [Up72Y]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:38 [VXZRl]cnt:0newcnt:1 newbin:0/0
+wrote [VXZRl]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:78/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+index:5 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/2
+wrote [PkRT!]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [QIho6]
+wrote [MSjbS]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [MSjbS]
+wrote [QIho6]
+wrote [MSjbS]
+wrote [PkRT!]
+wrote [PkRT!]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [L@sq2]
+wrote [HhBdo]
+wrote [Hxwa@]
+wrote [M63o&]
+wrote [Lkb9#]
+wrote [L@sq2]
+wrote [Hxwa@]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [M63o&]
+wrote []
+wrote []
+wrote [HhBdo]
+wrote [Lkb9#]
+wrote [Hxwa@]
+wrote [D3Ev$]
+wrote [L@sq2]
+wrote [M63o&]
+wrote [HhBdo]
+wrote [Lkb9#]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[4] to 0
+wrote [Si%C#]
+wrote [StQXq]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [StQXq]
+wrote [Si%C#]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [SLzMu]
+wrote []
+wrote [RjedH]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Si%C#]
+wrote []
+wrote []
+wrote [RjedH]
+wrote [SLzMu]
+wrote [RjedH]
+wrote [QIho6]
+wrote [SLzMu]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [Up72Y]
+wrote [Up72Y]
+wrote [TzcQa]
+wrote [TzcQa]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [StQXq]
+wrote [TzcQa]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [VXZRl]
+wrote [Up72Y]
+wrote [VXZRl]
+reset NEW[1] to 0
+wrote [VXZRl]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:79/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:4 [PkRT!]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:9 [Si%C#]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:9 [StQXq]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:9 [TzcQa]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:9 [TzcQa]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:19 [Up72Y]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:19 [Up72Y]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:39 [VXZRl]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:39 [VXZRl]cnt:1newcnt:2 newbin:0/0
+wrote [W2Ne8]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:80/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 [SLzMu]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:19 [Up72Y]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:19 [VXZRl]cnt:0newcnt:1 newbin:1/1
+wrote [W2Ne8]
+wrote [VXZRl]
+wrote [VXZRl]
+reset NEW[1] to 0
+wrote [W2Ne8]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:81/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:4 [RjedH]cnt:0newcnt:1 newbin:0/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:9 [StQXq]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:9 [Si%C#]cnt:1newcnt:2 newbin:1/1
+index:3 instance:0 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:9 [StQXq]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:9 [TzcQa]cnt:2newcnt:3 newbin:0/1
+index:3 instance:1 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:40 [W2Ne8]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:40 [W2Ne8]cnt:1newcnt:2 newbin:0/0
+wrote [W2Ne8]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:82/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:9 []cnt:-1newcnt:0 newbin:1/1
+wrote [VXZRl]
+wrote [VXZRl]
+wrote [Up72Y]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Up72Y]
+wrote [Up72Y]
+wrote [VXZRl]
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [W2Ne8]
+wrote [W2Ne8]
+wrote [W2Ne8]
+reset NEW[1] to 0
+wrote [Xn$rY]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:83/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:4 [QIho6]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:4 [MSjbS]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 [Si%C#]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:20 [VXZRl]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:20 [W2Ne8]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:41 [W2Ne8]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:41 [Xn$rY]cnt:0newcnt:1 newbin:0/0
+wrote [Xn$rY]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:84/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 [RjedH]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:20 [VXZRl]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:20 [W2Ne8]cnt:1newcnt:2 newbin:1/1
+wrote [Xn$rY]
+wrote [W2Ne8]
+wrote [Xn$rY]
+reset NEW[1] to 0
+wrote [Xn$rY]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:85/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:4 [MSjbS]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:4 [QIho6]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:4 [MSjbS]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:4 [SLzMu]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:4 [RjedH]cnt:2newcnt:3 newbin:0/1
+index:4 instance:1 upCnt:4 [QIho6]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:42 [Xn$rY]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:42 [Xn$rY]cnt:1newcnt:2 newbin:0/0
+wrote [Yo5rd]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:86/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:4 [PkRT!]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:4 [PkRT!]cnt:2newcnt:3 newbin:1/1
+index:4 instance:0 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:4 [SLzMu]cnt:2newcnt:3 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:4 []cnt:-1newcnt:0 newbin:1/1
+wrote [Up72Y]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Up72Y]
+wrote [Up72Y]
+wrote [VXZRl]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [TzcQa]
+wrote []
+wrote []
+wrote []
+wrote [StQXq]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [TzcQa]
+wrote []
+wrote [Si%C#]
+wrote [TzcQa]
+wrote [StQXq]
+wrote [Si%C#]
+wrote [StQXq]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [W2Ne8]
+wrote [Xn$rY]
+wrote [W2Ne8]
+wrote [VXZRl]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [VXZRl]
+wrote [W2Ne8]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [Yo5rd]
+wrote [Xn$rY]
+wrote [Xn$rY]
+reset NEW[1] to 0
+wrote [Yo5rd]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:87/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:10 [Up72Y]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:10 [W2Ne8]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:10 [VXZRl]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:21 [W2Ne8]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:21 [Xn$rY]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:43 [Yo5rd]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:43 [Yo5rd]cnt:1newcnt:2 newbin:0/0
+wrote [Yo5rd]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:88/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:21 [Xn$rY]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:21 [Xn$rY]cnt:2newcnt:3 newbin:1/1
+wrote [Yo5rd]
+wrote [Yo5rd]
+wrote [Yo5rd]
+reset NEW[1] to 0
+wrote [aAozE]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:89/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:10 [Up72Y]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:10 [Up72Y]cnt:2newcnt:3 newbin:1/1
+index:3 instance:0 upCnt:10 [VXZRl]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:10 [VXZRl]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:10 [W2Ne8]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:44 [Yo5rd]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:44 [aAozE]cnt:0newcnt:1 newbin:0/0
+wrote [aAozE]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:90/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:10 []cnt:-1newcnt:0 newbin:1/1
+wrote [Yo5rd]
+wrote [Yo5rd]
+wrote [W2Ne8]
+wrote [Xn$rY]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Xn$rY]
+wrote [Xn$rY]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [aAozE]
+wrote [Yo5rd]
+wrote [aAozE]
+reset NEW[1] to 0
+wrote [aAozE]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:91/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:22 [Yo5rd]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:22 [Yo5rd]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:45 [aAozE]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:45 [aAozE]cnt:1newcnt:2 newbin:0/0
+wrote [bL@Lv]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:92/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:22 [Yo5rd]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:22 [aAozE]cnt:0newcnt:1 newbin:0/1
+wrote [bL@Lv]
+wrote [aAozE]
+wrote [aAozE]
+reset NEW[1] to 0
+wrote [bL@Lv]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:93/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:46 [bL@Lv]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:46 [bL@Lv]cnt:1newcnt:2 newbin:0/0
+wrote [bL@Lv]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:94/150
+wrote []
+wrote [L@sq2]
+wrote [HhBdo]
+wrote [Hxwa@]
+wrote [M63o&]
+wrote [Lkb9#]
+wrote [L@sq2]
+wrote [Hxwa@]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [M63o&]
+wrote []
+wrote []
+wrote [HhBdo]
+wrote [Lkb9#]
+wrote [Hxwa@]
+wrote [D3Ev$]
+wrote [L@sq2]
+wrote [M63o&]
+wrote [HhBdo]
+wrote [Lkb9#]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [#EQyT]
+wrote []
+wrote []
+wrote [BPz*B]
+wrote []
+wrote []
+wrote []
+wrote [4AYL&]
+wrote []
+wrote [D3Ev$]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [C7MOT]
+wrote []
+wrote [9L$xX]
+wrote []
+wrote []
+wrote []
+wrote [CCm^8]
+wrote []
+wrote [$FU&K]
+wrote [#L4%9]
+wrote []
+wrote []
+wrote []
+wrote [@ejoz]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [5d85d]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [C7MOT]
+wrote [$FU&K]
+wrote [CCm^8]
+wrote [4AYL&]
+wrote [#EQyT]
+wrote [#L4%9]
+wrote [D3Ev$]
+wrote [BPz*B]
+wrote [9L$xX]
+wrote [5d85d]
+wrote [@ejoz]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [9L$xX]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [5d85d]
+wrote [C7MOT]
+wrote [BPz*B]
+wrote []
+wrote []
+wrote [@ejoz]
+wrote []
+wrote [#L4%9]
+wrote []
+wrote []
+wrote []
+wrote [$FU&K]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [CCm^8]
+wrote []
+wrote [4AYL&]
+wrote []
+wrote [#EQyT]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[5] to 0
+wrote []
+wrote []
+wrote []
+wrote [TzcQa]
+wrote []
+wrote []
+wrote []
+wrote [StQXq]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [TzcQa]
+wrote []
+wrote [Si%C#]
+wrote [TzcQa]
+wrote [StQXq]
+wrote [Si%C#]
+wrote [StQXq]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [RjedH]
+wrote [Si%C#]
+wrote [MSjbS]
+wrote [QIho6]
+wrote [SLzMu]
+wrote [RjedH]
+wrote [PkRT!]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [QIho6]
+wrote [QIho6]
+wrote [MSjbS]
+wrote [PkRT!]
+wrote [MSjbS]
+wrote [SLzMu]
+wrote [RjedH]
+wrote [PkRT!]
+wrote [SLzMu]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[4] to 0
+wrote [W2Ne8]
+wrote [Xn$rY]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Xn$rY]
+wrote [Xn$rY]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [VXZRl]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Up72Y]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [W2Ne8]
+wrote [Up72Y]
+wrote [W2Ne8]
+wrote [Up72Y]
+wrote [VXZRl]
+wrote [VXZRl]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [aAozE]
+wrote [aAozE]
+wrote [Yo5rd]
+wrote [aAozE]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Yo5rd]
+wrote [Yo5rd]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [bL@Lv]
+wrote [bL@Lv]
+wrote [bL@Lv]
+reset NEW[1] to 0
+wrote [bPN1j]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:95/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 [L@sq2]cnt:0newcnt:1 newbin:1/2
+index:5 instance:0 upCnt:2 [HhBdo]cnt:0newcnt:1 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 [RjedH]cnt:0newcnt:1 newbin:0/2
+index:5 instance:1 upCnt:2 [Si%C#]cnt:0newcnt:1 newbin:1/2
+index:5 instance:1 upCnt:2 [MSjbS]cnt:0newcnt:1 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:5 [VXZRl]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:11 [W2Ne8]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:11 [Xn$rY]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:11 [Yo5rd]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:11 [aAozE]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:23 [aAozE]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:23 [bL@Lv]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:47 [bL@Lv]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:47 [bPN1j]cnt:0newcnt:1 newbin:0/0
+wrote [bPN1j]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:96/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 [Hxwa@]cnt:0newcnt:1 newbin:0/2
+index:5 instance:0 upCnt:2 [M63o&]cnt:0newcnt:1 newbin:0/2
+index:5 instance:0 upCnt:2 [Lkb9#]cnt:0newcnt:1 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 [QIho6]cnt:0newcnt:1 newbin:0/2
+index:5 instance:1 upCnt:2 [SLzMu]cnt:0newcnt:1 newbin:2/2
+index:5 instance:1 upCnt:2 [RjedH]cnt:1newcnt:2 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:5 [TzcQa]cnt:0newcnt:1 newbin:0/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:23 [aAozE]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:23 [bL@Lv]cnt:1newcnt:2 newbin:0/1
+wrote [bPN1j]
+wrote [bL@Lv]
+wrote [bPN1j]
+reset NEW[1] to 0
+wrote [bPN1j]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:97/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 [L@sq2]cnt:1newcnt:2 newbin:2/2
+index:5 instance:0 upCnt:2 [Hxwa@]cnt:1newcnt:2 newbin:1/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 [PkRT!]cnt:0newcnt:1 newbin:2/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 [StQXq]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:11 [Xn$rY]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:11 [Xn$rY]cnt:2newcnt:3 newbin:1/1
+index:3 instance:0 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:11 [Yo5rd]cnt:1newcnt:2 newbin:0/1
+index:3 instance:1 upCnt:11 [Yo5rd]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:48 [bPN1j]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:48 [bPN1j]cnt:1newcnt:2 newbin:0/0
+wrote [eZ40L]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:98/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:11 []cnt:-1newcnt:0 newbin:1/1
+wrote [bL@Lv]
+wrote [bPN1j]
+wrote [aAozE]
+wrote [bL@Lv]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [bL@Lv]
+wrote [aAozE]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [eZ40L]
+wrote [bPN1j]
+wrote [bPN1j]
+reset NEW[1] to 0
+wrote [eZ40L]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:99/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:5 [Up72Y]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:24 [bL@Lv]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:24 [bPN1j]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:49 [eZ40L]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:49 [eZ40L]cnt:1newcnt:2 newbin:0/0
+wrote [eZ40L]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:100/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:5 [TzcQa]cnt:1newcnt:2 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 [Si%C#]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:5 [W2Ne8]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:24 [bPN1j]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:24 [bPN1j]cnt:2newcnt:3 newbin:1/1
+wrote [eZ40L]
+wrote [eZ40L]
+wrote [eZ40L]
+reset NEW[1] to 0
+wrote [ggtlj]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:101/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:5 [TzcQa]cnt:2newcnt:3 newbin:0/1
+index:4 instance:0 upCnt:5 [StQXq]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:5 [Si%C#]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:5 [Up72Y]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:5 [W2Ne8]cnt:1newcnt:2 newbin:1/1
+index:4 instance:1 upCnt:5 [Up72Y]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:50 [eZ40L]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:50 [ggtlj]cnt:0newcnt:1 newbin:0/0
+wrote [ggtlj]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:102/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 [M63o&]cnt:1newcnt:2 newbin:1/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:5 [StQXq]cnt:2newcnt:3 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:5 [VXZRl]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:5 [VXZRl]cnt:2newcnt:3 newbin:1/1
+index:4 instance:1 upCnt:5 []cnt:-1newcnt:0 newbin:1/1
+wrote [aAozE]
+wrote [bL@Lv]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [bL@Lv]
+wrote [aAozE]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Yo5rd]
+wrote []
+wrote []
+wrote [Xn$rY]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [aAozE]
+wrote []
+wrote []
+wrote [W2Ne8]
+wrote [Yo5rd]
+wrote [Xn$rY]
+wrote [Xn$rY]
+wrote [Yo5rd]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [eZ40L]
+wrote [eZ40L]
+wrote [bPN1j]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [bL@Lv]
+wrote [bPN1j]
+wrote [bPN1j]
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [ggtlj]
+wrote [eZ40L]
+wrote [ggtlj]
+reset NEW[1] to 0
+wrote [ggtlj]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:103/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 [HhBdo]cnt:1newcnt:2 newbin:2/2
+index:5 instance:0 upCnt:2 [Lkb9#]cnt:1newcnt:2 newbin:2/2
+index:5 instance:0 upCnt:2 [Hxwa@]cnt:2newcnt:3 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 [QIho6]cnt:1newcnt:2 newbin:1/2
+index:5 instance:1 upCnt:2 [QIho6]cnt:2newcnt:3 newbin:2/2
+index:5 instance:1 upCnt:2 [MSjbS]cnt:1newcnt:2 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:12 [aAozE]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:12 [bL@Lv]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:12 [bPN1j]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:25 [eZ40L]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:25 [eZ40L]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:51 [ggtlj]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:51 [ggtlj]cnt:1newcnt:2 newbin:0/0
+wrote [gzCZh]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:104/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 [D3Ev$]cnt:0newcnt:1 newbin:1/2
+index:5 instance:0 upCnt:2 [L@sq2]cnt:2newcnt:3 newbin:0/2
+index:5 instance:0 upCnt:2 [M63o&]cnt:2newcnt:3 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 [PkRT!]cnt:1newcnt:2 newbin:0/2
+index:5 instance:1 upCnt:2 [MSjbS]cnt:2newcnt:3 newbin:1/2
+index:5 instance:1 upCnt:2 [SLzMu]cnt:1newcnt:2 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:25 [eZ40L]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:25 [ggtlj]cnt:0newcnt:1 newbin:0/1
+wrote [gzCZh]
+wrote [ggtlj]
+wrote [ggtlj]
+reset NEW[1] to 0
+wrote [gzCZh]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:105/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 [HhBdo]cnt:2newcnt:3 newbin:0/2
+index:5 instance:0 upCnt:2 [Lkb9#]cnt:2newcnt:3 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 [RjedH]cnt:2newcnt:3 newbin:2/2
+index:5 instance:1 upCnt:2 [PkRT!]cnt:2newcnt:3 newbin:1/2
+index:5 instance:1 upCnt:2 [SLzMu]cnt:2newcnt:3 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:12 [bL@Lv]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:12 [aAozE]cnt:1newcnt:2 newbin:1/1
+index:3 instance:0 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:12 [bL@Lv]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:12 [bPN1j]cnt:1newcnt:2 newbin:0/1
+index:3 instance:1 upCnt:12 [bPN1j]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:52 [gzCZh]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:52 [gzCZh]cnt:1newcnt:2 newbin:0/0
+wrote [gzCZh]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:106/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:12 []cnt:-1newcnt:0 newbin:1/1
+wrote [ggtlj]
+wrote [ggtlj]
+wrote [eZ40L]
+wrote [ggtlj]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [eZ40L]
+wrote [eZ40L]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [gzCZh]
+wrote [gzCZh]
+wrote [gzCZh]
+reset NEW[1] to 0
+wrote [hW1Uc]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:107/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:26 [ggtlj]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:26 [gzCZh]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:53 [gzCZh]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:53 [hW1Uc]cnt:0newcnt:1 newbin:0/0
+wrote [hW1Uc]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:108/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:26 [ggtlj]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:26 [gzCZh]cnt:1newcnt:2 newbin:1/1
+wrote [hW1Uc]
+wrote [gzCZh]
+wrote [hW1Uc]
+reset NEW[1] to 0
+wrote [hW1Uc]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:109/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:54 [hW1Uc]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:54 [hW1Uc]cnt:1newcnt:2 newbin:0/0
+wrote [iYI85]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:110/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:2 []cnt:-1newcnt:0 newbin:0/2
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Yo5rd]
+wrote []
+wrote []
+wrote [Xn$rY]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [aAozE]
+wrote []
+wrote []
+wrote [W2Ne8]
+wrote [Yo5rd]
+wrote [Xn$rY]
+wrote [Xn$rY]
+wrote [Yo5rd]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [VXZRl]
+wrote [Si%C#]
+wrote [W2Ne8]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [TzcQa]
+wrote [Up72Y]
+wrote [StQXq]
+wrote [TzcQa]
+wrote []
+wrote []
+wrote []
+wrote [Up72Y]
+wrote [VXZRl]
+wrote [StQXq]
+wrote [Up72Y]
+wrote [W2Ne8]
+wrote [VXZRl]
+wrote [TzcQa]
+wrote [Si%C#]
+wrote [StQXq]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[4] to 0
+wrote [eZ40L]
+wrote [ggtlj]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [eZ40L]
+wrote [eZ40L]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [bPN1j]
+wrote []
+wrote []
+wrote []
+wrote [bL@Lv]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [aAozE]
+wrote [bL@Lv]
+wrote [bL@Lv]
+wrote [aAozE]
+wrote [bPN1j]
+wrote [bPN1j]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [gzCZh]
+wrote [hW1Uc]
+wrote [ggtlj]
+wrote [gzCZh]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [ggtlj]
+wrote [gzCZh]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [iYI85]
+wrote [hW1Uc]
+wrote [hW1Uc]
+reset NEW[1] to 0
+wrote [iYI85]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:111/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:13 [eZ40L]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:13 [ggtlj]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:13 [ggtlj]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:13 [gzCZh]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:27 [gzCZh]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:27 [hW1Uc]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:55 [iYI85]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:55 [iYI85]cnt:1newcnt:2 newbin:0/0
+wrote [iYI85]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:112/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 [Yo5rd]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:6 [bPN1j]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:27 [hW1Uc]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:27 [hW1Uc]cnt:2newcnt:3 newbin:0/1
+wrote [iYI85]
+wrote [iYI85]
+wrote [iYI85]
+reset NEW[1] to 0
+wrote [ijn6N]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:113/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 [Xn$rY]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 [bL@Lv]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:13 [eZ40L]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:13 [eZ40L]cnt:2newcnt:3 newbin:1/1
+index:3 instance:0 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:13 [ggtlj]cnt:2newcnt:3 newbin:0/1
+index:3 instance:1 upCnt:13 [gzCZh]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:56 [iYI85]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:56 [ijn6N]cnt:0newcnt:1 newbin:0/0
+wrote [ijn6N]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:114/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:13 []cnt:-1newcnt:0 newbin:1/1
+wrote [iYI85]
+wrote [iYI85]
+wrote [gzCZh]
+wrote [hW1Uc]
+wrote [hW1Uc]
+wrote []
+wrote []
+wrote []
+wrote [hW1Uc]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [ijn6N]
+wrote [iYI85]
+wrote [ijn6N]
+reset NEW[1] to 0
+wrote [ijn6N]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:115/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 [aAozE]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:28 [iYI85]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:28 [iYI85]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:57 [ijn6N]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:57 [ijn6N]cnt:1newcnt:2 newbin:0/0
+wrote [kPuRP]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:116/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 [W2Ne8]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:6 [aAozE]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:28 [iYI85]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:28 [ijn6N]cnt:0newcnt:1 newbin:1/1
+wrote [kPuRP]
+wrote [ijn6N]
+wrote [ijn6N]
+reset NEW[1] to 0
+wrote [kPuRP]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:117/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:6 [Yo5rd]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:6 [Xn$rY]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:6 [Xn$rY]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:6 [bL@Lv]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:6 [bL@Lv]cnt:2newcnt:3 newbin:1/1
+index:4 instance:1 upCnt:6 [aAozE]cnt:2newcnt:3 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:58 [kPuRP]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:58 [kPuRP]cnt:1newcnt:2 newbin:0/0
+wrote [kPuRP]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:118/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:6 [Yo5rd]cnt:2newcnt:3 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:6 [bPN1j]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:6 [bPN1j]cnt:2newcnt:3 newbin:1/1
+index:4 instance:1 upCnt:6 []cnt:-1newcnt:0 newbin:1/1
+wrote [gzCZh]
+wrote [hW1Uc]
+wrote [hW1Uc]
+wrote []
+wrote []
+wrote []
+wrote [hW1Uc]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [ggtlj]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [ggtlj]
+wrote [eZ40L]
+wrote [gzCZh]
+wrote [eZ40L]
+wrote [gzCZh]
+wrote [eZ40L]
+wrote [ggtlj]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [ijn6N]
+wrote [ijn6N]
+wrote [iYI85]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [iYI85]
+wrote [iYI85]
+wrote [ijn6N]
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [kPuRP]
+wrote [kPuRP]
+wrote [kPuRP]
+reset NEW[1] to 0
+wrote [l!!Cp]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:119/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:14 [gzCZh]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:14 [hW1Uc]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:14 [hW1Uc]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:14 [iYI85]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:29 [ijn6N]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:29 [kPuRP]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:59 [kPuRP]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:59 [l!!Cp]cnt:0newcnt:1 newbin:0/0
+wrote [l!!Cp]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:120/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:29 [ijn6N]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:29 [kPuRP]cnt:1newcnt:2 newbin:0/1
+wrote [l!!Cp]
+wrote [kPuRP]
+wrote [l!!Cp]
+reset NEW[1] to 0
+wrote [l!!Cp]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:121/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:14 [hW1Uc]cnt:2newcnt:3 newbin:0/1
+index:3 instance:0 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:14 [iYI85]cnt:1newcnt:2 newbin:0/1
+index:3 instance:1 upCnt:14 [iYI85]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:14 [ijn6N]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:60 [l!!Cp]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:60 [l!!Cp]cnt:1newcnt:2 newbin:0/0
+wrote [lbU^K]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:122/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:14 []cnt:-1newcnt:0 newbin:1/1
+wrote [kPuRP]
+wrote [l!!Cp]
+wrote [ijn6N]
+wrote [kPuRP]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [ijn6N]
+wrote [kPuRP]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [lbU^K]
+wrote [l!!Cp]
+wrote [l!!Cp]
+reset NEW[1] to 0
+wrote [lbU^K]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:123/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:30 [kPuRP]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:30 [l!!Cp]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:61 [lbU^K]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:61 [lbU^K]cnt:1newcnt:2 newbin:0/0
+wrote [lbU^K]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:124/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:30 [l!!Cp]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:30 [l!!Cp]cnt:2newcnt:3 newbin:0/1
+wrote [lbU^K]
+wrote [lbU^K]
+wrote [lbU^K]
+reset NEW[1] to 0
+wrote [nEMWE]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:125/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:62 [lbU^K]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:62 [nEMWE]cnt:0newcnt:1 newbin:0/0
+wrote [nEMWE]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:126/150
+wrote []
+wrote [VXZRl]
+wrote [Si%C#]
+wrote [W2Ne8]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [TzcQa]
+wrote [Up72Y]
+wrote [StQXq]
+wrote [TzcQa]
+wrote []
+wrote []
+wrote []
+wrote [Up72Y]
+wrote [VXZRl]
+wrote [StQXq]
+wrote [Up72Y]
+wrote [W2Ne8]
+wrote [VXZRl]
+wrote [TzcQa]
+wrote [Si%C#]
+wrote [StQXq]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [RjedH]
+wrote [Lkb9#]
+wrote [HhBdo]
+wrote [Hxwa@]
+wrote [M63o&]
+wrote [SLzMu]
+wrote [QIho6]
+wrote [PkRT!]
+wrote [L@sq2]
+wrote [MSjbS]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [QIho6]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [MSjbS]
+wrote [M63o&]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [HhBdo]
+wrote []
+wrote [D3Ev$]
+wrote []
+wrote [Si%C#]
+wrote [RjedH]
+wrote []
+wrote []
+wrote [Lkb9#]
+wrote []
+wrote [Hxwa@]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [PkRT!]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [SLzMu]
+wrote []
+wrote [L@sq2]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [SLzMu]
+wrote [RjedH]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [PkRT!]
+wrote [L@sq2]
+wrote []
+wrote [MSjbS]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [HhBdo]
+wrote [Lkb9#]
+wrote [Hxwa@]
+wrote [QIho6]
+wrote [M63o&]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[5] to 0
+wrote [ggtlj]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [ggtlj]
+wrote [eZ40L]
+wrote [gzCZh]
+wrote [eZ40L]
+wrote [gzCZh]
+wrote [eZ40L]
+wrote [ggtlj]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [bPN1j]
+wrote [W2Ne8]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [aAozE]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [Yo5rd]
+wrote [aAozE]
+wrote [Xn$rY]
+wrote [bL@Lv]
+wrote [aAozE]
+wrote [bL@Lv]
+wrote [Xn$rY]
+wrote [Xn$rY]
+wrote [bL@Lv]
+wrote [bPN1j]
+wrote [Yo5rd]
+wrote [Yo5rd]
+wrote [bPN1j]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[4] to 0
+wrote [ijn6N]
+wrote [kPuRP]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [ijn6N]
+wrote [kPuRP]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [hW1Uc]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [iYI85]
+wrote [gzCZh]
+wrote [hW1Uc]
+wrote [ijn6N]
+wrote [iYI85]
+wrote [iYI85]
+wrote [hW1Uc]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [lbU^K]
+wrote [lbU^K]
+wrote [l!!Cp]
+wrote [l!!Cp]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [kPuRP]
+wrote [l!!Cp]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [nEMWE]
+wrote [lbU^K]
+wrote [nEMWE]
+reset NEW[1] to 0
+wrote [nEMWE]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:127/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 [#EQyT]cnt:0newcnt:1 newbin:2/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 [RjedH]cnt:0newcnt:1 newbin:2/4
+index:6 instance:1 upCnt:1 [Lkb9#]cnt:0newcnt:1 newbin:3/4
+index:6 instance:1 upCnt:1 [HhBdo]cnt:0newcnt:1 newbin:4/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 [VXZRl]cnt:0newcnt:1 newbin:2/2
+index:5 instance:0 upCnt:3 [Si%C#]cnt:0newcnt:1 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 [bPN1j]cnt:0newcnt:1 newbin:0/2
+index:5 instance:1 upCnt:3 [W2Ne8]cnt:0newcnt:1 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:7 [ggtlj]cnt:0newcnt:1 newbin:0/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:7 [hW1Uc]cnt:0newcnt:1 newbin:0/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:15 [ijn6N]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:15 [kPuRP]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:15 [l!!Cp]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:15 [l!!Cp]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:31 [lbU^K]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:31 [lbU^K]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:63 [nEMWE]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:63 [nEMWE]cnt:1newcnt:2 newbin:0/0
+wrote [o3JNU]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:128/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 [BPz*B]cnt:0newcnt:1 newbin:2/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 [Hxwa@]cnt:0newcnt:1 newbin:4/4
+index:6 instance:1 upCnt:1 [M63o&]cnt:0newcnt:1 newbin:2/4
+index:6 instance:1 upCnt:1 [SLzMu]cnt:0newcnt:1 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 [W2Ne8]cnt:1newcnt:2 newbin:2/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:31 [lbU^K]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:31 [nEMWE]cnt:0newcnt:1 newbin:0/1
+wrote [o3JNU]
+wrote [nEMWE]
+wrote [nEMWE]
+reset NEW[1] to 0
+wrote [rmGev]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:129/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 [4AYL&]cnt:0newcnt:1 newbin:3/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 [QIho6]cnt:0newcnt:1 newbin:4/4
+index:6 instance:1 upCnt:1 [PkRT!]cnt:0newcnt:1 newbin:1/4
+index:6 instance:1 upCnt:1 [L@sq2]cnt:0newcnt:1 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 [aAozE]cnt:0newcnt:1 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:15 [ijn6N]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:15 [kPuRP]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:15 [kPuRP]cnt:2newcnt:3 newbin:1/1
+index:3 instance:1 upCnt:15 [l!!Cp]cnt:2newcnt:3 newbin:0/1
+index:3 instance:1 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:64 [o3JNU]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:64 [rmGev]cnt:0newcnt:1 newbin:0/0
+wrote [rmGev]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:130/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 [D3Ev$]cnt:0newcnt:1 newbin:2/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 [MSjbS]cnt:0newcnt:1 newbin:4/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:15 []cnt:-1newcnt:0 newbin:1/1
+wrote [nEMWE]
+wrote [nEMWE]
+wrote [lbU^K]
+wrote [nEMWE]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [lbU^K]
+wrote [lbU^K]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [rmGev]
+wrote [o3JNU]
+wrote [rmGev]
+reset NEW[1] to 0
+wrote [rmGev]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:131/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:32 [nEMWE]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:32 [o3JNU]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:65 [rmGev]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:65 [rmGev]cnt:1newcnt:2 newbin:0/0
+wrote [s1kF%]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:132/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 [QIho6]cnt:1newcnt:2 newbin:0/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 [TzcQa]cnt:0newcnt:1 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:7 [ggtlj]cnt:1newcnt:2 newbin:1/1
+index:4 instance:0 upCnt:7 [eZ40L]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:7 [gzCZh]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:7 [iYI85]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:7 [gzCZh]cnt:1newcnt:2 newbin:1/1
+index:4 instance:1 upCnt:7 [hW1Uc]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:32 [nEMWE]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:32 [rmGev]cnt:0newcnt:1 newbin:1/1
+wrote [s1kF%]
+wrote [rmGev]
+wrote [rmGev]
+reset NEW[1] to 0
+wrote [s1kF%]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:133/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 [C7MOT]cnt:0newcnt:1 newbin:3/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 [9L$xX]cnt:0newcnt:1 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 [Up72Y]cnt:0newcnt:1 newbin:2/2
+index:5 instance:0 upCnt:3 [StQXq]cnt:0newcnt:1 newbin:2/2
+index:5 instance:0 upCnt:3 [TzcQa]cnt:1newcnt:2 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 [Yo5rd]cnt:0newcnt:1 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:7 [eZ40L]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:7 [gzCZh]cnt:2newcnt:3 newbin:0/1
+index:4 instance:0 upCnt:7 [eZ40L]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:7 [ijn6N]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:7 [iYI85]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:7 [iYI85]cnt:2newcnt:3 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:66 [s1kF%]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:66 [s1kF%]cnt:1newcnt:2 newbin:0/0
+wrote [s1kF%]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:134/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 [MSjbS]cnt:1newcnt:2 newbin:0/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 [aAozE]cnt:1newcnt:2 newbin:1/2
+index:5 instance:1 upCnt:3 [Xn$rY]cnt:0newcnt:1 newbin:1/2
+index:5 instance:1 upCnt:3 [bL@Lv]cnt:0newcnt:1 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:7 [ggtlj]cnt:2newcnt:3 newbin:0/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:7 [hW1Uc]cnt:2newcnt:3 newbin:0/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:7 []cnt:-1newcnt:0 newbin:1/1
+wrote [lbU^K]
+wrote [nEMWE]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [lbU^K]
+wrote [lbU^K]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [l!!Cp]
+wrote []
+wrote []
+wrote [kPuRP]
+wrote [ijn6N]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [l!!Cp]
+wrote []
+wrote []
+wrote [ijn6N]
+wrote [kPuRP]
+wrote [l!!Cp]
+wrote [kPuRP]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [rmGev]
+wrote [rmGev]
+wrote [nEMWE]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [o3JNU]
+wrote [nEMWE]
+wrote [rmGev]
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [s1kF%]
+wrote [s1kF%]
+wrote [s1kF%]
+reset NEW[1] to 0
+wrote [tUa!B]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:135/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 [CCm^8]cnt:0newcnt:1 newbin:4/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 [$FU&K]cnt:0newcnt:1 newbin:4/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 [M63o&]cnt:1newcnt:2 newbin:3/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 [Up72Y]cnt:1newcnt:2 newbin:0/2
+index:5 instance:0 upCnt:3 [VXZRl]cnt:1newcnt:2 newbin:0/2
+index:5 instance:0 upCnt:3 [StQXq]cnt:1newcnt:2 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 [aAozE]cnt:2newcnt:3 newbin:2/2
+index:5 instance:1 upCnt:3 [bL@Lv]cnt:1newcnt:2 newbin:1/2
+index:5 instance:1 upCnt:3 [Xn$rY]cnt:1newcnt:2 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:16 [lbU^K]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:16 [nEMWE]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:16 [nEMWE]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:33 [rmGev]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:33 [s1kF%]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:67 [s1kF%]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:67 [tUa!B]cnt:0newcnt:1 newbin:0/0
+wrote [tUa!B]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:136/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 [#L4%9]cnt:0newcnt:1 newbin:2/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 [HhBdo]cnt:1newcnt:2 newbin:0/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 [Up72Y]cnt:2newcnt:3 newbin:1/2
+index:5 instance:0 upCnt:3 [W2Ne8]cnt:2newcnt:3 newbin:0/2
+index:5 instance:0 upCnt:3 [VXZRl]cnt:2newcnt:3 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 [Xn$rY]cnt:2newcnt:3 newbin:0/2
+index:5 instance:1 upCnt:3 [bL@Lv]cnt:2newcnt:3 newbin:2/2
+index:5 instance:1 upCnt:3 [bPN1j]cnt:1newcnt:2 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:33 [rmGev]cnt:1newcnt:2 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:33 [s1kF%]cnt:1newcnt:2 newbin:1/1
+wrote [tUa!B]
+wrote [s1kF%]
+wrote [tUa!B]
+reset NEW[1] to 0
+wrote [tUa!B]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:137/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 [@ejoz]cnt:0newcnt:1 newbin:3/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 [D3Ev$]cnt:1newcnt:2 newbin:3/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 [TzcQa]cnt:2newcnt:3 newbin:1/2
+index:5 instance:0 upCnt:3 [Si%C#]cnt:1newcnt:2 newbin:2/2
+index:5 instance:0 upCnt:3 [StQXq]cnt:2newcnt:3 newbin:1/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 [Yo5rd]cnt:1newcnt:2 newbin:1/2
+index:5 instance:1 upCnt:3 [Yo5rd]cnt:2newcnt:3 newbin:2/2
+index:5 instance:1 upCnt:3 [bPN1j]cnt:2newcnt:3 newbin:2/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:16 [lbU^K]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:16 [lbU^K]cnt:2newcnt:3 newbin:1/1
+index:3 instance:0 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:16 [o3JNU]cnt:0newcnt:1 newbin:1/1
+index:3 instance:1 upCnt:16 [nEMWE]cnt:2newcnt:3 newbin:0/1
+index:3 instance:1 upCnt:16 [rmGev]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:68 [tUa!B]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:68 [tUa!B]cnt:1newcnt:2 newbin:0/0
+wrote [tUa!B]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:138/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 [Si%C#]cnt:0newcnt:1 newbin:3/4
+index:6 instance:1 upCnt:1 [RjedH]cnt:1newcnt:2 newbin:3/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:16 []cnt:-1newcnt:0 newbin:1/1
+wrote [s1kF%]
+wrote [tUa!B]
+wrote [s1kF%]
+wrote [rmGev]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [rmGev]
+wrote [s1kF%]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [tUa!B]
+wrote [tUa!B]
+wrote [tUa!B]
+reset NEW[1] to 0
+wrote [tUa!B]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:139/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 [Lkb9#]cnt:1newcnt:2 newbin:4/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:34 [s1kF%]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:34 [tUa!B]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:69 [tUa!B]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:69 [tUa!B]cnt:1newcnt:2 newbin:0/0
+wrote [uV&!W]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:140/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 [5d85d]cnt:0newcnt:1 newbin:2/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 [Hxwa@]cnt:1newcnt:2 newbin:0/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:34 [tUa!B]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:34 [tUa!B]cnt:2newcnt:3 newbin:0/1
+wrote [uV&!W]
+wrote [tUa!B]
+wrote [tUa!B]
+reset NEW[1] to 0
+wrote [uV&!W]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:141/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:70 [uV&!W]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:70 [uV&!W]cnt:1newcnt:2 newbin:0/0
+wrote [uV&!W]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:142/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 [C7MOT]cnt:1newcnt:2 newbin:4/4
+index:6 instance:0 upCnt:1 [$FU&K]cnt:1newcnt:2 newbin:0/4
+index:6 instance:0 upCnt:1 [CCm^8]cnt:1newcnt:2 newbin:0/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 [PkRT!]cnt:1newcnt:2 newbin:2/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:0 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+index:5 instance:1 upCnt:3 []cnt:-1newcnt:0 newbin:0/2
+wrote []
+wrote []
+wrote []
+wrote [l!!Cp]
+wrote []
+wrote []
+wrote [kPuRP]
+wrote [ijn6N]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [l!!Cp]
+wrote []
+wrote []
+wrote [ijn6N]
+wrote [kPuRP]
+wrote [l!!Cp]
+wrote [kPuRP]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [gzCZh]
+wrote [eZ40L]
+wrote [gzCZh]
+wrote [iYI85]
+wrote [ggtlj]
+wrote [hW1Uc]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [ggtlj]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [hW1Uc]
+wrote [eZ40L]
+wrote [gzCZh]
+wrote [iYI85]
+wrote [ggtlj]
+wrote [eZ40L]
+wrote [hW1Uc]
+wrote [ijn6N]
+wrote [iYI85]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[4] to 0
+wrote [s1kF%]
+wrote [rmGev]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [rmGev]
+wrote [s1kF%]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [nEMWE]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [nEMWE]
+wrote [lbU^K]
+wrote [rmGev]
+wrote [o3JNU]
+wrote [nEMWE]
+wrote [lbU^K]
+wrote [lbU^K]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [tUa!B]
+wrote [tUa!B]
+wrote [s1kF%]
+wrote [tUa!B]
+wrote [tUa!B]
+wrote []
+wrote []
+wrote []
+wrote [tUa!B]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [uV&!W]
+wrote [uV&!W]
+wrote [uV&!W]
+reset NEW[1] to 0
+wrote [xNk1Q]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:143/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 [4AYL&]cnt:1newcnt:2 newbin:4/4
+index:6 instance:0 upCnt:1 [#EQyT]cnt:1newcnt:2 newbin:3/4
+index:6 instance:0 upCnt:1 [#L4%9]cnt:1newcnt:2 newbin:3/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 [SLzMu]cnt:1newcnt:2 newbin:2/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:8 [nEMWE]cnt:0newcnt:1 newbin:0/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:17 [s1kF%]cnt:0newcnt:1 newbin:0/1
+index:3 instance:0 upCnt:17 [rmGev]cnt:0newcnt:1 newbin:1/1
+index:3 instance:0 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:17 [s1kF%]cnt:1newcnt:2 newbin:1/1
+index:3 instance:1 upCnt:17 [tUa!B]cnt:0newcnt:1 newbin:0/1
+index:3 instance:1 upCnt:17 [tUa!B]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:35 [tUa!B]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:35 [uV&!W]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:71 [uV&!W]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:71 [xNk1Q]cnt:0newcnt:1 newbin:0/0
+wrote [xNk1Q]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:144/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 [D3Ev$]cnt:2newcnt:3 newbin:4/4
+index:6 instance:0 upCnt:1 [BPz*B]cnt:1newcnt:2 newbin:3/4
+index:6 instance:0 upCnt:1 [9L$xX]cnt:1newcnt:2 newbin:2/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 [L@sq2]cnt:1newcnt:2 newbin:2/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:8 [l!!Cp]cnt:0newcnt:1 newbin:0/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:35 [tUa!B]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:35 [uV&!W]cnt:1newcnt:2 newbin:0/1
+wrote [xNk1Q]
+wrote [uV&!W]
+wrote [xNk1Q]
+reset NEW[1] to 0
+wrote [xNk1Q]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:145/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 [5d85d]cnt:1newcnt:2 newbin:3/4
+index:6 instance:0 upCnt:1 [@ejoz]cnt:1newcnt:2 newbin:4/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:8 [kPuRP]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:8 [ijn6N]cnt:0newcnt:1 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:17 [rmGev]cnt:1newcnt:2 newbin:0/1
+index:3 instance:0 upCnt:17 [s1kF%]cnt:2newcnt:3 newbin:0/1
+index:3 instance:0 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:17 [tUa!B]cnt:2newcnt:3 newbin:0/1
+index:3 instance:1 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:72 [xNk1Q]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:72 [xNk1Q]cnt:1newcnt:2 newbin:0/0
+wrote [y%maG]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:146/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:0 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:0 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:3 instance:1 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+index:3 instance:1 upCnt:17 []cnt:-1newcnt:0 newbin:1/1
+wrote [uV&!W]
+wrote [xNk1Q]
+wrote [tUa!B]
+wrote [uV&!W]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [uV&!W]
+wrote [tUa!B]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [y%maG]
+wrote [xNk1Q]
+wrote [xNk1Q]
+reset NEW[1] to 0
+wrote [y%maG]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:147/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:36 [uV&!W]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:36 [xNk1Q]cnt:0newcnt:1 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:73 [y%maG]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:73 [y%maG]cnt:1newcnt:2 newbin:0/0
+wrote [y%maG]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:148/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:8 [l!!Cp]cnt:1newcnt:2 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:1 upCnt:8 [nEMWE]cnt:1newcnt:2 newbin:1/1
+index:4 instance:1 upCnt:8 [lbU^K]cnt:0newcnt:1 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:0 upCnt:36 [xNk1Q]cnt:1newcnt:2 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:2 instance:1 upCnt:36 [xNk1Q]cnt:2newcnt:3 newbin:0/1
+wrote [y%maG]
+wrote [y%maG]
+wrote [y%maG]
+reset NEW[1] to 0
+wrote [zZGgo]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:149/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 [9L$xX]cnt:2newcnt:3 newbin:3/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:8 [ijn6N]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:8 [kPuRP]cnt:1newcnt:2 newbin:0/1
+index:4 instance:0 upCnt:8 [l!!Cp]cnt:2newcnt:3 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:8 [rmGev]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:8 [o3JNU]cnt:0newcnt:1 newbin:1/1
+index:4 instance:1 upCnt:8 [nEMWE]cnt:2newcnt:3 newbin:0/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:0 upCnt:74 [y%maG]cnt:0newcnt:1 newbin:0/0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:1 instance:1 upCnt:74 [zZGgo]cnt:0newcnt:1 newbin:0/0
+wrote [zZGgo]
+reset NEW[0] to 0
+-----------------------------------
+ inserting keywords:150/150
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:0 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+index:6 instance:1 upCnt:1 []cnt:-1newcnt:0 newbin:1/4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:0 upCnt:8 [kPuRP]cnt:2newcnt:3 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+index:4 instance:0 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+index:4 instance:1 upCnt:8 [lbU^K]cnt:1newcnt:2 newbin:0/1
+index:4 instance:1 upCnt:8 [lbU^K]cnt:2newcnt:3 newbin:1/1
+index:4 instance:1 upCnt:8 []cnt:-1newcnt:0 newbin:1/1
+wrote [tUa!B]
+wrote [uV&!W]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [uV&!W]
+wrote [tUa!B]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [tUa!B]
+wrote []
+wrote [s1kF%]
+wrote [rmGev]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [tUa!B]
+wrote []
+wrote []
+wrote [s1kF%]
+wrote []
+wrote [s1kF%]
+wrote [tUa!B]
+wrote [rmGev]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[3] to 0
+wrote [y%maG]
+wrote [y%maG]
+wrote [xNk1Q]
+wrote [xNk1Q]
+wrote []
+wrote []
+wrote []
+wrote []
+wrote [uV&!W]
+wrote [xNk1Q]
+wrote []
+wrote []
+wrote []
+wrote []
+reset NEW[2] to 0
+wrote [zZGgo]
+wrote [y%maG]
+wrote [zZGgo]
+reset NEW[1] to 0
+wrote [zZGgo]
+reset NEW[0] to 0
+-----------------------------------
+------------------------------------------------------------------------------
+Result of Operations for DB Size 150
+Search for Keyword With [5] Results and [0] Deletions:tUa!B
+searching at[0][0]
+ciphers size:1
+flag:0increasing count2/1
+-----------------------------------------------
+searching at[0][1]
+ciphers size:1
+flag:0increasing count2/1
+-----------------------------------------------
+searching at[0][2]
+ciphers size:0
+flag:0increasing count2/1
+-----------------------------------------------
+searching at[1][0]
+ciphers size:2
+flag:0increasing count2/1
+-----------------------------------------------
+searching at[1][1]
+ciphers size:2
+flag:0increasing count2/1
+-----------------------------------------------
+searching at[1][2]
+ciphers size:0
+flag:0increasing count2/1
+-----------------------------------------------
+searching at[2][0]
+ciphers size:6
+ MATCH:tUa!B 1
+flag:1increasing count2/2
+-----------------------------------------------
+searching at[2][1]
+ciphers size:6
+flag:0increasing count2/2
+-----------------------------------------------
+searching at[2][2]
+ciphers size:0
+flag:0increasing count2/2
+-----------------------------------------------
+searching at[3][0]
+ciphers size:18
+flag:0increasing count2/2
+-----------------------------------------------
+searching at[3][1]
+ciphers size:18
+flag:0increasing count2/2
+-----------------------------------------------
+searching at[3][2]
+ciphers size:18
+ MATCH:tUa!B 1
+flag:1increasing count2/2
+-----------------------------------------------
+searching at[4][0]
+ciphers size:24
+flag:0increasing count2/2
+-----------------------------------------------
+searching at[4][1]
+ciphers size:24
+flag:0increasing count2/2
+-----------------------------------------------
+searching at[4][2]
+ciphers size:24
+flag:0increasing count2/2
+-----------------------------------------------
+searching at[5][0]
+ciphers size:45
+flag:0increasing count2/3
+ciphers size:11
+flag:0increasing count3/3
+-----------------------------------------------
+searching at[5][1]
+ciphers size:45
+flag:0increasing count2/3
+ciphers size:45
+flag:0increasing count3/3
+-----------------------------------------------
+Number of return item:[2]
+*********************************************************************************

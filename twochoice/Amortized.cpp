@@ -17,22 +17,22 @@ Amortized::Amortized(int N, bool inMemory, bool overwrite)
     {
         fstream file("/tmp/existStatus.txt", std::ofstream::in);
         if (file.fail()) 
-	{
+		{
             file.close();
             return;
         }
         for (unsigned int i = localSize; i < L->exist.size(); i++) 
-	{
+		{
             string data;
             getline(file, data);
             if (data == "true") 
-	    {
+	    	{
                 L->exist[i] = true;
                 unsigned char* newKey = new unsigned char[16];
                 memset(newKey, 0, 16);
                 keys[i] = newKey;
             } else 
-	    {
+	    	{
                 L->exist[i] = false;
             }
         }

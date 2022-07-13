@@ -9,12 +9,12 @@ using namespace std;
 DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite) 
 {
 	cout <<"=====================Running SDd+OneChoiceAllocation======================"<<endl;
+    L = new OneChoiceClient(N, inMemory, overwrite, true);
    	this->deleteFiles = deleteFiles;
 	l = ceil((float)log2(N));
 	b = ceil((float)log2(B));
-	lb = l-b;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-	int numOfIndices = l - b;
+	numOfIndices = l - b;
     for (int i = 0; i <=numOfIndices; i++) 
 	{
 		int j = i + b;
@@ -25,7 +25,7 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
         sizeOfEachBin.push_back(curSizeOfEachBin);
         //printf("Index:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
     }
-    for (int i = 0; i <= lb; i++) 
+    for (int i = 0; i <= numOfIndices; i++) 
 	{
         keys.push_back(vector<unsigned char*> ());
     	for (int j = 0; j < 4; j++) 
@@ -34,7 +34,7 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
             keys[i].push_back(tmpKey);
         }
     }
-    for (int i = 0; i <=lb; i++) 
+    for (int i = 0; i <=numOfIndices ; i++) 
         cnt.push_back(0);
     for (int i = 0; i < localSize; i++) 
         localmap.push_back(map<string, string>());
@@ -42,27 +42,26 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 	{
         vector< unordered_map<string, prf_type> > curVec;
         for (int i = 0; i < localSize; i++) 
-		{
             curVec.push_back(unordered_map<string, prf_type>());
-        }
         data.push_back(curVec);
     }
-    L = new OneChoiceClient(N, inMemory, overwrite, true);
-	/*
+
     if (!overwrite) 
     {
+		cout <<"READING-"<<overwrite<<endl;
         fstream file("/tmp/existStatus.txt", std::ofstream::in);
         if (file.fail()) 
 		{
             file.close();
             return;
         }
-        for (unsigned int i = localSize; i < L->exist.size(); i++) 
+        for (unsigned int i = 0; i <= numOfIndices; i++) 
 		{
 			for(int j = 0; j< 3; j++)
 			{
             	string data;
             	getline(file, data);
+				cout <<"data:["<<data<<"]"<<endl;
             	if (data == "true") 
 	    		{
                 	L->exist[i][j] = true;
@@ -78,10 +77,33 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
         	file.close();
     	}
 	}
-	*/
 }
 
-DeAmortized::~DeAmortized() {}
+DeAmortized::~DeAmortized() 
+{
+    fstream file("/tmp/existStatus.txt", std::ofstream::out);
+    if (file.fail()) 
+    {
+        cerr << "Error: " << strerror(errno);
+    }
+    for (unsigned int i = localSize; i <= numOfIndices; i++) 
+    {
+		for(int j = 0; j<3;j++)
+		{
+        	if (L->exist[i][j]) 
+			{
+            	file << "true" << endl;
+				cout <<"true"<< endl;
+			}
+        	else 
+			{
+            	file << "nofalse" << endl;
+				cout <<"nofalse"<< endl;
+			}
+		}
+    }
+    file.close();
+}
 
 float by(int a, int b)
 {
@@ -94,7 +116,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	//int s = 2; // for now choose wisely and make sure to not overflow 
 	int t;
 	int s; 
-	for(int i=lb; i>0; i--)
+	for(int i=numOfIndices; i>0; i--)
 	{
 		int j = b+i;
 		int mi = numberOfBins[j]; // for now
@@ -229,7 +251,7 @@ vector<int> DeAmortized::search(string keyword)
         }
     }
 	*/
-    for (int i = localSize; i <= lb; i++) 
+    for (int i = localSize; i <= numOfIndices; i++) 
 	{
     	for (int j = 0; j < 3; j++) 
 		{

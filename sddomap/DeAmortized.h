@@ -46,7 +46,7 @@ private:
     int localSize = 0;
     int l;
 	int s = S;
-	int b, lb;
+	int b, numOfIndices;
     prf_type getElementAt(int instance, int index, int pos);
     double totalUpdateCommSize;
     double totalSearchCommSize;
