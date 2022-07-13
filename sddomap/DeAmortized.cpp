@@ -123,22 +123,25 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		int mi = numberOfBins[j]; // for now
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
-			t = i>1 ? 3 : 1;
-			s = i>1 ? 4 : 2;
-			if(cnt[i] <(ceil((float)t*(by(pow(2,j),s)))))
+			//t = i>1 ? 3 : 1;
+			s = i>1 ? 6 : 2;
+			//if(cnt[i] <=(ceil((float)t*(by(pow(2,j),s)))))
+			if(cnt[i] <=(ceil((float)(by(numberOfBins[i]*sizeOfEachBin[i],s)))))
 			{
 				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);
 				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][1], keys[i][3]);
 			}
-			else if ((ceil((float)t*by(pow(2,j),s)))<=cnt[i] && 
-					  cnt[i]<((ceil((float)t*by(pow(2,j),s)))+(ceil(by(mi,s)))))
-				L->addDummy(i, (cnt[i]-(ceil((float)t*by(pow(2,j),s)))), updateCounter, keys[i][3]);
-			else if (((ceil((float)t*by(pow(2,j),s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
+			//else if ((ceil((float)t*by(pow(2,j),s)))<=cnt[i] && 
+			else if ((ceil((float)t*by(numberOfBins[i]*sizeOfEachBin[i],s)))<=cnt[i] && 
+					  cnt[i]<((ceil((float)by(numberOfBins[i]*sizeOfEachBin[i],s)))+(ceil(by(mi,s)))))
+				L->addDummy(i, (cnt[i]-(ceil((float)by(numberOfBins[i]*sizeOfEachBin[i],s)))), updateCounter, keys[i][3]);
+			//else if (((ceil((float)t*by(pow(2,j),s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
+			else if (((ceil((float)by(numberOfBins[i]*sizeOfEachBin[i],s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=numberOfBins[i]*sizeOfEachBin[i])
 				L->nonOblSort(i, keys[i][3]);
 				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
 		
 			cnt[i]=cnt[i]+1;
-			if(cnt[i]== pow(2,j))
+			if(cnt[i]== numberOfBins[i]*sizeOfEachBin[i])
 			{
 				L->resize(i,numberOfBins[j]*sizeOfEachBin[j]); //j = i+logB
 				L->move(i-1,0,2); 
