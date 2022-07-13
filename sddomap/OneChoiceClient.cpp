@@ -138,23 +138,22 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
     	totalCommunication += ciphers.size() * sizeof (prf_type) ;
 	    for (auto item : ciphers) 
 		{
-	        prf_type plaintext;
-			//cout<<"["<<item.data()<<"]"<<endl;
-	        Utilities::decode(item, plaintext, key);
+	        prf_type plaintext = item;
+	        //Utilities::decode(item, plaintext, key);
 	       	if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 			{
 	           	finalRes.push_back(plaintext);
 				flag =1;
 				cout<<" MATCH:"<<plaintext.data()<<" "<<bin<<endl;
 	       	}
-	//	cout <<"bin:"<<bin<<"/"<<numberOfBins[index]<<endl;
+		//cout <<"bin:"<<bin<<"/"<<numberOfBins[index]<<endl;
 		}
 		if(bin == numberOfBins[index]-1)
 			bin = 0;
 		else
 			bin++;
-		cout <<"flag:"<<flag<<"increasing count"<<cnt<<"/"<<numberOfBins[index]<<endl;
 		cnt++;
+		cout <<"flag:"<<flag<<"increasing count"<<cnt<<"/"<<numberOfBins[index]<<endl;
 	}
 	while(cnt < numberOfBins[index]);
 	//while(flag == 1 && cnt < numberOfBins[index]);
@@ -204,7 +203,8 @@ void OneChoiceClient::copy(int index, int toInstance)
 
 void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 {
-	prf_type encKeyVal = Utilities::encode(keyVal.data(), key);
+	prf_type encKeyVal = keyVal;
+	//encKeyVal = Utilities::encode(keyVal.data(), key);
 	server->append(index, encKeyVal);
 }
 
@@ -229,9 +229,9 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 		cout <<"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
 		for(auto c: ciphers)
 		{
-	        prf_type plaintext;
+	        prf_type plaintext = c;
 			//cout <<"[ "<<c.data() <<" ]"<<endl;
-	        Utilities::decode(c, plaintext, key1);
+	        //Utilities::decode(c, plaintext, key1);
 	        prf_type decodedString = plaintext;
 	        int ind = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
 	        int op = ((byte) decodedString.data()[AES_KEY_SIZE - 6]); 
@@ -364,19 +364,19 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
     vector<prf_type> decodedNEWi;	
 	for(auto n : encNEWi)
 	{
-		prf_type dec;
-	    Utilities::decode(n, dec, key);
+		prf_type dec = n;
+	    //Utilities::decode(n, dec, key);
 		decodedNEWi.push_back(dec);
 	}
 	sort(decodedNEWi);
 	encNEWi.resize(0);
 	for(auto n : decodedNEWi)
 	{
-		prf_type enc= Utilities::encode(n.data(), key);
+		prf_type enc = n;
+		//enc = Utilities::encode(n.data(), key);
 		encNEWi.push_back(enc);
 	}
 	server->putNEW(index, encNEWi);
-
 }
 /*
 Two things to fix:

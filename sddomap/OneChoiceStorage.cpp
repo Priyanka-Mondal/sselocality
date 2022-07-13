@@ -25,7 +25,7 @@ bool OneChoiceStorage::setup(bool overwrite)
 {
     if (inMemoryStorage) 
 	{
-        for (int i = 0; i < dataIndex; i++) 
+        for (int i = 0; i <= dataIndex; i++) 
 		{
             vector<pair<prf_type, prf_type> > curData;
             data.push_back(curData);
@@ -82,6 +82,7 @@ void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphe
                     memset(newRecord, 0, AES_KEY_SIZE);
                     std::copy(ci.begin(), ci.end(), newRecord);
                     file.write((char*) newRecord, AES_KEY_SIZE);
+					cout <<"wrote ["<<ci.data()<<"]"<<endl;
                 //}
             }
             file.close();
@@ -150,7 +151,15 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
     char* keyValues = new char[readLength];
     file.read(keyValues, readLength);
     file.close();
+////////////////////////
 
+//    file.seekg(seek, ios::beg);
+//	readLength = size;
+//    char* keyValues = new char[size];
+//    file.read(keyValues, readLength);
+//    file.close();
+
+////////////////////////
     for (int i = 0; i < readLength/AES_KEY_SIZE; i++) 
 	{
         prf_type restmp;
@@ -191,7 +200,6 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     std::fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
-	cout <<filenames[index][instance].c_str()<<endl;
     int readPos = bin * AES_KEY_SIZE * sizeOfEachBin[index];
     int fileLength = numberOfBins[index] * sizeOfEachBin[index] * AES_KEY_SIZE;
     int remainder = fileLength - readPos;

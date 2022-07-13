@@ -3,16 +3,13 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <string.h>
-//#include <sse/crypto/prg.hpp>
 #include <vector>
 using namespace std;
-//using namespace boost::algorithm;
 
 DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite) 
 {
 	cout <<"=====================Running SDd+OneChoiceAllocation======================"<<endl;
    	this->deleteFiles = deleteFiles;
-	//B = 1;
 	l = ceil((float)log2(N));
 	b = ceil((float)log2(B));
 	lb = l-b;
@@ -38,18 +35,9 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
         }
     }
     for (int i = 0; i <=lb; i++) 
-	{
         cnt.push_back(0);
-        bytes<Key> key{0};
-        //OMAP* omap = new OMAP(max((int) pow(2, i+1), 8), key);
-        //omaps.push_back(omap);
-        //setupOMAPS.push_back(map<Bid, string>());
-        //setupOMAPSDummies.push_back(0);
-    }
     for (int i = 0; i < localSize; i++) 
-	{
         localmap.push_back(map<string, string>());
-    }
     for (int j = 0; j < 4; j++) 
 	{
         vector< unordered_map<string, prf_type> > curVec;
@@ -112,21 +100,12 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		int mi = numberOfBins[j]; // for now
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
-			if(i-1>1)
+			t = i>2 ? 3 : 1;
+			s = i>2 ? 6 : 2;
+			if(cnt[i] <(ceil((float)t*(by(pow(2,j),s)))))
+			//if(cnt[i]<1)
 			{
-				t = 3;
-				s = 6;
-			}
-			else 
-			{
-				t = 1;
-				s = 2;
-			}
-			if(cnt[i] <(ceil(t*(by(pow(2,j),s)))))
-			{
-				//cout<<"OLDEST["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);
-				//cout<<"OLDER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][1], keys[i][3]);
 			}
 			else if ((ceil((float)t*by(pow(2,j),s)))<=cnt[i] && 
@@ -137,7 +116,6 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
 		
 			cnt[i]=cnt[i]+1;
-			//cout <<"cnt["<<i<<"] increased to:"<<cnt[i]<<endl;
 			if(cnt[i]== pow(2,j))
 			{
 				L->resize(i,numberOfBins[j]*sizeOfEachBin[j]); //j = i+logB
@@ -183,19 +161,19 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	{
 		if(!(L->exist[0][0]))
 		{
-			cout<<"NEW[0] to OLDEST[0]"<<endl;
+			//cout<<"NEW[0] to OLDEST[0]"<<endl;
 			L->copy(0,0);
 			updateKey(0,0,3);
 		}
 		else if(!(L->exist[0][1]))
 		{
-			cout<<"NEW[0] to OLDER[0]"<<endl;
+			//cout<<"NEW[0] to OLDER[0]"<<endl;
 			L->copy(0,1);
 			updateKey(0,1,3);
 		}
 		else
 		{
-			cout<<"NEW[0] to OLD[0]"<<endl;
+			//cout<<"NEW[0] to OLD[0]"<<endl;
 			L->copy(0,2);
 			updateKey(0,2,3);
 		}
@@ -207,34 +185,19 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
     updateCounter++;
 	cout <<"-----------------------------------"<<endl;
 }
-/*
-int DeAmortized::numberOfBins(int i)
-{
-    int curNumberOfBins = i > 1 ? 
-			(int) ceil((float) pow(2, i)/(float)(log2(pow(2, i))*log2(log2(pow(2, i))))):1;
-	return curNumberOfBins;
-}
-*/
+
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
 {
 	keys[index][toInstance] = keys[index][fromInstance];
 	//cout <<"key["<<index<<"]["<<fromInstance<<"] to key["<<index<<"]["<<toInstance<<"]"<<endl;
 }
-/*
-prf_type DeAmortized::getElementAt(int instance, int index, int pos) 
-{
-    auto iter = data[instance][index].begin();
-    for (int i = 0; i < pos; i++) 
-        iter++;
-    return (*iter).second;
-}
-*/
+
 vector<int> DeAmortized::search(string keyword) 
 {
     for (int i = 0; i < l; i++) 
 	{
-        //omaps[i]->treeHandler->oram->totalRead = 0;
-        //omaps[i]->treeHandler->oram->totalWrite = 0;
+        L->omaps[i]->treeHandler->oram->totalRead = 0;
+        L->omaps[i]->treeHandler->oram->totalWrite = 0;
     }
     L->totalCommunication = 0;
     totalSearchCommSize = 0;
@@ -289,15 +252,15 @@ vector<int> DeAmortized::search(string keyword)
     }
     for (auto const& cur : remove) 
 	{
-        //if (cur.second < 0) 
+        if (cur.second < 0) 
 		{
             finalRes.emplace_back(cur.first);
         }
     }
     for (int i = 0; i < l; i++) 
 	{
-        //totalSearchCommSize += (omaps[i]->treeHandler->oram->totalRead + 
-		//		omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
+        totalSearchCommSize += (L->omaps[i]->treeHandler->oram->totalRead + 
+				L->omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
     }
     totalSearchCommSize += L->totalCommunication;
     return finalRes;

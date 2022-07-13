@@ -23,9 +23,9 @@ class OneChoiceClient
 private:
     OneChoiceServer* server;
     bool profile = false;
-    vector<OMAP*> omaps;
 
 public:
+    vector<OMAP*> omaps;
     virtual ~OneChoiceClient();
     OneChoiceClient(int maxUpdate, bool inMemory, bool overwrite, bool profile);
     int totalCommunication = 0;
