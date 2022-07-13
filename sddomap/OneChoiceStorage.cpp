@@ -191,7 +191,7 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     std::fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
-	//cout <<filenames[index][instance].c_str()<<endl;
+	cout <<filenames[index][instance].c_str()<<endl;
     int readPos = bin * AES_KEY_SIZE * sizeOfEachBin[index];
     int fileLength = numberOfBins[index] * sizeOfEachBin[index] * AES_KEY_SIZE;
     int remainder = fileLength - readPos;

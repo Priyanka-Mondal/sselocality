@@ -33,7 +33,7 @@ OneChoiceClient::OneChoiceClient(int N,
 		{
             exist[i].push_back(false);
         }
-		numNEW.push_back(0);
+		numNEW.push_back(1);
     }
 	exist[0][3] = true;
     for (int i = 0; i <=numOfIndices; i++) 
@@ -122,21 +122,20 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
     double searchPreparation = 0, searchDecryption = 0;
     if (profile) 
         Utilities::startTimer(65);
-    
     vector<prf_type> finalRes;
     int keywordCnt = 0;
-	//I have to stored the keyword counter anywhere, two options
+	//I have to store the keyword counter somewhere, two options
 	//1. store the counter
 	//2. make search interactive --> For now I made it interactive
-	int cnt = 0;
+	int cnt = 1;
 	int flag = 0;
 	int bin = map(keyword, cnt, index, key);
 	do
 	{
     	vector<prf_type> ciphers = server->search(index, instance, bin);
-		//cout <<"index:"<<index<<" instance:"<<instance<<" bin:"<<bin<<" bin size:"<<ciphers.size()<<"/"<<sizeOfEachBin[index]<<endl;
+		cout <<"ciphers size:"<<ciphers.size()<<endl;
+		flag = 0;
     	totalCommunication += ciphers.size() * sizeof (prf_type) ;
-		cnt++;
 	    for (auto item : ciphers) 
 		{
 	        prf_type plaintext;
@@ -146,17 +145,19 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 			{
 	           	finalRes.push_back(plaintext);
 				flag =1;
-				cout <<"MATCH:"<<plaintext.data()<<" "<<finalRes.size()<<endl;
+				cout<<" MATCH:"<<plaintext.data()<<" "<<bin<<endl;
 	       	}
+	//	cout <<"bin:"<<bin<<"/"<<numberOfBins[index]<<endl;
 		}
 		if(bin == numberOfBins[index]-1)
 			bin = 0;
 		else
 			bin++;
+		cout <<"flag:"<<flag<<"increasing count"<<cnt<<"/"<<numberOfBins[index]<<endl;
 		cnt++;
 	}
-	while(flag == 1 && cnt < numberOfBins[index]);
-
+	while(cnt < numberOfBins[index]);
+	//while(flag == 1 && cnt < numberOfBins[index]);
     if (profile) 
 	{
         searchPreparation = Utilities::stopTimer(65);
@@ -169,7 +170,6 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
         searchDecryption = Utilities::stopTimer(65);
         //cout<<"search decryption time:"<<searchDecryption<<" for decrypting:"<<ciphers.size()<<" ciphers"<<endl;
     }
-	cout <<"final size:"<<finalRes.size()<<endl;
     return finalRes;
 }
 
@@ -226,7 +226,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 	{
 		vector<prf_type> ciphers = server->getElements(index-1, instance, start, end);
 		int upCnt = numNEW[index];
-		//cout <<"size of ciphers:"<<ciphers.size()<<" upCnt:"<<upCnt<< " index:"<<index<<endl;
+		cout <<"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
 		for(auto c: ciphers)
 		{
 	        prf_type plaintext;
@@ -236,10 +236,13 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 	        int ind = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
 	        int op = ((byte) decodedString.data()[AES_KEY_SIZE - 6]); 
 	        string w((char*) plaintext.data());
-			int cnt=0;
+			int cnt=-1;
 			if(w!="")
 				cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
+			string newCnt= omaps[index]->find(getBid(w,upCnt));
 			int bin = map(w, cnt, index, key2);		
+			cout <<"index:"<<index<<" instance:"<<instance<<" upCnt:"<<upCnt <<" ";
+		cout <<"["<<w<<"]"<<"cnt:"<<cnt<<"newcnt:"<<newCnt<<" newbin:"<<bin<<"/"<<numberOfBins[index]-1<<endl;
 			int realbin;
 			if(w=="")
 				realbin = INF;
@@ -315,8 +318,8 @@ Bid OneChoiceClient::getBid(string input, int cnt)
 }
 int OneChoiceClient::map(string w, int cnt, int index, unsigned char* key)
 {
-	//if(w=="")
-	//	return INF;
+	if(w=="")
+		cnt = 0;
 
     prf_type K = Utilities::encode(w, key);
     prf_type mapKey, mapValue;
@@ -325,8 +328,10 @@ int OneChoiceClient::map(string w, int cnt, int index, unsigned char* key)
     *(int*) (&(cntstr[AES_KEY_SIZE - 4])) = 0;
     mapKey = Utilities::generatePRF(cntstr, K.data());
     unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
-    int bin = ((unsigned int) (*((int*) hash))+cnt) % numberOfBins[index];
-	return bin;
+    //int bin = (((((unsigned int) (*((int*) hash))) % numberOfBins[index]))%numberOfBins[index]);
+    int bin2 = (((((unsigned int) (*((int*) hash))) % numberOfBins[index])+cnt)%numberOfBins[index]);
+	//cout <<"at map1:"<<bin<<"|"<<bin2<<endl;
+	return bin2;
 }
 void OneChoiceClient::bitonicSort(int step, int index, int counter)
 {

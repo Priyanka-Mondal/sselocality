@@ -114,9 +114,7 @@ string OMAP::incrementCnt(Bid key)
     if (res == "") 
 	{
         string value = "1";
-	//cout <<"res0:["<<res<<"]"<<endl;
         rootKey = treeHandler->insert(rootKey, rootPos, key, value);
-	//cout <<"res1:["<<res<<"]"<<endl;
 		res ="0";
     }
     treeHandler->finishOperation(false, rootKey, rootPos);

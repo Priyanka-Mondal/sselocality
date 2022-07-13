@@ -28,7 +28,7 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
         sizeOfEachBin.push_back(curSizeOfEachBin);
         //printf("Index:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
     }
-    for (int i = 0; i < lb; i++) 
+    for (int i = 0; i <= lb; i++) 
 	{
         keys.push_back(vector<unsigned char*> ());
     	for (int j = 0; j < 4; j++) 
@@ -60,6 +60,37 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
         data.push_back(curVec);
     }
     L = new OneChoiceClient(N, inMemory, overwrite, true);
+	/*
+    if (!overwrite) 
+    {
+        fstream file("/tmp/existStatus.txt", std::ofstream::in);
+        if (file.fail()) 
+		{
+            file.close();
+            return;
+        }
+        for (unsigned int i = localSize; i < L->exist.size(); i++) 
+		{
+			for(int j = 0; j< 3; j++)
+			{
+            	string data;
+            	getline(file, data);
+            	if (data == "true") 
+	    		{
+                	L->exist[i][j] = true;
+                	unsigned char* newKey = new unsigned char[16];
+                	memset(newKey, 0, 16);
+                	keys[i][j] = newKey;
+            	} 
+				else 
+	    		{
+                	L->exist[i][j] = false;
+            	}
+        	}
+        	file.close();
+    	}
+	}
+	*/
 }
 
 DeAmortized::~DeAmortized() {}
@@ -93,7 +124,6 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			}
 			if(cnt[i] <(ceil(t*(by(pow(2,j),s)))))
 			{
-				//cout <<"s:"<<s<<" index:"<<i<<" cnt:"<<cnt[i]<<" ceil:"<<(ceil(t*(by(pow(2,j),s))))<<endl;
 				//cout<<"OLDEST["<<i-1<<"] to NEW["<<i<<"]"<<endl;
 				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);
 				//cout<<"OLDER["<<i-1<<"] to NEW["<<i<<"]"<<endl;
@@ -244,8 +274,8 @@ vector<int> DeAmortized::search(string keyword)
 			{
 				cout <<"searching at["<< i<<"]["<<j<<"]"<<endl;
                 auto tmpRes = L->search(i, j, keyword, keys[i][j]);
-				cout <<"tmpRes size:"<<tmpRes.size()<<endl;
                 encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
+				cout <<"-----------------------------------------------"<<endl;
             }
         }
     }
@@ -259,7 +289,7 @@ vector<int> DeAmortized::search(string keyword)
     }
     for (auto const& cur : remove) 
 	{
-        if (cur.second < 0) 
+        //if (cur.second < 0) 
 		{
             finalRes.emplace_back(cur.first);
         }
