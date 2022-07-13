@@ -124,7 +124,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
 			t = i>1 ? 3 : 1;
-			s = i>1 ? 6 : 2;
+			s = i>1 ? 4 : 2;
 			if(cnt[i] <(ceil((float)t*(by(pow(2,j),s)))))
 			{
 				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);

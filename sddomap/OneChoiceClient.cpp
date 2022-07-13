@@ -126,11 +126,11 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
     int keywordCnt = 0;
 	int cnt = 0;
 	int flag = 0;
-	int bin = map(keyword, cnt, index, key);
+	int bin = map(keyword, 0, index, key);
 	do
 	{
     	vector<prf_type> ciphers = server->search(index, instance, bin);
-		cout <<"ciphers size:"<<ciphers.size()<<endl;
+		//cout <<"ciphers size:"<<ciphers.size()<<endl;
 		flag = 0;
     	totalCommunication += ciphers.size() * sizeof (prf_type) ;
 	    for (auto item : ciphers) 
@@ -141,7 +141,7 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 			{
 	           	finalRes.push_back(plaintext);
 				flag =1;
-				cout<<" MATCH:"<<plaintext.data()<<" "<<bin<<endl;
+				//cout<<" MATCH:"<<plaintext.data()<<" "<<bin<<endl;
 	       	}
 		//cout <<"bin:"<<bin<<"/"<<numberOfBins[index]<<endl;
 		}
@@ -150,10 +150,10 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 		else
 			bin++;
 		cnt++;
-		cout <<"flag:"<<flag<<"increasing count"<<cnt<<"/"<<numberOfBins[index]<<endl;
+		//cout <<"flag:"<<flag<<"increasing count"<<cnt<<"/"<<numberOfBins[index]<<endl;
 	}
-	while(flag == 1 && cnt < numberOfBins[index]);
-	//while(cnt < numberOfBins[index]);
+	while(cnt < numberOfBins[index]);
+	//while(flag == 1 && cnt < numberOfBins[index]);
     if (profile) 
 	{
         searchPreparation = Utilities::stopTimer(65);
@@ -205,11 +205,15 @@ void OneChoiceClient::resize(int index, int size)
 void OneChoiceClient::getBin(int index, int instance, int start, int end, int updateCounter, 
 							 unsigned char* key1, unsigned char* key2)
 {
-	if(start <=numberOfBins[index]*sizeOfEachBin[index] && end<=numberOfBins[index]*sizeOfEachBin[index])
+	cout <<"["<<index<<" start:"<<start<<" end:"<<end<<"]"<<"actual end:"<<numberOfBins[index-1]*sizeOfEachBin[index-1];
+	if(start <=numberOfBins[index-1]*sizeOfEachBin[index-1])
 	{
+		if(end>numberOfBins[index-1]*sizeOfEachBin[index-1])
+			end = numberOfBins[index-1]*sizeOfEachBin[index-1];
+		cout <<" new end:"<<end<<endl;
 		vector<prf_type> ciphers = server->getElements(index-1, instance, start, end);
 		int upCnt = numNEW[index];
-		cout <<"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+		//cout <<"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
 		for(auto c: ciphers)
 		{
 	        prf_type plaintext = c;
@@ -224,8 +228,8 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 				cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
 			string newCnt= omaps[index]->find(getBid(w,upCnt));
 			int bin = map(w, cnt, index, key2);		
-			cout <<"from index:"<<index-1<<" instance:"<<instance<<" upCnt:"<<upCnt <<" "<<cnt;
-			cout <<"["<<w<<"|"<<ind<<"|"<<bin<<"]/"<<numberOfBins[index]-1<<endl;
+			//cout <<"from index:"<<index-1<<" instance:"<<instance<<" upCnt:"<<upCnt <<" "<<cnt;
+			//cout <<"["<<w<<"|"<<ind<<"|"<<bin<<"]/"<<numberOfBins[index]-1<<endl;
 			int realbin;
 			if(w=="")
 				realbin = INF;
@@ -248,10 +252,12 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 }
 void OneChoiceClient::addDummy(int index, int count, int updateCounter, unsigned char* key)
 {
-	//cout<<index <<" size of NEW before adding dummy:"<<server->getNEWsize(index)<<endl;
+	cout <<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
+	assert(server->getNEWsize(index) == 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
+	
     int upCnt = numNEW[index];
 	int s;
-	s = index>1 ? 6 : 2;
+	s = index>1 ? 4 : 2;
 	for(int t = 0; t<s; t++)
 	{
 		int bin = count*s+t;

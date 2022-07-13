@@ -122,8 +122,8 @@ int main(int argc, char** argv)
 
 		
 
-    //for (uint j = 0; j < testCases[i].Qs.size(); j++) 
-    for (uint j = 0; j < 1; j++) 
+    //for (uint j = 0; j < 1; j++) 
+    for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	{
         cout << "------------------------------------------------------------------------------" << endl;
         cout << "Result of Operations for DB Size " << testCases[i].N << endl;
@@ -134,8 +134,7 @@ int main(int argc, char** argv)
         //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
         //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
         cout << "Number of return item:[" << res.size()<<"]" << endl;
-		sleep(1);
-		//assert(testCases[i].Qs[j]-testCases[i].delNumber[j] == res.size());
+		assert(testCases[i].Qs[j]-testCases[i].delNumber[j] == res.size());
     }
     cout << "*********************************************************************************" << endl;
 

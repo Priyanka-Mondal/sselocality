@@ -86,8 +86,8 @@ void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphe
                     file.write((char*) newRecord, AES_KEY_SIZE);
     int bina = *(int*) (&(ci.data()[AES_KEY_SIZE - 10]));
     int id = *(int*) (&(ci.data()[AES_KEY_SIZE - 5]));
-					if(ci != nullKey)
-					cout <<"wrote ["<<ci.data()<<"|"<<id<<"|"<<bina<<"] in "<<filenames[index][instance].c_str()<<endl;
+					//if(ci != nullKey)
+					//cout <<"wrote ["<<ci.data()<<"|"<<id<<"|"<<bina<<"] in "<<filenames[index][instance].c_str()<<endl;
                 //}
             }
             file.close();
