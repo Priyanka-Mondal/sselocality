@@ -32,6 +32,7 @@ public:
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;
 	prf_type nullKey;
+	int numOfIndices;
 	vector<int> numNEW;
 
     vector<vector<bool>> exist;
@@ -50,6 +51,7 @@ public:
 	void nonOblSort(int index, unsigned char* key);
     int map(string w, int cnt, int index, unsigned char* key);
     Bid getBid(string str, int cnt);
+	vector<prf_type> searchNEW(int index, string keyword);
 };
 
 #endif /* ONECHOICECLIENT_H */

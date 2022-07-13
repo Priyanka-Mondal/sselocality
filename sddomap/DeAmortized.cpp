@@ -10,6 +10,7 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 {
 	cout <<"=====================Running SDd+OneChoiceAllocation======================"<<endl;
     L = new OneChoiceClient(N, inMemory, overwrite, true);
+	this->overwrite = overwrite;
    	this->deleteFiles = deleteFiles;
 	l = ceil((float)log2(N));
 	b = ceil((float)log2(B));
@@ -61,7 +62,6 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 			{
             	string data;
             	getline(file, data);
-				cout <<"data:["<<data<<"]"<<endl;
             	if (data == "true") 
 	    		{
                 	L->exist[i][j] = true;
@@ -74,13 +74,15 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
                 	L->exist[i][j] = false;
             	}
         	}
-        	file.close();
     	}
+        	file.close();
 	}
 }
 
 DeAmortized::~DeAmortized() 
 {
+	if(overwrite)
+	{
     fstream file("/tmp/existStatus.txt", std::ofstream::out);
     if (file.fail()) 
     {
@@ -93,16 +95,15 @@ DeAmortized::~DeAmortized()
         	if (L->exist[i][j]) 
 			{
             	file << "true" << endl;
-				cout <<"true"<< endl;
 			}
         	else 
 			{
-            	file << "nofalse" << endl;
-				cout <<"nofalse"<< endl;
+            	file << "false" << endl;
 			}
 		}
-    }
+	}    
     file.close();
+}
 }
 
 float by(int a, int b)
@@ -122,10 +123,9 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		int mi = numberOfBins[j]; // for now
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
-			t = i>2 ? 3 : 1;
-			s = i>2 ? 6 : 2;
+			t = i>1 ? 3 : 1;
+			s = i>1 ? 6 : 2;
 			if(cnt[i] <(ceil((float)t*(by(pow(2,j),s)))))
-			//if(cnt[i]<1)
 			{
 				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);
 				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][1], keys[i][3]);
@@ -170,14 +170,9 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			}
 		}
 	}
-    prf_type keyVal;
-    std::fill(keyVal.begin(), keyVal.end(), 0);
-    std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
-    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
-    keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
-    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = 0;//bin
+	prf_type keyVal;
+	createKeyVal(keyword,ind,op, keyVal);
 	L->append(0, keyVal, keys[0][3]);
-	//cout <<"at NEW[0]"<<endl;
 	cnt[0]=cnt[0]+1;
 	if(cnt[0]==B)
 	{
@@ -206,6 +201,15 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	}
     updateCounter++;
 	cout <<"-----------------------------------"<<endl;
+}
+
+void DeAmortized::createKeyVal(string keyword, int ind, OP op, prf_type& keyVal)
+{
+    std::fill(keyVal.begin(), keyVal.end(), 0);
+    std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
+    keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = 0;//bin
 }
 
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
@@ -264,7 +268,8 @@ vector<int> DeAmortized::search(string keyword)
             }
         }
     }
-
+	auto tmpRes = L->searchNEW(numOfIndices, keyword);
+    encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
     map<int, int> remove;
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
 	{

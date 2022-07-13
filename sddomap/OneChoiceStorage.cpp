@@ -9,11 +9,13 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
     this->dataIndex = dataIndex;
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
+	this->b = ceil((float)log2(B));
     for (int i = 0; i <= dataIndex; i++) 
 	{
-        int curNumberOfBins = i > 1 ? 
-			(int) ceil((float) pow(2, i)/(float)(log2(pow(2, i))*log2(log2(pow(2,i))))) : 1;
-        int curSizeOfEachBin = i > 1 ? 3*(log2(pow(2, i)) * ceil(log2(log2(pow(2, i))))) : pow(2,i);
+		int j = i + b;
+        int curNumberOfBins = j > 1 ? 
+			(int) ceil((float) pow(2, j)/(float)(log2(pow(2, j))*log2(log2(pow(2,j))))) : 1;
+        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j)) * ceil(log2(log2(pow(2, j))))) : pow(2, j);
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
         printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
@@ -82,7 +84,10 @@ void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphe
                     memset(newRecord, 0, AES_KEY_SIZE);
                     std::copy(ci.begin(), ci.end(), newRecord);
                     file.write((char*) newRecord, AES_KEY_SIZE);
-					cout <<"wrote ["<<ci.data()<<"]"<<endl;
+    int bina = *(int*) (&(ci.data()[AES_KEY_SIZE - 10]));
+    int id = *(int*) (&(ci.data()[AES_KEY_SIZE - 5]));
+					if(ci != nullKey)
+					cout <<"wrote ["<<ci.data()<<"|"<<id<<"|"<<bina<<"] in "<<filenames[index][instance].c_str()<<endl;
                 //}
             }
             file.close();
@@ -209,13 +214,13 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     if (totalReadLength > remainder) 
 	{
         readLength = remainder;
-        totalReadLength -= remainder;
     } 
 	else 
 	{
         readLength = totalReadLength;
-        totalReadLength = 0;
     }
+	if(remainder<0)
+		readLength = 0;
     file.seekg(readPos, ios::beg);
     SeekG++;
     char* keyValues = new char[readLength];

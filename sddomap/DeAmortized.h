@@ -50,8 +50,10 @@ private:
     prf_type getElementAt(int instance, int index, int pos);
     double totalUpdateCommSize;
     double totalSearchCommSize;
+	bool overwrite;
 
 public:
+    void createKeyVal(string keyword, int ind, OP op, prf_type& keyVal);
     DeAmortized(int N, bool inMemory, bool overwrite);
     void update(OP op, string keyword, int ind, bool setup);
     vector<int> search(string keyword);

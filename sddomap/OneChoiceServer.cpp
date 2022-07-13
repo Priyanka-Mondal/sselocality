@@ -89,7 +89,7 @@ void OneChoiceServer::copy(int index, int toInstance)
 	storage->insertAll(index, toInstance, NEW[index]);
 	NEW[index].clear();
 	NEW[index].resize(0);
-	cout <<"reset NEW["<<index<<"] to "<<NEW[index].size()<<endl;
+	//cout <<"reset NEW["<<index<<"] to "<<NEW[index].size()<<endl;
 }
 
 void OneChoiceServer::append(int index, prf_type keyVal)

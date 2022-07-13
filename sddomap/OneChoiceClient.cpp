@@ -13,7 +13,8 @@ OneChoiceClient::OneChoiceClient(int N,
 	int l = ceil((float)log2(N));
     memset(nullKey.data(), 0, AES_KEY_SIZE);
 	int b = ceil((float)log2(B));
-	int numOfIndices = l - b;
+	this->numOfIndices = l - b;
+    server = new OneChoiceServer(l-b, inMemory, overwrite, profile);
     for (int i = 0; i <=numOfIndices; i++) 
 	{
 		int j = i + b;
@@ -22,7 +23,6 @@ OneChoiceClient::OneChoiceClient(int N,
         int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
-        //printf("Index:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
     }
 	exist.resize(numOfIndices+1);
     for (int i = 0; i <=numOfIndices; i++) 
@@ -35,16 +35,13 @@ OneChoiceClient::OneChoiceClient(int N,
         }
 		numNEW.push_back(1);
     }
-	exist[0][3] = true;
+	//exist[0][3] = true;
     for (int i = 0; i <=numOfIndices; i++) 
 	{
         bytes<Key> key{0};
         OMAP* omap = new OMAP(max((int) pow(2, i+2), 16), key);
         omaps.push_back(omap);
-        //setupOMAPS.push_back(map<Bid, string>());
-        //setupOMAPSDummies.push_back(0);
     }
-    server = new OneChoiceServer(numOfIndices, inMemory, overwrite, profile);
 }
 /*
 void OneChoiceClient::setup(int index, unordered_map<string, vector<prf_type> > pairs, unsigned char* key) 
@@ -119,15 +116,15 @@ void OneChoiceClient::setup(int index, unordered_map<string, vector<prf_type> > 
 */
 vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword, unsigned char* key) 
 {
+	//I have to store the keyword counter somewhere, two options
+	//1. store the counter
+	//2. make search interactive --> For now I made it interactive
     double searchPreparation = 0, searchDecryption = 0;
     if (profile) 
         Utilities::startTimer(65);
     vector<prf_type> finalRes;
     int keywordCnt = 0;
-	//I have to store the keyword counter somewhere, two options
-	//1. store the counter
-	//2. make search interactive --> For now I made it interactive
-	int cnt = 1;
+	int cnt = 0;
 	int flag = 0;
 	int bin = map(keyword, cnt, index, key);
 	do
@@ -155,8 +152,8 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 		cnt++;
 		cout <<"flag:"<<flag<<"increasing count"<<cnt<<"/"<<numberOfBins[index]<<endl;
 	}
-	while(cnt < numberOfBins[index]);
-	//while(flag == 1 && cnt < numberOfBins[index]);
+	while(flag == 1 && cnt < numberOfBins[index]);
+	//while(cnt < numberOfBins[index]);
     if (profile) 
 	{
         searchPreparation = Utilities::stopTimer(65);
@@ -172,27 +169,13 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
     return finalRes;
 }
 
-/*
-vector<prf_type> OneChoiceClient::getAllData(int index, int instance, unsigned char* key) 
-{
-    vector<prf_type> finalRes;
-    auto ciphers = server->getAllData(index, instance);
-    for (auto cipher : ciphers) 
-	{
-        prf_type plaintext;
-        Utilities::decode(cipher, plaintext, key);
-        finalRes.push_back(plaintext);
-    }
-    totalCommunication += ciphers.size() * sizeof (prf_type);
-    return finalRes;
-}
-*/
 void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 {
 	server->clear(index, toInstance);
 	server->move(index, toInstance, fromInstance);
-	exist[index][toInstance] = true;
 	server->clear(index, fromInstance);
+	exist[index][toInstance] = true;
+	exist[index][fromInstance] = false;
 }
 void OneChoiceClient::copy(int index, int toInstance)
 {
@@ -236,13 +219,13 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 	        int ind = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
 	        int op = ((byte) decodedString.data()[AES_KEY_SIZE - 6]); 
 	        string w((char*) plaintext.data());
-			int cnt=-1;
+			int cnt=0;
 			if(w!="")
 				cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
 			string newCnt= omaps[index]->find(getBid(w,upCnt));
 			int bin = map(w, cnt, index, key2);		
-			cout <<"index:"<<index<<" instance:"<<instance<<" upCnt:"<<upCnt <<" ";
-		cout <<"["<<w<<"]"<<"cnt:"<<cnt<<"newcnt:"<<newCnt<<" newbin:"<<bin<<"/"<<numberOfBins[index]-1<<endl;
+			cout <<"from index:"<<index-1<<" instance:"<<instance<<" upCnt:"<<upCnt <<" "<<cnt;
+			cout <<"["<<w<<"|"<<ind<<"|"<<bin<<"]/"<<numberOfBins[index]-1<<endl;
 			int realbin;
 			if(w=="")
 				realbin = INF;
@@ -259,7 +242,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 		}
 		if(server->getNEWsize(index) >= (instance+1)*numberOfBins[index]*sizeOfEachBin[index])
 		{
-			//exist[index][instance] = false;
+			exist[index][instance] = false;
 		}
 	}
 }
@@ -268,10 +251,7 @@ void OneChoiceClient::addDummy(int index, int count, int updateCounter, unsigned
 	//cout<<index <<" size of NEW before adding dummy:"<<server->getNEWsize(index)<<endl;
     int upCnt = numNEW[index];
 	int s;
-	if(index >1)
-		s = 6;
-	else 
-		s = 2;	
+	s = index>1 ? 6 : 2;
 	for(int t = 0; t<s; t++)
 	{
 		int bin = count*s+t;
@@ -327,11 +307,12 @@ int OneChoiceClient::map(string w, int cnt, int index, unsigned char* key)
     memset(cntstr, 0, AES_KEY_SIZE);
     *(int*) (&(cntstr[AES_KEY_SIZE - 4])) = 0;
     mapKey = Utilities::generatePRF(cntstr, K.data());
-    unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
+    //unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
+    unsigned char* hash = Utilities::sha256((char*) K.data(), AES_KEY_SIZE);
     //int bin = (((((unsigned int) (*((int*) hash))) % numberOfBins[index]))%numberOfBins[index]);
-    int bin2 = (((((unsigned int) (*((int*) hash))) % numberOfBins[index])+cnt)%numberOfBins[index]);
+    int bin = (((((unsigned int) (*((int*) hash))) % numberOfBins[index])+cnt)%numberOfBins[index]);
 	//cout <<"at map1:"<<bin<<"|"<<bin2<<endl;
-	return bin2;
+	return bin;
 }
 void OneChoiceClient::bitonicSort(int step, int index, int counter)
 {
@@ -378,10 +359,20 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 	}
 	server->putNEW(index, encNEWi);
 }
-/*
-Two things to fix:
-why it is not reading a whole of a bin in searchBin
-encryption problem
-sort does not work
-*/
+vector<prf_type> OneChoiceClient::searchNEW(int index, string keyword)
+{
+	cout <<"searching new"<<endl;
+	vector<prf_type> ni = server->getNEW(index);
+	vector<prf_type> nii;
+	for(auto a : ni)
+	{
+	    if (strcmp((char*) a.data(), keyword.data()) == 0) 
+			nii.push_back(a);
+	}
+	return nii;
+}
 
+/*
+check all the cases of s and t
+why is bin assigned are not proper
+*/

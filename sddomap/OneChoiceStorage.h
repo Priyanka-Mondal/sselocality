@@ -37,6 +37,7 @@ private:
 public:
     int readBytes = 0;
     int SeekG = 0;
+	int b;
     OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
     void insertAll(int dataIndex, int instance, vector<prf_type> ciphers);
