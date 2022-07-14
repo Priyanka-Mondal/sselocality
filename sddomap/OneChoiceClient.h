@@ -54,6 +54,7 @@ public:
     int map(string w, int cnt, int index, unsigned char* key);
     Bid getBid(string str, int cnt);
 	vector<prf_type> searchNEW(int index, string keyword);
+	void ensureNEWSize(int index, int bin, int cnt);
 };
 
 #endif /* ONECHOICECLIENT_H */

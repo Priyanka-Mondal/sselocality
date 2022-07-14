@@ -266,7 +266,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 }
 void OneChoiceClient::addDummy(int index, int count, unsigned char* key)
 {
-	cout<<"adding dummy at:"<<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
+	//cout<<"adding dummy at:"<<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
 	assert(server->getNEWsize(index) == 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
     int upCnt = numNEW[index];
 	int s;
@@ -285,6 +285,9 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key)
 			else 
 				cbin = stoi(cb);
 			cout <<"bin:"<<bin<<"current bin size:"<<cbin<<"/"<<sizeOfEachBin[index]<<endl;
+			if(cbin>sizeOfEachBin[index]);
+				ensureNEWSize(index,bin, sizeOfEachBin[index]-cbin);
+			assert(cbin <= sizeOfEachBin[index]);
 			for(int k = cbin; k<sizeOfEachBin[index]; k++)
 			{
 			//	cout <<"adding REAL dummy:"<<k<<endl;
@@ -305,7 +308,29 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key)
 	}
 	//if(count ) add more dummy for bitonic sort
 }
-
+void OneChoiceClient::ensureNEWSize(int index, int bin, int cnt)
+{
+	vector<prf_type> encNEW = server->getNEW(index);
+	while(cnt>0)
+	{
+		for(int i = 0; i<encNEW.size(); i++)
+		{
+	        string w((char*) encNEW[i].data());
+    		int b = *(int*) (&(encNEW[i].data()[AES_KEY_SIZE - 10]));
+		
+			if(bin == b && w == "")
+			{
+			cout <<"b================="<<encNEW[i].data()<<endl;
+				for(int j = i+1; j<encNEW.size();j++)
+				{
+					encNEW[i]=encNEW[j];
+				}
+				encNEW.resize(encNEW.size()-1);
+			}
+		}
+		cnt--;
+	}
+}
 Bid OneChoiceClient::getBid(string input, int cnt) 
 {
     std::array< uint8_t, ID_SIZE> value;
@@ -361,7 +386,7 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 {
 	vector<prf_type> encNEWi = server->getNEW(index);
 	cout <<"at NOSort index:"<<index<<"{"<<encNEWi.size()<<"|"<<indexSize[index]+2*indexSize[index-1]<<"}"<<endl;
-	//assert(encNEWi.size() == indexSize[index]+2*indexSize[index-1]);
+	assert(encNEWi.size() >= indexSize[index]+2*indexSize[index-1]);
 	server->resize(index,0);
     vector<prf_type> decodedNEWi;	
 	for(auto n : encNEWi)
