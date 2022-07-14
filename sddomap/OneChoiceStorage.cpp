@@ -86,6 +86,9 @@ void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphe
             fstream file(filenames[index][instance].c_str(), ios::binary | ios::out);
             if (file.fail()) 
                 cerr << "Error in insert: " <<strerror(errno)<<endl;
+			
+            file.seekg(0, ios::beg);
+			SeekG++;
             for (auto ci : ciphers) 
 			{
                 //for (auto pair : item) {
@@ -125,6 +128,7 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
                 cerr << "Error in read: " << strerror(errno);
             int size = file.tellg();
             file.seekg(0, ios::beg);
+			SeekG++;
             char* keyValues = new char[size];
             file.read(keyValues, size);
             file.close();
@@ -133,6 +137,7 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
 			{
                 prf_type tmp;
                 std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
+				cout <<"tmp:"<<tmp.data()<<endl;
                 //if (tmp != nullKey) 
 				//{
                     results.push_back(tmp);
@@ -212,6 +217,7 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
 {
     vector<prf_type> results;
     std::fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
+    cout<<filenames[index][instance].c_str()<<endl;
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
     int readPos = bin * AES_KEY_SIZE * sizeOfEachBin[index];
@@ -236,7 +242,7 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     file.read(keyValues, readLength);
     readBytes += readLength;
 	cout <<"index:"<<index<<" bin:"<<bin<<" sizeOfBin:"<<sizeOfEachBin[index]<<endl;
-	//cout <<"readPos:"<<readPos<<" readLen:"<<readLength<<" totalsize:"<< AES_KEY_SIZE*sizeOfEachBin[index]*numberOfBins[index]<<endl;
+	cout <<"readPos:"<<readPos<<" readLen:"<<readLength<<" totalsize:"<< AES_KEY_SIZE*sizeOfEachBin[index]*numberOfBins[index]<<endl;
 	cout<<"rem:"<<remainder<<" read len:"<<readLength<<endl;
 	assert(readLength>=AES_KEY_SIZE);
     for (int i = 0; i < readLength / AES_KEY_SIZE; i++) 

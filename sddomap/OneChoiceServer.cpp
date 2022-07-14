@@ -23,7 +23,7 @@ void OneChoiceServer::storeCiphers(int dataIndex, int instance, vector<vector<pa
 }
 */
 
-vector<prf_type> OneChoiceServer::search(int dataIndex, int instance, int bin) 
+vector<prf_type> OneChoiceServer::search(int index, int instance, int bin) 
 {
     vector<prf_type> result;
 	/*
@@ -62,7 +62,7 @@ vector<prf_type> OneChoiceServer::search(int dataIndex, int instance, int bin)
         }
     }
 	*/
-    result = storage->searchBin(dataIndex, instance, bin);
+    result = storage->searchBin(index, instance, bin);
     return result;
 }
 

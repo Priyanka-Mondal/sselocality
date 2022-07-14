@@ -51,7 +51,7 @@ int main(int argc, char** argv)
     	}
     	file.close();
     }
-    DeAmortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
+    DeAmortized client(testCases[0].N, false, overwrite); // only one test is performed for now
     
     //client.endSetup();
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;

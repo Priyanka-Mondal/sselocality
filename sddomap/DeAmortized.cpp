@@ -140,12 +140,15 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			if ((ceil((float)2*by(indexSize[i-1],s)))<=cnt[i] && 
 					  cnt[i]<((ceil((float)2*by(indexSize[i-1],s)))+(ceil(by(mi,s)))))
 			{
-				cout <<"ADDING DUMMY"<<endl;
-				L->addDummy(i, (cnt[i]-(ceil((float)2*by(indexSize[i-1],s)))), keys[i][3]);
+				cout <<"ADDING DUMMY:"<<i<<" cnt[i]:"<<cnt[i]<<endl;
+				L->addDummy(i, (cnt[i]-(ceil((float)2*by(indexSize[i-1],s)))), keys[i][3], s);
 			}
 			else if (((ceil((float)2*by(indexSize[i-1],s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
+			{
+				cout <<"SORTING:"<<i<<" cnt[i]:"<<cnt[i]<<"<="<<pow(2,j)<<endl;
 				L->nonOblSort(i, keys[i][3]);
 				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
+			}
 		
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,j))
@@ -183,6 +186,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	prf_type keyVal;
 	createKeyVal(keyword,ind,op, keyVal);
 	L->append(0, keyVal, keys[0][3]);
+	cout <<"keyVal:"<<keyVal.data()<<endl;
 	cnt[0]=cnt[0]+1;
 	if(cnt[0]==B)
 	{
@@ -278,13 +282,12 @@ vector<int> DeAmortized::search(string keyword)
             }
         }
     }
-	//auto tmpRes = L->searchNEW(numOfIndices, keyword);
-    //encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
     map<int, int> remove;
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
 	{
         prf_type decodedString = *i;
         int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
+		cout <<"OP is:"<<(decodedString.data()[AES_KEY_SIZE - 6])<<endl;
         remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
     }
     for (auto const& cur : remove) 

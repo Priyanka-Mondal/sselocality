@@ -82,7 +82,7 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 			{
 	           	finalRes.push_back(plaintext);
 				flag =1;
-				cout<<" MATCH:"<<plaintext.data()<<" "<<bin<<endl;
+				cout<<" MATCH:"<<plaintext.data()<<" "<<bin<<"/"<<finalRes.size()<<endl;
 	       	}
 		//cout <<"bin:"<<bin<<"/"<<numberOfBins[index]-1<<endl;
 		}
@@ -93,8 +93,8 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 		cnt++;
 		//cout <<"flag:"<<flag<<"increasing count"<<cnt<<"/"<<numberOfBins[index]<<endl;
 	}
-	while(cnt < numberOfBins[index]);
-	//while(flag == 1 && cnt < numberOfBins[index]);
+	while(flag == 1 && cnt < numberOfBins[index]);
+	//while(cnt < numberOfBins[index]);
     if (profile) 
 	{
         searchPreparation = Utilities::stopTimer(65);
@@ -124,6 +124,7 @@ void OneChoiceClient::copy(int index, int toInstance)
 	server->copy(index, toInstance);
 	exist[index][toInstance] = true;
 	numNEW[index] = numNEW[index] + 1;
+	exist[index][3] = false;	
 }
 
 void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
@@ -190,19 +191,18 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 			if(w!="")
 			string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
 		}
-		if(server->getNEWsize(index) >= (instance+1)*numberOfBins[index]*sizeOfEachBin[index])
+
+		/*if(server->getNEWsize(index) >= (instance+1)*numberOfBins[index]*sizeOfEachBin[index])
 		{
 			exist[index][instance] = false;
-		}
+		}*/
 	}
 }
-void OneChoiceClient::addDummy(int index, int count, unsigned char* key)
+void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 {
 	cout<<"adding dummy at:"<<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
 	assert(server->getNEWsize(index) >= 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
     int upCnt = numNEW[index];
-	int s;
-	s = index>1 ? 6 : 2;
 	cout <<"s:"<<s<<" count:"<<count<<endl;
 	for(int t = 0; t<s; t++)
 	{
@@ -228,6 +228,7 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key)
 	    		std::fill(value.begin(), value.end(), 0);
     			*(int*) (&(value.data()[AES_KEY_SIZE - 10])) = bin;//bin
 				append(index, value, key);
+				string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
 			}
 			for(int k = 0; k<cbin ; k++)
 			{
@@ -238,32 +239,10 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key)
 				append(index, value, key);
 			}
 		}
+		else
+			assert(server->getNEWsize(index)==indexSize[index]+2*indexSize[index-1]);
 	}
 	//if(count ) add more dummy for bitonic sort
-}
-void OneChoiceClient::ensureNEWSize(int index, int bin, int cnt)
-{
-	vector<prf_type> encNEW = server->getNEW(index);
-	while(cnt>0)
-	{
-		for(int i = 0; i<encNEW.size(); i++)
-		{
-	        string w((char*) encNEW[i].data());
-    		int b = *(int*) (&(encNEW[i].data()[AES_KEY_SIZE - 10]));
-		
-			if(bin == b && w == "")
-			{
-			cout <<"b================="<<encNEW[i].data()<<endl;
-				for(int j = i+1; j<encNEW.size();j++)
-				{
-					encNEW[i]=encNEW[j];
-				}
-				encNEW.resize(encNEW.size()-1);
-			}
-		}
-		cnt--;
-	}
-	server->putNEW(index,encNEW);
 }
 Bid OneChoiceClient::getBid(string input, int cnt) 
 {
@@ -330,8 +309,15 @@ int issorted(vector<prf_type> A)
 void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 {
 	vector<prf_type> encNEWi = server->getNEW(index);
-	cout <<"at NOSort index:"<<index<<"{"<<encNEWi.size()<<"|"<<indexSize[index]+2*indexSize[index-1]<<"}"<<endl;
+	if(!issorted(encNEWi))
+	{
 	assert(encNEWi.size() == indexSize[index]+2*indexSize[index-1]);
+	int upCnt = numNEW[index];
+	for(int k =0; k<numberOfBins[index]; k++)
+	{
+			int cb = stoi((omaps[index]->find(getBid(to_string(k),upCnt))));
+			assert(cb == sizeOfEachBin[index]);
+	}
 	server->resize(index,0);
     vector<prf_type> decodedNEWi;	
 	for(auto n : encNEWi)
@@ -349,22 +335,19 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 		encNEWi.push_back(enc);
 	}
 	server->putNEW(index, encNEWi);
+	vector<prf_type> sortedNEW = server->getNEW(index);
+	for(int i = 0; i<numberOfBins[index]; i++)
+	{
+		for(int j = 0; j<sizeOfEachBin[index]; j++)
+		{
+			int k = i*sizeOfEachBin[index]+j;
+			prf_type val = sortedNEW[k];
+    		int bina = *(int*) (&(val.data()[AES_KEY_SIZE - 10]));
+			assert(bina == i);
+		}
+	}
+	}
+	else
+		cout <<"ALREADY SORTED:"<<index<<endl;
 	assert(issorted(encNEWi));
 }
-vector<prf_type> OneChoiceClient::searchNEW(int index, string keyword)
-{
-	cout <<"searching new"<<endl;
-	vector<prf_type> ni = server->getNEW(index);
-	vector<prf_type> nii;
-	for(auto a : ni)
-	{
-	    if (strcmp((char*) a.data(), keyword.data()) == 0) 
-			nii.push_back(a);
-	}
-	return nii;
-}
-
-/*
-check all the cases of s and t
-why is bin assigned are not proper
-*/
