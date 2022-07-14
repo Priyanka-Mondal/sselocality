@@ -23,12 +23,12 @@ OneChoiceClient::OneChoiceClient(int N,
         int curNumberOfBins = j > 1 ? 
 			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
         int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
-		if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
+		/*if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
 		{
 			curNumberOfBins = ceil((float)(2*prev*cprev+1)/(float)curSizeOfEachBin);
 		}
 		cprev = curSizeOfEachBin;
-		prev = curNumberOfBins;
+		prev = curNumberOfBins;*/
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		int is = curNumberOfBins*curSizeOfEachBin;
@@ -256,6 +256,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 	    	keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op);//op
 	    	*(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = realbin;//bin
 			append(index, keyVal, key2);
+			if(w!="")
 			string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
 		}
 		if(server->getNEWsize(index) >= (instance+1)*numberOfBins[index]*sizeOfEachBin[index])
@@ -266,7 +267,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 }
 void OneChoiceClient::addDummy(int index, int count, unsigned char* key)
 {
-	//cout<<"adding dummy at:"<<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
+	cout<<"adding dummy at:"<<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
 	assert(server->getNEWsize(index) == 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
     int upCnt = numNEW[index];
 	int s;

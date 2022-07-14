@@ -18,12 +18,12 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
         int curNumberOfBins = j > 1 ? 
 			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
         int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
-		if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
+		/*if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
 		{
 			curNumberOfBins = ceil((float)(2*prev*cprev+1)/(float)curSizeOfEachBin);
 		}
 		cprev = curSizeOfEachBin;
-		prev = curNumberOfBins;
+		prev = curNumberOfBins;*/
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		int is = curNumberOfBins*curSizeOfEachBin;
