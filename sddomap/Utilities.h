@@ -426,6 +426,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) 
 		{
                     int fileName = ((rand() % 1000)) + 1000000;
+					cout<<"++"<<fileName<<"++"<<endl;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }

@@ -19,12 +19,12 @@
 //#include <sse/crypto/hash.hpp>
 
 using namespace std;
-
+/*
 enum OP 
 {
     INS, DEL
 };
-
+*/
 class DeAmortized 
 {
 private:

@@ -127,6 +127,8 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
             if (file.fail()) 
                 cerr << "Error in read: " << strerror(errno);
             int size = file.tellg();
+			cout <<"size::"<<size<<endl;
+			assert(size == sizeOfEachBin[index]*numberOfBins[index]*AES_KEY_SIZE);
             file.seekg(0, ios::beg);
 			SeekG++;
             char* keyValues = new char[size];
@@ -137,7 +139,7 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
 			{
                 prf_type tmp;
                 std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-				cout <<"tmp:"<<tmp.data()<<endl;
+				//cout <<"tmp:"<<tmp.data()<<endl;
                 //if (tmp != nullKey) 
 				//{
                     results.push_back(tmp);

@@ -153,7 +153,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,j))
 			{
-				L->resize(i,numberOfBins[j]*sizeOfEachBin[j]); //j = i+logB
+				L->reSize(i,numberOfBins[j]*sizeOfEachBin[j]); //j = i+logB
 				L->move(i-1,0,2); 
 				updateKey(i-1,0,2);
 				//cout<<"OLD["<<i-1<<"] to OLDEST["<<i-1<<"]"<<endl;
@@ -220,6 +220,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 void DeAmortized::createKeyVal(string keyword, int ind, OP op, prf_type& keyVal)
 {
     std::fill(keyVal.begin(), keyVal.end(), 0);
+    //memset(keyVal.data(), 0, AES_KEY_SIZE);
     std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
     *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
     keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
@@ -287,8 +288,8 @@ vector<int> DeAmortized::search(string keyword)
 	{
         prf_type decodedString = *i;
         int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
-		cout <<"OP is:"<<(decodedString.data()[AES_KEY_SIZE - 6])<<endl;
         remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
+		cout <<"(("<<decodedString.data()<<":"<<plaintext<<":"<<remove[plaintext]<<"))";
     }
     for (auto const& cur : remove) 
 	{
@@ -303,6 +304,7 @@ vector<int> DeAmortized::search(string keyword)
 				L->omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
     }
     totalSearchCommSize += L->totalCommunication;
+	cout <<"size of ENCIND:"<<encIndexes.size()<<endl;
     return finalRes;
 }
 /*

@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 {
     vector<TC<int> > testCases;
     vector<string> testKeywords;
-    uint keywordLength = 5;
+    uint keywordLength = 4;
     bool inMemory, overwrite;
     string filename = "configs/config.txt";
     if (argc == 2) 
@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     	    for (j = 0; j < cur->second.size(); j++) 
 			{
 			key++;
-			cout <<" inserting keywords:"<<key<<"/"<<testCases[i].N<<endl;
+			cout <<" inserting keywords:"<<key<<"/"<<testCases[i].N<<" ind:"<<cur->second[j]<<endl;
         	    client.update(OP::INS, cur->first, cur->second[j], true);
             	cnt++;
             	if (cnt % 500 == 0) 

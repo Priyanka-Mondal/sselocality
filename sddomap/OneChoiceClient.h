@@ -17,6 +17,10 @@
 #include "OMAP.h"
 #include <unordered_map>
 
+enum OP 
+{
+    INS, DEL
+};
 
 class OneChoiceClient 
 {
@@ -47,6 +51,7 @@ public:
 	void append(int instance, prf_type keyVal, unsigned char* key);
 	void destroy(int index, int instance);
 	void resize(int index, int size);
+	void reSize(int index, int size);
 	void getBin(int newindex, int instance, int start, int end, unsigned char* key1, unsigned char* key2);
 	void addDummy(int index, int count, unsigned char* key, int s);
 	void bitonicSort(int step, int index, int counter);
