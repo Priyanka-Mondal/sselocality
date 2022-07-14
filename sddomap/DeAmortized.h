@@ -37,6 +37,7 @@ private:
 	prf_type nullKey;
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;
+    vector<int> indexSize;
     //vector< map<Bid, string> > setupOMAPS;
     //vector<int> setupOMAPSDummies;
     OneChoiceClient* L;

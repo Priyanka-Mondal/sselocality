@@ -31,9 +31,11 @@ public:
     int totalCommunication = 0;
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;
+	vector<int> indexSize;
 	prf_type nullKey;
 	int numOfIndices;
 	vector<int> numNEW;
+	int b;
 
     vector<vector<bool>> exist;
     void destry(int index);
@@ -45,8 +47,8 @@ public:
 	void append(int instance, prf_type keyVal, unsigned char* key);
 	void destroy(int index, int instance);
 	void resize(int index, int size);
-	void getBin(int newindex, int instance, int start, int end, int updateCounter, unsigned char* key1, unsigned char* key2);
-	void addDummy(int index, int count, int updateCounter, unsigned char* key);
+	void getBin(int newindex, int instance, int start, int end, unsigned char* key1, unsigned char* key2);
+	void addDummy(int index, int count, unsigned char* key);
 	void bitonicSort(int step, int index, int counter);
 	void nonOblSort(int index, unsigned char* key);
     int map(string w, int cnt, int index, unsigned char* key);

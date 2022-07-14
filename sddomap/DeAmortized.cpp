@@ -16,15 +16,25 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 	b = ceil((float)log2(B));
     memset(nullKey.data(), 0, AES_KEY_SIZE);
 	numOfIndices = l - b;
+	int prev = 0;
+	int cprev = 0;
     for (int i = 0; i <=numOfIndices; i++) 
 	{
 		int j = i + b;
         int curNumberOfBins = j > 1 ? 
-			(int) ceil((float) pow(2, j)/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
+			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
         int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
+		if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
+		{
+			curNumberOfBins = ceil((float)(2*prev*cprev+1)/(float)curSizeOfEachBin);
+		}
+		cprev = curSizeOfEachBin;
+		prev = curNumberOfBins;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
-        //printf("Index:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
+		int is = curNumberOfBins*curSizeOfEachBin;
+		indexSize.push_back(is);
+        printf("DeAm:%d number of Bins:%d size of bin:%d is:%d\n", i, curNumberOfBins, curSizeOfEachBin, is);
     }
     for (int i = 0; i <= numOfIndices; i++) 
 	{
@@ -49,7 +59,6 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 
     if (!overwrite) 
     {
-		cout <<"READING-"<<overwrite<<endl;
         fstream file("/tmp/existStatus.txt", std::ofstream::in);
         if (file.fail()) 
 		{
@@ -75,7 +84,7 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
             	}
         	}
     	}
-        	file.close();
+       	file.close();
 	}
 }
 
@@ -114,34 +123,32 @@ float by(int a, int b)
 
 void DeAmortized::update(OP op, string keyword, int ind, bool setup) 
 {
-	//int s = 2; // for now choose wisely and make sure to not overflow 
-	int t;
-	int s; 
 	for(int i=numOfIndices; i>0; i--)
 	{
 		int j = b+i;
 		int mi = numberOfBins[j]; // for now
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
-			//t = i>1 ? 3 : 1;
-			s = i>1 ? 6 : 2;
-			//if(cnt[i] <=(ceil((float)t*(by(pow(2,j),s)))))
-			if(cnt[i] <=(ceil((float)(by(numberOfBins[i]*sizeOfEachBin[i],s)))))
+			int s = i>1 ? 6 : 2;
+		//cout <<"index:"<<i<<"[is:"<<indexSize[i]<<"]"<<ceil(2*by(indexSize[i-1],s))<<"<="<<cnt[i]<<"<"<<ceil(2*by(indexSize[i-1],s))+ceil(by(mi,s))<<endl;
+		cout <<"index:"<<i<<"[is:"<<indexSize[i]<<"]:"<<ceil(2*by(indexSize[i-1],s))<<"<="<<cnt[i]<<"<"<<ceil(2*by(indexSize[i-1],s))+ceil(by(mi,s))<<endl;
+			if(cnt[i] <=(ceil((float)(2*by(indexSize[i-1],s)))))
 			{
-				L->getBin(i, 0, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][0], keys[i][3]);
-				L->getBin(i, 1, cnt[i]*(s/2),(cnt[i]+1)*(s/2), updateCounter, keys[i-1][1], keys[i][3]);
+				L->getBin(i, 1, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
+				L->getBin(i, 1, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
 			}
-			//else if ((ceil((float)t*by(pow(2,j),s)))<=cnt[i] && 
-			else if ((ceil((float)t*by(numberOfBins[i]*sizeOfEachBin[i],s)))<=cnt[i] && 
-					  cnt[i]<((ceil((float)by(numberOfBins[i]*sizeOfEachBin[i],s)))+(ceil(by(mi,s)))))
-				L->addDummy(i, (cnt[i]-(ceil((float)by(numberOfBins[i]*sizeOfEachBin[i],s)))), updateCounter, keys[i][3]);
-			//else if (((ceil((float)t*by(pow(2,j),s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
-			else if (((ceil((float)by(numberOfBins[i]*sizeOfEachBin[i],s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=numberOfBins[i]*sizeOfEachBin[i])
+			if ((ceil((float)2*by(indexSize[i-1],s)))<=cnt[i] && 
+					  cnt[i]<((ceil((float)2*by(indexSize[i-1],s)))+(ceil(by(mi,s)))))
+			{
+				cout <<"ADDING DUMMY"<<endl;
+				L->addDummy(i, (cnt[i]-(ceil((float)2*by(indexSize[i-1],s)))), keys[i][3]);
+			}
+			else if (((ceil((float)2*by(indexSize[i-1],s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
 				L->nonOblSort(i, keys[i][3]);
 				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
 		
-			cnt[i]=cnt[i]+1;
-			if(cnt[i]== numberOfBins[i]*sizeOfEachBin[i])
+			cnt[i] = cnt[i]+1;
+			if(cnt[i] == pow(2,j))
 			{
 				L->resize(i,numberOfBins[j]*sizeOfEachBin[j]); //j = i+logB
 				L->move(i-1,0,2); 
@@ -271,8 +278,8 @@ vector<int> DeAmortized::search(string keyword)
             }
         }
     }
-	auto tmpRes = L->searchNEW(numOfIndices, keyword);
-    encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
+	//auto tmpRes = L->searchNEW(numOfIndices, keyword);
+    //encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
     map<int, int> remove;
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
 	{

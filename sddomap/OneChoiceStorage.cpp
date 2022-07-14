@@ -9,16 +9,25 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
     this->dataIndex = dataIndex;
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-	this->b = ceil((float)log2(B));
+	b = ceil((float)log2(B));
+	int prev = 0;
+    int	cprev = 0;
     for (int i = 0; i <= dataIndex; i++) 
 	{
 		int j = i + b;
         int curNumberOfBins = j > 1 ? 
-			(int) ceil((float) pow(2, j)/(float)(log2(pow(2, j))*log2(log2(pow(2,j))))) : 1;
-        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j)) * ceil(log2(log2(pow(2, j))))) : pow(2, j);
+			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
+        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
+		if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
+		{
+			curNumberOfBins = ceil((float)(2*prev*cprev+1)/(float)curSizeOfEachBin);
+		}
+		cprev = curSizeOfEachBin;
+		prev = curNumberOfBins;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
-        printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
+		int is = curNumberOfBins*curSizeOfEachBin;
+        printf("%d StLevel:%d number of Bins:%d size of bin:%d is:%d\n",j, i, curNumberOfBins, curSizeOfEachBin, is);
     }
 
 }
@@ -134,7 +143,7 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
     }
 }
 
-vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int start, int end)
+vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int start, int numOfEl)
 {
 	vector<prf_type> results;
     fstream file(filenames[index][instance].c_str(), ios::binary | ios::in | ios::ate);
@@ -143,7 +152,7 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
     int seek = AES_KEY_SIZE*start;
     file.seekg(seek, ios::beg);
 	SeekG++;
-	int readLength = (end-start)*AES_KEY_SIZE;
+	int readLength = (numOfEl)*AES_KEY_SIZE;
 	int size = numberOfBins[index]*sizeOfEachBin[index]*AES_KEY_SIZE;
 	int remainder = size - seek;
 	//cout <<"index:"<<index<<endl;
@@ -226,9 +235,9 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     char* keyValues = new char[readLength];
     file.read(keyValues, readLength);
     readBytes += readLength;
-	//cout <<"index:"<<index<<" bin:"<<bin<<" sizeOfBin:"<<sizeOfEachBin[index]<<endl;
+	cout <<"index:"<<index<<" bin:"<<bin<<" sizeOfBin:"<<sizeOfEachBin[index]<<endl;
 	//cout <<"readPos:"<<readPos<<" readLen:"<<readLength<<" totalsize:"<< AES_KEY_SIZE*sizeOfEachBin[index]*numberOfBins[index]<<endl;
-	//cout<<"rem:"<<remainder<<" size:"<<size<< "read len:"<<readLength<<endl;
+	cout<<"rem:"<<remainder<<" read len:"<<readLength<<endl;
 	assert(readLength>=AES_KEY_SIZE);
     for (int i = 0; i < readLength / AES_KEY_SIZE; i++) 
 	{

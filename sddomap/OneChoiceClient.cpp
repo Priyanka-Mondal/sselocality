@@ -12,17 +12,28 @@ OneChoiceClient::OneChoiceClient(int N,
     this->profile = profile;
 	int l = ceil((float)log2(N));
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-	int b = ceil((float)log2(B));
+	b = ceil((float)log2(B));
 	this->numOfIndices = l - b;
-    server = new OneChoiceServer(l-b, inMemory, overwrite, profile);
+    server = new OneChoiceServer(numOfIndices, inMemory, overwrite, profile);
+	int prev = 0;
+	int cprev = 0;
     for (int i = 0; i <=numOfIndices; i++) 
 	{
 		int j = i + b;
         int curNumberOfBins = j > 1 ? 
-			(int) ceil((float) pow(2, j)/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
+			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
         int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
+		if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
+		{
+			curNumberOfBins = ceil((float)(2*prev*cprev+1)/(float)curSizeOfEachBin);
+		}
+		cprev = curSizeOfEachBin;
+		prev = curNumberOfBins;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
+		int is = curNumberOfBins*curSizeOfEachBin;
+		indexSize.push_back(is);
+        printf("j:%d OC:%d number of Bins:%d size of bin:%d is:%d\n",j, i, curNumberOfBins, curSizeOfEachBin, is);
     }
 	exist.resize(numOfIndices+1);
     for (int i = 0; i <=numOfIndices; i++) 
@@ -35,7 +46,7 @@ OneChoiceClient::OneChoiceClient(int N,
         }
 		numNEW.push_back(1);
     }
-	//exist[0][3] = true;
+	exist[0][3] = true;
     for (int i = 0; i <=numOfIndices; i++) 
 	{
         bytes<Key> key{0};
@@ -143,7 +154,7 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 				flag =1;
 				//cout<<" MATCH:"<<plaintext.data()<<" "<<bin<<endl;
 	       	}
-		//cout <<"bin:"<<bin<<"/"<<numberOfBins[index]<<endl;
+		cout <<"bin:"<<bin<<"/"<<numberOfBins[index]<<endl;
 		}
 		if(bin == numberOfBins[index]-1)
 			bin = 0;
@@ -202,17 +213,18 @@ void OneChoiceClient::resize(int index, int size)
 	server->resize(index,size);
 }
 
-void OneChoiceClient::getBin(int index, int instance, int start, int end, int updateCounter, 
+void OneChoiceClient::getBin(int index, int instance, int start, int end,
 							 unsigned char* key1, unsigned char* key2)
 {
-	cout <<"["<<index<<" start:"<<start<<" end:"<<end<<"]"<<"actual end:"<<numberOfBins[index-1]*sizeOfEachBin[index-1];
-	if(start <=numberOfBins[index-1]*sizeOfEachBin[index-1])
+	//cout <<"["<<index-1<<" start:"<<start<<" numOfEl:"<<end<<"]"<<"actual numOfEl:"<<numberOfBins[index-1]*sizeOfEachBin[index-1];
+	if(start <numberOfBins[index-1]*sizeOfEachBin[index-1])
 	{
-		if(end>numberOfBins[index-1]*sizeOfEachBin[index-1])
-			end = numberOfBins[index-1]*sizeOfEachBin[index-1];
-		cout <<" new end:"<<end<<endl;
+		if(start+end>numberOfBins[index-1]*sizeOfEachBin[index-1])
+			end = numberOfBins[index-1]*sizeOfEachBin[index-1] - start;
+		//cout <<" new numOfEl:"<<end<<endl;
 		vector<prf_type> ciphers = server->getElements(index-1, instance, start, end);
 		int upCnt = numNEW[index];
+		int cntw=0;
 		//cout <<"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
 		for(auto c: ciphers)
 		{
@@ -223,10 +235,12 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 	        int ind = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
 	        int op = ((byte) decodedString.data()[AES_KEY_SIZE - 6]); 
 	        string w((char*) plaintext.data());
-			int cnt=0;
+			int cnt;
 			if(w!="")
 				cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
-			string newCnt= omaps[index]->find(getBid(w,upCnt));
+			else
+				cnt = cntw++;
+			//string newCnt= omaps[index]->find(getBid(w,upCnt));
 			int bin = map(w, cnt, index, key2);		
 			//cout <<"from index:"<<index-1<<" instance:"<<instance<<" upCnt:"<<upCnt <<" "<<cnt;
 			//cout <<"["<<w<<"|"<<ind<<"|"<<bin<<"]/"<<numberOfBins[index]-1<<endl;
@@ -250,14 +264,14 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end, int up
 		}
 	}
 }
-void OneChoiceClient::addDummy(int index, int count, int updateCounter, unsigned char* key)
+void OneChoiceClient::addDummy(int index, int count, unsigned char* key)
 {
-	cout <<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
+	cout<<"adding dummy at:"<<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
 	assert(server->getNEWsize(index) == 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
-	
     int upCnt = numNEW[index];
 	int s;
-	s = index>1 ? 4 : 2;
+	s = index>1 ? 6 : 2;
+	cout <<"s:"<<s<<" count:"<<count<<endl;
 	for(int t = 0; t<s; t++)
 	{
 		int bin = count*s+t;
@@ -265,13 +279,12 @@ void OneChoiceClient::addDummy(int index, int count, int updateCounter, unsigned
 		if(bin < numberOfBins[index])
 		{
 			int cbin;
-			Bid b =getBid(to_string(bin),upCnt);
 			string cb = (omaps[index]->find(getBid(to_string(bin),upCnt)));
 			if(cb == "")
 				cbin = 0;
 			else 
 				cbin = stoi(cb);
-			//cout <<"current bin size:"<<cbin<<"/"<<sizeOfEachBin[index]<<endl;
+			cout <<"bin:"<<bin<<"current bin size:"<<cbin<<"/"<<sizeOfEachBin[index]<<endl;
 			for(int k = cbin; k<sizeOfEachBin[index]; k++)
 			{
 			//	cout <<"adding REAL dummy:"<<k<<endl;
@@ -304,8 +317,8 @@ Bid OneChoiceClient::getBid(string input, int cnt)
 }
 int OneChoiceClient::map(string w, int cnt, int index, unsigned char* key)
 {
-	if(w=="")
-		cnt = 0;
+	//if(w=="")
+	//	cnt = 0;
 
     prf_type K = Utilities::encode(w, key);
     prf_type mapKey, mapValue;
@@ -347,6 +360,8 @@ vector<prf_type> sort(vector<prf_type> &A)
 void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 {
 	vector<prf_type> encNEWi = server->getNEW(index);
+	cout <<"at NOSort index:"<<index<<"{"<<encNEWi.size()<<"|"<<indexSize[index]+2*indexSize[index-1]<<"}"<<endl;
+	//assert(encNEWi.size() == indexSize[index]+2*indexSize[index-1]);
 	server->resize(index,0);
     vector<prf_type> decodedNEWi;	
 	for(auto n : encNEWi)
