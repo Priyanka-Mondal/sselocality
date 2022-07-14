@@ -98,6 +98,7 @@ void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphe
                     file.write((char*) newRecord, AES_KEY_SIZE);
     int bina = *(int*) (&(ci.data()[AES_KEY_SIZE - 10]));
     int id = *(int*) (&(ci.data()[AES_KEY_SIZE - 5]));
+					cout <<"<<"<<ci.data()<<"|"<<id<<">>"<<endl;
 					//if(ci != nullKey)
 					//cout <<"wrote ["<<ci.data()<<"|"<<id<<"|"<<bina<<"] in "<<filenames[index][instance].c_str()<<endl;
                 //}
@@ -185,7 +186,8 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
 	{
         prf_type restmp;
         std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, restmp.begin());
-        //if (restmp != nullKey) {
+		cout <<"L|"<<restmp.data()<<"||"<<endl;
+        //if (restmp.data() != nullKey.data()) {
             results.push_back(restmp);
         //}
     }

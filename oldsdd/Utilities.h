@@ -15,30 +15,37 @@
 #include <math.h>
 #include <set>
 #include "Types.hpp"
+#include<algorithm>
 
 #define SUB_BLOCK_SIZE 4096
 #define SUB_BLOCKS_PER_BLOCK 4096
-
 using namespace std;
-struct PRFHasher {
 
-    std::size_t operator()(const prf_type &key) const {
+struct PRFHasher 
+{
+    std::size_t operator()(const prf_type &key) const 
+    {
         std::hash<byte_t> hasher;
         size_t result = 0;
-        for (size_t i = 0; i < AES_KEY_SIZE; ++i) {
+        for (size_t i = 0; i < AES_KEY_SIZE; ++i) 
+	{
             result = (result << 1) ^ hasher(key[i]);
         }
         return result;
     }
 };
 
-struct CompareLess {
-
-    bool operator()(const prf_type& a, const prf_type& b) const {
-        for (int i = 0; i < AES_KEY_SIZE; i++) {
-            if (a[i] > b[i]) {
+struct CompareLess 
+{
+    bool operator()(const prf_type& a, const prf_type& b) const 
+    {
+        for (int i = 0; i < AES_KEY_SIZE; i++) 
+	{
+            if (a[i] > b[i]) 
+	    {
                 return false;
-            } else if (a[i] < b[i]) {
+            } else if (a[i] < b[i]) 
+	    {
                 return true;
             }
         }
@@ -46,17 +53,21 @@ struct CompareLess {
         return false;
     }
 
-    static prf_type min_value() {
+    static prf_type min_value() 
+    {
         prf_type result;
-        for (int i = 0; i < AES_KEY_SIZE; i++) {
+        for (int i = 0; i < AES_KEY_SIZE; i++) 
+	{
             result[i] = 0;
         }
         return result;
     }
 
-    static prf_type max_value() {
+    static prf_type max_value() 
+    {
         prf_type result;
-        for (int i = 0; i < AES_KEY_SIZE; i++) {
+        for (int i = 0; i < AES_KEY_SIZE; i++) 
+	{
             result[i] = 0xFF;
         }
         return result;
@@ -64,7 +75,8 @@ struct CompareLess {
 };
 
 template <typename T>
-class TC {
+class TC 
+{
 public:
     uint N;
     uint K;
@@ -72,10 +84,12 @@ public:
     std::vector<uint> delNumber;
     std::vector<std::string> keywords;
     std::vector<std::string> testKeywords;
+    //std::vector<std::pair<std::string, std::vector<T>>> filePairs;
     std::map<std::string, std::vector<T> > filePairs;
 };
 
-class Utilities {
+class Utilities 
+{
 private:
     static int parseLine(char* line);
 public:
@@ -111,200 +125,8 @@ public:
     static std::array<uint8_t, 16> generatePRF(unsigned char* keyword, unsigned char* prfkey);
 
     template <typename T>
-    static void readConfigFile(std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) {
-
-
-        /*
-         * 
-         * 
-         * COLUMN 6 
-         * 
-         * 
-1118148  BATTERY
-12495  INTERFER
-22  HUMANTRA
-13960  GAMBLING
-23056  CRIMSEXU
-6257  KIDNAPPI
-136  PUBLICIN
-373285  ASSAULT
-383  OBSCENIT
-66666  PROSTITU
-44471  PUBLICPE
-289047  MOTORVEH
-2909  STALKING
-59704  WEAPONSV
-13546  LIQUORLA
-882136  CRIMINAL
-23  RITUALIS
-229541  ROBBERY
-39711  OFFENSEI
-111  NONCRIMI
-7824  HOMICIDE
-1268571  THEFT
-10173  ARSON
-111  OTHERNAR
-66  CONCEALE
-357878  BURGLARY
-3572  INTIMIDA
-215943  DECEPTIV
-378935  OTHEROFF
-22469  SEXOFFEN
-1  DOMESTIC
-682125  NARCOTIC
-         * 
-         * 
-         * COLUMN 8
-         * 
-5280  OTHERRAI
-311  CEMETARY
-37  VEHICLED
-941  COINOPER
-46  GARAGE
-1  CLEANERS
-615506  SIDEWALK
-57183  RESIDENT
-24466  CHAHALLW
-2  PUBLICHI
-12779  GOVERNME
-583  BOWLINGA
-73305  DEPARTME
-6858  ATHLETIC
-2469  CARWASH
-3  CHABREEZ
-20622  TAVERNLI
-2595  OTHERCOM
-4517  CLEANING
-5379  LIBRARY
-1566  APPLIANC
-45213  COMMERCI
-79330  GROCERYF
-15312  POLICEFA
-911  HIGHWAYE
-1  PUBLICGR
-858  JAILLOCK
-38  CHAGROUN
-61  GANGWAY
-6  LIQUORST
-96833  VEHICLEN
-138782  ALLEY
-19813  CTATRAIN
-2  CTALTRAI
-17807  DRIVEWAY
-9888  CURRENCY
-124  VEHICLEO
-34357  CHAAPART
-7  DUMPSTER
-13  OFFICE
-34293  CTAPLATF
-22163  VACANTLO
-27816  DRUGSTOR
-930  LAKEFRON
-13  RAILROAD
-11632  CONVENIE
-2  RIVERBAN
-9376  CTAGARAG
-230516  OTHER
-1475  null
-6463  FACTORYM
-11977  CONSTRUC
-19534  CTABUS
-89882  RESTAURA
-54176  CHAPARKI
-402  PAWNSHOP
-66  RETAILST
-47641  PARKPROP
-6458  MEDICALD
-78  HALLWAY
-217  NEWSSTAN
-3  SEWER
-24995  BANK
-2302  DAYCAREC
-11559  NURSINGH
-5  MOTEL
-15  VESTIBUL
-363  FORESTPR
-1  BANQUETH
-2  YMCA
-1  JUNKYARD
-8  CHASTAIR
-1  EXPRESSW
-1  LOADINGD
-236  PORCH
-2  PRAIRIE
-8539  WAREHOUS
-8  TRUCK
-3  LAKE
-2  LAUNDRYR
-103472  SMALLRET
-17642  HOSPITAL
-29  BASEMENT
-9  GARAGEAU
-2  CHAELEVA
-1  ROOMINGH
-63407  GASSTATI
-15744  SCHOOLPR
-2266  MOVIEHOU
-327  SAVINGSA
-328  BRIDGE
-161149  SCHOOLPU
-1616  CTASTATI
-449  HOUSE
-1  ELEVATOR
-1631721  STREET
-31288  BARORTAV
-15934  AIRPORTA
-949  AUTO
-851  AIRPORTB
-4834  CTABUSST
-7160  BARBERSH
-4  RIVER
-690  AIRPORTE
-9  SCHOOLYA
-6306  TAXICAB
-2  CHURCHPR
-6525  COLLEGEU
-3  TRAILER
-6  CHALOBBY
-3  CHAPLAYL
-754  POOLROOM
-3  CTALPLAT
-1  TRUCKING
-1262971  RESIDENC
-14  STAIRWEL
-907  FIRESTAT
-2  LIVERYST
-585  BOATWATE
-2  FACTORY
-1  FUNERALP
-175207  PARKINGL
-434  AIRCRAFT
-158  YARD
-3  COACHHOU
-41  CTATRACK
-6334  ATMAUTOM
-32  TAVERN
-962  DELIVERY
-468  AIRPORTP
-619107  APARTMEN
-24698  HOTELMOT
-4  CHURCH
-10376  ABANDONE
-4377  SPORTSAR
-451  CREDITUN
-5380  AIRPORTT
-15  HOTEL
-5  WOODEDAR
-2  CTAPROPE
-13545  CHURCHSY
-638  AIRPORTV
-640  ANIMALHO
-1  LIVERYAU
-2  COUNTYJA
-14  CLUB
-4766  VEHICLEC
-687  FEDERALB
-         */
+    static void readConfigFile(std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) 
+    {
         std::ifstream infile;
         infile.open("crimes2.csv");
         std::string tmp;
@@ -313,7 +135,8 @@ public:
         testCase.N = numOfLines;
         testCase.K = 148;
         std::set<std::string> keywords;
-        for (int i = 1; i <= numOfLines; i++) {
+        for (int i = 1; i <= numOfLines; i++) 
+	{
             getline(infile, tmp);
             testCase.filePairs[tmp].push_back(i);
             keywords.insert(tmp);
@@ -368,7 +191,8 @@ public:
     }
 
     template <typename T>
-    static void readConfigFile(int argc, char** argv, std::string address, std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) {
+    static void readConfigFile(int argc, char** argv, std::string address, std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) 
+    {
         /*
          * Config file structure (They should be sorted based on N)
          * 
@@ -399,15 +223,17 @@ public:
         overwrite = (tmp == "true") ? true : false;
         getline(infile, tmp);
         int totalTests = stoi(tmp);
-        for (int i = 0; i < totalTests; i++) {
+        for (int i = 0; i < totalTests; i++) 
+	{
             TC<T> testCase;
             getline(infile, tmp);
             testCase.N = stoi(tmp);
             getline(infile, tmp);
             testCase.K = stoi(tmp);
             getline(infile, tmp);
-            int qNum = stoi(tmp);
-            for (int i = 0; i < qNum; i++) {
+            int qNum = stoi(tmp); //#of queries
+            for (int i = 0; i < qNum; i++) 
+	    {
                 getline(infile, tmp);
                 testCase.Qs.push_back(stoi(tmp));
                 getline(infile, tmp);
@@ -419,8 +245,80 @@ public:
         //        }
     };
 
+/*
     template <typename T>
-    static void generateTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed) {
+static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed, bool overwrite, vector<string> testKeywords)	
+    {
+        char alphanum[] =
+                "0123456789"
+                "!@#$%^&*"
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                "abcdefghijklmnopqrstuvwxyz";
+        srand(seed);
+        uint totalKeywordSize = 0;
+        uint totalPairNumber = 0;
+        for (uint i = 0; i < testCases.size(); i++) //for each test suite
+	{
+	   if(overwrite)
+	   {
+           	for (uint j = 0; j < testKeywords.size(); j++) 
+	   	{
+           		testCases[i].keywords.push_back(testKeywords[j]);
+           	}
+	    }
+            for (uint j = testKeywords.size(); j<testCases[i].K-totalKeywordSize; j++)
+	    {
+                std::string str;
+                for (uint k = 0; k < keywordLength; ++k) 
+		{
+                    str += alphanum[rand() % (sizeof (alphanum) - 1)];
+                }
+                //                str="salam";
+                testCases[i].keywords.push_back(str);
+            }
+            totalKeywordSize += testCases[i].keywords.size();
+
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) // first few keywords are testkeywords
+	    {
+                testCases[i].testKeywords.push_back(testCases[i].keywords[j]);
+            }
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+	    {
+                std::vector<T> files;
+	        //testCases[i].Qs[j] = pow(2, (int)ceil(log2(testCases[i].Qs[j])));	
+                for (uint k = 0; k < testCases[i].Qs[j]; k++)   //add file ids based on number in config file
+		{
+                    files.push_back(k);
+                    totalPairNumber++;
+                }
+                testCases[i].filePairs.push_back(make_pair(testCases[i].testKeywords[j],files));
+                files.clear();
+            }
+            uint totalCounter = totalPairNumber;
+            uint reminderKeywords = testCases[i].keywords.size() - testCases[i].testKeywords.size();
+            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
+	    {
+                std::vector<T> files;
+		int sz=rand()%((int)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
+		//sz = pow(2, (int)ceil(log2(sz)));
+                //for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
+		for(uint k =0; k<sz;k++)
+		{
+                    int fileName = ((rand() % 1000)) + 10000000;
+                    files.push_back(fileName);
+                    totalPairNumber++;
+                }
+                testCases[i].filePairs.push_back(make_pair(testCases[i].keywords[j],files));
+                files.clear();
+            }
+	cout <<"Total number of keyword-fileID pairs:"<< totalPairNumber<<endl;
+        }
+	//delete queries are not added here
+    };*/
+    
+    template <typename T>
+    static void generateTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed) 
+    {
         char alphanum[] =
                 "0123456789"
                 "!@#$%^&*"
@@ -430,11 +328,13 @@ public:
         srand(seed);
         uint totalKeywordSize = 0;
         uint totalPairNumber = 0;
-        for (uint i = 0; i < testCases.size(); i++) {
-
-            for (uint j = 0; j < testCases[i].K - totalKeywordSize; j++) {
+        for (uint i = 0; i < testCases.size(); i++) //for each test suite
+	{
+            for (uint j = 0; j < testCases[i].K - totalKeywordSize; j++) // generate random K keywords 
+	    {
                 std::string str;
-                for (uint k = 0; k < keywordLength; ++k) {
+                for (uint k = 0; k < keywordLength; ++k) 
+		{
                     str += alphanum[rand() % (sizeof (alphanum) - 1)];
                 }
                 //                str="salam";
@@ -442,17 +342,16 @@ public:
             }
             totalKeywordSize += testCases[i].keywords.size();
 
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) {
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) // first few keywords are testkeywords
+	    {
                 testCases[i].testKeywords.push_back(testCases[i].keywords[j]);
             }
-
-
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) {
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+	    {
                 std::vector<T> files;
-                for (uint k = 0; k < testCases[i].Qs[j]; k++) {
-                    int fileName = ((rand() % 1000)) + 1000; //////here
-                    files.push_back(fileName);
-					cout<<"++"<<fileName<<"++"<<endl;
+                for (uint k = 0; k < testCases[i].Qs[j]; k++)   //add file ids based on number in config file
+		{
+                    files.push_back(k);
                     totalPairNumber++;
                 }
                 testCases[i].filePairs[testCases[i].testKeywords[j]] = files;
@@ -460,18 +359,20 @@ public:
             }
             uint totalCounter = totalPairNumber;
             uint reminderKeywords = testCases[i].keywords.size() - testCases[i].testKeywords.size();
-            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) {
+            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
+	    {
                 std::vector<T> files;
-                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
-                    int fileName = ((rand() % 1000)) + 1000;
+                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
+		{
+                    int fileName = ((rand() % 1000)) + 1000000;
                     files.push_back(fileName);
-					cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
                 }
                 testCases[i].filePairs[testCases[i].keywords[j]] = files;
                 files.clear();
             }
         }
+	//delete queries are not added here
     };
 
     template <typename T>
@@ -485,30 +386,33 @@ public:
         srand(seed);
         uint totalKeywordSize = 0;
         uint totalPairNumber = 0;
-        for (uint i = 0; i < testCases.size(); i++) {
-            for (uint j = 0; j < testKeywords.size(); j++) {
+        for (uint i = 0; i < testCases.size(); i++) 
+	{
+            for (uint j = 0; j < testKeywords.size(); j++) 
+	    {
                 testCases[i].keywords.push_back(testKeywords[j]);
             }
-            for (uint j = testKeywords.size(); j < testCases[i].K - totalKeywordSize; j++) {
+            for (uint j = testKeywords.size(); j < testCases[i].K - totalKeywordSize; j++) 
+	    {
                 std::string str;
-                for (uint k = 0; k < keywordLength; ++k) {
+                for (uint k = 0; k < keywordLength; ++k) 
+		{
                     str += alphanum[rand() % (sizeof (alphanum) - 1)];
                 }
                 testCases[i].keywords.push_back(str);
             }
             totalKeywordSize += testCases[i].keywords.size();
 
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) {
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+	    {
                 testCases[i].testKeywords.push_back(testCases[i].keywords[j]);
             }
-
-
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) {
+            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+	    {
                 std::vector<T> files;
-                for (uint k = 0; k < testCases[i].Qs[j]; k++) {
-                    int fileName = ((rand() % 1000)) + 1000;
-                    files.push_back(fileName);
-					cout<<"++"<<fileName<<"++"<<endl;
+                for (uint k = 0; k < testCases[i].Qs[j]; k++) 
+		{
+                    files.push_back(k);
                     totalPairNumber++;
                 }
                 testCases[i].filePairs[testCases[i].testKeywords[j]] = files;
@@ -516,12 +420,14 @@ public:
             }
             uint totalCounter = totalPairNumber;
             uint reminderKeywords = testCases[i].keywords.size() - testCases[i].testKeywords.size();
-            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) {
+            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
+	    {
                 std::vector<T> files;
-                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
-                    int fileName = ((rand() % 1000)) + 1000;
-                    files.push_back(fileName);
+                for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) 
+		{
+                    int fileName = ((rand() % 1000)) + 1000000;
 					cout<<"++"<<fileName<<"++"<<endl;
+                    files.push_back(fileName);
                     totalPairNumber++;
                 }
                 testCases[i].filePairs[testCases[i].keywords[j]] = files;
@@ -529,8 +435,9 @@ public:
             }
         }
     };
+    
+
     virtual ~Utilities();
 };
 
 #endif /* UTILITIES_H */
-

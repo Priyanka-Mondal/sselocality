@@ -134,7 +134,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		cout <<"index:"<<i<<"[is:"<<indexSize[i]<<"]:"<<ceil(2*by(indexSize[i-1],s))<<"<="<<cnt[i]<<"<"<<ceil(2*by(indexSize[i-1],s))+ceil(by(mi,s))<<endl;
 			if(cnt[i] <=(ceil((float)(2*by(indexSize[i-1],s)))))
 			{
-				L->getBin(i, 1, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
+				L->getBin(i, 0, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
 				L->getBin(i, 1, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
 			}
 			if ((ceil((float)2*by(indexSize[i-1],s)))<=cnt[i] && 
@@ -184,9 +184,15 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		}
 	}
 	prf_type keyVal;
-	createKeyVal(keyword,ind,op, keyVal);
+    std::fill(keyVal.begin(), keyVal.end(), 0);
+    //memset(keyVal.data(), 0, AES_KEY_SIZE);
+    std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
+    keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = 0;//bin
+	//createKeyVal(keyword,ind,op, keyVal);
 	L->append(0, keyVal, keys[0][3]);
-	cout <<"keyVal:"<<keyVal.data()<<endl;
+	cout <<"keyVal:"<<keyVal.data()<<*(int*) (&(keyVal.data()[AES_KEY_SIZE - 5]))<<endl;
 	cnt[0]=cnt[0]+1;
 	if(cnt[0]==B)
 	{
@@ -289,7 +295,6 @@ vector<int> DeAmortized::search(string keyword)
         prf_type decodedString = *i;
         int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
         remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
-		cout <<"(("<<decodedString.data()<<":"<<plaintext<<":"<<remove[plaintext]<<"))";
     }
     for (auto const& cur : remove) 
 	{

@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     	    for (j = 0; j < cur->second.size(); j++) 
 			{
 			key++;
-			cout <<" inserting keywords:"<<key<<"/"<<testCases[i].N<<" ind:"<<cur->second[j]<<endl;
+			cout <<" inserting keywords:"<<key<<"/"<<testCases[i].N<<" "<<cur->first<<" ind:"<<cur->second[j]<<endl;
         	    client.update(OP::INS, cur->first, cur->second[j], true);
             	cnt++;
             	if (cnt % 500 == 0) 
@@ -134,7 +134,8 @@ int main(int argc, char** argv)
         //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
         //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
         cout << "Number of return item:[" << res.size()<<"]" << endl;
-		//assert(testCases[i].Qs[j]-testCases[i].delNumber[j] == res.size());
+		sleep(1);
+		assert(testCases[i].Qs[j]-testCases[i].delNumber[j] == res.size());
     }
     cout << "*********************************************************************************" << endl;
 
