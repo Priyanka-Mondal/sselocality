@@ -141,15 +141,22 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			{
 				L->addDummy(i, (cnt[i]-(ceil((float)2*by(indexSize[i-1],s)))), keys[i][3], s);
 			}
-			else if (((ceil((float)2*by(indexSize[i-1],s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
+			if(((ceil((float)2*by(indexSize[i-1],s)))+ceil(by(mi,s)))==cnt[i])
+			{
+				int newSize = floor((float)log2(2*indexSize[i]+2*indexSize[i-1]));
+				newSize = pow(2,newSize);
+				L->reSize(i,newSize);
+				assert(newSize>=indexSize[i]);
+			}
+			if (((ceil((float)2*by(indexSize[i-1],s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
 			{
 				int count = (cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s));
 				int N = L->getNEWsize(i);
-				int totStepsi = ceil(N*by(log2(N)*(log2(N)+1),4));
-				int step = ceil(by(totStepsi, (pow(2,j)-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s))));
+				int totStepsi = ceil(by(N*log2(N)*(log2(N)+1),4));
+				int step = ceil(by(totStepsi, (pow(2,j)-ceil((float)2*by(indexSize[i-1],s))-ceil(by(mi,s)))));
 				int stepi = pow(2, (int)ceil(log2(step)));
-				L->bitonicSort(stepi, i,(cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s)), keys[i][3]);
-				L->nonOblSort(i, keys[i][3]);
+				L->deAmortizedBitSort(stepi, (cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s)), N,i, keys[i][3]);
+				//L->nonOblSort(i, keys[i][3]);
 			}
 		
 			cnt[i] = cnt[i]+1;
