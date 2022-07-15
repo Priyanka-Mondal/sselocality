@@ -452,7 +452,7 @@ public:
                 for (uint k = 0; k < testCases[i].Qs[j]; k++) {
                     int fileName = ((rand() % 1000)) + 1000; //////here
                     files.push_back(fileName);
-					cout<<"++"<<fileName<<"++"<<endl;
+					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
                 }
                 testCases[i].filePairs[testCases[i].testKeywords[j]] = files;
@@ -465,7 +465,7 @@ public:
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
                     int fileName = ((rand() % 1000)) + 1000;
                     files.push_back(fileName);
-					cout<<"++"<<fileName<<"++"<<endl;
+					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
                 }
                 testCases[i].filePairs[testCases[i].keywords[j]] = files;
@@ -508,7 +508,7 @@ public:
                 for (uint k = 0; k < testCases[i].Qs[j]; k++) {
                     int fileName = ((rand() % 1000)) + 1000;
                     files.push_back(fileName);
-					cout<<"++"<<fileName<<"++"<<endl;
+					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
                 }
                 testCases[i].filePairs[testCases[i].testKeywords[j]] = files;
@@ -521,7 +521,7 @@ public:
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
                     int fileName = ((rand() % 1000)) + 1000;
                     files.push_back(fileName);
-					cout<<"++"<<fileName<<"++"<<endl;
+					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
                 }
                 testCases[i].filePairs[testCases[i].keywords[j]] = files;

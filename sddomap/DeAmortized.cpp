@@ -152,11 +152,13 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			{
 				int count = (cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s));
 				int N = L->getNEWsize(i);
-				int totStepsi = ceil(by(N*log2(N)*(log2(N)+1),4));
-				int step = ceil(by(totStepsi, (pow(2,j)-ceil((float)2*by(indexSize[i-1],s))-ceil(by(mi,s)))));
+				int totStepsi = 2*ceil(by(N*log2(N)*(log2(N)+1),4));
+				int times = pow(2,j)-((ceil((float)2*by(indexSize[i-1],s)))-ceil(by(mi,s)));
+				int step = ceil(by(totStepsi, times));
 				int stepi = pow(2, (int)ceil(log2(step)));
-				L->deAmortizedBitSort(stepi, (cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s)), N,i, keys[i][3]);
-				//L->nonOblSort(i, keys[i][3]);
+				cout <<"j:"<<j<<"cnt[i]:"<<cnt[i]<<"N:"<<N<<" totStepsi:"<<totStepsi<<" step:"<<step<<" stepi:"<<stepi<<" times:"<< times<<endl;
+				//L->deAmortizedBitSort(stepi, (cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s)), N,i, keys[i][3]);
+				L->nonOblSort(i, keys[i][3]);
 			}
 		
 			cnt[i] = cnt[i]+1;
