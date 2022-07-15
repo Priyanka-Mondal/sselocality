@@ -98,7 +98,6 @@ void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphe
                     file.write((char*) newRecord, AES_KEY_SIZE);
     int bina = *(int*) (&(ci.data()[AES_KEY_SIZE - 10]));
     int id = *(int*) (&(ci.data()[AES_KEY_SIZE - 5]));
-					cout <<"<<"<<ci.data()<<"|"<<id<<">>"<<endl;
 					//if(ci != nullKey)
 					//cout <<"wrote ["<<ci.data()<<"|"<<id<<"|"<<bina<<"] in "<<filenames[index][instance].c_str()<<endl;
                 //}
@@ -128,7 +127,6 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
             if (file.fail()) 
                 cerr << "Error in read: " << strerror(errno);
             int size = file.tellg();
-			cout <<"size::"<<size<<endl;
 			assert(size == sizeOfEachBin[index]*numberOfBins[index]*AES_KEY_SIZE);
             file.seekg(0, ios::beg);
 			SeekG++;
@@ -166,27 +164,17 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
 	//cout <<"index:"<<index<<endl;
 	//cout <<"start:"<<start<<" end:"<<end<<" seek:"<< seek<<endl;
 	//cout<<"rem:"<<remainder<<" size:"<<size<< "read len:"<<readLength<<endl;
-	if(readLength > remainder)
+	if(readLength >= remainder)
 		readLength = remainder;
 	if(remainder <0)
 		readLength = 0;
     char* keyValues = new char[readLength];
     file.read(keyValues, readLength);
     file.close();
-////////////////////////
-
-//    file.seekg(seek, ios::beg);
-//	readLength = size;
-//    char* keyValues = new char[size];
-//    file.read(keyValues, readLength);
-//    file.close();
-
-////////////////////////
     for (int i = 0; i < readLength/AES_KEY_SIZE; i++) 
 	{
         prf_type restmp;
         std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, restmp.begin());
-		cout <<"L|"<<restmp.data()<<"||"<<endl;
         //if (restmp.data() != nullKey.data()) {
             results.push_back(restmp);
         //}
@@ -221,7 +209,7 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
 {
     vector<prf_type> results;
     std::fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
-    cout<<filenames[index][instance].c_str()<<endl;
+    //cout<<filenames[index][instance].c_str()<<endl;
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
     int readPos = bin * AES_KEY_SIZE * sizeOfEachBin[index];
@@ -245,9 +233,9 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     char* keyValues = new char[readLength];
     file.read(keyValues, readLength);
     readBytes += readLength;
-	cout <<"index:"<<index<<" bin:"<<bin<<" sizeOfBin:"<<sizeOfEachBin[index]<<endl;
-	cout <<"readPos:"<<readPos<<" readLen:"<<readLength<<" totalsize:"<< AES_KEY_SIZE*sizeOfEachBin[index]*numberOfBins[index]<<endl;
-	cout<<"rem:"<<remainder<<" read len:"<<readLength<<endl;
+	//cout <<"index:"<<index<<" bin:"<<bin<<" sizeOfBin:"<<sizeOfEachBin[index]<<endl;
+	//cout <<"readPos:"<<readPos<<" readLen:"<<readLength<<" totalsize:"<< AES_KEY_SIZE*sizeOfEachBin[index]*numberOfBins[index]<<endl;
+	//cout<<"rem:"<<remainder<<" read len:"<<readLength<<endl;
 	assert(readLength>=AES_KEY_SIZE);
     for (int i = 0; i < readLength / AES_KEY_SIZE; i++) 
 	{

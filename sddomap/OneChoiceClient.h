@@ -54,12 +54,13 @@ public:
 	void reSize(int index, int size);
 	void getBin(int newindex, int instance, int start, int end, unsigned char* key1, unsigned char* key2);
 	void addDummy(int index, int count, unsigned char* key, int s);
-	void bitonicSort(int step, int index, int counter);
+	void bitonicSort(int step, int index, int counter, unsigned char* key);
 	void nonOblSort(int index, unsigned char* key);
     int map(string w, int cnt, int index, unsigned char* key);
     Bid getBid(string str, int cnt);
 	vector<prf_type> searchNEW(int index, string keyword);
 	void ensureNEWSize(int index, int bin, int cnt);
+    int getNEWsize(int index);
 };
 
 #endif /* ONECHOICECLIENT_H */

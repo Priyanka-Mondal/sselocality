@@ -92,25 +92,19 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 	int bin = map(kw, cntw, index, key);
 	do
 	{
-		cntw++;
-    	//vector<prf_type> ciphers = server->getAllData(index,instance);
     	vector<prf_type> ciphers = server->search(index, instance, bin);
-		assert(issorted(ciphers));
-		cout <<index<<":ciphers size:"<<ciphers.size()<<endl;
 		flag = 0;
     	totalCommunication += ciphers.size() * sizeof (prf_type) ;
 	    for (auto item : ciphers) 
 		{
-	        prf_type plaintext = item;
-	        //Utilities::decode(item, plaintext, key);
-	       	//if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-			//if(plaintext.data()!=nullKey.data())
-            if (string((char*) plaintext.data()) == keyword) 
+	        prf_type plaintext;// = item;
+	        Utilities::decode(item, plaintext, key);
+            //if (string((char*) plaintext.data()) == keyword) 
+	       	if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 			{
-			cout <<"{"<<plaintext.data()<<"}";
 	           	finalRes.push_back(plaintext);
 				flag =1;
-				cout<<" MATCH:"<<plaintext.data()<<" "<<bin<<"/"<<finalRes.size()<<endl;
+				//cout<<" MATCH:"<<plaintext.data()<<" "<<bin<<"/"<<finalRes.size()<<endl;
 	       	}
 		//cout <<"bin:"<<bin<<"/"<<numberOfBins[index]-1<<endl;
 		}
@@ -145,9 +139,6 @@ void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 	server->clear(index, fromInstance);
 	exist[index][toInstance] = true;
 	exist[index][fromInstance] = false;
-	vector<prf_type> again = server->getAllData(index,toInstance);
-	cout <<"index:"<<index<<"MOVE:"<<again.size()<<endl;
-	assert(issorted(again));
 }
 
 void OneChoiceClient::copy(int index, int toInstance)
@@ -156,20 +147,14 @@ void OneChoiceClient::copy(int index, int toInstance)
 	exist[index][toInstance] = true;
 	numNEW[index] = numNEW[index] + 1;
 	exist[index][3] = false;	
-	vector<prf_type> again = server->getAllData(index,toInstance);
-	cout <<"newOLD:"<<again[0].data()<<" "<<*(int*) (&(again[0].data()[AES_KEY_SIZE - 5]))<<endl;
-	cout <<"index:"<<index<<"AGAIN:"<<again.size()<<endl;
-	assert(issorted(again));
 }
 
 void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 {
-	prf_type encKeyVal = keyVal;
-	//encKeyVal = Utilities::encode(keyVal.data(), key);
+	prf_type encKeyVal;
+	encKeyVal = Utilities::encode(keyVal.data(), key);
+	//cout <<encKeyVal.data();
 	server->append(index, encKeyVal);
-	vector<prf_type> new0 = server->getNEW(index);
-	if(index==0)
-	cout <<index<<" new0:"<<new0[0].data()<<" "<<*(int*) (&(new0[0].data()[AES_KEY_SIZE - 5]))<<endl;
 }
 
 void OneChoiceClient::destroy(int index, int instance)
@@ -191,46 +176,38 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 	{
 		if(start+end>numberOfBins[index-1]*sizeOfEachBin[index-1])
 			end = numberOfBins[index-1]*sizeOfEachBin[index-1] - start;
-		//cout <<" new numOfEl:"<<end<<endl;
 		vector<prf_type> ciphers = server->getElements(index-1, instance, start, end);
 		int upCnt = numNEW[index];
 		int cntw=0;
-		//cout <<"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
-		for(auto c: ciphers)
+		for(prf_type c: ciphers)
 		{
-	        prf_type plaintext = c;
-	        int ind = *(int*) (&(c.data()[AES_KEY_SIZE - 5]));
-			cout <<"[{( "<<c.data() <<"|"<<ind<<" )}]/"<<ciphers.size()<<endl;
-	        //Utilities::decode(c, plaintext, key1);
-	        prf_type decodedString = plaintext;
-	        //int ind = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
-	        //int op = ((byte) decodedString.data()[AES_KEY_SIZE - 6]); 
+	        prf_type plaintext;// = c;
+			//sleep(1);
+	        Utilities::decode(c, plaintext, key1);
+	        int ind = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
+	        int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]); 
+	        int oldbin = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 10]));
 	        string w((char*) plaintext.data());
 			int cnt;
 			if(w!="")
 				cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
 			else
 				cnt = cntw++;
-			//string newCnt= omaps[index]->find(getBid(w,upCnt));
 			int bin = map(w, cnt, index, key2);		
-			//cout <<"from index:"<<index-1<<" instance:"<<instance<<" upCnt:"<<upCnt <<" "<<cnt;
-			//cout <<"["<<w<<"|"<<ind<<"|"<<bin<<"]/"<<numberOfBins[index]-1<<endl;
 			int realbin;
 			if(w=="")
 				realbin = INF;
 			else
 				realbin = bin;
 	    	prf_type keyVal;
-    		//memset(keyVal.data(), 0, AES_KEY_SIZE);
-	    	//std::copy(w.begin(), w.end(), keyVal.begin());//keyword
-	    	//*(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind; 
-			//*(int*)(&(decodedString.data()[AES_KEY_SIZE - 5]));//fileid
-	    	//keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == 1 ? 1 : 0);//op
-	    	//*(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = realbin;//bin
-	    	*(int*) (&(plaintext.data()[AES_KEY_SIZE - 10])) = realbin;//bin
-			append(index, plaintext, key2);
+    		memset(keyVal.data(), 0, AES_KEY_SIZE);
+	    	std::copy(w.begin(), w.end(), keyVal.begin());//keyword
+	    	*(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind; 
+	    	keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == 1 ? 1 : 0);//op
+	    	*(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = realbin;//bin
+			append(index, keyVal, key2);
 			if(w!="")
-			string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
+				string ob = omaps[index]->incrementCnt(getBid(to_string(realbin),upCnt));
 		}
 
 		/*if(server->getNEWsize(index) >= (instance+1)*numberOfBins[index]*sizeOfEachBin[index])
@@ -241,14 +218,12 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 }
 void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 {
-	cout<<"adding dummy at:"<<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
+	//cout<<"adding dummy at:"<<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
 	assert(server->getNEWsize(index) >= 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
     int upCnt = numNEW[index];
-	cout <<"s:"<<s<<" count:"<<count<<endl;
 	for(int t = 0; t<s; t++)
 	{
 		int bin = count*s+t;
-		//cout <<"ADDdummy count:"<<count<<" upCnt:"<<upCnt <<" index:"<<index<<" bin:"<<bin<<endl;
 		if(bin < numberOfBins[index])
 		{
 			assert(server->getNEWsize(index)<indexSize[index]+2*indexSize[index-1]);
@@ -258,16 +233,12 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 				cbin = 0;
 			else 
 				cbin = stoi(cb);
-			cout <<"bin:"<<bin<<"current bin size:"<<cbin<<"/"<<sizeOfEachBin[index]<<endl;
-			//if(cbin>sizeOfEachBin[index]);
-			//	ensureNEWSize(index,bin, sizeOfEachBin[index]-cbin);
 			assert(cbin <= sizeOfEachBin[index]);
 			for(int k = cbin; k<sizeOfEachBin[index]; k++)
 			{
-			//	cout <<"adding REAL dummy:"<<k<<endl;
 				prf_type value;
     			memset(value.data(), 0, AES_KEY_SIZE);
-    			*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = 9999;//id
+    			*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = 9999;//dummy-id
 	    		value.data()[AES_KEY_SIZE - 6] = (byte) (1);//op
     			*(int*) (&(value.data()[AES_KEY_SIZE - 10])) = bin;//bin
 				append(index, value, key);
@@ -275,13 +246,13 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 			}
 			for(int k = 0; k<cbin ; k++)
 			{ 
-				//dummy omap access
 				prf_type value;
     			memset(value.data(), 0, AES_KEY_SIZE);
     			*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = 9999;//id
 	    		value.data()[AES_KEY_SIZE - 6] = (byte) (1);//op
     			*(int*) (&(value.data()[AES_KEY_SIZE - 10])) = INF;//bin
 				append(index, value, key);
+				//**dummy omap access here
 			}
 		}
 		else
@@ -313,10 +284,9 @@ int OneChoiceClient::map(string w, int cnt, int index, unsigned char* key)
     unsigned char* hash = Utilities::sha256((char*) K.data(), AES_KEY_SIZE);
     //int bin = (((((unsigned int) (*((int*) hash))) % numberOfBins[index]))%numberOfBins[index]);
     int bin = (((((unsigned int) (*((int*) hash))) % numberOfBins[index])+cnt)%numberOfBins[index]);
-	//cout <<"at map1:"<<bin<<"|"<<bin2<<endl;
 	return bin;
 }
-void OneChoiceClient::bitonicSort(int step, int index, int counter)
+void OneChoiceClient::bitonicSort(int step, int index, int counter, unsigned char* key)
 {
 	//do the actual sort here
 	//but get the elements from the server
@@ -358,71 +328,61 @@ return A;
 void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 {
 	vector<prf_type> encNEWi = server->getNEW(index);
-	//if(!issorted(encNEWi))
-	{
-	cout <<"[[[[[";
-	for(auto a : encNEWi)
-	{
-    	int ind = *(int*) (&(a.data()[AES_KEY_SIZE - 5]));
-    	int bin = *(int*) (&(a.data()[AES_KEY_SIZE - 10]));
-	    int op = ((byte) a.data()[AES_KEY_SIZE - 6]); 
-		cout <<"{"<<a.data()<<"|"<<bin<<"|"<<op<<"|"<<ind<<"}";
-	}
-	cout<<"]]]]]"<<endl;
 	assert(encNEWi.size() == indexSize[index]+2*indexSize[index-1]);
 	int upCnt = numNEW[index];
 	for(int k =0; k<numberOfBins[index]; k++)
 	{
-			int cb = stoi((omaps[index]->find(getBid(to_string(k),upCnt))));
-			assert(cb == sizeOfEachBin[index]);
+		int cb = stoi((omaps[index]->find(getBid(to_string(k),upCnt))));
+		assert(cb == sizeOfEachBin[index]);
 	}
-	server->resize(index,0);
-    vector<prf_type> decodedNEWi;	
-	for(auto n : encNEWi)
+		vector<prf_type> decodedNEWi;	
+		for(auto n : encNEWi)
+		{
+			prf_type dec;// = n;
+		    Utilities::decode(n, dec, key);
+			decodedNEWi.push_back(dec);
+		}
+	if(!issorted(decodedNEWi))
 	{
-		prf_type dec = n;
-	    //Utilities::decode(n, dec, key);
+		server->resize(index,0);
+		sort(decodedNEWi);
+		encNEWi.clear();
+		for(auto n : decodedNEWi)
+		{
+			prf_type enc;// = n;
+			enc = Utilities::encode(n.data(), key);
+			encNEWi.push_back(enc);
+		}
+		server->putNEW(index, encNEWi);
+	}
+	/*
+	vector<prf_type> sortedNEW = server->getNEW(index);
+	vector<prf_type> decodedNEWi;	
+	for(auto n : sortedNEW)
+	{
+		prf_type dec;// = n;
+	    Utilities::decode(n, dec, key);
 		decodedNEWi.push_back(dec);
 	}
-	sort(decodedNEWi);
-	encNEWi.resize(0);
-	for(auto n : decodedNEWi)
-	{
-		prf_type enc = n;
-		//enc = Utilities::encode(n.data(), key);
-		encNEWi.push_back(enc);
-	}
-	server->putNEW(index, encNEWi);
-	vector<prf_type> sortedNEW = server->getNEW(index);
 	for(int i = 0; i<numberOfBins[index]; i++)
 	{
 		for(int j = 0; j<sizeOfEachBin[index]; j++)
 		{
 			int k = i*sizeOfEachBin[index]+j;
-			prf_type val = sortedNEW[k];
-    		int bina = *(int*) (&(val.data()[AES_KEY_SIZE - 10]));
+			prf_type val = decodedNEWi[k];
+			int bina = *(int*) (&(val.data()[AES_KEY_SIZE - 10]));
 			assert(bina == i);
 		}
-	}
-	cout <<"{{{{{";
-	for(auto a : encNEWi)
-	{
-    	int ind = *(int*) (&(a.data()[AES_KEY_SIZE - 5]));
-    	int bin = *(int*) (&(a.data()[AES_KEY_SIZE - 10]));
-	    int op = ((byte) a.data()[AES_KEY_SIZE - 6]); 
-		cout <<"{"<<a.data()<<"|"<<bin<<"|"<<op<<"|"<<ind<<"}";
-	}
-	cout<<"}}}}}"<<endl;
-	}
+	}*/
 	//else
 	//	cout <<"ALREADY SORTED:"<<index<<endl;
 	//assert(issorted(encNEWi));
 }
 void OneChoiceClient::reSize(int index, int size)
 {
-	cout <<"resizing:"<<index<<endl;
 	server->resize(index,size);
-	vector<prf_type> encNEWi = server->getNEW(index);
-	assert(encNEWi.size() == indexSize[index]);
-	assert(issorted(encNEWi));
+}
+int OneChoiceClient::getNEWsize(int index)
+{
+	return server->getNEWsize(index);
 }

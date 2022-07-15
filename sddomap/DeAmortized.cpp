@@ -130,30 +130,32 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
 			int s = i>1 ? 6 : 2;
-		//cout <<"index:"<<i<<"[is:"<<indexSize[i]<<"]"<<ceil(2*by(indexSize[i-1],s))<<"<="<<cnt[i]<<"<"<<ceil(2*by(indexSize[i-1],s))+ceil(by(mi,s))<<endl;
-		cout <<"index:"<<i<<"[is:"<<indexSize[i]<<"]:"<<ceil(2*by(indexSize[i-1],s))<<"<="<<cnt[i]<<"<"<<ceil(2*by(indexSize[i-1],s))+ceil(by(mi,s))<<endl;
+		//cout <<"index:"<<i<<"[is:"<<indexSize[i]<<"]:"<<ceil(2*by(indexSize[i-1],s))<<"<="<<cnt[i]<<"<"<<ceil(2*by(indexSize[i-1],s))+ceil(by(mi,s))<<endl;
 			if(cnt[i] <=(ceil((float)(2*by(indexSize[i-1],s)))))
 			{
-				L->getBin(i, 0, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
+				L->getBin(i, 0, cnt[i]*(s/2),(s/2), keys[i-1][0], keys[i][3]);
 				L->getBin(i, 1, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
 			}
 			if ((ceil((float)2*by(indexSize[i-1],s)))<=cnt[i] && 
 					  cnt[i]<((ceil((float)2*by(indexSize[i-1],s)))+(ceil(by(mi,s)))))
 			{
-				cout <<"ADDING DUMMY:"<<i<<" cnt[i]:"<<cnt[i]<<endl;
 				L->addDummy(i, (cnt[i]-(ceil((float)2*by(indexSize[i-1],s)))), keys[i][3], s);
 			}
 			else if (((ceil((float)2*by(indexSize[i-1],s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
 			{
-				cout <<"SORTING:"<<i<<" cnt[i]:"<<cnt[i]<<"<="<<pow(2,j)<<endl;
+				int count = (cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s));
+				int N = L->getNEWsize(i);
+				int totStepsi = ceil(N*by(log2(N)*(log2(N)+1),4));
+				int step = ceil(by(totStepsi, (pow(2,j)-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s))));
+				int stepi = pow(2, (int)ceil(log2(step)));
+				L->bitonicSort(stepi, i,(cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s)), keys[i][3]);
 				L->nonOblSort(i, keys[i][3]);
-				//L->bitonicSort(stepi, i,(cnt[i]-ceil(t*pow(2,j)/s)-ceil(mi/s))));
 			}
 		
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,j))
 			{
-				L->reSize(i,numberOfBins[j]*sizeOfEachBin[j]); //j = i+logB
+				L->reSize(i,indexSize[i]); //j = i+logB
 				L->move(i-1,0,2); 
 				updateKey(i-1,0,2);
 				//cout<<"OLD["<<i-1<<"] to OLDEST["<<i-1<<"]"<<endl;
@@ -184,15 +186,8 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		}
 	}
 	prf_type keyVal;
-    std::fill(keyVal.begin(), keyVal.end(), 0);
-    //memset(keyVal.data(), 0, AES_KEY_SIZE);
-    std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
-    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
-    keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
-    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = 0;//bin
-	//createKeyVal(keyword,ind,op, keyVal);
+	createKeyVal(keyword,ind,op, keyVal);
 	L->append(0, keyVal, keys[0][3]);
-	cout <<"keyVal:"<<keyVal.data()<<*(int*) (&(keyVal.data()[AES_KEY_SIZE - 5]))<<endl;
 	cnt[0]=cnt[0]+1;
 	if(cnt[0]==B)
 	{
@@ -220,13 +215,11 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		cnt[0] = 0;
 	}
     updateCounter++;
-	cout <<"-----------------------------------"<<endl;
 }
 
 void DeAmortized::createKeyVal(string keyword, int ind, OP op, prf_type& keyVal)
 {
-    std::fill(keyVal.begin(), keyVal.end(), 0);
-    //memset(keyVal.data(), 0, AES_KEY_SIZE);
+    memset(keyVal.data(), 0, AES_KEY_SIZE);
     std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
     *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
     keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
@@ -236,7 +229,6 @@ void DeAmortized::createKeyVal(string keyword, int ind, OP op, prf_type& keyVal)
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
 {
 	keys[index][toInstance] = keys[index][fromInstance];
-	//cout <<"key["<<index<<"]["<<fromInstance<<"] to key["<<index<<"]["<<toInstance<<"]"<<endl;
 }
 
 vector<int> DeAmortized::search(string keyword) 
@@ -282,10 +274,9 @@ vector<int> DeAmortized::search(string keyword)
 		{
             if (L->exist[i][j]) 
 			{
-				cout <<"searching at["<< i<<"]["<<j<<"]"<<endl;
+				//cout <<"searching at["<< i<<"]["<<j<<"]"<<endl;
                 auto tmpRes = L->search(i, j, keyword, keys[i][j]);
                 encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
-				cout <<"-----------------------------------------------"<<endl;
             }
         }
     }
@@ -299,9 +290,7 @@ vector<int> DeAmortized::search(string keyword)
     for (auto const& cur : remove) 
 	{
         if (cur.second < 0) 
-		{
             finalRes.emplace_back(cur.first);
-        }
     }
     for (int i = 0; i < l; i++) 
 	{
@@ -309,41 +298,9 @@ vector<int> DeAmortized::search(string keyword)
 				L->omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
     }
     totalSearchCommSize += L->totalCommunication;
-	cout <<"size of ENCIND:"<<encIndexes.size()<<endl;
     return finalRes;
 }
 /*
-prf_type DeAmortized::bitwiseXOR(int input1, int op, prf_type input2) {
-    prf_type result;
-    result[3] = input2[3] ^ ((input1 >> 24) & 0xFF);
-    result[2] = input2[2] ^ ((input1 >> 16) & 0xFF);
-    result[1] = input2[1] ^ ((input1 >> 8) & 0xFF);
-    result[0] = input2[0] ^ (input1 & 0xFF);
-    result[4] = input2[4] ^ (op & 0xFF);
-    for (int i = 5; i < AES_KEY_SIZE; i++) {
-        result[i] = (rand() % 255) ^ input2[i];
-    }
-    return result;
-}
-
-prf_type DeAmortized::bitwiseXOR(prf_type input1, prf_type input2) {
-    prf_type result;
-    for (unsigned int i = 0; i < input2.size(); i++) {
-        result[i] = input1.at(i) ^ input2[i];
-    }
-    return result;
-}
-
-void DeAmortized::getAESRandomValue(unsigned char* keyword, int op, int srcCnt, int fileCnt, unsigned char* result) {
-    if (deleteFiles) {
-        *(int*) (&keyword[AES_KEY_SIZE - 9]) = srcCnt;
-    }
-    keyword[AES_KEY_SIZE - 5] = op & 0xFF;
-    *(int*) (&keyword[AES_KEY_SIZE - 4]) = fileCnt;
-    sse::crypto::Prg::derive((unsigned char*) keyword, 0, AES_KEY_SIZE, result);
-}
-
-
 void DeAmortized::endSetup() 
 {
     for (unsigned int i = 0; i < setupOMAPS.size(); i++) 
