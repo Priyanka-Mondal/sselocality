@@ -77,25 +77,43 @@ void sort(int a[], int N, int up)
 vector<int> getSeq(int count, int step)
 {
 	int start = count*step;
-	cout <<"count:"<<count<<"step:"<<step<<" start:"<<start<<" "<<memseq[start]<<endl;
 	vector<int> res;
 	for(int i = start; i<start+step; i++)
 	{
 		res.push_back(memseq[i]);
-		cout <<"("<<memseq[i]<<")";
 	}
-	cout <<endl;
 	return res;
 }
 
 
-void deamortizeBitonicSort(int step, int a[], int N)
+void deamortizeBitonicSort(int step, int count, vector<int>& p, int N)
 {
+		vector<int> curMem = getSeq(count, step);
+		/*
+		for(int i =0; i<curMem.size(); i++)
+		{
+			cout<<"{"<<curMem[i]<<"}";
+		}*/
+		cout <<endl;
+		std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
+		vector<int> elToSort;
+		for(auto el : curMem)
+		{
+			elToSort.push_back(p[el]);
+		}
+		std::sort(elToSort.begin(), elToSort.end(), [](int a, int b) {return a < b;});
+		int cnt = 0;
+		for(int i =0; i<curMem.size(); i++)
+		{
+			p[curMem[i]] = elToSort[cnt];
+			cnt++;
+		}
+	
 }
 
 int main()
 {
-	int p[]= {3, 7, 4, 8, 6, 2, 1, 5, 9,13,12,16,14,10,15,11, 17,18,19,20,31,32,30,28,26,29,21,25,22,24,23,27};
+	vector<int> p = {3, 7, 4, 8, 6, 2, 1, 5, 9,13,12,16,14,10,15,11, 17,18,19,20,31,32,30,28,26,29,21,25,22,24,23,27};
 	int a[32];
 	int step = 4;
 	memset(a,0,32);
@@ -105,38 +123,13 @@ int main()
 	sort(a, N, up);
 
 	printf("Sorted array: \n");
-	for (int i=0; i<N; i++)
-		printf("%d ", a[i]);
-	deamortizeBitonicSort(step,a,N);
+	//for (int i=0; i<N; i++)
+	//	printf("%d ", a[i]);
 	int totmemseq = memseq.size();
 	int totStep = ceil((float)totmemseq	/(float)step);
 	for(int count = 0; count<totStep; count++)
 	{
-		cout<<"count:"<<count<<endl;
-		vector<int> curMem;
-		curMem = getSeq(count, step);
-		cout <<"size of surMem:"<<curMem.size()<<endl;
-		vector<int> elToSort;
-		std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
-		for(auto el : curMem)
-		{
-			cout <<"["<<p[el]<<"]";
-			elToSort.push_back(p[el]);
-		}
-		cout <<endl;
-		std::sort(elToSort.begin(), elToSort.end(), [](int a, int b) {return a < b;});
-		cout <<endl;
-		int cnt = 0;
-		for(int i =0; i<curMem.size(); i++)
-		{
-			p[curMem[i]] = elToSort[cnt];
-			cnt++;
-		}
-		for(int i =0; i<curMem.size(); i++)
-		{
-			cout<<"{"<<p[curMem[i]]<<"}";
-		}
-		cout <<endl;
+		deamortizeBitonicSort(step, count, p, N);
 	}
 	for (int i=0; i<N; i++)
 		printf("%d ", p[i]);
