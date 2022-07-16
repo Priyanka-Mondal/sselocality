@@ -120,27 +120,24 @@ void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphe
 vector<prf_type> OneChoiceStorage::getAllData(int index, int instance) 
 {
     vector<prf_type> results;
-    fstream file(filenames[index][instance].c_str(), ios::binary | ios::in | ios::ate);
+    fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
-    int size = file.tellg();
 	int actSize = sizeOfEachBin[index]*numberOfBins[index]*AES_KEY_SIZE;
-	//assert(size == actSize || size == 6*actSize);
     file.seekg(0, ios::beg);
 	SeekG++;
-    char* keyValues = new char[size];
-    file.read(keyValues, size);
+    char* keyValues = new char[actSize];
+    file.read(keyValues, actSize);
     file.close();
     for (int i = 0; i < actSize / AES_KEY_SIZE; i++) 
 	{
         prf_type tmp;
         std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-		//cout <<"tmp:"<<tmp.data()<<endl;
         //if (tmp != nullKey) 
 		//{
             results.push_back(tmp);
 			//if(index == 1)
-			cout <<"getAll:["<<tmp.data()<<"]"<<endl;
+			cout <<index<<" getAll:["<<tmp.data()<<"]"<<endl;
         //}
     }
     delete keyValues;
@@ -156,7 +153,6 @@ vector<prf_type> OneChoiceStorage::getNEW(int index, int ressize) //get all of N
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
 	cout <<"st: "<<index<<" "<<ressize<<endl;
-	cout <<"file.tellg()"<<file.tellg()<<endl;
     file.seekg(0, ios::beg);
 	SeekG++;
 	int size = AES_KEY_SIZE*ressize;
@@ -198,7 +194,8 @@ void OneChoiceStorage::truncate(int index, int size, int fileSize)
 }
 int OneChoiceStorage::writeToNEW(int index, prf_type keyVal, int pos)
 {
-	fstream file(filenames[index][3].c_str(), ios::binary | ios::out| ios::in | ios::ate);
+	fstream file(filenames[index][3].c_str(), ios::binary | ios::out | ios::in| ios::ate);
+	cout <<filenames[index][3].c_str()<<endl;
     if (file.fail()) 
         cerr << "Error in writeToNEW: " << strerror(errno);
     int seek = AES_KEY_SIZE*pos;
@@ -246,7 +243,6 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
 			cout <<index<<" getEl:["<<restmp.data()<<"]"<<endl;
         //}
     }
-			sleep(1);
 	cout <<"returning"<<endl;
 	return results;
 }
