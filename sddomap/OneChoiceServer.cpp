@@ -130,9 +130,9 @@ void OneChoiceServer::resize(int index, int size)
 {
 	NEW[index].resize(size);
 }
-void OneChoiceServer::truncate(int index, int size)
+void OneChoiceServer::truncate(int index, int size, int filesize)
 {
-	storage->truncate(index,size);
+	storage->truncate(index,size,filesize);
 }
 
 vector<prf_type> OneChoiceServer::getElements(int index, int instance, int start, int end)

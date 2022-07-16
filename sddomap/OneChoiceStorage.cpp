@@ -140,7 +140,7 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
 		//{
             results.push_back(tmp);
 			//if(index == 1)
-			//cout <<"getAll:["<<tmp.data()<<"]"<<endl;
+			cout <<"getAll:["<<tmp.data()<<"]"<<endl;
         //}
     }
     delete keyValues;
@@ -178,19 +178,21 @@ vector<prf_type> OneChoiceStorage::getNEW(int index, int ressize) //get all of N
 }
 
 
-void OneChoiceStorage::truncate(int index, int size)
+void OneChoiceStorage::truncate(int index, int size, int fileSize)
 {
 	fstream file(filenames[index][3].c_str(), ios::binary | ios::out | ios::ate);
     if (file.fail()) 
         cerr << "Error in truncate: " << strerror(errno);
-    int filesize = file.tellg();
+    int filesize = fileSize*AES_KEY_SIZE;
     int seek = AES_KEY_SIZE*size;
 	int rem = filesize-seek;
 	file.seekg(seek, ios::beg);
+	cout<<"trunc:"<<rem<<endl;
 	SeekG++;
-    for (int j = 0; j < rem/AES_KEY_SIZE; j++) 
+    for (int j = 0; j < (fileSize-size); j++) 
 	{
         file.write((char*) nullKey.data(), AES_KEY_SIZE);
+		cout <<index<<" truncating"<<endl;
     }
     file.close();
 }
@@ -236,14 +238,16 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
     file.close();
     for (int i = 0; i < readLength/AES_KEY_SIZE; i++) 
 	{
+		cout <<"entering i:"<<i<<endl;
         prf_type restmp;
         std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, restmp.begin());
         //if (restmp.data() != nullKey.data()) {
             results.push_back(restmp);
-			cout <<index<<" getEl:"<<restmp.data();
-			sleep(1);
+			cout <<index<<" getEl:["<<restmp.data()<<"]"<<endl;
         //}
     }
+			sleep(1);
+	cout <<"returning"<<endl;
 	return results;
 }
 

@@ -36,7 +36,7 @@ public:
     int getNEWsize(int index);
 	int writeToNEW(int index, prf_type keyVal, int pos);
 	void moveNEW(int index, int toInstance, int size);
-	void truncate(int index, int size);
+	void truncate(int index, int size, int filesize);
 };
 
 #endif /* ONECHOICESERVER_H */

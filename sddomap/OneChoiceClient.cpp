@@ -164,7 +164,8 @@ void OneChoiceClient::destroy(int index, int instance)
 }
 void OneChoiceClient::resize(int index, int size)
 {
-	server->truncate(index,size);
+	server->truncate(index,size, NEWsize[index]);
+	auto get = server->getAllData(index, 3);
 	NEWsize[index]=size;
 }
 
