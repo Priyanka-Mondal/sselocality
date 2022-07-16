@@ -125,7 +125,6 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
         cerr << "Error in read: " << strerror(errno);
     int size = file.tellg();
 	int actSize = sizeOfEachBin[index]*numberOfBins[index]*AES_KEY_SIZE;
-	cout <<"ga:"<<index<<" "<<size<<" "<<actSize<<endl;
 	//assert(size == actSize || size == 6*actSize);
     file.seekg(0, ios::beg);
 	SeekG++;
@@ -140,6 +139,8 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
         //if (tmp != nullKey) 
 		//{
             results.push_back(tmp);
+			//if(index == 1)
+			//cout <<"getAll:["<<tmp.data()<<"]"<<endl;
         //}
     }
     delete keyValues;
@@ -150,21 +151,23 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
 vector<prf_type> OneChoiceStorage::getNEW(int index, int ressize) //get all of NEW
 {
     vector<prf_type> results;
-    fstream file(filenames[index][3].c_str(), ios::binary | ios::in | ios::ate);
+    fstream file(filenames[index][3].c_str(), ios::binary | ios::in);
+	cout <<filenames[index][3].c_str()<<endl;
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
 	cout <<"st: "<<index<<" "<<ressize<<endl;
+	cout <<"file.tellg()"<<file.tellg()<<endl;
     file.seekg(0, ios::beg);
 	SeekG++;
 	int size = AES_KEY_SIZE*ressize;
     char* keyValues = new char[size];
     file.read(keyValues, size);
     file.close();
-    for (int i = 0; i < size/AES_KEY_SIZE; i++) 
+    for (int i = 0; i < ressize; i++) 
 	{
         prf_type tmp;
         std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-		//cout <<"tmp:"<<tmp.data()<<endl;
+		cout <<i<<" index:"<<index<<"tmp:["<<tmp.data()<<"]"<<endl;
         //if (tmp != nullKey) 
 		//{
             results.push_back(tmp);
@@ -179,7 +182,7 @@ void OneChoiceStorage::truncate(int index, int size)
 {
 	fstream file(filenames[index][3].c_str(), ios::binary | ios::out | ios::ate);
     if (file.fail()) 
-        cerr << "Error in getElements: " << strerror(errno);
+        cerr << "Error in truncate: " << strerror(errno);
     int filesize = file.tellg();
     int seek = AES_KEY_SIZE*size;
 	int rem = filesize-seek;
@@ -193,16 +196,17 @@ void OneChoiceStorage::truncate(int index, int size)
 }
 int OneChoiceStorage::writeToNEW(int index, prf_type keyVal, int pos)
 {
-	fstream file(filenames[index][3].c_str(), ios::binary | ios::out | ios::ate);
+	fstream file(filenames[index][3].c_str(), ios::binary | ios::out| ios::in | ios::ate);
     if (file.fail()) 
-        cerr << "Error in getElements: " << strerror(errno);
+        cerr << "Error in writeToNEW: " << strerror(errno);
     int seek = AES_KEY_SIZE*pos;
-    file.seekg(seek, ios::beg);
+    file.seekg(seek, ios::beg);//
 	SeekG++;
     unsigned char newRecord[AES_KEY_SIZE];
     memset(newRecord, 0, AES_KEY_SIZE);
     std::copy(keyVal.begin(), keyVal.end(), newRecord);
     file.write((char*) newRecord, AES_KEY_SIZE);
+	cout <<"wrote:["<<keyVal.data()<<"] in:"<<index<<","<<3<<" at pos:"<<seek<<endl;
 	int last = file.tellg();
 	file.close();
 	return last;
@@ -210,28 +214,24 @@ int OneChoiceStorage::writeToNEW(int index, prf_type keyVal, int pos)
 
 vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int start, int numOfEl)
 {
+	assert(instance<2);
 	vector<prf_type> results;
-    fstream file(filenames[index][instance].c_str(), ios::binary | ios::in | ios::ate);
+    fstream file(filenames[index][instance].c_str(), ios::binary | ios::in| ios::ate);
     if (file.fail()) 
         cerr << "Error in getElements: " << strerror(errno);
     int seek = AES_KEY_SIZE*start;
     file.seekg(seek, ios::beg);
 	SeekG++;
 	int readLength = (numOfEl)*AES_KEY_SIZE;
-	int size;
-    if(instance<3)	
-		size = numberOfBins[index]*sizeOfEachBin[index]*AES_KEY_SIZE;
-	else
-		size = 6*numberOfBins[index]*sizeOfEachBin[index]*AES_KEY_SIZE;
+	int size = numberOfBins[index]*sizeOfEachBin[index]*AES_KEY_SIZE;
 	int remainder = size - seek;
-	//cout <<"index:"<<index<<endl;
-	//cout <<"start:"<<start<<" end:"<<end<<" seek:"<< seek<<endl;
-	//cout<<"rem:"<<remainder<<" size:"<<size<< "read len:"<<readLength<<endl;
 	if(readLength >= remainder)
 		readLength = remainder;
 	if(remainder <0)
 		readLength = 0;
     char* keyValues = new char[readLength];
+	cout <<"index:"<<index<<endl;
+	cout<<"seek:"<<seek<<" rem:"<<remainder<<" size:"<<size<< "read len:"<<readLength<<endl;
     file.read(keyValues, readLength);
     file.close();
     for (int i = 0; i < readLength/AES_KEY_SIZE; i++) 
@@ -240,6 +240,8 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
         std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, restmp.begin());
         //if (restmp.data() != nullKey.data()) {
             results.push_back(restmp);
+			cout <<index<<" getEl:"<<restmp.data();
+			sleep(1);
         //}
     }
 	return results;

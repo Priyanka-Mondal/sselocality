@@ -129,9 +129,9 @@ pair<prf_type, vector<prf_type>> TwoChoiceStorage::insertCuckooHT(int index,int 
 
 	vector<prf_type> results;
 	int entrySize = pow(2, tableNum);
-        int readPos = hash *(entrySize+1)* AES_KEY_SIZE;
-        cuckoo.seekg(readPos, ios::beg);
-        SeekG++;
+    int readPos = hash *(entrySize+1)* AES_KEY_SIZE;
+    cuckoo.seekg(readPos, ios::beg);
+    SeekG++;
 	
 	char* oldKey = new char[AES_KEY_SIZE];
 	cuckoo.read(oldKey, AES_KEY_SIZE);

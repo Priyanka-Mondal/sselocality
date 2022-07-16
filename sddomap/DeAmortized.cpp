@@ -108,7 +108,7 @@ float by(int a, int b)
 
 void DeAmortized::update(OP op, string keyword, int ind, bool setup) 
 {
-	int prof = 1;
+	int prof = 0;
 	for(int i=numOfIndices; i>0; i--)
 	{
 		int s = i>1 ? 6 : 2;
@@ -155,7 +155,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				int stepi = ceil(by(by(totStepsi, times),2));
 				stepi = stepi*2;
 				if(i==prof) 
-					cout <<j<<" SORTING:"<<cnt[i]<<"/"<<pow(2,j)<<"/"<<pow(2,j)<<" totstep:"<<totStepsi<<" stepi:"<<stepi<<endl;
+					cout <<j<<" SORTING: N:"<<N<<" "<<cnt[i]<<"/"<<pow(2,j)<<"/"<<pow(2,j)<<" totstep:"<<totStepsi<<" stepi:"<<stepi<<endl;
 				//cout <<"j:"<<j<<" cnt[i]:"<<cnt[i]<<" N:"<<N<<
 				//	" totStepsi:"<<totStepsi<<" stepi:"<<stepi<<" count:"<<count<<" times:"<< times<<endl;
 				L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
@@ -232,6 +232,7 @@ void DeAmortized::createKeyVal(string keyword, int ind, OP op, prf_type& keyVal)
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
 {
 	keys[index][toInstance] = keys[index][fromInstance];
+	cout <<index<<","<<toInstance<<"<-"<<index<<","<<fromInstance<<endl;
 }
 
 vector<int> DeAmortized::search(string keyword) 

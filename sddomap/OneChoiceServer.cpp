@@ -140,10 +140,6 @@ vector<prf_type> OneChoiceServer::getElements(int index, int instance, int start
 	return storage->getElements(index, instance, start, end);
 }
 
-vector< prf_type> OneChoiceServer::getNEW(int index)
-{
-	return NEW[index];
-}
 vector< prf_type> OneChoiceServer::getNEW(int index, int size)
 {
 	return storage->getNEW(index, size);

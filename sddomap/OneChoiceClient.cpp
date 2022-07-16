@@ -148,6 +148,7 @@ void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 	prf_type encKeyVal;// = keyVal;
 	encKeyVal = Utilities::encode(keyVal.data(), key);
 	int last = server->writeToNEW(index, encKeyVal, NEWsize[index]);
+	auto vecres = server->getAllData(index,3);
 	NEWsize[index]=NEWsize[index]+1;
 	assert(last == NEWsize[index]*AES_KEY_SIZE);
 }
@@ -170,18 +171,20 @@ void OneChoiceClient::resize(int index, int size)
 void OneChoiceClient::getBin(int index, int instance, int start, int end,
 							 unsigned char* key1, unsigned char* key2)
 {
+	assert(index>=1);
 	//cout <<"["<<index-1<<" start:"<<start<<" numOfEl:"<<end<<"]"<<"actual numOfEl:"<<numberOfBins[index-1]*sizeOfEachBin[index-1];
 	if(start <numberOfBins[index-1]*sizeOfEachBin[index-1])
 	{
 		if(start+end>numberOfBins[index-1]*sizeOfEachBin[index-1])
 			end = numberOfBins[index-1]*sizeOfEachBin[index-1] - start;
+		cout <<index-1<<" start:"<<start<<" numofel:"<<end<<endl;
 		vector<prf_type> ciphers = server->getElements(index-1, instance, start, end);
+		assert(ciphers.size() == end);
 		int upCnt = numNEW[index];
 		int cntw=0;
 		for(prf_type c: ciphers)
 		{
 	        prf_type plaintext;// = c;
-			cout <<"c:"<<indexSize[index-1]<<endl;
 	        Utilities::decode(c, plaintext, key1);
 	        int ind = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
 	        int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]); 
@@ -223,6 +226,7 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 {
 	cout<<"adding dummy at:"<<index<<":"<<NEWsize[index]<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<"s:"<<s<<endl;
 	cout <<"count:"<<count<<endl;
+	assert(index>=1);
 	assert(NEWsize[index] >= 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
     int upCnt = numNEW[index];
 	for(int t = 0; t<s; t++)
@@ -230,7 +234,6 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 		int bin = count*s+t;
 		if(bin < numberOfBins[index])
 		{
-			cout <<"entered"<<endl;
 			//assert(NEWsize[index]<2*indexSize[index]+2*indexSize[index-1]);
 			int cbin;
 			string cb = (omaps[index]->find(getBid(to_string(bin),upCnt)));
@@ -272,6 +275,7 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 
 void OneChoiceClient::pad(int index, int newSize, unsigned char* key)
 {
+	assert(index>=1);
 	int size = NEWsize[index];
 	//cout <<"newSize:"<<newSize<<" old size:"<<size<<endl;
 	if(size<newSize)
@@ -433,8 +437,6 @@ void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int inde
 	for(auto n : elToSort)
 	{
 		prf_type dec;// = n;
-	cout <<"bitonicsecond:"<<index<<endl;
-	sleep(1);
 	    Utilities::decode(n, dec, key);
 		decodedNEW.push_back(dec);
 	}
