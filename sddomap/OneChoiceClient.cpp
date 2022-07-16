@@ -23,12 +23,6 @@ OneChoiceClient::OneChoiceClient(int N,
         int curNumberOfBins = j > 1 ? 
 			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
         int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
-		/*if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
-		{
-			curNumberOfBins = ceil((float)(2*prev*cprev+1)/(float)curSizeOfEachBin);
-		}
-		cprev = curSizeOfEachBin;
-		prev = curNumberOfBins;*/
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		int is = curNumberOfBins*curSizeOfEachBin;
@@ -45,6 +39,7 @@ OneChoiceClient::OneChoiceClient(int N,
             exist[i].push_back(false);
         }
 		numNEW.push_back(1);
+		NEWsize.push_back(0);
     }
 	exist[0][3] = true;
     for (int i = 0; i <=numOfIndices; i++) 
@@ -56,7 +51,8 @@ OneChoiceClient::OneChoiceClient(int N,
 }
 
 int issorted(vector<prf_type> A)
-{/*
+{
+	/*
 	cout<<"CHECKING IF SORTED"<<endl;
 	for(auto a : A)
 	{
@@ -97,8 +93,8 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
     	totalCommunication += ciphers.size() * sizeof (prf_type) ;
 	    for (auto item : ciphers) 
 		{
-	        prf_type plaintext;// = item;
-	        Utilities::decode(item, plaintext, key);
+	        prf_type plaintext = item;
+	        //Utilities::decode(item, plaintext, key);
             //if (string((char*) plaintext.data()) == keyword) 
 	       	if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 			{
@@ -135,7 +131,7 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 {
 	server->clear(index, toInstance);
-	server->move(index, toInstance, fromInstance);
+	server->move(index, toInstance, fromInstance, indexSize[index]);
 	server->clear(index, fromInstance);
 	exist[index][toInstance] = true;
 	exist[index][fromInstance] = false;
@@ -143,18 +139,24 @@ void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 
 void OneChoiceClient::copy(int index, int toInstance)
 {
+	vector<prf_type> sorted = server->getNEW(index);
 	server->copy(index, toInstance);
+	assert(sorted.size()==indexSize[index]);
+	//server->moveNEW(index, toInstance);
 	exist[index][toInstance] = true;
 	numNEW[index] = numNEW[index] + 1;
 	exist[index][3] = false;	
+	NEWsize[index] = 0;
 }
 
 void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 {
-	prf_type encKeyVal;
+	prf_type encKeyVal;// = keyVal;
 	encKeyVal = Utilities::encode(keyVal.data(), key);
-	//cout <<encKeyVal.data();
 	server->append(index, encKeyVal);
+	server->writeToNEW(index, encKeyVal,NEWsize[index]);
+	NEWsize[index]=NEWsize[index]+1;
+	//cout <<"index:"<<index<<"|"<<NEWsize[index]<<endl;
 }
 
 void OneChoiceClient::destroy(int index, int instance)
@@ -166,6 +168,7 @@ void OneChoiceClient::destroy(int index, int instance)
 void OneChoiceClient::resize(int index, int size)
 {
 	server->resize(index,size);
+	server->truncate(index,size);
 }
 
 void OneChoiceClient::getBin(int index, int instance, int start, int end,
@@ -182,7 +185,6 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 		for(prf_type c: ciphers)
 		{
 	        prf_type plaintext;// = c;
-			//sleep(1);
 	        Utilities::decode(c, plaintext, key1);
 	        int ind = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
 	        int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]); 
@@ -207,7 +209,11 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 	    	*(int*) (&(keyVal.data()[AES_KEY_SIZE - 10])) = realbin;//bin
 			append(index, keyVal, key2);
 			if(w!="")
+			{
 				string ob = omaps[index]->incrementCnt(getBid(to_string(realbin),upCnt));
+				string ob2 = omaps[index]->find(getBid(to_string(realbin),upCnt));
+				//cout <<"incremented OMAP:"<<ob<<" to "<< ob2<<" upcnt:"<<upCnt<<" for bin:"<<realbin<<endl;
+			}
 		}
 
 		/*if(server->getNEWsize(index) >= (instance+1)*numberOfBins[index]*sizeOfEachBin[index])
@@ -233,6 +239,7 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 				cbin = 0;
 			else 
 				cbin = stoi(cb);
+			//cout <<"index:"<<index<<" cbin:"<<cbin<<" upcnt:"<<upCnt<<" for bin:"<<bin<<endl;
 			assert(cbin <= sizeOfEachBin[index]);
 			for(int k = cbin; k<sizeOfEachBin[index]; k++)
 			{
@@ -262,6 +269,25 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 	}
 	
 	//if(count ) add more dummy for bitonic sort
+}
+
+void OneChoiceClient::pad(int index, int newSize, unsigned char* key)
+{
+	int size = NEWsize[index];
+	//cout <<"newSize:"<<newSize<<" old size:"<<size<<endl;
+	if(size<newSize)
+	{
+		for(int k = 0; k<newSize-size ; k++)
+		{ 
+			prf_type value;
+    		memset(value.data(), 0, AES_KEY_SIZE);
+    		*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = 9999;//id
+			value.data()[AES_KEY_SIZE - 6] = (byte) (1);//op
+    		*(int*) (&(value.data()[AES_KEY_SIZE - 10])) = INF;//bin
+			append(index, value, key);
+			//**dummy omap access here
+		}
+	}
 }
 
 
@@ -353,58 +379,82 @@ void bitonicSort(int a[],int low, int cnt, vector<int>&memseq)
 	}
 }
 
-void sort(int a[], int N, vector<int>& memseq)
+void generateSeq(int a[], int N, vector<int>& memseq)
 {
 	bitonicSort(a,0, N, memseq);
 }
-vector<int> getSeq(int count, int step, int size)
+vector<int> getSeq(int step, int count, int size)
 {
 	vector<int> memseq;
 	int a[size];
 	memset(a,0,size);
-	sort(a, size, memseq);
+	generateSeq(a, size, memseq);
+	//cout <<size<<endl;
+	assert(memseq.size() == 2*ceil((float)(size*log2(size)*(log2(size)+1)/(float)4)));
 	int start = count*step;
 	vector<int> res;
 	for(int i = start; i<start+step; i++)
 	{
+		//cout <<"(("<<memseq[i]<<"))";
 		res.push_back(memseq[i]);
 	}
 	return res;
 }
 
+vector<int> remDup(vector<int> v)
+{
+	int vsize = v.size();
+	vector<int>::iterator ip;
+    ip = std::unique(v.begin(), v.begin() +vsize );
+    v.resize(std::distance(v.begin(), ip));
+	return v;
+}
 void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int index, unsigned char* key)
 {
-		vector<int> curMem = getSeq(count, step, size);
-		std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
-		vector<prf_type> elToSort;
-		vector<prf_type> encNEW = server->getNEW(index);
-		for(auto el : curMem)
-		{
-			elToSort.push_back(encNEW[el]);
-		}
-		vector<prf_type> decodedNEW;	
-		for(auto n : elToSort)
-		{
-			prf_type dec;
-		    Utilities::decode(n, dec, key);
-			decodedNEW.push_back(dec);
-		}
-		sort(decodedNEW.begin(), decodedNEW.end(), cmpp);
-		vector<prf_type> sorted;
-		for(auto n : decodedNEW)
-		{
-			prf_type enc;// = n;
-			enc = Utilities::encode(n.data(), key);
-			sorted.push_back(enc);
-		}
-		int cnt = 0;
-		for(int i =0; i<curMem.size(); i++)
-		{
-			encNEW[curMem[i]] = sorted[cnt];
-			cnt++;
-		}
-		server->putNEW(index, encNEW);
+	//cout<<"index:"<<index<<" size:"<<size<<endl;
+	vector<int> curMem = getSeq(step, count, size);
+	std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
+	vector<int> ncm = remDup(curMem);
+	//for(auto n : ncm)
+	//	cout<<"("<<n<<")";
+	//cout<<endl;
+	//cout<<endl;
+	vector<prf_type> encNEW = server->getNEW(index);
+	assert(encNEW.size() == size);
+	int initSize = encNEW.size();
+	vector<prf_type> elToSort;
+	for(int k = 0; k<ncm.size(); k++)
+	{
+		elToSort.push_back(encNEW[ncm[k]]);
+	}
+	assert(elToSort.size() == ncm.size());
+	vector<prf_type> decodedNEW;	
+	for(auto n : elToSort)
+	{
+		prf_type dec;// = n;
+	    Utilities::decode(n, dec, key);
+		decodedNEW.push_back(dec);
+	}
+	assert(elToSort.size() == decodedNEW.size());
+	sort(decodedNEW.begin(), decodedNEW.end(), cmpp);
+	assert(issorted(decodedNEW));
+	vector<prf_type> sorted;
+	for(auto n : decodedNEW)
+	{
+		prf_type enc;// = n;
+		enc = Utilities::encode(n.data(), key);
+		sorted.push_back(enc);
+	}
+	int cnt = 0;
+	for(int i =0; i<ncm.size(); i++)
+	{
+		encNEW[ncm[i]] = sorted[cnt];
+		cnt++;
+	}
+	assert(encNEW.size() == initSize);
+	server->putNEW(index, encNEW);
 }
+
 
 
 	/*for(auto a : A)
@@ -440,7 +490,7 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 	for(int k =0; k<numberOfBins[index]; k++)
 	{
 		int cb = stoi((omaps[index]->find(getBid(to_string(k),upCnt))));
-		assert(cb == sizeOfEachBin[index]);
+		//assert(cb == sizeOfEachBin[index]);
 	}
 		vector<prf_type> decodedNEWi;	
 		for(auto n : encNEWi)
@@ -491,5 +541,5 @@ void OneChoiceClient::reSize(int index, int size)
 }
 int OneChoiceClient::getNEWsize(int index)
 {
-	return server->getNEWsize(index);
+	return NEWsize[index];
 }

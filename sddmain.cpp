@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     	    for (j = 0; j < cur->second.size(); j++) 
 			{
 			key++;
-			cout <<" inserting keywords:"<<key<<"/"<<testCases[i].N<<" "<<cur->first<<" fileId:"<<cur->second[j]<<endl;
+			//cout <<" inserting keywords:"<<key<<"/"<<testCases[i].N<<" "<<cur->first<<" fileId:"<<cur->second[j]<<endl;
         	    client.update(OP::INS, cur->first, cur->second[j], true);
             	cnt++;
             	if (cnt % 500 == 0) 

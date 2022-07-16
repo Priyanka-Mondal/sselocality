@@ -39,6 +39,7 @@ public:
 	prf_type nullKey;
 	int numOfIndices;
 	vector<int> numNEW;
+	vector<int> NEWsize;
 	int b;
 
     vector<vector<bool>> exist;
@@ -61,7 +62,7 @@ public:
 	vector<prf_type> searchNEW(int index, string keyword);
 	void ensureNEWSize(int index, int bin, int cnt);
     int getNEWsize(int index);
-	void padNEW(int index);
+	void pad(int index, int newSize, unsigned char* key);
 };
 
 #endif /* ONECHOICECLIENT_H */

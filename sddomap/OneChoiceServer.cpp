@@ -1,5 +1,5 @@
 #include "OneChoiceServer.h"
-#include <string.h>
+#include <string>
 
 OneChoiceServer::OneChoiceServer(int dataIndex, bool inMemory, bool overwrite, bool profile) 
 {
@@ -77,10 +77,12 @@ void OneChoiceServer::clear(int index, int instance)
     keyworkCounters->clear(index);
 }
 
-void OneChoiceServer::move(int index, int toInstance, int fromInstance)
+void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size)
 {
 	vector<prf_type> data;
    	data = storage->getAllData(index, fromInstance);
+	cout <<"instance:"<<fromInstance<<endl;
+	assert(data.size()==size);
 	storage->insertAll(index, toInstance, data);
 }
 
@@ -100,6 +102,13 @@ void OneChoiceServer::append(int index, prf_type keyVal)
 	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
 }
 
+void OneChoiceServer::writeToNEW(int index, prf_type keyVal, int pos)
+{
+	storage->writeToNEW(index, keyVal, pos);
+	//cout <<index<<":"<<NEW[index].size()<<"<="<<6*pow(2,index)<<endl;
+	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
+}
+
 int OneChoiceServer::getNEWsize(int index)
 {
 	return NEW[index].size();
@@ -114,20 +123,21 @@ void OneChoiceServer::resize(int index, int size)
 {
 	NEW[index].resize(size);
 }
+void OneChoiceServer::truncate(int index, int size)
+{
+	storage->truncate(index,size);
+}
 
 vector<prf_type> OneChoiceServer::getElements(int index, int instance, int start, int end)
 {
 	return storage->getElements(index, instance, start, end);
 }
-/*vector<prf_type> OneChoiceServer::getAllData(int index, int instance)
-{
-	return storage->getAllData(index, instance);
-}*/
-vector< prf_type> OneChoiceServer::getNEW(int index)
+
+vector< prf_type> OneChoiceServer::getNEW(int index)//getAllData
 {
 	return NEW[index];
 }
-void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)
+void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)//insertAll
 {
 	NEW[index].clear();
 	//NEW[index].resize(sorted.size());
@@ -138,8 +148,3 @@ void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)
 }
 
 
-void OneChoiceServer::bitonicSort(int index)
-{
-	//do the actual sort here
-	//but get the elements from the server
-}

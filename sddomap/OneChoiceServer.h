@@ -22,7 +22,7 @@ public:
     //vector<prf_type> search(int dataIndex, int instance, prf_type token, int & keywordCnt);
     vector<prf_type> search(int dataIndex, int instance, int bin);
     vector<prf_type> getAllData(int dataIndex, int instance);
-	void move(int index, int toInstance, int fromInstance);
+	void move(int index, int toInstance, int fromInstance, int size);
 	void copy(int index, int toInstance);
 	void append(int instance, prf_type keyVal);
 	void destroy(int index, int instance);
@@ -33,6 +33,8 @@ public:
 	void putNEW(int index, vector<prf_type>);
 	void bitonicSort(int index);
     int getNEWsize(int index);
+	void writeToNEW(int index, prf_type keyVal, int pos);
+	void truncate(int index, int size);
 };
 
 #endif /* ONECHOICESERVER_H */

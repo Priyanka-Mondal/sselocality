@@ -16,20 +16,12 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 	b = ceil((float)log2(B));
     memset(nullKey.data(), 0, AES_KEY_SIZE);
 	numOfIndices = l - b;
-	int prev = 0;
-	int cprev = 0;
     for (int i = 0; i <=numOfIndices; i++) 
 	{
 		int j = i + b;
         int curNumberOfBins = j > 1 ? 
 			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
         int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
-		/*if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
-		{
-			curNumberOfBins = ceil((float)(2*prev*cprev+1)/(float)curSizeOfEachBin);
-		}
-		cprev = curSizeOfEachBin;
-		prev = curNumberOfBins;*/
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		int is = curNumberOfBins*curSizeOfEachBin;
@@ -56,7 +48,6 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
             curVec.push_back(unordered_map<string, prf_type>());
         data.push_back(curVec);
     }
-
     if (!overwrite) 
     {
         fstream file("/tmp/existStatus.txt", std::ofstream::in);
@@ -92,27 +83,21 @@ DeAmortized::~DeAmortized()
 {
 	if(overwrite)
 	{
-    fstream file("/tmp/existStatus.txt", std::ofstream::out);
-    if (file.fail()) 
-    {
-        cerr << "Error: " << strerror(errno);
-    }
-    for (unsigned int i = localSize; i <= numOfIndices; i++) 
-    {
-		for(int j = 0; j<3;j++)
-		{
-        	if (L->exist[i][j]) 
+	    fstream file("/tmp/existStatus.txt", std::ofstream::out);
+	    if (file.fail()) 
+	        cerr << "Error: " << strerror(errno);
+	    for (unsigned int i = localSize; i <= numOfIndices; i++) 
+	    {
+			for(int j = 0; j<3;j++)
 			{
-            	file << "true" << endl;
+	        	if (L->exist[i][j]) 
+	            	file << "true" << endl;
+	        	else 
+	            	file << "false" << endl;
 			}
-        	else 
-			{
-            	file << "false" << endl;
-			}
-		}
-	}    
-    file.close();
-}
+		}    
+    	file.close();
+	}
 }
 
 float by(int a, int b)
@@ -123,44 +108,59 @@ float by(int a, int b)
 
 void DeAmortized::update(OP op, string keyword, int ind, bool setup) 
 {
+	int prof = 3;
 	for(int i=numOfIndices; i>0; i--)
 	{
+		int s = i>1 ? 6 : 2;
 		int j = b+i;
-		int mi = numberOfBins[j]; // for now
+		int mi = numberOfBins[j]; 
+		int r1 = ceil((float)(2*floor(by(indexSize[i-1],s))));
+		int r2 = r1 + ceil(by(mi,s));
+		assert(r1<r2);
+		assert(r2<=pow(2,j));
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
-			int s = i>1 ? 6 : 2;
-		//cout <<"index:"<<i<<"[is:"<<indexSize[i]<<"]:"<<ceil(2*by(indexSize[i-1],s))<<"<="<<cnt[i]<<"<"<<ceil(2*by(indexSize[i-1],s))+ceil(by(mi,s))<<endl;
-			if(cnt[i] <=(ceil((float)(2*by(indexSize[i-1],s)))))
+			if(cnt[i] <= r1)
 			{
+				if(i==prof) 
+					cout <<j <<" GETBIN:"<<cnt[i]<<"/"<<r1<<"/"<<pow(2,j)<<endl;
 				L->getBin(i, 0, cnt[i]*(s/2),(s/2), keys[i-1][0], keys[i][3]);
 				L->getBin(i, 1, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
 			}
-			if ((ceil((float)2*by(indexSize[i-1],s)))<=cnt[i] && 
-					  cnt[i]<((ceil((float)2*by(indexSize[i-1],s)))+(ceil(by(mi,s)))))
+			if (r1 <=cnt[i] &&  cnt[i]<= r2)
 			{
-				L->addDummy(i, (cnt[i]-(ceil((float)2*by(indexSize[i-1],s)))), keys[i][3], s);
+				if(r2 == cnt[i])
+				{
+					assert(L->getNEWsize(i) == 2*indexSize[i]+2*indexSize[i-1]);
+					if(i==prof) 
+						cout <<j <<" PADDING:"<<cnt[i]<<"/"<<r2<<"/"<<pow(2,j)<<endl;
+					int newSize = ceil((float)log2(2*indexSize[i]+2*indexSize[i-1]));
+					newSize = pow(2,newSize);
+					L->pad(i,newSize, keys[i][3]);
+					assert(newSize>=2*indexSize[i]);
+				}
+				else
+				{
+					if(i==prof) 
+						cout <<j<<" ADDING DUMMY:"<<cnt[i]<<"/"<<r2<<"/"<<pow(2,j)<<endl;
+				}
+				L->addDummy(i, (cnt[i]-r1), keys[i][3], s);
 			}
-			if(((ceil((float)2*by(indexSize[i-1],s)))+ceil(by(mi,s)))==cnt[i])
+			if (r2 <= cnt[i] && cnt[i] <pow(2,j))
 			{
-				int newSize = floor((float)log2(2*indexSize[i]+2*indexSize[i-1]));
-				newSize = pow(2,newSize);
-				L->reSize(i,newSize);
-				assert(newSize>=indexSize[i]);
-			}
-			if (((ceil((float)2*by(indexSize[i-1],s)))+ceil(by(mi,s)))<=cnt[i] && cnt[i]<=pow(2,j))
-			{
-				int count = (cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s));
+				int count = cnt[i]-r2;
+				int times = pow(2,j)-r2;
 				int N = L->getNEWsize(i);
 				int totStepsi = 2*ceil(by(N*log2(N)*(log2(N)+1),4));
-				int times = pow(2,j)-((ceil((float)2*by(indexSize[i-1],s)))-ceil(by(mi,s)));
-				int step = ceil(by(totStepsi, times));
-				int stepi = pow(2, (int)ceil(log2(step)));
-				cout <<"j:"<<j<<"cnt[i]:"<<cnt[i]<<"N:"<<N<<" totStepsi:"<<totStepsi<<" step:"<<step<<" stepi:"<<stepi<<" times:"<< times<<endl;
-				//L->deAmortizedBitSort(stepi, (cnt[i]-ceil((float)2*by(indexSize[i-1],s))-ceil(mi/s)), N,i, keys[i][3]);
-				L->nonOblSort(i, keys[i][3]);
+				int stepi = ceil(by(by(totStepsi, times),2));
+				stepi = stepi*2;
+				if(i==prof) 
+					cout <<j<<" SORTING:"<<cnt[i]<<"//"<<pow(2,j)<<" totstep:"<<totStepsi<<" stepi:"<<stepi<<endl;
+				//cout <<"j:"<<j<<" cnt[i]:"<<cnt[i]<<" N:"<<N<<
+				//	" totStepsi:"<<totStepsi<<" stepi:"<<stepi<<" count:"<<count<<" times:"<< times<<endl;
+				L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
+				//L->nonOblSort(i, keys[i][3]);
 			}
-		
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,j))
 			{

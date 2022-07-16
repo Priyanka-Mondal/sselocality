@@ -48,7 +48,8 @@ public:
     virtual ~OneChoiceStorage();
     vector<prf_type> getElements(int index, int instance, int start, int end);
 	void copy(int index, int toInstance, int fromInstance);
-
+	void writeToNEW(int index, prf_type keyVal, int pos);
+	void truncate(int index, int size);
 
 };
 
