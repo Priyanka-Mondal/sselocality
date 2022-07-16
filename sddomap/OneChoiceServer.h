@@ -30,10 +30,12 @@ public:
 	vector<prf_type> getElements(int index, int instance, int start, int end);
 	void addDummy(int index, int count, int updateCounter);
 	vector<prf_type> getNEW(int index);
+	vector<prf_type> getNEW(int index, int size);
 	void putNEW(int index, vector<prf_type>);
 	void bitonicSort(int index);
     int getNEWsize(int index);
-	void writeToNEW(int index, prf_type keyVal, int pos);
+	int writeToNEW(int index, prf_type keyVal, int pos);
+	void moveNEW(int index, int toInstance, int size);
 	void truncate(int index, int size);
 };
 

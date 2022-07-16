@@ -38,7 +38,7 @@ OneChoiceClient::OneChoiceClient(int N,
 		{
             exist[i].push_back(false);
         }
-		numNEW.push_back(1);
+		numNEW.push_back(1);//updtCnt
 		NEWsize.push_back(0);
     }
 	exist[0][3] = true;
@@ -135,40 +135,36 @@ void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 	server->clear(index, fromInstance);
 	exist[index][toInstance] = true;
 	exist[index][fromInstance] = false;
-}
-
-void OneChoiceClient::copy(int index, int toInstance)
-{
-	vector<prf_type> sorted = server->getNEW(index);
-	server->copy(index, toInstance);
-	assert(sorted.size()==indexSize[index]);
-	//server->moveNEW(index, toInstance);
-	exist[index][toInstance] = true;
-	numNEW[index] = numNEW[index] + 1;
-	exist[index][3] = false;	
-	NEWsize[index] = 0;
+	if(fromInstance == 3)
+	{
+		numNEW[index] = numNEW[index] + 1;
+		NEWsize[index] = 0;
+	}
 }
 
 void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 {
+	exist[index][3] = true;
 	prf_type encKeyVal;// = keyVal;
 	encKeyVal = Utilities::encode(keyVal.data(), key);
-	server->append(index, encKeyVal);
-	server->writeToNEW(index, encKeyVal,NEWsize[index]);
+	int last = server->writeToNEW(index, encKeyVal, NEWsize[index]);
 	NEWsize[index]=NEWsize[index]+1;
-	//cout <<"index:"<<index<<"|"<<NEWsize[index]<<endl;
+	assert(last == NEWsize[index]*AES_KEY_SIZE);
 }
 
 void OneChoiceClient::destroy(int index, int instance)
 {
     server->clear(index, instance);
     exist[index][instance] = false;
-    totalCommunication += sizeof (int);
+	if(instance == 3)
+	{
+		NEWsize[index]=0;
+	}
 }
 void OneChoiceClient::resize(int index, int size)
 {
-	server->resize(index,size);
 	server->truncate(index,size);
+	NEWsize[index]=size;
 }
 
 void OneChoiceClient::getBin(int index, int instance, int start, int end,
@@ -185,6 +181,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 		for(prf_type c: ciphers)
 		{
 	        prf_type plaintext;// = c;
+			cout <<"c:"<<indexSize[index-1]<<endl;
 	        Utilities::decode(c, plaintext, key1);
 	        int ind = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
 	        int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]); 
@@ -216,7 +213,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 			}
 		}
 
-		/*if(server->getNEWsize(index) >= (instance+1)*numberOfBins[index]*sizeOfEachBin[index])
+		/*if(NEWsize[index] >= (instance+1)*numberOfBins[index]*sizeOfEachBin[index])
 		{
 			exist[index][instance] = false;
 		}*/
@@ -224,15 +221,17 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 }
 void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 {
-	//cout<<"adding dummy at:"<<index<<":"<<server->getNEWsize(index)<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
-	assert(server->getNEWsize(index) >= 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
+	cout<<"adding dummy at:"<<index<<":"<<NEWsize[index]<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<"s:"<<s<<endl;
+	cout <<"count:"<<count<<endl;
+	assert(NEWsize[index] >= 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
     int upCnt = numNEW[index];
 	for(int t = 0; t<s; t++)
 	{
 		int bin = count*s+t;
 		if(bin < numberOfBins[index])
 		{
-			//assert(server->getNEWsize(index)<2*indexSize[index]+2*indexSize[index-1]);
+			cout <<"entered"<<endl;
+			//assert(NEWsize[index]<2*indexSize[index]+2*indexSize[index-1]);
 			int cbin;
 			string cb = (omaps[index]->find(getBid(to_string(bin),upCnt)));
 			if(cb == "")
@@ -265,7 +264,7 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s)
 			}
 		}
 		//else
-		//	assert(server->getNEWsize(index)==2*indexSize[index]+2*indexSize[index-1]);
+		//	assert(NEWsize(index)==2*indexSize[index]+2*indexSize[index-1]);
 	}
 	
 	//if(count ) add more dummy for bitonic sort
@@ -419,9 +418,11 @@ void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int inde
 	//	cout<<"("<<n<<")";
 	//cout<<endl;
 	//cout<<endl;
-	vector<prf_type> encNEW = server->getNEW(index);
-	assert(encNEW.size() == size);
-	int initSize = encNEW.size();
+	cout <<"bitonicfirst:"<<index<<":"<<NEWsize[index]<<endl;
+	//*** READ ncm.size() of elements;
+	vector<prf_type> encNEW = server->getNEW(index,NEWsize[index]);
+	assert(size == NEWsize[index]);
+	assert(encNEW.size() == NEWsize[index]);
 	vector<prf_type> elToSort;
 	for(int k = 0; k<ncm.size(); k++)
 	{
@@ -432,6 +433,8 @@ void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int inde
 	for(auto n : elToSort)
 	{
 		prf_type dec;// = n;
+	cout <<"bitonicsecond:"<<index<<endl;
+	sleep(1);
 	    Utilities::decode(n, dec, key);
 		decodedNEW.push_back(dec);
 	}
@@ -451,7 +454,7 @@ void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int inde
 		encNEW[ncm[i]] = sorted[cnt];
 		cnt++;
 	}
-	assert(encNEW.size() == initSize);
+	assert(encNEW.size() == size);
 	server->putNEW(index, encNEW);
 }
 
@@ -482,23 +485,17 @@ return A;
 */
 void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 {
-	vector<prf_type> encNEWi = server->getNEW(index);
+	vector<prf_type> encNEWi = server->getNEW(index,NEWsize[index]);
 	int newSize = pow(2,floor((float)log2(2*indexSize[index]+2*indexSize[index-1])));
-	//assert(encNEWi.size() <= 2*indexSize[index]+2*indexSize[index-1]);
-	//assert(encNEWi.size() == newSize);
+	assert(encNEWi.size() == NEWsize[index]);
 	int upCnt = numNEW[index];
-	for(int k =0; k<numberOfBins[index]; k++)
+	vector<prf_type> decodedNEWi;	
+	for(auto n : encNEWi)
 	{
-		int cb = stoi((omaps[index]->find(getBid(to_string(k),upCnt))));
-		//assert(cb == sizeOfEachBin[index]);
+		prf_type dec;// = n;
+	    Utilities::decode(n, dec, key);
+		decodedNEWi.push_back(dec);
 	}
-		vector<prf_type> decodedNEWi;	
-		for(auto n : encNEWi)
-		{
-			prf_type dec;// = n;
-		    Utilities::decode(n, dec, key);
-			decodedNEWi.push_back(dec);
-		}
 	if(!issorted(decodedNEWi))
 	{
 		server->resize(index,0);
@@ -535,10 +532,13 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 	//	cout <<"ALREADY SORTED:"<<index<<endl;
 	//assert(issorted(encNEWi));
 }
+/*
 void OneChoiceClient::reSize(int index, int size)
 {
 	server->resize(index,size);
+	NEWsize[index]=size;
 }
+*/
 int OneChoiceClient::getNEWsize(int index)
 {
 	return NEWsize[index];

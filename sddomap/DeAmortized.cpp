@@ -108,7 +108,7 @@ float by(int a, int b)
 
 void DeAmortized::update(OP op, string keyword, int ind, bool setup) 
 {
-	int prof = 3;
+	int prof = 1;
 	for(int i=numOfIndices; i>0; i--)
 	{
 		int s = i>1 ? 6 : 2;
@@ -155,38 +155,34 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				int stepi = ceil(by(by(totStepsi, times),2));
 				stepi = stepi*2;
 				if(i==prof) 
-					cout <<j<<" SORTING:"<<cnt[i]<<"//"<<pow(2,j)<<" totstep:"<<totStepsi<<" stepi:"<<stepi<<endl;
+					cout <<j<<" SORTING:"<<cnt[i]<<"/"<<pow(2,j)<<"/"<<pow(2,j)<<" totstep:"<<totStepsi<<" stepi:"<<stepi<<endl;
 				//cout <<"j:"<<j<<" cnt[i]:"<<cnt[i]<<" N:"<<N<<
 				//	" totStepsi:"<<totStepsi<<" stepi:"<<stepi<<" count:"<<count<<" times:"<< times<<endl;
 				L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
-				//L->nonOblSort(i, keys[i][3]);
 			}
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,j))
 			{
-				L->reSize(i,indexSize[i]); //j = i+logB
+				L->resize(i,indexSize[i]); //j = i+logB
 				L->move(i-1,0,2); 
 				updateKey(i-1,0,2);
-				//cout<<"OLD["<<i-1<<"] to OLDEST["<<i-1<<"]"<<endl;
 				L->destroy(i-1,1);
 				if(!(L->exist[i][0]))
 				{
-				//	cout<<"NEW["<<i<<"] to OLDEST["<<i<<"]"<<endl;
-					L->copy(i,0);
+					L->move(i,0,3);
 					updateKey(i,0,3);
 				}
 				else if(!(L->exist[i][1]))
 				{
-				//	cout<<"NEW["<<i<<"] to OLDER["<<i<<"]"<<endl;
-					L->copy(i,1);
+					L->move(i,1,3);
 					updateKey(i,1,3);
 				}
 				else
 				{
-				//	cout<<"NEW["<<i<<"] to OLD["<<i<<"]"<<endl;
-					L->copy(i,2);
+					L->move(i,2,3);
 					updateKey(i,2,3);
 				}
+				//L->destroy(i,3);
     	    	unsigned char* newKey = new unsigned char[16];
     	    	memset(newKey, 0, 16);
     	    	keys[i][3] = newKey;
@@ -202,22 +198,20 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	{
 		if(!(L->exist[0][0]))
 		{
-			//cout<<"NEW[0] to OLDEST[0]"<<endl;
-			L->copy(0,0);
+			L->move(0,0,3);
 			updateKey(0,0,3);
 		}
 		else if(!(L->exist[0][1]))
 		{
-			//cout<<"NEW[0] to OLDER[0]"<<endl;
-			L->copy(0,1);
+			L->move(0,1,3);
 			updateKey(0,1,3);
 		}
 		else
 		{
-			//cout<<"NEW[0] to OLD[0]"<<endl;
-			L->copy(0,2);
+			L->move(0,2,3);
 			updateKey(0,2,3);
 		}
+		//L->destroy(0,3);
        	unsigned char* newKey = new unsigned char[16];
        	memset(newKey, 0, 16);
        	keys[0][3] = newKey;

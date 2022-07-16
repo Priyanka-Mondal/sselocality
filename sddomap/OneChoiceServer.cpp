@@ -81,11 +81,17 @@ void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size
 {
 	vector<prf_type> data;
    	data = storage->getAllData(index, fromInstance);
-	cout <<"instance:"<<fromInstance<<endl;
 	assert(data.size()==size);
 	storage->insertAll(index, toInstance, data);
 }
-
+/*
+void OneChoiceServer::moveNEW(int index, int toInstance, int size)
+{
+	vector<prf_type> data;
+   	data = storage->getNEW(index, size);
+	storage->insertAll(index, toInstance, data);
+}
+*/
 void OneChoiceServer::copy(int index, int toInstance)
 {
 	//cout <<"NEW[index].size():"<<NEW[index].size()<<endl;
@@ -102,9 +108,10 @@ void OneChoiceServer::append(int index, prf_type keyVal)
 	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
 }
 
-void OneChoiceServer::writeToNEW(int index, prf_type keyVal, int pos)
+int OneChoiceServer::writeToNEW(int index, prf_type keyVal, int pos)
 {
-	storage->writeToNEW(index, keyVal, pos);
+	int last = storage->writeToNEW(index, keyVal, pos);
+	return last;
 	//cout <<index<<":"<<NEW[index].size()<<"<="<<6*pow(2,index)<<endl;
 	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
 }
@@ -133,10 +140,15 @@ vector<prf_type> OneChoiceServer::getElements(int index, int instance, int start
 	return storage->getElements(index, instance, start, end);
 }
 
-vector< prf_type> OneChoiceServer::getNEW(int index)//getAllData
+vector< prf_type> OneChoiceServer::getNEW(int index)
 {
 	return NEW[index];
 }
+vector< prf_type> OneChoiceServer::getNEW(int index, int size)
+{
+	return storage->getNEW(index, size);
+}
+/*
 void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)//insertAll
 {
 	NEW[index].clear();
@@ -146,5 +158,11 @@ void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)//insertAll
 		NEW[index].push_back(n);
 	}
 }
+*/
 
+void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)//insertAll
+{
+	storage->clear(index,3);
+	storage->insertAll(index, 3, sorted);
+}
 

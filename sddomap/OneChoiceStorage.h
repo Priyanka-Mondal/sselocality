@@ -42,14 +42,16 @@ public:
     bool setup(bool overwrite);
     void insertAll(int dataIndex, int instance, vector<prf_type> ciphers);
     vector<prf_type> getAllData(int dataIndex, int instance);
+	vector<prf_type> getNEW(int index, int size);
     void clear(int index, int instance);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
     vector<prf_type> searchBin(int index, int instance, int bin);
     virtual ~OneChoiceStorage();
     vector<prf_type> getElements(int index, int instance, int start, int end);
 	void copy(int index, int toInstance, int fromInstance);
-	void writeToNEW(int index, prf_type keyVal, int pos);
+	int writeToNEW(int index, prf_type keyVal, int pos);
 	void truncate(int index, int size);
+	//vector<prf_type> getNEW(int index, int size);
 
 };
 
