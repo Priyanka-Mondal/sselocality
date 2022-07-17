@@ -37,7 +37,7 @@ public:
     Storage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
     void insert(int dataIndex, int instance, map<prf_type, prf_type> ciphers);
-    vector<prf_type> getAllData(int dataIndex, int instance);
+    map<prf_type,prf_type> getAllData(int dataIndex, int instance);
     void clear(int index, int instance);
     prf_type find(int index, int instance, prf_type mapKey, bool& found);
     virtual ~Storage();

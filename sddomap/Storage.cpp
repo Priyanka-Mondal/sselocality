@@ -107,14 +107,9 @@ void Storage::insert(int dataIndex, int instance, map<prf_type, prf_type> cipher
     }
 }
 
-vector<prf_type> Storage::getAllData(int dataIndex, int instance) 
+map<prf_type,prf_type> Storage::getAllData(int dataIndex, int instance) 
 {
-    vector<prf_type> results;
-    if (inMemoryStorage) {
-        for (auto item : data[dataIndex]) {
-            results.push_back(item.second);
-        }
-    } else {
+    map<prf_type, prf_type> results;
 	    /*
         if (USE_XXL) {
             for (auto item : (*diskData[dataIndex])) {
@@ -135,16 +130,14 @@ vector<prf_type> Storage::getAllData(int dataIndex, int instance)
                 std::copy(keyValue + i*KEY_VALUE_SIZE, keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
                 std::copy(keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
                 if (tmp != nullKey) {
-                    results.push_back(restmp);
+					
+                    results[tmp]=restmp;
                 }
             }
 
             file.close();
             delete keyValue;
             return results;
-        //}
-    }
-    return results;
 }
 
 void Storage::clear(int index, int instance) {

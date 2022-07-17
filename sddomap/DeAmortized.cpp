@@ -264,7 +264,7 @@ vector<int> DeAmortized::search(string keyword)
             if (L->exist[i][j]) 
 			{
 				//cout <<"searching at["<< i<<"]["<<j<<"]"<<endl;
-                auto tmpRes = L->search(i, j, keyword, keys[i][j]);
+                auto tmpRes = L->NIsearch(i, j, keyword, keys[i][j]);
                 encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
             }
         }

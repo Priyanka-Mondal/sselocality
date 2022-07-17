@@ -79,7 +79,7 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 	{
 		int bin = hashKey(kw, cntw, index, key);
 		cntw++;
-    	vector<prf_type> ciphers = server->search(index, instance, bin);
+    	vector<prf_type> ciphers = server->searchBin(index, instance, bin);
 		flag = 0;
     	totalCommunication += ciphers.size() * sizeof (prf_type) ;
 	    for (auto item : ciphers) 
@@ -101,6 +101,52 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 		cnt++;
 	}
 	while(flag == 1 && cnt < numberOfBins[index]);
+    if (profile) 
+	{
+        searchPreparation = Utilities::stopTimer(65);
+        //printf("search preparation time:%f include server time\n", searchPreparation);
+        Utilities::startTimer(65);
+    }
+
+    if (profile) 
+	{
+        searchDecryption = Utilities::stopTimer(65);
+        //cout<<"search decryption time:"<<searchDecryption<<" for decrypting:"<<ciphers.size()<<" ciphers"<<endl;
+    }
+    return finalRes;
+}
+
+vector<prf_type> OneChoiceClient::NIsearch(int index, int instance, string keyword, unsigned char* key) 
+{
+    double searchPreparation = 0, searchDecryption = 0;
+    if (profile) 
+        Utilities::startTimer(65);
+    vector<prf_type> finalRes;
+    int keywordCnt = 0;
+	int cnt = 0;
+	int flag = 0;
+	string kw = keyword;
+	int cntw = 0;
+	int bin = hashKey(kw, cntw, index, key);
+	cntw++;
+	prf_type K = Utilities::encode(keyword, key);
+	int keywordCount = 0;
+	vector<prf_type> ciphers = server->search(index, instance, K, keywordCount);
+	flag = 0;
+	totalCommunication += ciphers.size() * sizeof (prf_type) ;
+	for (auto item : ciphers) 
+	{
+	    prf_type plaintext = item;
+	    Utilities::decode(item, plaintext, key);
+	   	if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+		{
+	       	finalRes.push_back(plaintext);
+			flag =1;
+			int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]);
+			cout<<" MATCH:"<<plaintext.data()<<" op:"<<op<<" bin:"<<bin<<" index:"<<index<<endl;
+	   	}
+	}
+
     if (profile) 
 	{
         searchPreparation = Utilities::stopTimer(65);
@@ -309,6 +355,7 @@ void OneChoiceClient::updateCounters(int index, unsigned char* key)
 	}
 	//pad with dummy omap access
 	server->storeKwCounters(index, 3, kcc);
+	/*
 	for(auto c: all)
 	{
 	    prf_type plaintext;// = c;
@@ -330,6 +377,7 @@ void OneChoiceClient::updateCounters(int index, unsigned char* key)
 			cout<< w<<" cntw:"<<cntw<<":"<<keywordCnt<<endl;
 		}
 	}
+	*/
 }
 
 Bid OneChoiceClient::getBid(string input, int cnt) 
@@ -347,7 +395,11 @@ int OneChoiceClient::hashKey(string w, int cnt, int index, unsigned char* key)
 		return INF;
 
     prf_type K = Utilities::encode(w, key);
-    unsigned char* hash = Utilities::sha256((char*) K.data(), AES_KEY_SIZE);
+	unsigned char cntstr[AES_KEY_SIZE];		
+	memset(cntstr, 0, AES_KEY_SIZE);
+	*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+	prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
+    unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
     int bin = ((((unsigned int) (*((int*) hash))) +cnt)%numberOfBins[index]);
 	return bin;
 }

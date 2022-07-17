@@ -32,8 +32,48 @@ prf_type OneChoiceServer::findCounter(int dataIndex, int instance, prf_type toke
     prf_type res = keyworkCounters->find(dataIndex, instance, token, found);
 	return res;
 }
+vector<prf_type> OneChoiceServer::search(int dataIndex, int instance, prf_type token, int & keywordCnt)
+{
+    vector<prf_type> result;
+    keyworkCounters->seekgCount = 0;
+    storage->readBytes = 0;
+    double keywordCounterTime = 0, serverSearchTime = 0;
+    if (profile) 
+        Utilities::startTimer(35);
+    prf_type curToken = token;
+    unsigned char cntstr[AES_KEY_SIZE];
+    memset(cntstr, 0, AES_KEY_SIZE);
+    *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+    prf_type keywordMapKey = Utilities::generatePRF(cntstr, token.data());
+    bool found = false;
+    prf_type res = keyworkCounters->find(dataIndex, instance, keywordMapKey, found);
+    /*if (profile) 
+	{
+        keywordCounterTime = Utilities::stopTimer(35);
+        cout<<"keyword counter Search Time:"<<keywordCounterTime<<endl;
+	   	cout<<"number of SeekG:"<<keyworkCounters->seekgCount<<endl;
+	   	cout<<"number of read bytes:"<<keyworkCounters->KEY_VALUE_SIZE * keyworkCounters->seekgCount<<endl;
+        Utilities::startTimer(45);
+    }*/
+    if (found) 
+	{
+        prf_type plaintext;
+        Utilities::decode(res, plaintext, token.data());
+        keywordCnt = *(int*) (&(plaintext[0]));
+		cout <<"keyw cont at:"<<dataIndex<<","<<instance<<":"<<keywordCnt<<endl;
+        result = storage->find(dataIndex, instance, keywordMapKey, keywordCnt);
+        /*if (profile) 
+		{
+            serverSearchTime = Utilities::stopTimer(45);
+            cout<<"server Search Time:"<<serverSearchTime <<endl;
+			cout<<"number of SeekG:"<<storage->SeekG<<" number of read bytes:"<<storage->readBytes<<endl;
+        }*/
+    }
+	
+    return result;
+}
 
-vector<prf_type> OneChoiceServer::search(int index, int instance, int bin) 
+vector<prf_type> OneChoiceServer::searchBin(int index, int instance, int bin) 
 {
     vector<prf_type> result;
 	/*
@@ -93,30 +133,13 @@ void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size
    	data = storage->getAllData(index, fromInstance);
 	assert(data.size()==size);
 	storage->insertAll(index, toInstance, data);
-}
-/*
-void OneChoiceServer::moveNEW(int index, int toInstance, int size)
-{
-	vector<prf_type> data;
-   	data = storage->getNEW(index, size);
-	storage->insertAll(index, toInstance, data);
-}
-*/
-void OneChoiceServer::copy(int index, int toInstance)
-{
-	//cout <<"NEW[index].size():"<<NEW[index].size()<<endl;
-	storage->insertAll(index, toInstance, NEW[index]);
-	NEW[index].clear();
-	NEW[index].resize(0);
-	//cout <<"reset NEW["<<index<<"] to "<<NEW[index].size()<<endl;
+
+	map<prf_type,prf_type> wordCount;
+   	wordCount = keyworkCounters->getAllData(index, fromInstance);
+	keyworkCounters->insert(index, toInstance, wordCount);
 }
 
-void OneChoiceServer::append(int index, prf_type keyVal)
-{
-	NEW[index].push_back(keyVal);
-	//cout <<index<<":"<<NEW[index].size()<<"<="<<6*pow(2,index)<<endl;
-	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
-}
+
 
 int OneChoiceServer::writeToNEW(int index, prf_type keyVal, int pos)
 {
@@ -126,10 +149,6 @@ int OneChoiceServer::writeToNEW(int index, prf_type keyVal, int pos)
 	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
 }
 
-int OneChoiceServer::getNEWsize(int index)
-{
-	return NEW[index].size();
-}
 
 void OneChoiceServer::destroy(int index, int instance)
 {
@@ -154,17 +173,6 @@ vector< prf_type> OneChoiceServer::getNEW(int index, int size)
 {
 	return storage->getNEW(index, size);
 }
-/*
-void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)//insertAll
-{
-	NEW[index].clear();
-	//NEW[index].resize(sorted.size());
-	for(auto n : sorted)
-	{
-		NEW[index].push_back(n);
-	}
-}
-*/
 
 void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)//insertAll
 {

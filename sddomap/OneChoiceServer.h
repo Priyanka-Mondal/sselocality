@@ -20,7 +20,7 @@ public:
     virtual ~OneChoiceServer();
 	void storeKwCounters(int dataIndex, int instance, map<prf_type, prf_type> keywordCounters);
 	prf_type findCounter(int dataIndex, int instance, prf_type token);
-    vector<prf_type> search(int dataIndex, int instance, int bin);
+    vector<prf_type> searchBin(int dataIndex, int instance, int bin);
     vector<prf_type> getAllData(int dataIndex, int instance);
 	void move(int index, int toInstance, int fromInstance, int size);
 	void copy(int index, int toInstance);
@@ -37,7 +37,7 @@ public:
 	int writeToNEW(int index, prf_type keyVal, int pos);
 	void moveNEW(int index, int toInstance, int size);
 	void truncate(int index, int size, int filesize);
-    //vector<prf_type> search(int dataIndex, int instance, prf_type token, int & keywordCnt);
+    vector<prf_type> search(int dataIndex, int instance, prf_type token, int & keywordCnt);
     //void storeCiphers(int dataIndex, int instance, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters);
 };
 
