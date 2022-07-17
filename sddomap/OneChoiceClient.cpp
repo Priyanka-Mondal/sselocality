@@ -1,6 +1,11 @@
 #include "OneChoiceClient.h"
 #include<string>
+#include<map>
+#include<vector>
+#include<algorithm>
 
+
+using namespace::std;
 OneChoiceClient::~OneChoiceClient() 
 {
     delete server;
@@ -72,7 +77,7 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 	int cntw = 0;
 	do
 	{
-		int bin = map(kw, cntw, index, key);
+		int bin = hashKey(kw, cntw, index, key);
 		cntw++;
     	vector<prf_type> ciphers = server->search(index, instance, bin);
 		flag = 0;
@@ -176,7 +181,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 				cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
 			else
 				cnt = cntw++;
-			int bin = map(w, cnt, index, key2);		
+			int bin = hashKey(w, cnt, index, key2);		
 			int realbin;
 			if(w=="")
 				realbin = INF;
@@ -272,8 +277,60 @@ void OneChoiceClient::pad(int index, int newSize, unsigned char* key)
 			//**dummy omap access here
 		}
 	}
+
+	//**will have to deamortize it later**//
+	updateCounters(index, key);
 }
 
+void OneChoiceClient::updateCounters(int index, unsigned char* key)
+{
+	int upCnt = numNEW[index];
+	vector<prf_type> all= server->getNEW(index, NEWsize[index]);
+	map <prf_type, prf_type> kcc;
+	
+	for(auto c: all)
+	{
+	    prf_type plaintext;// = c;
+	    Utilities::decode(c, plaintext, key);
+	    string w((char*) plaintext.data());
+		if(w!="")
+		{
+			int cntw = stoi(omaps[index]->find(getBid(w, upCnt)));
+			prf_type K = Utilities::encode(w, key);
+			unsigned char cntstr[AES_KEY_SIZE];
+			memset(cntstr, 0, AES_KEY_SIZE);
+			*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+			prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
+			prf_type valueTmp, totalTmp;
+			*(int*) (&(valueTmp[0])) = cntw;
+			prf_type mapValue = Utilities::encode(valueTmp.data(), K.data());
+			kcc[mapKey] = mapValue; 
+		}
+	}
+	//pad with dummy omap access
+	server->storeKwCounters(index, 3, kcc);
+	for(auto c: all)
+	{
+	    prf_type plaintext;// = c;
+	    Utilities::decode(c, plaintext, key);
+	    string w((char*) plaintext.data());
+		if(w!="")
+		{
+			int cntw = stoi(omaps[index]->find(getBid(w, upCnt)));
+			prf_type K = Utilities::encode(w, key);
+			unsigned char cntstr[AES_KEY_SIZE];
+			memset(cntstr, 0, AES_KEY_SIZE);
+			*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+			prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
+			prf_type res = server->findCounter(index,3,mapKey);
+        	prf_type plaintext;
+        	Utilities::decode(res, plaintext, K.data());
+        	int keywordCnt = *(int*) (&(plaintext[0]));
+			assert(cntw == keywordCnt);
+			cout<< w<<" cntw:"<<cntw<<":"<<keywordCnt<<endl;
+		}
+	}
+}
 
 Bid OneChoiceClient::getBid(string input, int cnt) 
 {
@@ -284,7 +341,7 @@ Bid OneChoiceClient::getBid(string input, int cnt)
     Bid res(value);
     return res;
 }
-int OneChoiceClient::map(string w, int cnt, int index, unsigned char* key)
+int OneChoiceClient::hashKey(string w, int cnt, int index, unsigned char* key)
 {
 	if(w=="")
 		return INF;

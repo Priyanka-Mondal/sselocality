@@ -22,6 +22,16 @@ void OneChoiceServer::storeCiphers(int dataIndex, int instance, vector<vector<pa
     keyworkCounters->insert(dataIndex, keywordCounters);
 }
 */
+void OneChoiceServer::storeKwCounters(int dataIndex, int instance, map<prf_type, prf_type> kc) 
+{
+    keyworkCounters->insert(dataIndex, instance, kc);
+}
+prf_type OneChoiceServer::findCounter(int dataIndex, int instance, prf_type token)
+{
+	bool found;
+    prf_type res = keyworkCounters->find(dataIndex, instance, token, found);
+	return res;
+}
 
 vector<prf_type> OneChoiceServer::search(int index, int instance, int bin) 
 {
@@ -74,7 +84,7 @@ vector<prf_type> OneChoiceServer::getAllData(int dataIndex, int instance)
 void OneChoiceServer::clear(int index, int instance) 
 {
     storage->clear(index, instance);
-    keyworkCounters->clear(index);
+    keyworkCounters->clear(index, instance);
 }
 
 void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size)

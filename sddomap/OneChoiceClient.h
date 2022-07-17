@@ -57,12 +57,13 @@ public:
 	void addDummy(int index, int count, unsigned char* key, int s, int r1, int r2);
 	void deAmortizedBitSort(int step, int counter, int size, int index, unsigned char* key);
 	void nonOblSort(int index, unsigned char* key);
-    int map(string w, int cnt, int index, unsigned char* key);
+    int hashKey(string w, int cnt, int index, unsigned char* key);
     Bid getBid(string str, int cnt);
 	vector<prf_type> searchNEW(int index, string keyword);
 	void ensureNEWSize(int index, int bin, int cnt);
     int getNEWsize(int index);
 	void pad(int index, int newSize, unsigned char* key);
+	void updateCounters(int index, unsigned char* key);
 };
 
 #endif /* ONECHOICECLIENT_H */

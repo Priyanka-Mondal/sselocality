@@ -26,7 +26,7 @@ private:
     bool profile = false;
     vector< unordered_map<prf_type, prf_type, PRFHasher> > data;
     //stxxl::unordered_map<prf_type, prf_type, PRFHasher, CompareLess, SUB_BLOCK_SIZE, SUB_BLOCKS_PER_BLOCK>** diskData;
-    vector<string> filenames;
+    vector<vector<string>> filenames;
     int dataIndex;
     prf_type nullKey;
     string fileAddressPrefix;
@@ -36,10 +36,10 @@ public:
     int KEY_VALUE_SIZE = (2 * AES_KEY_SIZE + sizeof (int));
     Storage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
-    void insert(int dataIndex, map<prf_type, prf_type> ciphers);
-    vector<prf_type> getAllData(int dataIndex);
-    void clear(int index);
-    prf_type find(int index, prf_type mapKey, bool& found);
+    void insert(int dataIndex, int instance, map<prf_type, prf_type> ciphers);
+    vector<prf_type> getAllData(int dataIndex, int instance);
+    void clear(int index, int instance);
+    prf_type find(int index, int instance, prf_type mapKey, bool& found);
     virtual ~Storage();
 
 

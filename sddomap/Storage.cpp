@@ -1,7 +1,8 @@
 #include "Storage.h"
 #include<string.h>
 
-Storage::Storage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) {
+Storage::Storage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) 
+{
     this->inMemoryStorage = inMemory;
     this->fileAddressPrefix = fileAddressPrefix;
     this->dataIndex = dataIndex;
@@ -12,47 +13,37 @@ Storage::Storage(bool inMemory, int dataIndex, string fileAddressPrefix, bool pr
 
 bool Storage::setup(bool overwrite) 
 {
-    if (inMemoryStorage) {
-        for (int i = 0; i < dataIndex; i++) {
-            unordered_map<prf_type, prf_type, PRFHasher> curData;
-            data.push_back(curData);
-        }
-    } else {
-        /*if (USE_XXL) {
-            diskData = new stxxl::unordered_map<prf_type, prf_type, PRFHasher, CompareLess, SUB_BLOCK_SIZE, SUB_BLOCKS_PER_BLOCK>*[dataIndex];
-            for (int i = 0; i < dataIndex; i++) {
-                diskData[i] = new stxxl::unordered_map<prf_type, prf_type, PRFHasher, CompareLess, SUB_BLOCK_SIZE, SUB_BLOCKS_PER_BLOCK>();
-            }
-        } else {*/
-            for (int i = 0; i < dataIndex; i++) 
-	    {
-                string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
-                filenames.push_back(filename);
-                fstream testfile(filename.c_str(), std::ofstream::in);
-                if (testfile.fail() || overwrite) 
-		{
-                    testfile.close();
-                    fstream file(filename.c_str(), std::ofstream::out);
-                    if (file.fail()) 
-                        cerr << "Error: " << strerror(errno);
-                    int maxSize = pow(2, i);
-                    int nextPtr = 0;
-                    for (int j = 0; j < maxSize; j++) 
-		    {
-                        file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                        file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                        file.write((char*) &nextPtr, sizeof (int));
-                    }
-                    //                file.write((char*) &nextPtr, sizeof (int));
-                    file.close();
-                }
-            }
-        //}
-
-    }
+		filenames.resize(dataIndex+1);
+   for (int i = 0; i <= dataIndex; i++) 
+   {
+			filenames[i].resize(4);
+       for(int j=0; j<4;j++)
+       {
+      	 string filename = fileAddressPrefix + "MAP-" + to_string(i)+"-"+to_string(j) + ".dat";
+           filenames[i][j]=filename;
+      	 fstream testfile(filename.c_str(), std::ofstream::in);
+      	 if (testfile.fail() || overwrite) 
+      	 {
+      	     testfile.close();
+      	     fstream file(filename.c_str(), std::ofstream::out);
+      	     if (file.fail()) 
+      	         cerr << "Error: " << strerror(errno);
+      	     int maxSize = pow(2, i);
+      	     int nextPtr = 0;
+      	     for (int j = 0; j < maxSize; j++) 
+   	  	  	 {
+      	         file.write((char*) nullKey.data(), AES_KEY_SIZE);
+      	         file.write((char*) nullKey.data(), AES_KEY_SIZE);
+      	         file.write((char*) &nextPtr, sizeof (int));
+      	     }
+      	     //                file.write((char*) &nextPtr, sizeof (int));
+      	     file.close();
+      	 }
+       }
+   }
 }
 
-void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers) 
+void Storage::insert(int dataIndex, int instance, map<prf_type, prf_type> ciphers) 
 {
     if (inMemoryStorage) 
     {
@@ -76,7 +67,7 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers)
                 unsigned char* hash = Utilities::sha256((char*) item.first.data(), AES_KEY_SIZE);
                 int pos = (unsigned int) (*((int*) hash)) % maxSize;
 
-                fstream file(filenames[dataIndex].c_str(), ios::binary | ios::in | ios::out | ios::ate);
+                fstream file(filenames[dataIndex][instance].c_str(), ios::binary | ios::in | ios::out | ios::ate);
                 if (file.fail()) 
 		{
 		    cout <<"xx:"<<dataIndex<<endl;
@@ -93,7 +84,8 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers)
                 prf_type tmp;
                 std::copy(chainHead, chainHead + KEY_VALUE_SIZE, tmp.begin());
 
-                if (tmp != nullKey) {
+                if (tmp != nullKey) 
+				{
                     nextPos = tmpNextPos;
                     file.seekp(nextPos, ios::beg);
                     file.write(chainHead, KEY_VALUE_SIZE);
@@ -115,7 +107,7 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers)
     }
 }
 
-vector<prf_type> Storage::getAllData(int dataIndex) 
+vector<prf_type> Storage::getAllData(int dataIndex, int instance) 
 {
     vector<prf_type> results;
     if (inMemoryStorage) {
@@ -129,7 +121,7 @@ vector<prf_type> Storage::getAllData(int dataIndex)
                 results.push_back(item.second);
             }
         } else {*/
-            fstream file(filenames[dataIndex].c_str(), ios::binary | ios::in | ios::ate);
+            fstream file(filenames[dataIndex][instance].c_str(), ios::binary | ios::in | ios::ate);
             if (file.fail()) {
                 cerr << "Error in read: " << strerror(errno);
             }
@@ -155,7 +147,7 @@ vector<prf_type> Storage::getAllData(int dataIndex)
     return results;
 }
 
-void Storage::clear(int index) {
+void Storage::clear(int index, int instance) {
     if (inMemoryStorage) {
         data[index].clear();
     } else {
@@ -163,7 +155,7 @@ void Storage::clear(int index) {
         if (USE_XXL) {
             diskData[index]->clear();
         } else {*/
-            fstream file(filenames[index].c_str(), std::ios::binary | std::ofstream::out);
+            fstream file(filenames[index][instance].c_str(), std::ios::binary | std::ofstream::out);
             if (file.fail()) {
                 cerr << "Error: " << strerror(errno);
             }
@@ -182,7 +174,7 @@ void Storage::clear(int index) {
 Storage::~Storage() {
 }
 
-prf_type Storage::find(int index, prf_type mapKey, bool& found) {
+prf_type Storage::find(int index, int instance, prf_type mapKey, bool& found) {
     prf_type result;
     if (inMemoryStorage) {
         if (data[index].count(mapKey) == 0) {
@@ -204,7 +196,7 @@ prf_type Storage::find(int index, prf_type mapKey, bool& found) {
             }
         } else {*/
 
-            std::fstream file(filenames[index].c_str(), ios::binary | ios::in);
+            std::fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
             if (file.fail()) {
                 cerr << "Error in read: " << strerror(errno);
             }
