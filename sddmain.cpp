@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 {
     vector<TC<int> > testCases;
     vector<string> testKeywords;
-    uint keywordLength = 5;
+    uint keywordLength = 4;
     bool inMemory, overwrite;
     string filename = "configs/config.txt";
     if (argc == 2) 
@@ -134,7 +134,6 @@ int main(int argc, char** argv)
         //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
         //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
         cout << "Number of return item:[" << res.size()<<"]" << endl;
-		sleep(1);
 		//assert(testCases[i].Qs[j]-testCases[i].delNumber[j] == res.size());
     }
     cout << "*********************************************************************************" << endl;

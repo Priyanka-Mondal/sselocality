@@ -54,7 +54,7 @@ public:
 	void resize(int index, int size);
 	void reSize(int index, int size);
 	void getBin(int newindex, int instance, int start, int end, unsigned char* key1, unsigned char* key2);
-	void addDummy(int index, int count, unsigned char* key, int s);
+	void addDummy(int index, int count, unsigned char* key, int s, int r1, int r2);
 	void deAmortizedBitSort(int step, int counter, int size, int index, unsigned char* key);
 	void nonOblSort(int index, unsigned char* key);
     int map(string w, int cnt, int index, unsigned char* key);
