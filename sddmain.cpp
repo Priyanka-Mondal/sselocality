@@ -57,7 +57,6 @@ int main(int argc, char** argv)
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;
     cout <<"*************************************************************************"<<endl;
    
-    
     for (uint i = 0; i < testCases.size(); i++) 
     {
 		cout <<"SIZE of testcases:"<<testCases[i].Qs.size()<<endl;
@@ -71,8 +70,9 @@ int main(int argc, char** argv)
 			int j;
     	    for (j = 0; j < cur->second.size(); j++) 
 			{
-			key++;
-			//cout <<" inserting keywords:"<<key<<"/"<<testCases[i].N<<" "<<cur->first<<" fileId:"<<cur->second[j]<<endl;
+				key++;
+				if(std::find(testCases[i].testKeywords.begin(),testCases[i].testKeywords.end(),cur->first)!=testCases[i].testKeywords.end())
+				     cout <<" inserting:"<<key<<"/"<<testCases[i].N<<" "<<cur->first<<" fileId:"<<cur->second[j]<<endl;
         	    client.update(OP::INS, cur->first, cur->second[j], true);
             	cnt++;
             	if (cnt % 500 == 0) 
@@ -86,7 +86,6 @@ int main(int argc, char** argv)
 		
         for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
-       		//auto item = testCases[i].filePairs[j].second;
             auto item = testCases[i].filePairs[testCases[i].testKeywords[j]];
         	vector<int> delPoses;
 			if(testCases[i].delNumber[j] < item.size())
@@ -109,18 +108,12 @@ int main(int argc, char** argv)
 			{
             	Utilities::startTimer(500);
             	client.update(OP::DEL, testCases[i].testKeywords[j], item[delPoses[k]], true);
-		    	//cout <<"deleted:"<<testCases[i].testKeywords[j]<<" fileid:"<<delPoses[k]<<endl;
+		    	cout <<"deleted:"<<testCases[i].testKeywords[j]<<" fileid:"<<item[delPoses[k]]<<endl;
             	time = Utilities::stopTimer(500);
         	}
         }
     }
     //    client.endSetup();
-
-
-
-
-
-		
 
     //for (uint j = 0; j < 1; j++) 
     for (uint j = 0; j < testCases[i].Qs.size(); j++) 

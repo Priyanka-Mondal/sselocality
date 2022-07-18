@@ -174,8 +174,10 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		}
 	}
 	prf_type keyVal;
-	createKeyVal(keyword,ind,op, keyVal);
+	createKeyVal(keyword, ind, op, keyVal);
 	L->append(0, keyVal, keys[0][3]);
+	L->updateOMAP(0,keyword, keys[0][3]);
+	L->updateCounters(0, keys[0][3]);
 	cnt[0]=cnt[0]+1;
 	if(cnt[0]==B)
 	{
@@ -209,7 +211,7 @@ void DeAmortized::createKeyVal(string keyword, int ind, OP op, prf_type& keyVal)
     std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
     *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
     keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
-    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 11])) = 0;//bin
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 11])) = 0;//index 0 has only bin 0
 }
 
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
@@ -255,7 +257,7 @@ vector<int> DeAmortized::search(string keyword)
         }
     }
 	*/
-    for (int i = localSize; i <= numOfIndices; i++) 
+    for (int i = 0; i <= numOfIndices; i++) 
 	{
     	for (int j = 0; j < 3; j++) 
 		{
@@ -292,6 +294,7 @@ vector<int> DeAmortized::search(string keyword)
 	cout <<"NUMBER OF RETURN:"<<ressize<<endl;
     return finalRes;
 }
+
 /*
 void DeAmortized::endSetup() 
 {
@@ -301,7 +304,6 @@ void DeAmortized::endSetup()
         omaps[i]->setupInsert(setupOMAPS[i]);
     }
 }
-
 double DeAmortized::getTotalSearchCommSize() const {
     return totalSearchCommSize;
 }

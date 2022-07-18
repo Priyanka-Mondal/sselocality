@@ -65,6 +65,7 @@ public:
     int getNEWsize(int index);
 	void pad(int index, int newSize, unsigned char* key);
 	void updateCounters(int index, unsigned char* key);
+	void updateOMAP(int index, string keyword, unsigned char* key);
 };
 
 #endif /* ONECHOICECLIENT_H */

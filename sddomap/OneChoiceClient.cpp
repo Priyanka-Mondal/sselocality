@@ -134,8 +134,9 @@ vector<prf_type> OneChoiceClient::NIsearch(int index, int instance, string keywo
 	   	if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 		{
 	       	finalRes.push_back(plaintext);
+	        int ind = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
 			int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]);
-			cout<<" MATCH:"<<plaintext.data()<<" op:"<<op<<" index:"<<index<<endl;
+			//cout<<" MATCH:"<<plaintext.data()<<" op:"<<op<<" id:"<<ind<<" index:"<<index<<endl;
 	   	}
 	}
 
@@ -275,9 +276,17 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s,
 		    		value.data()[AES_KEY_SIZE - 6] = (byte) (OP::INS);//op
     				*(int*) (&(value.data()[AES_KEY_SIZE - 11])) = bin;//bin
 					append(index, value, key); // double insertion for bitonic sort in future 
-					append(index, value, key);
 					string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
-					ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
+				}
+				for(int k = cbin; k<sizeOfEachBin[index]; k++)
+				{
+					prf_type value;
+    				memset(value.data(), 0, AES_KEY_SIZE);
+    				*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = INF;//dummy-id
+		    		value.data()[AES_KEY_SIZE - 6] = (byte) (OP::INS);//op
+    				*(int*) (&(value.data()[AES_KEY_SIZE - 11])) = INF;//bin
+					append(index, value, key); // double insertion for bitonic sort in future 
+					string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
 				}
 				for(int k = 0; k<cbin ; k++)
 				{ 
@@ -315,6 +324,12 @@ void OneChoiceClient::pad(int index, int newSize, unsigned char* key)
 
 	//**will have to deamortize it later**//
 	updateCounters(index, key);
+}
+
+void OneChoiceClient::updateOMAP(int index, string keyword, unsigned char* key)
+{
+	int upCnt = numNEW[index];
+	string ob = omaps[index]->incrementCnt(getBid(keyword,upCnt));
 }
 
 void OneChoiceClient::updateCounters(int index, unsigned char* key)

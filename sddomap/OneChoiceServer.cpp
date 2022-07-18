@@ -60,7 +60,7 @@ vector<prf_type> OneChoiceServer::search(int dataIndex, int instance, prf_type t
         prf_type plaintext;
         Utilities::decode(res, plaintext, token.data());
         keywordCnt = *(int*) (&(plaintext[0]));
-		cout <<"keyw cont at:"<<dataIndex<<","<<instance<<":"<<keywordCnt<<endl;
+		//cout <<"keyw cont at:"<<dataIndex<<","<<instance<<":"<<keywordCnt<<endl;
         result = storage->find(dataIndex, instance, keywordMapKey, keywordCnt);
         /*if (profile) 
 		{
@@ -135,6 +135,7 @@ void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size
 	storage->insertAll(index, toInstance, data);
 
 	map<prf_type,prf_type> wordCount;
+	cout <<"get all data from counters:"<<index<<"|"<<fromInstance<<" to"<<toInstance<<endl;
    	wordCount = keyworkCounters->getAllData(index, fromInstance);
 	keyworkCounters->insert(index, toInstance, wordCount);
 }
