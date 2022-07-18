@@ -76,7 +76,7 @@ int main(int argc, char** argv)
                 for (j = 0; j < cur->second.size(); j++) 
 		{
                     client.update(OP::INS, cur->first, cur->second[j], true);
-					cout <<"cur->sec:"<<cur->second[j]<<endl;
+					//cout <<"cur->sec:"<<cur->second[j]<<endl;
                     cnt++;
                     if (cnt % 1000 == 0) 
 		    {

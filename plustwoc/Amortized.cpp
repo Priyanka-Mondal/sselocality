@@ -168,7 +168,7 @@ vector<int> Amortized::search(string keyword)
         prf_type decodedString = *i;
         int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
         remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1); //ins gives -1
-		cout <<"(("<<remove[plaintext]<<"))";
+		//cout <<"(("<<remove[plaintext]<<"))";
     }
     for (auto const& cur : remove) 
     {
