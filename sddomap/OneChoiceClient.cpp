@@ -220,11 +220,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 			else
 				cnt = cntw++;
 			int bin = hashKey(w, cnt, index, key2);		
-			int realbin;
-			if(w=="")
-				realbin = INF;
-			else
-				realbin = bin;
+			int realbin = bin;
 	    	prf_type keyVal;
     		memset(keyVal.data(), 0, AES_KEY_SIZE);
 	    	std::copy(w.begin(), w.end(), keyVal.begin());//keyword
@@ -235,7 +231,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 			if(w!="")
 			{
 				string ob = omaps[index]->incrementCnt(getBid(to_string(realbin),upCnt));
-				string ob2 = omaps[index]->find(getBid(to_string(realbin),upCnt));
+				//string ob2 = omaps[index]->find(getBid(to_string(realbin),upCnt));
 				//cout <<"incremented OMAP:"<<ob<<" to "<< ob2<<" upcnt:"<<upCnt<<" for bin:"<<realbin<<endl;
 			}
 		}
@@ -278,9 +274,10 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s,
     				*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = INF;//dummy-id
 		    		value.data()[AES_KEY_SIZE - 6] = (byte) (OP::INS);//op
     				*(int*) (&(value.data()[AES_KEY_SIZE - 11])) = bin;//bin
-					append(index, value, key);
+					append(index, value, key); // double insertion for bitonic sort in future 
 					append(index, value, key);
 					string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
+					ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
 				}
 				for(int k = 0; k<cbin ; k++)
 				{ 
