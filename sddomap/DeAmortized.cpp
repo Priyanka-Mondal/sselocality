@@ -117,7 +117,8 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		int r1 = ceil((float)(2*floor(by(indexSize[i-1],s))));
 		int r2 = r1 + ceil(by(mi,s));
 		assert(r1<r2);
-		assert(r2<=pow(2,j));
+		assert(r2<pow(2,j));
+
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
 			if(cnt[i] <= r1)
@@ -137,12 +138,9 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				int times = pow(2,j)-r2;
 				int N = L->getNEWsize(i);
 				int totStepsi = 2*ceil(by(N*log2(N)*(log2(N)+1),4));
-				int stepi = ceil(by(by(totStepsi, times),2));
-				stepi = stepi*2;
+				int stepi = 2*ceil(by(by(totStepsi, times),2));
 				if(i==prof) 
 					cout <<j<<" SORTING: N:"<<N<<" "<<cnt[i]<<"/"<<pow(2,j)<<"/"<<pow(2,j)<<" totstep:"<<totStepsi<<" stepi:"<<stepi<<endl;
-				//cout <<"j:"<<j<<" cnt[i]:"<<cnt[i]<<" N:"<<N<<
-				//	" totStepsi:"<<totStepsi<<" stepi:"<<stepi<<" count:"<<count<<" times:"<< times<<endl;
 				L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
 			}
 			cnt[i] = cnt[i]+1;

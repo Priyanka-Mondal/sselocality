@@ -123,16 +123,9 @@ vector<prf_type> OneChoiceClient::NIsearch(int index, int instance, string keywo
         Utilities::startTimer(65);
     vector<prf_type> finalRes;
     int keywordCnt = 0;
-	int cnt = 0;
-	int flag = 0;
-	string kw = keyword;
-	int cntw = 0;
-	int bin = hashKey(kw, cntw, index, key);
-	cntw++;
 	prf_type K = Utilities::encode(keyword, key);
 	int keywordCount = 0;
 	vector<prf_type> ciphers = server->search(index, instance, K, keywordCount);
-	flag = 0;
 	totalCommunication += ciphers.size() * sizeof (prf_type) ;
 	for (auto item : ciphers) 
 	{
@@ -141,9 +134,8 @@ vector<prf_type> OneChoiceClient::NIsearch(int index, int instance, string keywo
 	   	if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 		{
 	       	finalRes.push_back(plaintext);
-			flag =1;
 			int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]);
-			cout<<" MATCH:"<<plaintext.data()<<" op:"<<op<<" bin:"<<bin<<" index:"<<index<<endl;
+			cout<<" MATCH:"<<plaintext.data()<<" op:"<<op<<" index:"<<index<<endl;
 	   	}
 	}
 

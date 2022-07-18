@@ -318,10 +318,17 @@ vector<prf_type> OneChoiceStorage::find(int index, int instance, prf_type mapKey
     int remainder = fileLength - readPos;
     int totalReadLength = cnt * AES_KEY_SIZE * sizeOfEachBin[index];
     int readLength = 0;
-    if (totalReadLength > remainder) 
+	//if totalReadLength > fileLength then ??
+    if (totalReadLength > remainder)
+	{ 
         readLength = remainder;
+		totalReadLength = totalReadLength-readLength;
+	}
      else 
+	{
         readLength = totalReadLength;
+		totalReadLength = 0;
+	}
     file.seekg(readPos, ios::beg);
     SeekG++;
     char* keyValues = new char[readLength];
@@ -334,6 +341,23 @@ vector<prf_type> OneChoiceStorage::find(int index, int instance, prf_type mapKey
         if (restmp != nullKey) 
             results.push_back(restmp);
     }
+	delete keyValues;
+	if(totalReadLength>0)
+	{
+	    file.seekg(0, ios::beg);
+	    SeekG++;
+	    char* keyValues2 = new char[totalReadLength];
+	    file.read(keyValues2, totalReadLength);
+	    readBytes += totalReadLength;
+	    for (int i = 0; i < totalReadLength / AES_KEY_SIZE; i++) 
+		{
+	        prf_type restmp;
+	        std::copy(keyValues2 + i * AES_KEY_SIZE, keyValues2 + i * AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
+	        if (restmp != nullKey) 
+	            results.push_back(restmp);
+	    }
+		delete keyValues2;
+	}
     file.close();
     return results;
 }
