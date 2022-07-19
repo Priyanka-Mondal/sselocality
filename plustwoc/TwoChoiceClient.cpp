@@ -279,7 +279,10 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 					memset(dummy.data(), 0, AES_KEY_SIZE);
 					auto dummypair = std::pair<prf_type, prf_type>(dummy, dummy);
 					ciphers[cipherIndex].push_back(dummypair);
-					fullness[cipherIndex] = fullness[cipherIndex]+1;
+					if(fullness.find(cipherIndex) == fullness.end()) //although this check is not reqd
+						fullness[cipherIndex] = 1;
+					else
+							fullness[cipherIndex] = fullness[cipherIndex]+1;
 				   	cipherIndex++;
 				}
 			 }
