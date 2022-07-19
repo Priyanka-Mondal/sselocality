@@ -8,15 +8,11 @@ TwoChoiceClient::~TwoChoiceClient()
 	delete one;
 }
 
-//3. change mpl value
-
 TwoChoiceClient::TwoChoiceClient(int numOfDataSets, bool inMemory, bool overwrite, bool profile) 
 {
-
 	this->profile = profile;
 	server = new TwoChoiceServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
-
 	cout <<"===================RUNNING SDa+TwoChoicePLUSPLUS====================="<<endl;
 	memset(nullKey.data(), 0, AES_KEY_SIZE);
 	for (int i = 0; i < numOfDataSets; i++) //why not <=
@@ -74,24 +70,9 @@ int TwoChoiceClient::maxPossibleLen(int index)
 	if(N == 1) return 1;
 	int l = (float)(log2(N)*log2(N)*log2(N));
 	int max = ceil((float)N/(float)l);
-	assert(max <3);
+	//assert(max <3); // this never fails, which implies mpl is never >3,
 	if(max>numberOfBins[index])
 		max = numberOfBins[index];
-	/*
-	if(N<4)
-		max = bins;
-	else
-	{
-		float p = (float) ((float)1/log2(log2(N)));
-		float m = (float) (1-p);
-		max = (float) floor(pow(N,m));
-	}
-	int maxmax= pow(2, (int)ceil(log2(max)));
-	int minmin= pow(2, (int)floor(log2(max)));
-	if(maxmax<= bins)
-		max = maxmax;
-	else
-		max = minmin;*/
 	//max = numberOfBins[index];
 	return max;
 }
@@ -207,38 +188,37 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 	for (auto pair : sorted) 
 	{
 		int pss = pair.second.size();
-		int newsize = pss;//pow(2, (int)ceil(log2(pss)));
-		int flag = 0;
+		int newsize = pss;
+		int flagOneChoice = 0;
 		if(pss > mpl)
 		{
-			//cout<<"number of bins:"<<numberOfBins[index]<<" nB:"<<nB[index]<<endl;
-			flag = 1;
-	   		 assert(pair.first != "");
-       		 prf_type K1 = Utilities::encode(pair.first, key);
-       		 prf_type mapKey, mapValue;
-       		 unsigned char cntstr[AES_KEY_SIZE];
-       		 memset(cntstr, 0, AES_KEY_SIZE);
-       		 *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-       		 mapKey = Utilities::generatePRF(cntstr, K1.data());
+			flagOneChoice = 1;
+	   		assert(pair.first != "");
+       		prf_type K1 = Utilities::encode(pair.first, key);
+       		prf_type mapKey, mapValue;
+       		unsigned char cntstr[AES_KEY_SIZE];
+       		memset(cntstr, 0, AES_KEY_SIZE);
+       		*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+       		mapKey = Utilities::generatePRF(cntstr, K1.data());
         	unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
         	int pos = ((unsigned int) (*((int*) hash))) % nB[index];
         	int cipherIndex = pos;
        		for (unsigned int i = 0; i < pair.second.size(); i++) 
-	   	 	 {
-       	    	 prf_type mapKey, mapValue;
-       	    	 unsigned char cntstr[AES_KEY_SIZE];
-       	    	 memset(cntstr, 0, AES_KEY_SIZE);
-       	    	 *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
-       	    	 mapKey = Utilities::generatePRF(cntstr, K1.data());
-       	    	 mapValue = Utilities::encode(pair.second[i].data(), key);
-       	    	 auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
-       	    	 ciphersOne[cipherIndex].push_back(p);
-       	    	 cipherIndex++;
-       	    	 if (cipherIndex == nB[index]) 
-	   	 		 {
-       	    	     cipherIndex = 0;
-       	    	 }
-       	 	 }
+	   	 	{
+       	        prf_type mapKey, mapValue;
+       	        unsigned char cntstr[AES_KEY_SIZE];
+       	        memset(cntstr, 0, AES_KEY_SIZE);
+       	        *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
+       	        mapKey = Utilities::generatePRF(cntstr, K1.data());
+       	        mapValue = Utilities::encode(pair.second[i].data(), key);
+       	        auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
+       	        ciphersOne[cipherIndex].push_back(p);
+       	        cipherIndex++;
+       	        if (cipherIndex == nB[index]) 
+	   	 	    {
+       	            cipherIndex = 0;
+       	        }
+       	 	}
     	}
 		else
 		{
@@ -285,6 +265,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 					prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
 					prf_type mapValue = Utilities::encode(pair.second[i].data(), key);
 					auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
+					assert(fullness[cipherIndex]<sizeOfEachBin[index]);
 					ciphers[cipherIndex].push_back(p);
 					if(fullness.find(cipherIndex) == fullness.end())
 						fullness[cipherIndex] = 1;
@@ -311,10 +292,10 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 		*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
 		prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
 		prf_type valueTmp, totalTmp;
-		if(flag == 0)
-		*(int*) (&(valueTmp[0])) = newsize;
-		else 
-		*(int*) (&(valueTmp[0])) = pair.second.size(); 
+		if(flagOneChoice == 0)
+			*(int*) (&(valueTmp[0])) = newsize;
+		else if(flagOneChoice == 1) 
+			*(int*) (&(valueTmp[0])) = pair.second.size(); 
 		prf_type mapValue = Utilities::encode(valueTmp.data(), K.data());
 		keywordCntCiphers[mapKey] = mapValue; 
 	}
@@ -373,14 +354,14 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
 		string newkeyword = keyword;
 		if(s==1) 
 		{
-			  newkeyword = newkeyword.append("1");
-				  hashtoken = Utilities::encode(newkeyword, key);
+	    	newkeyword = newkeyword.append("1");
+			hashtoken = Utilities::encode(newkeyword, key);
 		}
 		else if(s==2)
 		{
-			  newkeyword = keyword;
-			  newkeyword = newkeyword.append("2");
-				  hashtoken = Utilities::encode(newkeyword, key);
+			newkeyword = keyword;
+			newkeyword = newkeyword.append("2");
+			hashtoken = Utilities::encode(newkeyword, key);
 		}
 		ciphers = server->search(index, token, hashtoken, keywordCnt, numberOfBins[index]);
 		if(flag == 0)
@@ -391,8 +372,8 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
 		 		Utilities::decode(item, plaintext, key);
 		 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 				{
-			 			finalRes.push_back(plaintext);
-						flag++;
+		 			finalRes.push_back(plaintext);
+					flag++;
 		 		}
 			}
 		}
@@ -401,7 +382,7 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
 	if(keywordCnt > maxPossibleLen(index))
 	{
 		oneChoiceCiphers = one->search(index,token,keywordCnt);
-		cout <<"Searching in One choice bins:"<<keywordCnt<<">"<<maxPossibleLen(index)<<" resSize:"<<oneChoiceCiphers.size()<<endl;
+		cout <<"Searching ["<<keyword<<"] in One choice bins of index:"<<index<<endl;
 		if(oneChoiceCiphers.size()>0)
 		{
 			for (auto item : oneChoiceCiphers) 
@@ -412,7 +393,6 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
 				{
 						finalRes.push_back(plaintext);
 				}
-				//cout <<"one choice data:"<<plaintext.data()<<endl;
 			}
 		}
 		totalCommunication += cuckooCiphers.size()* sizeof(prf_type);
@@ -427,7 +407,7 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
 		newkeyword = keyword;
 		newkeyword = newkeyword.append("1");
 		prf_type hashtoken2 = Utilities::encode(newkeyword, key);
-		cuckooCiphers = server->cuckooSearch(index, tableNum, hashtoken1, hashtoken2); // also searche suckoo stash
+		cuckooCiphers = server->cuckooSearch(index, tableNum, hashtoken1, hashtoken2);//search HT+cuckoostash
 		if(cuckooCiphers.size()>0)
 		{
 			for (auto item : cuckooCiphers) 

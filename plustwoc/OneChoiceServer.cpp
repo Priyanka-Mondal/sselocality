@@ -34,7 +34,6 @@ vector<prf_type> OneChoiceServer::search(int dataIndex, prf_type token, int keyw
 
     vector<prf_type> result;
 	
-			cout <<"pos:"<<endl;
         result = storage->find(dataIndex, keywordMapKey, keywordCnt);
         if (profile) {
             serverSearchTime = Utilities::stopTimer(45);
