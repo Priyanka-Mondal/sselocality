@@ -14,10 +14,9 @@ TwoChoiceServer::~TwoChoiceServer() {}
 
 
 void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, 
-				vector<prf_type> stashCiphers, map<prf_type, prf_type> keywordCounter) 
+				 map<prf_type, prf_type> keywordCounter) 
 {
     storage->insertAll(dataIndex, ciphers);
-    storage->insertStash(dataIndex, stashCiphers);
     keywordCounters->insert(dataIndex, keywordCounter);
 }
 
@@ -52,15 +51,17 @@ vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type
         Utilities::startTimer(45);
     }
     vector<prf_type> result;
+	result.resize(0);
     if (found) 
     {
         prf_type plaintext;
         Utilities::decode(res, plaintext, curToken.data());
         keywordCnt = *(int*) (&(plaintext[0]));
+		//cout <<"keywordcnt:"<<keywordCnt<<endl;
+	if(keywordCnt > num)
+		return result;
         curToken = hashtoken;
         memset(cntstr, 0, AES_KEY_SIZE);
-	if(keywordCnt > num)
-		keywordCnt = num;
         *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
         keywordMapKey = Utilities::generatePRF(cntstr, curToken.data());
         result = storage->find(dataIndex, keywordMapKey, keywordCnt);

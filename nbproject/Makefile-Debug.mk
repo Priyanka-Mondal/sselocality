@@ -58,6 +58,8 @@ TWOOBJECTFILES= \
 PLUSOBJECTFILES= \
 	${OBJECTDIR}/${PLUS_TWO}/AES.o \
 	${OBJECTDIR}/${PLUS_TWO}/Amortized.o \
+	${PLUSOBJECTDIR}/OneChoiceServer.o \
+	${PLUSOBJECTDIR}/OneChoiceStorage.o \
 	${OBJECTDIR}/${PLUS_TWO}/TwoChoiceClient.o \
 	${OBJECTDIR}/${PLUS_TWO}/TwoChoiceServer.o \
 	${OBJECTDIR}/${PLUS_TWO}/TwoChoiceStorage.o \
@@ -210,6 +212,17 @@ ${PLUSOBJECTDIR}/Amortized.o: ${PLUS_TWO}/Amortized.cpp
 	${MKDIR} -p ${PLUSOBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${PLUSOBJECTDIR}/Amortized.o ${PLUS_TWO}/Amortized.cpp
+
+${PLUSOBJECTDIR}/OneChoiceServer.o: ${PLUS_TWO}/OneChoiceServer.cpp
+	${MKDIR} -p ${OBJECTDIR}/${PLUS_TWO}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${PLUS_TWO}/OneChoiceServer.o ${PLUS_TWO}/OneChoiceServer.cpp
+
+
+${PLUSOBJECTDIR}/OneChoiceStorage.o: ${PLUS_TWO}/OneChoiceStorage.cpp
+	${MKDIR} -p ${OBJECTDIR}/${PLUS_TWO}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${PLUS_TWO}/OneChoiceStorage.o ${PLUS_TWO}/OneChoiceStorage.cpp
 
 ${PLUSOBJECTDIR}/TwoChoiceClient.o: ${PLUS_TWO}/TwoChoiceClient.cpp
 	${MKDIR} -p ${OBJECTDIR}/${PLUS_TWO}

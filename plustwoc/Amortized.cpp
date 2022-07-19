@@ -68,35 +68,34 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
 
     for (int i = 0; i < min(rm0, localSize); i++) 
     {
-        for (auto item : data[i]) 
-	{
-            if (previousData.count(item.first) == 0) 
-	    {
-                previousData[item.first] = vector<prf_type>();
-            }
-            previousData[item.first].insert(previousData[item.first].end(), item.second.begin(), item.second.end());
-        }
-        data[i].clear();
-    }
-    
-    for (int i = localSize; i < rm0; i++) 
-    {
-        vector<prf_type> curData = L->getAllData(i, keys[i]);
-        for (auto item : curData) 
-	{
-            string curKeyword((char*) item.data());
-	    if (curKeyword == "") cout<<"[[curKeyword NULL]]"<<endl;
-            if (previousData.count(curKeyword) == 0) 
-	    {
-                previousData[curKeyword] = vector < prf_type>();
-            }
-            previousData[curKeyword].push_back(item);
-        }
+   		for (auto item : data[i]) 
+   	 	{
+   	        if (previousData.count(item.first) == 0) 
+   	     	{
+   	             previousData[item.first] = vector<prf_type>();
+   	        }
+   	        previousData[item.first].insert(previousData[item.first].end(), item.second.begin(), item.second.end());
+   	     }
+   	     data[i].clear();
+   	 }
+   	 for (int i = localSize; i < rm0; i++) 
+   	 {
+   	     vector<prf_type> curData = L->getAllData(i, keys[i]);
+   	     for (auto item : curData) 
+   	 	 {
+   	         string curKeyword((char*) item.data());
+   	     if (curKeyword == "") cout<<"[[curKeyword NULL]]"<<endl;
+   	         if (previousData.count(curKeyword) == 0) 
+   	     {
+   	             previousData[curKeyword] = vector < prf_type>();
+   	         }
+   	         previousData[curKeyword].push_back(item);
+   	     }
 
-        L->destry(i);
-	//cout <<"L->destroy("<<i<<") was called"<<endl;
-        delete keys[i];
-        keys[i] = NULL;
+   	     L->destry(i);
+   	 //cout <<"L->destroy("<<i<<") was called"<<endl;
+   	     delete keys[i];
+   	     keys[i] = NULL;
     }
     prf_type value;
     std::fill(value.begin(), value.end(), 0);
@@ -119,7 +118,6 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
         memset(newKey, 0, 16);
         keys[rm0] = newKey;
         L->setup(rm0, previousData, newKey);
-	//cout <<"L->setup("<<rm0<<") was called"<<endl;
         totalUpdateCommSize += L->totalCommunication;
     }
 }

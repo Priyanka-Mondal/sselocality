@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/sddomap/onechoice-sdd configs/mconfig.txt |tee results/sddomapresult2.txt 
+dist/Debug/GNU-Linux/plustwoc/plustwo-sda configs/mconfig.txt |tee results/sddomapresult1.txt 

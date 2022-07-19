@@ -15,11 +15,13 @@
 #include "Utilities.h"
 #include "AES.hpp"
 #include "TwoChoiceServer.h"
+#include "OneChoiceServer.h"
 #include <unordered_map>
 
 class TwoChoiceClient {
 private:
     TwoChoiceServer* server;
+	OneChoiceServer* one;
     bool profile = false;
 
 public:
@@ -27,10 +29,13 @@ public:
     TwoChoiceClient(int maxUpdate, bool inMemory, bool overwrite, bool profile);
     int totalCommunication = 0;
     vector<int> numberOfBins;
+	vector<int> nB;
     prf_type nullKey;
     vector<int> sizeOfEachBin;
+    vector<int> sEB;
     map<int,int> position;
     vector<bool> exist;
+    vector<bool> existone;
     void destry(int index);
     void setup(int index, map<string, vector<prf_type> >pairs, unsigned char* key);
     vector<prf_type> search(int index, string keyword, unsigned char* key);
@@ -40,7 +45,8 @@ public:
     void writeToCuckooHT(int index, int mpl, string keyword, vector<prf_type> fileids, unsigned char* key);
     void writeToCuckooStash(vector<prf_type> fileids,int cnt,int index, int tableNum, unsigned char* key);
 void place(string keyw,vector<prf_type> fileids,int cuckooID,int cnt,int index, int tableNum, unsigned char* key);
-void writeToStash(int pss, int mpl, vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers);
+void writeToStash(int pss,int mpl,vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers);
+int maxPossibleLen(int index);
 };
 
 #endif /* TWOCHOICECLIENT_H */
