@@ -71,8 +71,8 @@ int main(int argc, char** argv)
     	    for (j = 0; j < cur->second.size(); j++) 
 			{
 				key++;
-				if(std::find(testCases[i].testKeywords.begin(),testCases[i].testKeywords.end(),cur->first)!=testCases[i].testKeywords.end())
-				     cout <<" inserting:"<<key<<"/"<<testCases[i].N<<" "<<cur->first<<" fileId:"<<cur->second[j]<<endl;
+				//if(std::find(testCases[i].testKeywords.begin(),testCases[i].testKeywords.end(),cur->first)!=testCases[i].testKeywords.end())
+				  //   cout <<" inserting:"<<key<<"/"<<testCases[i].N<<" "<<cur->first<<" fileId:"<<cur->second[j]<<endl;
         	    client.update(OP::INS, cur->first, cur->second[j], true);
             	cnt++;
             	if (cnt % 500 == 0) 
@@ -108,7 +108,7 @@ int main(int argc, char** argv)
 			{
             	Utilities::startTimer(500);
             	client.update(OP::DEL, testCases[i].testKeywords[j], item[delPoses[k]], true);
-		    	cout <<"deleted:"<<testCases[i].testKeywords[j]<<" fileid:"<<item[delPoses[k]]<<endl;
+		    	//cout <<"deleted:"<<testCases[i].testKeywords[j]<<" fileid:"<<item[delPoses[k]]<<endl;
             	time = Utilities::stopTimer(500);
         	}
         }
@@ -126,7 +126,7 @@ int main(int argc, char** argv)
         time = Utilities::stopTimer(500);
         //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
         //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
-        cout << "Number of return item:[" << res.size()<<"]" << endl;
+        //cout << "Number of return item:[" << res.size()<<"]" << endl;
 		//assert(testCases[i].Qs[j]-testCases[i].delNumber[j] == res.size());
     }
     cout << "*********************************************************************************" << endl;

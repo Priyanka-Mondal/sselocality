@@ -218,7 +218,7 @@ public:
             for (uint j = 0; j < testCases[i].Qs.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < testCases[i].Qs[j]; k++) {
-                    int fileName = ((rand() % 1000)); //////here
+                    int fileName = ((rand() % 10000))+10000; //////here
                     files.push_back(fileName);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
@@ -231,7 +231,7 @@ public:
             for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
-                    int fileName = ((rand() % 1000));
+                    int fileName = ((rand() % 10000))+10000;
                     files.push_back(fileName);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
@@ -274,7 +274,7 @@ public:
             for (uint j = 0; j < testCases[i].Qs.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < testCases[i].Qs[j]; k++) {
-                    int fileName = ((rand() % 1000));
+                    int fileName = ((rand() % 10000))+10000;
                     files.push_back(fileName);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
@@ -287,7 +287,7 @@ public:
             for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
-                    int fileName = ((rand() % 1000)) + 1000;
+                    int fileName = ((rand() % 10000)) + 10000;
                     files.push_back(fileName);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;

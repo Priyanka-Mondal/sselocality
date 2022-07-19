@@ -135,7 +135,7 @@ void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size
 	storage->insertAll(index, toInstance, data);
 
 	map<prf_type,prf_type> wordCount;
-	cout <<"get all data from counters:"<<index<<"|"<<fromInstance<<" to"<<toInstance<<endl;
+	//cout <<"get all data from counters:"<<index<<"|"<<fromInstance<<" to"<<toInstance<<endl;
    	wordCount = keyworkCounters->getAllData(index, fromInstance);
 	keyworkCounters->insert(index, toInstance, wordCount);
 }

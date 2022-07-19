@@ -183,6 +183,10 @@ void OneChoiceClient::destroy(int index, int instance)
 {
     server->clear(index, instance);
     exist[index][instance] = false;
+	//delete omaps[index];
+    //bytes<Key> key{0};
+    //OMAP* omap = new OMAP(max((int) pow(2, index+2), 16), key);
+    //omaps[index]=omap;
 	if(instance == 3)
 	{
 		NEWsize[index]=0;
@@ -479,7 +483,7 @@ vector<int> getSeq(int step, int count, int size)
 	int a[size];
 	memset(a,0,size);
 	generateSeq(a, size, memseq);
-	//cout <<size<<endl;
+	//cout <<size<<" "<<memseq.size()<<endl;
 	assert(memseq.size() == 2*ceil((float)(size*log2(size)*(log2(size)+1)/(float)4)));
 	int start = count*step;
 	vector<int> res;
@@ -498,6 +502,18 @@ vector<int> remDup(vector<int> v)
     ip = std::unique(v.begin(), v.begin() +vsize );
     v.resize(std::distance(v.begin(), ip));
 	return v;
+}
+bool OneChoiceClient::sorted(int index, unsigned char* key)
+{
+	vector<prf_type> els = server->getNEW(index, NEWsize[index]);
+	vector<prf_type> decoded;
+	for(auto n :els)
+	{
+		prf_type plain;
+		Utilities::decode(n, plain, key);
+		decoded.push_back(plain);
+		return issorted(decoded);
+	}
 }
 void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int index, unsigned char* key)
 {

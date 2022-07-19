@@ -111,13 +111,14 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	int prof = 0;
 	for(int i=numOfIndices; i>0; i--)
 	{
-		int s = i>1 ? 6 : 2;
+		int s = i>1? 6:2;
 		int j = b+i;
 		int mi = numberOfBins[j]; 
 		int r1 = ceil((float)(2*floor(by(indexSize[i-1],s))));
 		int r2 = r1 + ceil(by(mi,s));
+		//cout <<"index:"<<i<<" r1:"<<r1<<" r2:"<<r2<<endl;
 		assert(r1<r2);
-		assert(r2<pow(2,j));
+		assert(r2<=pow(2,j));
 
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
@@ -132,7 +133,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			{
 				L->addDummy(i, (cnt[i]-r1), keys[i][3], s, r1, r2);
 			}
-			if (r2 <= cnt[i] && cnt[i] <pow(2,j))
+			if (r2 <= cnt[i] && cnt[i] <=pow(2,j))
 			{
 				int count = cnt[i]-r2;
 				int times = pow(2,j)-r2;
@@ -146,6 +147,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,j))
 			{
+				assert(L->sorted(i,keys[i][3]));
 				L->resize(i,indexSize[i]); //j = i+logB
 				L->move(i-1,0,2); 
 				updateKey(i-1,0,2);
@@ -178,9 +180,9 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	L->append(0, keyVal, keys[0][3]);
 	L->updateOMAP(0,keyword, keys[0][3]);
 	L->updateCounters(0, keys[0][3]);
-	cnt[0]=cnt[0]+1;
-	if(cnt[0]==B)
-	{
+	//cnt[0]=cnt[0]+1;
+	//if(cnt[0]==B)
+	//{
 		if(!(L->exist[0][0]))
 		{
 			L->move(0,0,3);
@@ -200,8 +202,8 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
        	unsigned char* newKey = new unsigned char[16];
        	memset(newKey, 0, 16);
        	keys[0][3] = newKey;
-		cnt[0] = 0;
-	}
+	//	cnt[0] = 0;
+	//}
     updateCounter++;
 }
 
@@ -276,10 +278,11 @@ vector<int> DeAmortized::search(string keyword)
         prf_type decodedString = *i;
         int id = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
         int op = ((byte) decodedString.data()[AES_KEY_SIZE - 6]);
-        remove[id] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
-	    if ((strcmp((char*) decodedString.data(), keyword.data()) == 0) && op!=1) 
+        remove[id] += (2 *op - 1);
+	    if ((strcmp((char*) decodedString.data(), keyword.data()) == 0)) 
 			ressize++;
     }
+	cout <<"size of remove:"<<remove.size()<<endl;
     for (auto const& cur : remove) 
 	{
         if (cur.second < 0) 
@@ -291,7 +294,7 @@ vector<int> DeAmortized::search(string keyword)
 				L->omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
     }
     totalSearchCommSize += L->totalCommunication;
-	cout <<"NUMBER OF RETURN:"<<ressize<<endl;
+	cout <<"NUMBER OF TOTAL RETURN:"<<ressize<<endl;
     return finalRes;
 }
 
