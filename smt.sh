@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/plustwoc/plustwo-sda configs/config.txt |tee results/sddomapresult1.txt 
+dist/Debug/GNU-Linux/dynStashplus/dynstash configs/config.txt |tee results/dynstash1.txt 

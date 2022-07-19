@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/plustwoc/plustwo-sda configs/bconfig.txt |tee results/plustwocresult1.txt 
+dist/Debug/GNU-Linux/dynStashplus/dynstash configs/bconfig.txt |tee results/dynstash1.txt 
