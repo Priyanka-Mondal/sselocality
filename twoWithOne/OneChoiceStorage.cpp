@@ -1,7 +1,8 @@
 #include "OneChoiceStorage.h"
 #include<string.h>
 
-OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) {
+OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) 
+{
     this->inMemoryStorage = inMemory;
     this->fileAddressPrefix = fileAddressPrefix;
     this->dataIndex = dataIndex;
@@ -14,60 +15,37 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
         int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
-		int is = curNumberOfBins*curSizeOfEachBin;
-	cout<<"OneChoice:"<<j<<" number of bins:"<<curNumberOfBins<<" size of each bin:"<<curSizeOfEachBin<<endl;
-	//	indexSize.push_back(is);
     }
 
 }
 
-bool OneChoiceStorage::setup(bool overwrite) {
-    if (inMemoryStorage) {
-        for (int i = 0; i < dataIndex; i++) {
-            vector<pair<prf_type, prf_type> > curData;
-            data.push_back(curData);
-        }
-    } 
-	else {
-            for (int i = 0; i < dataIndex; i++) {
-                string filename = fileAddressPrefix + "ONEMAP-" + to_string(i) + ".dat";
-                filenames.push_back(filename);
-                fstream testfile(filename.c_str(), std::ofstream::in);
-                if (testfile.fail() || overwrite) {
-                    testfile.close();
-                    fstream file(filename.c_str(), std::ofstream::out);
-                    if (file.fail()) {
-                        cerr << "Error: " << strerror(errno);
-                    }
-
-                    int maxSize = numberOfBins[i] * sizeOfEachBin[i];
-                    for (int j = 0; j < maxSize; j++) {
-                        file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                        file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                    }
-                    file.close();
-                }
-            }
-       // }
-    }
+bool OneChoiceStorage::setup(bool overwrite) 
+{
+   for (int i = 0; i < dataIndex; i++) 
+	{
+       string filename = fileAddressPrefix + "ONEMAP-" + to_string(i) + ".dat";
+       filenames.push_back(filename);
+       fstream testfile(filename.c_str(), std::ofstream::in);
+       if (testfile.fail() || overwrite) 
+		{
+           testfile.close();
+           fstream file(filename.c_str(), std::ofstream::out);
+           if (file.fail()) 
+               cerr << "Error: " << strerror(errno);
+           int maxSize = numberOfBins[i] * sizeOfEachBin[i];
+           for (int j = 0; j < maxSize; j++) 
+		   {
+               file.write((char*) nullKey.data(), AES_KEY_SIZE);
+               file.write((char*) nullKey.data(), AES_KEY_SIZE);
+           }
+           file.close();
+       }
+   }
 
 }
 
-void OneChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_type> > > ciphers) {
-    if (inMemoryStorage) {
-        for (auto item : ciphers) {
-            data[index].insert(data[index].end(), item.begin(), item.end());
-        }
-    } else {
-	    /*
-        if (USE_XXL) {
-            for (auto item : ciphers) {
-                for (auto pair : item) {
-                    diskData[index]->push_back(pair);
-                }
-
-            }
-        } else {*/
+void OneChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_type> > > ciphers) 
+{
             fstream file(filenames[index].c_str(), ios::binary | ios::out);
             if (file.fail()) {
                 cerr << "Error in insert: " << strerror(errno);
@@ -82,8 +60,6 @@ void OneChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_ty
                 }
             }
             file.close();
-        //}
-    }
 }
 
 vector<pair<prf_type, prf_type> > OneChoiceStorage::getAllData(int index) {
@@ -169,6 +145,7 @@ vector<prf_type> OneChoiceStorage::find(int index, prf_type mapKey, int cnt)
 		{
             //read everything
 			//cout <<"full index"<<endl;
+				cout <<"full index:"<<index<<endl;
             int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;
             char* keyValues = new char[fileLength];
             file.read(keyValues, fileLength);
@@ -187,6 +164,7 @@ vector<prf_type> OneChoiceStorage::find(int index, prf_type mapKey, int cnt)
         } 
 		else 
 		{
+				cout <<"NOT full index:"<<index<<endl;
             int pos = (unsigned int) (*((int*) hash)) % numberOfBins[index];
             int readPos = pos * KEY_VALUE_SIZE * sizeOfEachBin[index];
             int fileLength = numberOfBins[index] * sizeOfEachBin[index] * KEY_VALUE_SIZE;

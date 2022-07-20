@@ -54,7 +54,7 @@ int main(int argc, char** argv)
         }
         file.close();
     }
-    
+   	cout <<"N:"<<testCases[0].N<<endl<<endl; 
     Amortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
     client.endSetup(testCases[0].N);
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;

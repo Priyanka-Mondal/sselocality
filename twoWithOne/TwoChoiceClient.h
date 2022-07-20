@@ -27,6 +27,7 @@ private:
 public:
     virtual ~TwoChoiceClient();
     TwoChoiceClient(int maxUpdate, bool inMemory, bool overwrite, bool profile);
+	prf_type nullKey;
     int totalCommunication = 0;
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;

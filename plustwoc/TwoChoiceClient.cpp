@@ -177,11 +177,13 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 	vector<vector<pair<prf_type, prf_type>>> ciphersOne;
 	for (long i = 0; i < numberOfBins[index]; i++) 
 		ciphers.push_back(vector<pair<prf_type,prf_type>>());
-	for (long i = 0; i < numberOfBins[index]; i++) 
+	for (long i = 0; i < nB[index]; i++) 
 		ciphersOne.push_back(vector<pair<prf_type,prf_type>>());
 	
 	map<prf_type, prf_type> keywordCntCiphers;
 	map<long, long> fullness;
+	for(int b = 0; b<numberOfBins[index];b++)
+		fullness[b]=0;
 
 	vector<pair<string,vector<prf_type>>> sorted = sort(pairs);
 	long mpl = maxPossibleLen(index);
@@ -268,10 +270,10 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 					auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
 					assert(fullness[cipherIndex]<sizeOfEachBin[index]);
 					ciphers[cipherIndex].push_back(p);
-					if(fullness.find(cipherIndex) == fullness.end())
-						fullness[cipherIndex] = 1;
-					else
-							fullness[cipherIndex] = fullness[cipherIndex]+1;
+					//if(fullness.find(cipherIndex) == fullness.end())
+					//	fullness[cipherIndex] = 1;
+					//else
+						fullness[cipherIndex] = fullness[cipherIndex]+1;
 					assert(cipherIndex <ciphers.size());
 					cipherIndex++;
 				}
@@ -281,10 +283,10 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 					memset(dummy.data(), 0, AES_KEY_SIZE);
 					auto dummypair = std::pair<prf_type, prf_type>(dummy, dummy);
 					ciphers[cipherIndex].push_back(dummypair);
-					if(fullness.find(cipherIndex) == fullness.end()) //although this check is not reqd
-						fullness[cipherIndex] = 1;
-					else
-							fullness[cipherIndex] = fullness[cipherIndex]+1;
+					//if(fullness.find(cipherIndex) == fullness.end()) //although this check is not reqd
+					//	fullness[cipherIndex] = 1;
+					//else
+						fullness[cipherIndex] = fullness[cipherIndex]+1;
 				   	cipherIndex++;
 				}
 			 }

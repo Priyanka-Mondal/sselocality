@@ -80,7 +80,3 @@ void TwoChoiceServer::clear(int index)
     storage->clear(index);
     keyworkCounters->clear(index);
 }
-void TwoChoiceServer::printStashSizes() 
-{
-	storage->printStashSizes();
-}

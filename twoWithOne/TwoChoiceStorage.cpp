@@ -242,93 +242,6 @@ TwoChoiceStorage::~TwoChoiceStorage() {
 
 vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt) 
 {
-	/*
-    if (inMemoryStorage) 
-    {
-        vector<prf_type> results;
-
-        unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
-        if (cnt >= numberOfBins[index]) {
-            for (int i = 0; i < numberOfBins[index] * sizeOfEachBin[index]; i++) 
-	    {
-                if (data[index][i].first != nullKey) 
-		{
-                    results.push_back(data[index][i].second);
-                }
-            }
-        } 
-	else 
-	{
-            int pos = (unsigned int) (*((int*) hash)) % numberOfBins[index];
-            int readPos = pos * sizeOfEachBin[index];
-            int fileLength = numberOfBins[index] * sizeOfEachBin[index];
-            int remainder = fileLength - readPos;
-            int totalReadLength = cnt * sizeOfEachBin[index];
-            int readLength = 0;
-            if (totalReadLength > remainder) 
-	    {
-                readLength = remainder;
-                totalReadLength -= remainder;
-            } else {
-                readLength = totalReadLength;
-                totalReadLength = 0;
-            }
-            for (int i = 0; i < readLength; i++) {
-                if (data[index][i + readPos].first != nullKey) {
-                    results.push_back(data[index][i + readPos].second);
-                }
-            }
-            if (totalReadLength > 0) {
-                readLength = totalReadLength;
-                for (int i = 0; i < readLength; i++) {
-                    if (data[index][i].first != nullKey) {
-                        results.push_back(data[index][i].second);
-                    }
-                }
-            }
-        }
-        return results;
-    } else {
-        /*if (USE_XXL) {
-            vector<prf_type> results;
-
-            unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
-            if (cnt >= numberOfBins[index]) {
-                for (int i = 0; i < numberOfBins[index] * sizeOfEachBin[index]; i++) {
-                    if (diskData[index]->at(i).first != nullKey) {
-                        results.push_back(diskData[index]->at(i).second);
-                    }
-                }
-            } else {
-                int pos = (unsigned int) (*((int*) hash)) % numberOfBins[index];
-                int readPos = pos * sizeOfEachBin[index];
-                int fileLength = numberOfBins[index] * sizeOfEachBin[index];
-                int remainder = fileLength - readPos;
-                int totalReadLength = cnt * sizeOfEachBin[index];
-                int readLength = 0;
-                if (totalReadLength > remainder) {
-                    readLength = remainder;
-                    totalReadLength -= remainder;
-                } else {
-                    readLength = totalReadLength;
-                    totalReadLength = 0;
-                }
-                for (int i = 0; i < readLength; i++) {
-                    if (diskData[index]->at(i + readPos).first != nullKey) {
-                        results.push_back(diskData[index]->at(i + readPos).second);
-                    }
-                }
-                if (totalReadLength > 0) {
-                    readLength = totalReadLength;
-                    for (int i = 0; i < readLength; i++) {
-                        if (diskData[index]->at(i).first != nullKey) {
-                            results.push_back(diskData[index]->at(i).second);
-                        }
-                    }
-                }
-            }
-            return results;
-        } else {*/
             vector<prf_type> results;
 
             std::fstream file(filenames[index].c_str(), ios::binary | ios::in);
@@ -409,7 +322,7 @@ vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt)
     //}
 }
 
-
+/*
 void TwoChoiceStorage::printStashSizes() 
 {
 	for(int i =0; i<dataIndex; i++)
@@ -429,4 +342,4 @@ void TwoChoiceStorage::printStashSizes()
           	cout << "(Index:"<<i<<" Stash does not exist for index)"<<endl;
 	  }
 	}
-}
+}*/

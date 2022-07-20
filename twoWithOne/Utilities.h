@@ -227,7 +227,9 @@ public:
 	{
             TC<T> testCase;
             getline(infile, tmp);
-            testCase.N = stoi(tmp);
+			int N = stoi(tmp);
+			testCase.N = pow(2, (int)floor((float)log2(N)));
+			std::cout <<"test:"<<testCase.N<<endl;
             getline(infile, tmp);
             testCase.K = stoi(tmp);
             getline(infile, tmp);

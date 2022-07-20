@@ -118,8 +118,8 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
         unsigned char* newKey = new unsigned char[16];
         memset(newKey, 0, 16);
         keys[rm0] = newKey;
+	cout <<"L->setup("<<rm0<<") was called"<<endl;
         L->setup(rm0, previousData, newKey);
-	//cout <<"L->setup("<<rm0<<") was called"<<endl;
         totalUpdateCommSize += L->totalCommunication;
     }
 }
@@ -222,5 +222,4 @@ double Amortized::getTotalUpdateCommSize() const
 
 void Amortized::endSetup() 
 {
-	L->printStashSizes();
 }
