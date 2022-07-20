@@ -66,7 +66,6 @@ int TwoChoiceClient::maxPossibleLen(int index)
 void TwoChoiceClient::writeToStash(int pss, int mpl, vector<prf_type> fileids, 
 		unsigned char* key, vector<prf_type> &stashCiphers)
 {
-	cout <<"Writing to stash, size:"<<pss-mpl<<endl;
 	for (unsigned int i = mpl; i < pss; i++) 
 	{
 		prf_type value;
@@ -176,6 +175,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 		int newsize = pow(2, (int)ceil((float)log2(pss)));
 			if(pss > mpl)
 			{
+				cout <<"Index:"<<index<<" Writing to stash, data-size:"<<pss-mpl<<endl;
 				writeToStash(pss, mpl, pair.second, key, stashCiphers);
 				pss = mpl;
 				newsize = mpl;
@@ -334,7 +334,7 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
 	vector<prf_type> stashCiphers = server->getStash(index);
 	if(stashCiphers.size()>0)
 	{
-		cout<<"At index:"<<index <<" stash data size:"<<stashCiphers.size()<<endl;
+		cout<<"At index:"<<index <<" stash data size:"<<stashCiphers.size()*AES_KEY_SIZE<<endl;
 		for (auto item : stashCiphers) 
 		{
 			prf_type plaintext;

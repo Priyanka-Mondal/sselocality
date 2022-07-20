@@ -113,7 +113,7 @@ int main(int argc, char** argv)
                 }
             }
         }
-                //client.endSetup();
+                client.endSetup();
 	
         for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	{
