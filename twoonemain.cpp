@@ -73,25 +73,26 @@ int main(int argc, char** argv)
 		key++;
 		cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
 		int j;
-                for (j = 0; j < cur->second.size(); j++) 
+        for (j = 0; j < cur->second.size(); j++) 
 		{
                     client.update(OP::INS, cur->first, cur->second[j], true);
-                    //if (cnt % 20 == 0) 
-		    {
-                        cout << "Initial Insertions::" << cnt << "/" << to_string(testCases[i].N) << endl;
-                    }
-                }
+             if (cnt % 20 == 0) 
+		     {
+                   cout << "Initial Insertions::" << cnt << "/" << to_string(testCases[i].N) << endl;
+             }
+			cnt++;
+         }
 	        //cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;
             }
             cnt = 0;
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+        for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 auto item = testCases[i].filePairs[j].second;
                 vector<int> delPoses;
-		if(testCases[i].delNumber[j] < item.size())
-		{
+				if(testCases[i].delNumber[j] < item.size())
+				{
                     for (uint k = 0; k < testCases[i].delNumber[j]; k++) 
-	            {
+	            	{
                         int randPos = (rand() % (item.size() - 1)) + 1;
                         if (find(delPoses.begin(), delPoses.end(), randPos) != delPoses.end()) 
                             k--;

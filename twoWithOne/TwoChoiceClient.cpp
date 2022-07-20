@@ -10,13 +10,14 @@ TwoChoiceClient::~TwoChoiceClient()
 
 TwoChoiceClient::TwoChoiceClient(int numOfDataSets, bool inMemory, bool overwrite, bool profile) 
 {
-	cout <<"===================RUNNING SDa+TwoChoice+(One choice when bins overflows)(int) ====================="<<endl;
+	cout <<"===================RUNNING SDa+TwoChoice+(One choice when bins overflow)(int) ====================="<<endl;
 	this->profile = profile;
 	server = new TwoChoiceServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
 	memset(nullKey.data(), 0, AES_KEY_SIZE);
     for (int i = 0; i < numOfDataSets; i++) 
     {
+        exist.push_back(false);
         int curNumberOfBins = i > 3 ? ((int) ceil((float) pow(2, i) / ((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
 	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins))); 
      	int curSizeOfEachBin = i > 3 ? ceil(2*(log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))) : 2;
@@ -101,7 +102,6 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 	exist[index] = true;
 	vector<vector<pair<prf_type, prf_type>>> ciphers;
 	vector<vector<pair<prf_type, prf_type>>> ciphersOne;
-	cout <<"here:"<<endl;
 	for (int i = 0; i < numberOfBins[index]; i++) 
 		ciphers.push_back(vector<pair<prf_type,prf_type>>());
 	for (int i = 0; i < nB[index]; i++) 
@@ -111,7 +111,6 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 	map<int, int> fullness;
 
 	int mpl = maxPossibleLen(index);
-	cout <<"inserting in one choice bin:"<<mpl<<endl;
 	vector<pair<string,vector<prf_type>>> sorted = sort(pairs);
 	for (auto pair : sorted) 
 	{
