@@ -142,50 +142,9 @@ public:
             keywords.insert(tmp);
         }
         testCase.keywords.insert(testCase.keywords.end(), keywords.begin(), keywords.end());
-        //        testCase.testKeywords.push_back("DOMESTIC");
-        //        testCase.testKeywords.push_back("HUMANTRA");
-        //        testCase.testKeywords.push_back("OTHERNAR");
-        //        testCase.testKeywords.push_back("STALKING");
-        //        testCase.testKeywords.push_back("LIQUORLA");
-        //        testCase.testKeywords.push_back("ROBBERY");
-        //
-        //        testCase.Qs.push_back(1);
-        //        testCase.Qs.push_back(22);
-        //        testCase.Qs.push_back(111);
-        //        testCase.Qs.push_back(2909);
-        //        testCase.Qs.push_back(13546);
-        //        testCase.Qs.push_back(229541);
-        //
-        //        testCase.delNumber.push_back(0);
-        //        testCase.delNumber.push_back(2);
-        //        testCase.delNumber.push_back(11);
-        //        testCase.delNumber.push_back(290);
-        //        testCase.delNumber.push_back(1354);
-        //        testCase.delNumber.push_back(22954);
-
-
-        //        testCase.testKeywords.push_back("CHURCH");
-        //        testCase.testKeywords.push_back("HALLWAY");
-        //        testCase.testKeywords.push_back("FIRESTAT");
-        //        testCase.testKeywords.push_back("AIRPORTT");
         testCase.testKeywords.push_back("HOTELMOT");
-        //        testCase.testKeywords.push_back("PARKINGL");
-
-        //        testCase.Qs.push_back(4);
-        //        testCase.Qs.push_back(78);
-        //        testCase.Qs.push_back(907);
-        //        testCase.Qs.push_back(5380);
         testCase.Qs.push_back(24698);
-        //        testCase.Qs.push_back(175207);
-
         testCase.delNumber.push_back(4939);
-        //        testCase.delNumber.push_back(0);
-        //        testCase.delNumber.push_back(0);
-        //        testCase.delNumber.push_back(0);
-        //        testCase.delNumber.push_back(0);
-        //        testCase.delNumber.push_back(0);
-
-
         infile.close();
         testCases.push_back(testCase);
     }
@@ -193,37 +152,16 @@ public:
     template <typename T>
     static void readConfigFile(int argc, char** argv, std::string address, std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) 
     {
-        /*
-         * Config file structure (They should be sorted based on N)
-         * 
-         * Total Test Cases Number
-         *      #for each test case
-         *      N
-         *      K
-         *      query number
-         *      #for each query 
-         *          Q size
-         *          delete number
-         */
         std::ifstream infile;
         std::string tmp;
-
-        //        if (argc > 1) {
-        //            TC<T> testCase;
-        //            testCase.N = std::stoi(argv[1]);
-        //            testCase.K = std::stoi(argv[2]);
-        //            testCase.Qs.push_back(std::stoi(argv[3]));
-        //            testCase.delNumber.push_back(std::stoi(argv[4]));
-        //            testCases.push_back(testCase);
-        //        } else {
         infile.open(address);
         getline(infile, tmp);
         inMemory = (tmp == "true") ? true : false;
         getline(infile, tmp);
         overwrite = (tmp == "true") ? true : false;
         getline(infile, tmp);
-        int totalTests = stoi(tmp);
-        for (int i = 0; i < totalTests; i++) 
+        long totalTests = stoi(tmp);
+        for (long i = 0; i < totalTests; i++) 
 	{
             TC<T> testCase;
             getline(infile, tmp);
@@ -231,8 +169,8 @@ public:
             getline(infile, tmp);
             testCase.K = stoi(tmp);
             getline(infile, tmp);
-            int qNum = stoi(tmp); //#of queries
-            for (int i = 0; i < qNum; i++) 
+            long qNum = stoi(tmp); //#of queries
+            for (long i = 0; i < qNum; i++) 
 	    {
                 getline(infile, tmp);
                 testCase.Qs.push_back(stoi(tmp));
@@ -299,12 +237,12 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
             for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
 	    {
                 std::vector<T> files;
-		int sz=rand()%((int)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
-		//sz = pow(2, (int)ceil(log2(sz)));
+		long sz=rand()%((long)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
+		//sz = pow(2, (long)ceil(log2(sz)));
                 //for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
 		for(uint k =0; k<sz;k++)
 		{
-                    int fileName = ((rand() % 1000)) + 10000000;
+                    long fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }
