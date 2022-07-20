@@ -111,7 +111,8 @@ public:
     static std::array<uint8_t, 16> generatePRF(unsigned char* keyword, unsigned char* prfkey);
 
     template <typename T>
-    static void readConfigFile(std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) {
+    static void readConfigFile(std::vector<TC<T> >& testCases, bool& inMemory, bool& overwrite) 
+	{
 
         std::ifstream infile;
         infile.open("crimes2.csv");
@@ -218,7 +219,7 @@ public:
             for (uint j = 0; j < testCases[i].Qs.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < testCases[i].Qs[j]; k++) {
-                    int fileName = ((rand() % 10000))+10000; //////here
+                    int fileName = ((rand() % 10000000))+10000000; //////here
                     files.push_back(fileName);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
@@ -231,7 +232,7 @@ public:
             for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
-                    int fileName = ((rand() % 10000))+10000;
+                    int fileName = ((rand() % 10000000))+10000000;
                     files.push_back(fileName);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
@@ -274,7 +275,7 @@ public:
             for (uint j = 0; j < testCases[i].Qs.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < testCases[i].Qs[j]; k++) {
-                    int fileName = ((rand() % 10000))+10000;
+                    int fileName = ((rand() % 10000000))+10000000;
                     files.push_back(fileName);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
@@ -287,7 +288,7 @@ public:
             for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) {
-                    int fileName = ((rand() % 10000)) + 10000;
+                    int fileName = ((rand() % 10000000)) + 10000000;
                     files.push_back(fileName);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;

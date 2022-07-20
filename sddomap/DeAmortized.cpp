@@ -4,6 +4,7 @@
 #include <openssl/err.h>
 #include <string.h>
 #include <vector>
+#include<cstdlib>
 using namespace std;
 
 DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite) 
@@ -219,7 +220,7 @@ void DeAmortized::createKeyVal(string keyword, int ind, OP op, prf_type& keyVal)
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
 {
 	keys[index][toInstance] = keys[index][fromInstance];
-	//cout <<index<<","<<toInstance<<"<-"<<index<<","<<fromInstance<<endl;
+	//cout <<"keys:("<<index<<","<<toInstance<<")<-("<<index<<","<<fromInstance<<")"<<endl;
 }
 
 vector<int> DeAmortized::search(string keyword) 
@@ -282,11 +283,17 @@ vector<int> DeAmortized::search(string keyword)
 	    if ((strcmp((char*) decodedString.data(), keyword.data()) == 0)) 
 			ressize++;
     }
-	cout <<"size of remove:"<<remove.size()<<endl;
+	//cout <<"size of remove:"<<remove.size()<<endl;
+	int r = 1;
     for (auto const& cur : remove) 
 	{
+		//cout <<r<<":"<<cur.first <<"::"<<cur.second<<endl;
+		//r++;
         if (cur.second < 0) 
-            finalRes.emplace_back(cur.first);
+		{
+			for(int i = 0; i<abs(cur.second); i++)
+            	finalRes.emplace_back(cur.first);
+		}
     }
     for (int i = 0; i < l; i++) 
 	{

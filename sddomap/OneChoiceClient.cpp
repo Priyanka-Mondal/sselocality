@@ -157,6 +157,7 @@ vector<prf_type> OneChoiceClient::NIsearch(int index, int instance, string keywo
 
 void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 {
+	//cout <<"move:("<<index<<","<<toInstance<<")<-("<<index<<","<<fromInstance<<")"<<endl;
 	server->clear(index, toInstance);
 	server->move(index, toInstance, fromInstance, indexSize[index]);
 	server->clear(index, fromInstance);
@@ -325,7 +326,6 @@ void OneChoiceClient::pad(int index, int newSize, unsigned char* key)
 			//**dummy omap access here
 		}
 	}
-
 	//**will have to deamortize it later**//
 	updateCounters(index, key);
 }
@@ -338,10 +338,10 @@ void OneChoiceClient::updateOMAP(int index, string keyword, unsigned char* key)
 
 void OneChoiceClient::updateCounters(int index, unsigned char* key)
 {
+	//cout <<"updCo:("<<index<<")"<<endl;
 	int upCnt = numNEW[index];
 	vector<prf_type> all= server->getNEW(index, NEWsize[index]);
 	map <prf_type, prf_type> kcc;
-	
 	for(auto c: all)
 	{
 	    prf_type plaintext;// = c;

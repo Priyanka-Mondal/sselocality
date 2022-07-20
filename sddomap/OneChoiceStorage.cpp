@@ -342,7 +342,7 @@ vector<prf_type> OneChoiceStorage::find(int index, int instance, prf_type mapKey
 	        readLength = remainder;
 			totalReadLength = totalReadLength-readLength;
 		}
-	     else 
+	    else 
 		{
 	        readLength = totalReadLength;
 			totalReadLength = 0;

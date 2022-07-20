@@ -164,8 +164,8 @@ vector<long> Amortized::search(string keyword)
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
     {
         prf_type decodedString = *i;
-        long plalongext = *(long*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
-        remove[plalongext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1); //ins gives -1
+        long id = *(long*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
+        remove[id] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1); //ins gives -1
 		//cout <<"(("<<remove[plalongext]<<"))";
     }
     for (auto const& cur : remove) 
