@@ -23,27 +23,27 @@ enum OP {
 
 class Amortized {
 private:
-    inline prf_type bitwiseXOR(int input1, int op, prf_type input2);
+    inline prf_type bitwiseXOR(long input1, long op, prf_type input2);
     inline prf_type bitwiseXOR(prf_type input1, prf_type input2);
     vector<unsigned char*> keys;
     //        AmortizedBASClient* L;
     //OneChoiceClient* L;
     TwoChoiceClient* L;
-    int updateCounter = 0;
+    long updateCounter = 0;
     double totalUpdateCommSize;
     double totalSearchCommSize;
     vector< unordered_map< string, vector<prf_type > > > data;
-    int localSize = 0;
+    long localSize = 0;
     bool profile = false;
 
 public:
-    Amortized(int N, bool inMemory, bool overwrite);
-    void update(OP op, string keyword, int ind, bool setup);
-    vector<int> search(string keyword);
+    Amortized(long N, bool inMemory, bool overwrite);
+    void update(OP op, string keyword, long ind, bool setup);
+    vector<long> search(string keyword);
     virtual ~Amortized();
     double getTotalSearchCommSize() const;
     double getTotalUpdateCommSize() const;
-    void endSetup(int N);
+    void endSetup(long N);
 
 };
 

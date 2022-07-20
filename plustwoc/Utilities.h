@@ -78,10 +78,10 @@ template <typename T>
 class TC 
 {
 public:
-    uint N;
-    uint K;
-    std::vector<uint> Qs;
-    std::vector<uint> delNumber;
+    long N;
+    long K;
+    std::vector<long> Qs;
+    std::vector<long> delNumber;
     std::vector<std::string> keywords;
     std::vector<std::string> testKeywords;
     std::vector<std::pair<std::string, std::vector<T>>> filePairs;
@@ -222,8 +222,8 @@ public:
         getline(infile, tmp);
         overwrite = (tmp == "true") ? true : false;
         getline(infile, tmp);
-        int totalTests = stoi(tmp);
-        for (int i = 0; i < totalTests; i++) 
+        long totalTests = stoi(tmp);
+        for (long i = 0; i < totalTests; i++) 
 	{
             TC<T> testCase;
             getline(infile, tmp);
@@ -231,8 +231,8 @@ public:
             getline(infile, tmp);
             testCase.K = stoi(tmp);
             getline(infile, tmp);
-            int qNum = stoi(tmp); //#of queries
-            for (int i = 0; i < qNum; i++) 
+            long qNum = stoi(tmp); //#of queries
+            for (long i = 0; i < qNum; i++) 
 	    {
                 getline(infile, tmp);
                 testCase.Qs.push_back(stoi(tmp));
@@ -247,7 +247,7 @@ public:
 
 
     template <typename T>
-static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed, bool overwrite, vector<string> testKeywords)	
+static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, ulong keywordLength, unsigned long seed, bool overwrite, vector<string> testKeywords)	
     {
         char alphanum[] =
                 "0123456789"
@@ -256,17 +256,17 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
                 "abcdefghijklmnopqrstuvwxyz";
         srand(seed);
         uint totalKeywordSize = 0;
-        uint totalPairNumber = 0;
-        for (uint i = 0; i < testCases.size(); i++) //for each test suite
+        ulong totalPairNumber = 0;
+        for (ulong i = 0; i < testCases.size(); i++) //for each test suite
 	{
 	   if(overwrite)
 	   {
-           	for (uint j = 0; j < testKeywords.size(); j++) 
+           	for (ulong j = 0; j < testKeywords.size(); j++) 
 	   	{
            		testCases[i].keywords.push_back(testKeywords[j]);
            	}
 	    }
-            for (uint j = testKeywords.size(); j<testCases[i].K-totalKeywordSize; j++)
+            for (ulong j = testKeywords.size(); j<testCases[i].K-totalKeywordSize; j++)
 	    {
                 std::string str;
                 for (uint k = 0; k < keywordLength; ++k) 
@@ -278,15 +278,15 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
             }
             totalKeywordSize += testCases[i].keywords.size();
 
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) // first few keywords are testkeywords
+            for (ulong j = 0; j < testCases[i].Qs.size(); j++) // first few keywords are testkeywords
 	    {
                 testCases[i].testKeywords.push_back(testCases[i].keywords[j]);
             }
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+            for (ulong j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 std::vector<T> files;
-	        //testCases[i].Qs[j] = pow(2, (int)ceil(log2(testCases[i].Qs[j])));	
-                for (uint k = 0; k < testCases[i].Qs[j]; k++)   //add file ids based on number in config file
+	        //testCases[i].Qs[j] = pow(2, (long)ceil(log2(testCases[i].Qs[j])));	
+                for (ulong k = 0; k < testCases[i].Qs[j]; k++)   //add file ids based on number in config file
 		{
                     files.push_back(k);
                     totalPairNumber++;
@@ -294,17 +294,17 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
                 testCases[i].filePairs.push_back(make_pair(testCases[i].testKeywords[j],files));
                 files.clear();
             }
-            uint totalCounter = totalPairNumber;
-            uint reminderKeywords = testCases[i].keywords.size() - testCases[i].testKeywords.size();
-            for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
+            ulong totalCounter = totalPairNumber;
+            ulong reminderKeywords = testCases[i].keywords.size() - testCases[i].testKeywords.size();
+            for (ulong j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
 	    {
                 std::vector<T> files;
-		int sz=rand()%((int)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
-		//sz = pow(2, (int)ceil(log2(sz)));
-                //for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
-		for(uint k =0; k<sz;k++)
+		long sz=rand()%((long)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
+		//sz = pow(2, (long)ceil(log2(sz)));
+                //for (ulong k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
+		for(ulong k =0; k<sz;k++)
 		{
-                    int fileName = ((rand() % 1000)) + 10000000;
+                    long fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }

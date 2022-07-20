@@ -1,7 +1,7 @@
 #include "OneChoiceServer.h"
 #include <string.h>
 
-OneChoiceServer::OneChoiceServer(int dataIndex, bool inMemory, bool overwrite, bool profile) {
+OneChoiceServer::OneChoiceServer(long dataIndex, bool inMemory, bool overwrite, bool profile) {
     this->profile = profile;
     storage = new OneChoiceStorage(inMemory, dataIndex, "/tmp/", profile);
     storage->setup(overwrite);
@@ -10,12 +10,12 @@ OneChoiceServer::OneChoiceServer(int dataIndex, bool inMemory, bool overwrite, b
 OneChoiceServer::~OneChoiceServer() {
 }
 
-void OneChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers) 
+void OneChoiceServer::storeCiphers(long dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers) 
 {
     storage->insertAll(dataIndex, ciphers);
 }
 
-vector<prf_type> OneChoiceServer::search(int dataIndex, prf_type token, int keywordCnt) 
+vector<prf_type> OneChoiceServer::search(long dataIndex, prf_type token, long keywordCnt) 
 {
     storage->readBytes = 0;
     double keywordCounterTime = 0, serverSearchTime = 0;
@@ -25,7 +25,7 @@ vector<prf_type> OneChoiceServer::search(int dataIndex, prf_type token, int keyw
     prf_type curToken = token;
     unsigned char cntstr[AES_KEY_SIZE];
     memset(cntstr, 0, AES_KEY_SIZE);
-    *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+    *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
     prf_type keywordMapKey = Utilities::generatePRF(cntstr, curToken.data());
     if (profile) {
         keywordCounterTime = Utilities::stopTimer(35);
@@ -42,12 +42,12 @@ vector<prf_type> OneChoiceServer::search(int dataIndex, prf_type token, int keyw
     return result;
 }
 
-vector<pair<prf_type, prf_type> > OneChoiceServer::getAllData(int dataIndex) 
+vector<pair<prf_type, prf_type> > OneChoiceServer::getAllData(long dataIndex) 
 {
     return storage->getAllData(dataIndex);
 }
 
-void OneChoiceServer::clear(int index) 
+void OneChoiceServer::clear(long index) 
 {
     storage->clear(index);
 }

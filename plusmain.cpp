@@ -11,9 +11,9 @@ int main(int argc, char** argv)
     // add disk to config
     //stxxl::config * cfg = stxxl::config::get_instance();
     //cfg->add_disk(stxxl::disk_config("disk=/tmp/stxxl.tmp, 10 GiB, syscall unlink"));
-    vector<TC<int> > testCases;
+    vector<TC<long> > testCases;
     vector<string> testKeywords;
-    uint keywordLength = 7;
+    ulong keywordLength = 7;
     bool inMemory, overwrite;
     string filename = "configs/config.txt";
     if (argc == 2) 
@@ -29,9 +29,9 @@ int main(int argc, char** argv)
         fstream file("/tmp/search.txt", std::ofstream::out);
         if (file.fail()) 
             cerr << "Error: " << strerror(errno);
-        for (int j = 0; j < testCases.size(); j++) 
+        for (long j = 0; j < testCases.size(); j++) 
 	{
-            for (int z = 0; z < testCases[j].Qs.size(); z++) 
+            for (long z = 0; z < testCases[j].Qs.size(); z++) 
                 file << testCases[j].testKeywords[z] << endl;
         }
         file.close();
@@ -41,9 +41,9 @@ int main(int argc, char** argv)
         fstream file("/tmp/search.txt", std::ofstream::in);
         if (file.fail()) 
             cerr << "Error in read: " << strerror(errno);
-        for (int i = 0; i < testCases.size(); i++) 
+        for (long i = 0; i < testCases.size(); i++) 
 	{
-            for (int z = 0; z < testCases[i].Qs.size(); z++) 
+            for (long z = 0; z < testCases[i].Qs.size(); z++) 
 	    {
                 string tmp;
                 getline(file, tmp);
@@ -60,25 +60,25 @@ int main(int argc, char** argv)
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;
     cout <<"*************************************************************************"<<endl;
     
-    for (uint i = 0; i < testCases.size(); i++) 
+    for (ulong i = 0; i < testCases.size(); i++) 
     {
 	cout <<"SIZE of testcases:"<<testCases[i].Qs.size()<<endl;
-        int cnt = 0;
+        long cnt = 0;
         double time = 0;
         if (overwrite) 
 	{
-	    int key = 0;
+	    long key = 0;
             for (auto cur = testCases[i].filePairs.begin(); cur != testCases[i].filePairs.end(); cur++) 
 	    {
 		key++;
 		//cout <<" Total keywords:"<<key<<"/"<<testCases[i].filePairs.size()<<endl;
-		int j;
+		long j;
                 for (j = 0; j < cur->second.size(); j++) 
 		{
                     client.update(OP::INS, cur->first, cur->second[j], true);
 					//cout <<"cur->sec:"<<cur->second[j]<<endl;
                     cnt++;
-                    if (cnt % 1000 == 0) 
+                    if (cnt % 10 == 0) 
 		    {
                       cout << "Initial Insertions:" << cnt << "/" << to_string(testCases[i].N) << endl;
                     }
@@ -87,15 +87,15 @@ int main(int argc, char** argv)
             }
 	    
             cnt = 0;
-            for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+            for (unsigned long j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 auto item = testCases[i].filePairs[j].second;
-                vector<int> delPoses;
+                vector<long> delPoses;
 		if(testCases[i].delNumber[j] < item.size())
 		{
-                    for (uint k = 0; k < testCases[i].delNumber[j]; k++) 
+                    for (ulong k = 0; k < testCases[i].delNumber[j]; k++) 
 	            {
-                        int randPos = (rand() % (item.size() - 1)) + 1;
+                        long randPos = (rand() % (item.size() - 1)) + 1;
                         if (find(delPoses.begin(), delPoses.end(), randPos) != delPoses.end()) 
                             k--;
 	                else 
@@ -104,10 +104,10 @@ int main(int argc, char** argv)
 		}
 		else
 		{
-			for(uint k= 0 ;k<item.size();k++)
+			for(ulong k= 0 ;k<item.size();k++)
 				delPoses.push_back(k);
 		}
-                for (uint k = 0; k < testCases[i].delNumber[j]; k++) 
+                for (ulong k = 0; k < testCases[i].delNumber[j]; k++) 
 		{
                     Utilities::startTimer(500);
                     client.update(OP::DEL, testCases[i].testKeywords[j], item[delPoses[k]], true);
@@ -123,13 +123,13 @@ int main(int argc, char** argv)
 
 
 
-        for (uint j = 0; j < testCases[i].Qs.size(); j++) 
+        for (ulong j = 0; j < testCases[i].Qs.size(); j++) 
 	{
             cout << "------------------------------------------------------------------------------" << endl;
             cout << "Result of Operations for DB Size " << testCases[i].N << endl;
             cout << "Search for Keyword With [" << testCases[i].Qs[j] << "] Results and [" << testCases[i].delNumber[j] << "] Deletions:" <<testCases[i].testKeywords[j]<< endl;
                 Utilities::startTimer(500);
-                vector<int> res = client.search(testCases[i].testKeywords[j]);
+                vector<long> res = client.search(testCases[i].testKeywords[j]);
                 time = Utilities::stopTimer(500);
                 //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
                 //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;

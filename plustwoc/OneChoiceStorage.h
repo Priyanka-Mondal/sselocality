@@ -27,22 +27,22 @@ private:
     vector<string> filenames;
     prf_type nullKey;
     string fileAddressPrefix = "/tmp/";
-    int dataIndex;
-    vector<int> numberOfBins;
-    vector<int> sizeOfEachBin;
-    int KEY_VALUE_SIZE = (2 * AES_KEY_SIZE);
+    long dataIndex;
+    vector<long> numberOfBins;
+    vector<long> sizeOfEachBin;
+    long KEY_VALUE_SIZE = (2 * AES_KEY_SIZE);
     vector< vector<pair<prf_type, prf_type> > > data;
     //stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru >::result** diskData;
 
 public:
-    int readBytes = 0;
-    int SeekG = 0;
-    OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile);
+    long readBytes = 0;
+    long SeekG = 0;
+    OneChoiceStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
-    void insertAll(int dataIndex, vector<vector< pair<prf_type, prf_type> > > ciphers);
-    vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
-    void clear(int index);
-    vector<prf_type> find(int index, prf_type mapKey, int cnt);
+    void insertAll(long dataIndex, vector<vector< pair<prf_type, prf_type> > > ciphers);
+    vector<pair<prf_type, prf_type> > getAllData(long dataIndex);
+    void clear(long index);
+    vector<prf_type> find(long index, prf_type mapKey, long cnt);
     virtual ~OneChoiceStorage();
 
 
