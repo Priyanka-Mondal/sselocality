@@ -38,7 +38,7 @@ TwoChoiceClient::TwoChoiceClient(int numOfDataSets, bool inMemory, bool overwrit
     }
 }
 
-long countTotal(map<long, long> fullness, int bin,int size)
+int countTotal(map<int,int> fullness, int bin,int size)
 {
 	int full = 0;
 	for(int i = 0; i< size; i++)
@@ -181,15 +181,15 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 		ciphersOne.push_back(vector<pair<prf_type,prf_type>>());
 	
 	map<prf_type, prf_type> keywordCntCiphers;
-	map<long, long> fullness;
+	map<int, int> fullness;
 
 	vector<pair<string,vector<prf_type>>> sorted = sort(pairs);
 	int mpl = maxPossibleLen(index);
 
 	for (auto pair : sorted) 
 	{
-		long pss = pair.second.size();
-		long newsize = pss;
+		int pss = pair.second.size();
+		int newsize = pss;
 		int flagOneChoice = 0;
 		if(pss > mpl)
 		{
@@ -202,8 +202,8 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
        		*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
        		mapKey = Utilities::generatePRF(cntstr, K1.data());
         	unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
-        	long pos = ((unsigned int) (*((int*) hash))) % nB[index];
-        	long cipherIndex = pos;
+        	int pos = ((unsigned int) (*((int*) hash))) % nB[index];
+        	int cipherIndex = pos;
        		for (unsigned int i = 0; i < pair.second.size(); i++) 
 	   	 	{
        	        prf_type mapKey, mapValue;
@@ -223,7 +223,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
     	}
 		else
 		{
-			newsize = pow(2, (long)ceil(log2(pss)));
+			newsize = pow(2, (int)ceil(log2(pss)));
 			if(newsize > mpl)
 				newsize = mpl;
 	   
@@ -244,13 +244,13 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 			prf_type mapKey2 = Utilities::generatePRF(cntstr, K2.data());
 			unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
 
-			long superBins = ceil((float) numberOfBins[index]/newsize); 
-			long pos1 = (unsigned int) (*((long*) hash1)) % superBins;
-			long pos2 = (unsigned int) (*((long*) hash2)) % superBins; 
+			int superBins = ceil((float) numberOfBins[index]/newsize); 
+			int pos1 = (unsigned int) (*((int*) hash1)) % superBins;
+			int pos2 = (unsigned int) (*((int*) hash2)) % superBins; 
 
-			long totalItems1 = countTotal(fullness, pos1*newsize, newsize);
-			long totalItems2 = countTotal(fullness, pos2*newsize, newsize);
-				long cipherIndex ;
+			int totalItems1 = countTotal(fullness, pos1*newsize, newsize);
+			int totalItems2 = countTotal(fullness, pos2*newsize, newsize);
+				int cipherIndex ;
 			if(totalItems1>totalItems2)
 				cipherIndex = pos2*newsize;
 			else

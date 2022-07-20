@@ -2,12 +2,10 @@
 #define ONECHOICESERVER_H
 
 #include "OneChoiceStorage.h"
-//#include "Storage.h"
 
 class OneChoiceServer {
 private:
     OneChoiceStorage* storage;
-    //Storage* keyworkCounters;
     void getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result);
     int numberOfBins, sizeOfEachBin;
     bool profile = false;
