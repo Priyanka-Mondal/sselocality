@@ -38,6 +38,7 @@ public:
     vector<prf_type> getAllData(int index, unsigned char* key);
     void truncateToMpl(int pss, int mpl, int index, string keyword, vector<prf_type> fileids, unsigned char* key);
 void writeToStash(int pss, int mpl, vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers);
+	void printStashSizes();
 };
 
 #endif /* TWOCHOICECLIENT_H */

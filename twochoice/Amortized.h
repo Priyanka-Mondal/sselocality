@@ -45,7 +45,7 @@ public:
     virtual ~Amortized();
     double getTotalSearchCommSize() const;
     double getTotalUpdateCommSize() const;
-    void endSetup(int N);
+    void endSetup();
 
 };
 

@@ -220,6 +220,7 @@ double Amortized::getTotalUpdateCommSize() const
     return totalUpdateCommSize;
 }
 
-void Amortized::endSetup(int N) 
+void Amortized::endSetup() 
 {
+	L->printStashSizes();
 }

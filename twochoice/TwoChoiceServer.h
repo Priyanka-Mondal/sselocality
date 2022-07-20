@@ -21,6 +21,7 @@ public:
     vector<pair<prf_type, prf_type> > getAllData(int dataIndex);
     vector<prf_type> getStash(int dataIndex);
     //vector<prf_type> newsearch(int dataIndex , prf_type hashtoken, int keywordCnt, int pos);
+	void printStashSizes();
 
 };
 

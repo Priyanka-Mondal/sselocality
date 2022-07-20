@@ -56,7 +56,7 @@ int main(int argc, char** argv)
     }
     
     Amortized client(testCases[0].N, inMemory, overwrite); // only one test is performed for now
-    client.endSetup(testCases[0].N);
+    //client.endSetup(testCases[0].N);
     cout << "Start of Static, size of test suits:" << testCases.size()<< endl;
     cout <<"*************************************************************************"<<endl;
     
@@ -114,7 +114,7 @@ int main(int argc, char** argv)
                 }
             }
         }
-        //        client.endSetup();
+                client.endSetup();
 	
         for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	{
@@ -124,8 +124,8 @@ int main(int argc, char** argv)
                 Utilities::startTimer(500);
                 vector<int> res = client.search(testCases[i].testKeywords[j]);
                 time = Utilities::stopTimer(500);
-                cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
-                cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
+                //cout<<"Search Computation Time(micro):"<<time<<" for:"<<testCases[i].testKeywords[j]<<endl;
+                //cout << "Search Communication Size (Bytes):" << client.getTotalSearchCommSize() << endl;
                 cout << "Number of return item:[" << res.size()<<"]" << endl;
 		assert(testCases[i].Qs[j]-testCases[i].delNumber[j] == res.size());
         }

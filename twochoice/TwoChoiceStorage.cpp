@@ -10,11 +10,9 @@ TwoChoiceStorage::TwoChoiceStorage(bool inMemory, int dataIndex, string fileAddr
     memset(nullKey.data(), 0, AES_KEY_SIZE);
     for (int i = 0; i < dataIndex; i++) 
     {
-        int curNumberOfBins = 
-	     i>3 ? ((int)ceil((float) (pow(2,i)/((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i))))))))) : pow(2,i);
-	//in twochoice they assume #of Bins in power of 2
+        int curNumberOfBins = i > 3 ? ((int) ceil((float) pow(2, i) / ((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
 	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins))); 
-        int curSizeOfEachBin = i > 3 ? ceil(((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*3)) : 3;
+     	int curSizeOfEachBin = i > 3 ? ceil(2*(log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))) : 2;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
         printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
@@ -26,69 +24,63 @@ bool TwoChoiceStorage::setup(bool overwrite)
     if (inMemoryStorage) 
     {
         for (int i = 0; i < dataIndex; i++) 
-	{
+		{
             vector<pair<prf_type, prf_type> > curData;
             data.push_back(curData);
         }
     } 
     else 
     {
-	/*    
-        if (USE_XXL) {
-            diskData = new stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru >::result*[dataIndex];
-            for (int i = 0; i < dataIndex; i++) {
-                diskData[i] = new stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru>::result();
-            }
-        } else {*/
             for (int i = 0; i < dataIndex; i++) 
-	    {
+	    	{
                 string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
                 filenames.push_back(filename);
                 fstream testfile(filename.c_str(), std::ofstream::in);
                 if (testfile.fail() || overwrite) 
-		{
+				{
                     testfile.close();
                     fstream file(filename.c_str(), std::ofstream::out);
                     if (file.fail()) 
-		    {
+		    		{
                         cerr << "Error: " << strerror(errno);
                     }
                     int maxSize = numberOfBins[i] * sizeOfEachBin[i];
                     for (int j = 0; j < maxSize; j++) 
-		    {
+		    		{
                         file.write((char*) nullKey.data(), AES_KEY_SIZE);
                         file.write((char*) nullKey.data(), AES_KEY_SIZE);
                     }
                     file.close();
                 }
+				/*
                 string stashfilename = fileAddressPrefix + "STASH-" + to_string(i) + ".dat";
                 stashfilenames.push_back(stashfilename);
                 fstream tfile(stashfilename.c_str(), std::ofstream::in);
                 if (tfile.fail() || overwrite) 
-		{
+				{
                     tfile.close();
                     fstream sfile(stashfilename.c_str(), std::ofstream::out);
                     if (sfile.fail()) 
-		    {
+		    		{
                         cerr << "Error: " << strerror(errno);
                     }
                     int maxSize = pow(2,i);//numberOfBins[i] * sizeOfEachBin[i];
                     for (int j = 0; j < maxSize; j++) 
-		    {
+		    		{
                         sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
                         //sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
                     }
                     sfile.close();
-                }
+                }*/
             }
        // }
     }
-
 }
 
 void TwoChoiceStorage::insertStash(int index, vector<prf_type> ciphers) 
 {
-      fstream file(stashfilenames[index].c_str(), ios::binary | ios::out);
+      string st = fileAddressPrefix + "STASH-" + to_string(index) + ".dat";
+      fstream file(st, ios::binary | ios::out);
       if (file.fail()) 
       {
           cout <<"StashXX:"<<index<<endl;
@@ -107,9 +99,14 @@ void TwoChoiceStorage::insertStash(int index, vector<prf_type> ciphers)
 vector<prf_type> TwoChoiceStorage::getStash(int index) 
 {
       vector<prf_type> results;
-      fstream file(stashfilenames[index].c_str(), ios::binary | ios::in | ios::ate);
+	  results.resize(0);
+      string st = fileAddressPrefix + "STASH-" + to_string(index) + ".dat";
+      fstream file(st, ios::binary | ios::in | ios::ate);
       if (file.fail()) 
+	  {
+		  return results;
           cerr << "Error in read: " << strerror(errno);
+	  }
       int size = file.tellg();
       file.seekg(0, ios::beg);
       SeekG++;
@@ -142,25 +139,16 @@ void TwoChoiceStorage::insertAll(int index, vector<vector< pair<prf_type, prf_ty
     } 
     else 
     {
-	    /*
-        if (USE_XXL) {
-            for (auto item : ciphers) {
-                for (auto pair : item) {
-                    diskData[index]->push_back(pair);
-                }
-
-            }
-        } else {*/
             fstream file(filenames[index].c_str(), ios::binary | ios::out);
             if (file.fail()) 
-	    {
-		cout <<"XX:"<<index<<endl;
+	    	{
+				cout <<"XX:"<<index<<endl;
                 cerr << "(Error in insert: " << strerror(errno)<<")"<<endl;
             }
             for (auto item : ciphers) 
-	    {
+	    	{
                 for (auto pair : item) 
-		{
+				{
                     unsigned char newRecord[KEY_VALUE_SIZE];
                     memset(newRecord, 0, KEY_VALUE_SIZE);
                     std::copy(pair.first.begin(), pair.first.end(), newRecord);
@@ -179,7 +167,7 @@ vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index)
     {
         vector<pair<prf_type, prf_type> > results;
         for (int i = 0; i < data[index].size(); i++) 
-	{
+		{
             if (data[index][i].first != nullKey) 
                 results.push_back(data[index][i]);
         }
@@ -208,12 +196,12 @@ vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index)
             file.close();
 
             for (int i = 0; i < size / KEY_VALUE_SIZE; i++) 
-	    {
+	    	{
                 prf_type tmp, restmp;
                 std::copy(keyValues + i*KEY_VALUE_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
                 std::copy(keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValues + i * KEY_VALUE_SIZE + AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
                 if (tmp != nullKey) //dummy added to fillup bins 
-		{
+				{
                     results.push_back(pair<prf_type, prf_type>(tmp, restmp));
                 }
             }
@@ -225,33 +213,27 @@ vector<pair<prf_type, prf_type> > TwoChoiceStorage::getAllData(int index)
 
 void TwoChoiceStorage::clear(int index) 
 {
-    if (inMemoryStorage) 
-    {
-        data[index].clear();
-    } 
-    else {
-        /*if (USE_XXL) {
-            diskData[index]->clear();
-        } else {*/
-            fstream file(filenames[index].c_str(), std::ios::binary | std::ofstream::out);
-            if (file.fail()) 
-                cerr << "Error: " << strerror(errno);
-            int maxSize = numberOfBins[index] * sizeOfEachBin[index];
-            for (int j = 0; j < maxSize; j++) 
-	    {
-                file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                file.write((char*) nullKey.data(), AES_KEY_SIZE);
-            }
-            file.close();
+	fstream file(filenames[index].c_str(), std::ios::binary | std::ofstream::out);
+	if (file.fail()) 
+    	cerr << "Error: " << strerror(errno);
+	int maxSize = numberOfBins[index] * sizeOfEachBin[index];
+	for (int j = 0; j < maxSize; j++) 
+	{
+		file.write((char*) nullKey.data(), AES_KEY_SIZE);
+		file.write((char*) nullKey.data(), AES_KEY_SIZE);
+	}
+	file.close();
 
-            fstream sfile(stashfilenames[index].c_str(), std::ios::binary | std::ofstream::out);
-            if (sfile.fail()) 
-                cerr << "Error: " << strerror(errno);
-	    maxSize = pow(2,index);
-            for (int j = 0; j < maxSize; j++) 
-                sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
-            sfile.close();
-    }
+	string st = fileAddressPrefix + "STASH-" + to_string(index) + ".dat";
+	if(std::remove(st.c_str())!=0)
+		cout <<"STASH DELETE ERROR"<<endl;
+           // fstream sfile(stashfilenames[index].c_str(), std::ios::binary | std::ofstream::out);
+           // if (sfile.fail()) 
+           //     cerr << "Error: " << strerror(errno);
+	       // maxSize = pow(2,index);
+           // for (int j = 0; j < maxSize; j++) 
+           //     sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+           // sfile.close();
 }
 
 TwoChoiceStorage::~TwoChoiceStorage() {
@@ -427,3 +409,23 @@ vector<prf_type> TwoChoiceStorage::find(int index, prf_type mapKey, int cnt)
 }
 
 
+void TwoChoiceStorage::printStashSizes() 
+{
+	for(int i =0; i<dataIndex; i++)
+	{	
+      string st = fileAddressPrefix + "STASH-" + to_string(i) + ".dat";
+      fstream file(st.c_str(), ios::binary | ios::in | ios::ate);
+      if (file.fail()) 
+      {
+          cout << "(Index:"<<i<<" Stash does not exist for index)"<<endl;
+      }
+	  else
+	  {
+   	      int size = file.tellg();
+		  if(size>0)
+		  	cout <<"Index:"<<i<<" Stash size:"<<size<<endl;
+		  else
+          	cout << "(Index:"<<i<<" Stash does not exist for index)"<<endl;
+	  }
+	}
+}

@@ -47,6 +47,7 @@ public:
     void clear(int index);
     vector<prf_type> find(int index, prf_type mapKey, int cnt);
     virtual ~TwoChoiceStorage();
+	void printStashSizes();
 };
 
 #endif /* TWOCHOICESTORAGE_H */

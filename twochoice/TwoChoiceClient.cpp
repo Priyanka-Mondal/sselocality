@@ -16,10 +16,9 @@ TwoChoiceClient::TwoChoiceClient(int numOfDataSets, bool inMemory, bool overwrit
     {
         exist.push_back(false);
         stashExist.push_back(false);
-        int curNumberOfBins = i > 3 ? ((int) ceil((float) pow(2, i) / (log2(log2(pow(2,i)))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
-	//in twochoice they assume #of Bins in power of 2
-	curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins)));
-     int curSizeOfEachBin = i > 3 ? ceil((log2(log2(pow(2,i)))*(log2(log2(log2(pow(2,i)))))*3)) : 3;
+        int curNumberOfBins = i > 3 ? ((int) ceil((float) pow(2, i) / ((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
+		curNumberOfBins = pow(2, (int)ceil(log2(curNumberOfBins)));
+     	int curSizeOfEachBin = i > 3 ? ceil(2*(log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))) : 2;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
     }
@@ -97,96 +96,91 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
 
     vector<pair<string,vector<prf_type>>> sorted = sort(pairs);
     int mpl = maxPossibleLen((pow(2,index)),numberOfBins[index], index);
-    mpl = numberOfBins[index]; // for now
+    //mpl = numberOfBins[index]; // for now
 
     for (auto pair : sorted) 
     {
-	int pss = pair.second.size();
-	int newsize = pow(2, (int)ceil(log2(pss)));
-	if(pss > mpl)
-	{
-		writeToStash(pss,mpl,pair.second,key, stashCiphers);
-		pss = mpl;
-		newsize = mpl;
-	}
-	if(newsize > mpl)
-		newsize = mpl;
-
-        prf_type K = Utilities::encode(pair.first, key);
-	prf_type mapKey, mapValue;
-        unsigned char cntstr[AES_KEY_SIZE];
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        mapKey = Utilities::generatePRF(cntstr, K.data());
-        prf_type valueTmp, totalTmp;
-        *(int*) (&(valueTmp[0])) = newsize;//pair.second.size(); 
-        mapValue = Utilities::encode(valueTmp.data(), K.data());
-        keywordCntCiphers[mapKey] = mapValue; 
-       
-/////////////////////////////////////////////////////////////////////////	
-//	auto count = counters[index];				       //	
-//	count[pair.first] = make_pair(newsize,pair.second.size());     //
-//	counters[index]=count;                                         //
-/////////////////////////////////////////////////////////////////////////
-
-        string temp = pair.first;
-	temp = temp.append("1");
-        prf_type K1 = Utilities::encode(temp, key);
-        prf_type mapKey1;
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        mapKey1 = Utilities::generatePRF(cntstr, K1.data());
-        unsigned char* hash1 = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
-
-	temp = pair.first;
-	temp = temp.append("2");
-        prf_type K2 = Utilities::encode(temp, key);
-        prf_type mapKey2;
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        mapKey2 = Utilities::generatePRF(cntstr, K2.data());
-        unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
-
-        int superBins = ceil((float) numberOfBins[index]/newsize); 
-        int pos1 = (unsigned int) (*((int*) hash1)) % superBins;
-        int pos2 = (unsigned int) (*((int*) hash2)) % superBins; 
-
-	int totalItems1 = countTotal(fullness, pos1*newsize, newsize);
-	int totalItems2 = countTotal(fullness, pos2*newsize, newsize);
-	//assert(totalItems1 == totalItems2);
-        int cipherIndex ;
-	if(totalItems1>totalItems2)
-		cipherIndex = pos2*newsize;
-	else
-		cipherIndex = pos1*newsize;
-        
-	for (unsigned int i = 0; i < pss; i++) 
-	{
-            prf_type mapKey, mapValue;
-            unsigned char cntstr[AES_KEY_SIZE];
-            memset(cntstr, 0, AES_KEY_SIZE);
-            *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
-            mapKey = Utilities::generatePRF(cntstr, K.data());
-            mapValue = Utilities::encode(pair.second[i].data(), key);
-
-            auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
-            ciphers[cipherIndex].push_back(p);
-
-	    if(fullness.find(cipherIndex) == fullness.end())
-		    fullness[cipherIndex] = 1;
-	    else
-	    	    fullness[cipherIndex] = fullness[cipherIndex]+1;
-            cipherIndex++;
-        }
-	for(int i = pss; i<newsize; i++)
-	{
-    		prf_type dummy;
-    		memset(dummy.data(), 0, AES_KEY_SIZE);
-    		auto dummypair = std::pair<prf_type, prf_type>(dummy, dummy);
-            	ciphers[cipherIndex].push_back(dummypair);
-	    	fullness[cipherIndex] = fullness[cipherIndex]+1;
-            	cipherIndex++;
-	}
+		int pss = pair.second.size();
+		int newsize = pow(2, (int)ceil(log2(pss)));
+		if(pss > mpl)
+		{
+			writeToStash(pss,mpl,pair.second,key, stashCiphers);
+			pss = mpl;
+			newsize = mpl;
+		}
+		if(newsize > mpl)
+			newsize = mpl;
+		//cout <<"pss:"<<pss<<" ns:"<<newsize<<" mpl:"<<mpl<<endl;
+	    prf_type K = Utilities::encode(pair.first, key);
+		prf_type mapKey, mapValue;
+	    unsigned char cntstr[AES_KEY_SIZE];
+	    memset(cntstr, 0, AES_KEY_SIZE);
+	    *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+	    mapKey = Utilities::generatePRF(cntstr, K.data());
+	    prf_type valueTmp, totalTmp;
+	    *(int*) (&(valueTmp[0])) = newsize;//pair.second.size(); 
+	    mapValue = Utilities::encode(valueTmp.data(), K.data());
+	    keywordCntCiphers[mapKey] = mapValue; 
+	       
+	
+	    string temp = pair.first;
+		temp = temp.append("1");
+	    prf_type K1 = Utilities::encode(temp, key);
+	    prf_type mapKey1;
+	    memset(cntstr, 0, AES_KEY_SIZE);
+	    *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+	    mapKey1 = Utilities::generatePRF(cntstr, K1.data());
+	    unsigned char* hash1 = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
+	
+		temp = pair.first;
+		temp = temp.append("2");
+	    prf_type K2 = Utilities::encode(temp, key);
+	    prf_type mapKey2;
+	    memset(cntstr, 0, AES_KEY_SIZE);
+	    *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+	    mapKey2 = Utilities::generatePRF(cntstr, K2.data());
+	    unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
+	
+	    int superBins = ceil((float) numberOfBins[index]/newsize); 
+	    int pos1 = (unsigned int) (*((int*) hash1)) % superBins;
+	    int pos2 = (unsigned int) (*((int*) hash2)) % superBins; 
+	
+		int totalItems1 = countTotal(fullness, pos1*newsize, newsize);
+		int totalItems2 = countTotal(fullness, pos2*newsize, newsize);
+		//assert(totalItems1 == totalItems2);
+	        int cipherIndex ;
+		if(totalItems1>totalItems2)
+			cipherIndex = pos2*newsize;
+		else
+			cipherIndex = pos1*newsize;
+	        
+		for (unsigned int i = 0; i < pss; i++) 
+		{
+	    	prf_type mapKey, mapValue;
+	    	unsigned char cntstr[AES_KEY_SIZE];
+	    	memset(cntstr, 0, AES_KEY_SIZE);
+	    	*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
+	    	mapKey = Utilities::generatePRF(cntstr, K.data());
+	    	mapValue = Utilities::encode(pair.second[i].data(), key);
+	
+	    	auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
+	    	ciphers[cipherIndex].push_back(p);
+	
+		    if(fullness.find(cipherIndex) == fullness.end())
+			    fullness[cipherIndex] = 1;
+		    else
+		    	    fullness[cipherIndex] = fullness[cipherIndex]+1;
+	            cipherIndex++;
+	    }
+		for(int i = pss; i<newsize; i++)
+		{
+	    	prf_type dummy;
+	    	memset(dummy.data(), 0, AES_KEY_SIZE);
+	    	auto dummypair = std::pair<prf_type, prf_type>(dummy, dummy);
+	        	ciphers[cipherIndex].push_back(dummypair);
+		    fullness[cipherIndex] = fullness[cipherIndex]+1;
+	        	cipherIndex++;
+		}
     }
     prf_type dummy;
     memset(dummy.data(), 0, AES_KEY_SIZE);
@@ -195,7 +189,7 @@ void TwoChoiceClient::setup(int index, map<string, vector<prf_type> > pairs, uns
     {
         int curSize = ciphers[i].size();
         for (int j = curSize; j < sizeOfEachBin[index]; j++) 
-	{
+		{
             ciphers[i].push_back(dummypair);
         }
     }
@@ -259,6 +253,7 @@ vector<prf_type> TwoChoiceClient::search(int index, string keyword, unsigned cha
        		}
 		if(flag !=0)//found in one superBin will imply NOT found in the other
 		{
+				cout<<"Index:"<<index<<" Searching in stash, size:"<<stashCiphers.size()*AES_KEY_SIZE<<endl;
        			for (auto item : stashCiphers) 
        			{
        		 		prf_type plaintext;
@@ -307,4 +302,8 @@ void TwoChoiceClient::destry(int index)
     exist[index] = false;
     stashExist[index] = false;
     totalCommunication += sizeof (int);
+}
+void TwoChoiceClient::printStashSizes() 
+{
+	server->printStashSizes();
 }

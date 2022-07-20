@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/dynStashplus/dynstash configs/mconfig.txt |tee results/dynstash1.txt 
+dist/Debug/GNU-Linux/twochoice/twochoice-sda configs/mconfig.txt |tee results/dynstash1.txt 
