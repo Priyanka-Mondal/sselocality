@@ -59,8 +59,10 @@ public:
 	void getBin(int newindex, int instance, int start, int end, unsigned char* key1, unsigned char* key2);
 	void addDummy(int index, int count, unsigned char* key, int s, int r1, int r2);
 	void deAmortizedBitSort(int step, int counter, int size, int index, unsigned char* key);
+	void deAmortizedBitSortC(int step, int count, int size, int index, unsigned char* key);
 	void nonOblSort(int index, unsigned char* key);
     int hashKey(string w, int cnt, int index, unsigned char* key);
+	void updateHashTable(int index, unsigned char* key);
     Bid getBid(string str, int cnt);
 	vector<prf_type> searchNEW(int index, string keyword);
 	void ensureNEWSize(int index, int bin, int cnt);

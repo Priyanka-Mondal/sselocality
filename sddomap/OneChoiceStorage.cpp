@@ -90,36 +90,24 @@ bool OneChoiceStorage::setup(bool overwrite)
 
 void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphers) 
 {
-    if (inMemoryStorage) 
-	{
-        //for (auto item : ciphers) {
-          //  data[index].insert(data[index].end(), item.begin(), item.end());
-        //}
-    } 
+	fstream file;
+	if(instance<=3)
+    	file.open(filenames[index][instance].c_str(), ios::binary | ios::out);
 	else
-	{		fstream file;
-			if(instance>=3)
-            	file.open(filenames[index][instance].c_str(), ios::binary | ios::out);
-			else
-            	file.open(fileCounter[index].c_str(), ios::binary | ios::out);
-            if (file.fail()) 
-                cerr << "Error in insert: " <<strerror(errno)<<endl;
-			
-            file.seekg(0, ios::beg);
-			SeekG++;
-            for (auto ci : ciphers) 
-			{
-                //for (auto pair : item) {
-                    unsigned char newRecord[AES_KEY_SIZE];
-                    memset(newRecord, 0, AES_KEY_SIZE);
-                    std::copy(ci.begin(), ci.end(), newRecord);
-                    file.write((char*) newRecord, AES_KEY_SIZE);
-					//if(ci != nullKey)
-					//cout <<"wrote ["<<ci.data()<<"|"<<id<<"|"<<bina<<"] in "<<filenames[index][instance].c_str()<<endl;
-                //}
-            }
-            file.close();
+    	file.open(fileCounter[index].c_str(), ios::binary | ios::out);
+    if (file.fail()) 
+        cerr << "Error in insert: " <<strerror(errno)<<endl;
+	
+    file.seekg(0, ios::beg);
+	SeekG++;
+    for (auto ci : ciphers) 
+	{
+            unsigned char newRecord[AES_KEY_SIZE];
+            memset(newRecord, 0, AES_KEY_SIZE);
+            std::copy(ci.begin(), ci.end(), newRecord);
+            file.write((char*) newRecord, AES_KEY_SIZE);
     }
+    file.close();
 }
 
 
@@ -277,7 +265,7 @@ void OneChoiceStorage::clear(int index, int instance)
 	{
         data[index].clear();
     } 
-	else if(instance >=3)
+	else if(instance <=3)
 	{
         fstream file(filenames[index][instance].c_str(), std::ios::binary | std::ofstream::out);
         if (file.fail()) 

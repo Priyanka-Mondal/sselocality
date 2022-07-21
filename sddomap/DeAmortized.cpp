@@ -148,13 +148,15 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				int stepi = 2*ceil(by(by(totStepsi, times),2));
 				if(i==prof) 
 					cout <<j<<" SORTING: N:"<<N<<" "<<cnt[i]<<"/"<<pow(2,j)<<"/"<<pow(2,j)<<" totstep:"<<totStepsi<<" stepi:"<<stepi<<endl;
+				L->deAmortizedBitSortC(stepi, count, N, i, keys[i][3]);
 				L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
 			}
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,j))
 			{
 				assert(L->sorted(i,keys[i][3]));
-				L->resize(i,indexSize[i]); //j = i+logB
+				L->updateHashTable(i, keys[i][3]);
+				L->resize(i,indexSize[i]); 
 				L->move(i-1,0,2); 
 				updateKey(i-1,0,2);
 				L->destroy(i-1,1);

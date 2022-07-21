@@ -68,34 +68,35 @@ void Amortized::update(OP op, string keyword, long ind, bool setup)
 
     for (long i = 0; i < min(rm0, localSize); i++) 
     {
-   		for (auto item : data[i]) 
-   	 	{
-   	        if (previousData.count(item.first) == 0) 
-   	     	{
-   	             previousData[item.first] = vector<prf_type>();
-   	        }
-   	        previousData[item.first].insert(previousData[item.first].end(), item.second.begin(), item.second.end());
-   	     }
-   	     data[i].clear();
-   	 }
-   	 for (long i = localSize; i < rm0; i++) 
-   	 {
-   	     vector<prf_type> curData = L->getAllData(i, keys[i]);
-   	     for (auto item : curData) 
-   	 	 {
-   	         string curKeyword((char*) item.data());
-   	     if (curKeyword == "") cout<<"[[curKeyword NULL]]"<<endl;
-   	         if (previousData.count(curKeyword) == 0) 
-   	     {
-   	             previousData[curKeyword] = vector < prf_type>();
-   	         }
-   	         previousData[curKeyword].push_back(item);
-   	     }
+        for (auto item : data[i]) 
+	{
+            if (previousData.count(item.first) == 0) 
+	    {
+                previousData[item.first] = vector<prf_type>();
+            }
+            previousData[item.first].insert(previousData[item.first].end(), item.second.begin(), item.second.end());
+        }
+        data[i].clear();
+    }
+    
+    for (long i = localSize; i < rm0; i++) 
+    {
+        vector<prf_type> curData = L->getAllData(i, keys[i]);
+        for (auto item : curData) 
+	{
+            string curKeyword((char*) item.data());
+	    if (curKeyword == "") cout<<"[[curKeyword NULL]]"<<endl;
+            if (previousData.count(curKeyword) == 0) 
+	    {
+                previousData[curKeyword] = vector < prf_type>();
+            }
+            previousData[curKeyword].push_back(item);
+        }
 
-   	     L->destry(i);
-   	 //cout <<"L->destroy("<<i<<") was called"<<endl;
-   	     delete keys[i];
-   	     keys[i] = NULL;
+        L->destry(i);
+	//cout <<"L->destroy("<<i<<") was called"<<endl;
+        delete keys[i];
+        keys[i] = NULL;
     }
     prf_type value;
     std::fill(value.begin(), value.end(), 0);
@@ -146,7 +147,7 @@ vector<long> Amortized::search(string keyword)
 	{
             if (profile) 
 	    {
-                printf("level %ld:\n", i);
+                printf("level %d:\n", i);
             }
             auto tmpRes = L->search(i, keyword, keys[i]);
             encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
@@ -164,9 +165,8 @@ vector<long> Amortized::search(string keyword)
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
     {
         prf_type decodedString = *i;
-        long id = *(long*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
-        remove[id] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1); //ins gives -1
-		//cout <<"(("<<remove[plalongext]<<"))";
+        long plaintext = *(long*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
+        remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
     }
     for (auto const& cur : remove) 
     {
@@ -219,6 +219,6 @@ double Amortized::getTotalUpdateCommSize() const
     return totalUpdateCommSize;
 }
 
-void Amortized::endSetup(long N) 
+void Amortized::endSetup() 
 {
 }

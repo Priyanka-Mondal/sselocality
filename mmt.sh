@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/sddomap/onechoice-sdd configs/mconfig.txt |tee results/sdd1.txt 
+dist/Debug/GNU-Linux/vone/vone configs/bconfig.txt |tee results/sdd1.txt 

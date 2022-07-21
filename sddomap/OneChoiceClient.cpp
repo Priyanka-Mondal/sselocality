@@ -65,6 +65,17 @@ int issorted(vector<prf_type> A)
 	}
 	return 1;
 }
+int issortedC(vector<prf_type> A)
+{
+	for(int a=0;a<A.size()-1;a++)
+	{
+    	int prpa = *(int*) (&(A[a].data()[AES_KEY_SIZE - 11]));
+    	int prpb = *(int*) (&(A[a+1].data()[AES_KEY_SIZE - 11]));
+		if(prpa<prpb)
+			return 0;
+	}
+	return 1;
+}
 vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword, unsigned char* key) 
 {
     double searchPreparation = 0, searchDecryption = 0;
@@ -339,7 +350,7 @@ void OneChoiceClient::pad(int index, int newSize, int r, unsigned char* key)
 		}
 	}
 	//**will have to deamortize it later**//
-	updateCounters(index, key);
+	//updateCounters(index, key);
 }
 
 void OneChoiceClient::updateOMAP(int index, string keyword, unsigned char* key)
@@ -348,7 +359,30 @@ void OneChoiceClient::updateOMAP(int index, string keyword, unsigned char* key)
 	string ob = omaps[index]->incrementCnt(getBid(keyword,upCnt));
 }
 
+void OneChoiceClient::updateHashTable(int index, unsigned char* key)
+{
+	vector<prf_type> some = server->getNEW(index, 0, pow(2,index), false);
+	map <prf_type, prf_type> kcc;
+	for(auto c: some)
+	{
+	    prf_type plaintext;// = c;
+	    Utilities::decode(c, plaintext, key);
+	    string w((char*) plaintext.data());
+	    int cntw = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
+	    //int prp = ((byte) plaintext.data()[AES_KEY_SIZE - 11]); 
+		prf_type K = Utilities::encode(w, key);
+		unsigned char cntstr[AES_KEY_SIZE];
+		memset(cntstr, 0, AES_KEY_SIZE);
+		*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1; // here add the PRP
+		prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
+		prf_type valueTmp, totalTmp;
+		*(int*) (&(valueTmp[0])) = cntw;
+		prf_type mapValue = Utilities::encode(valueTmp.data(), K.data());
+		kcc[mapKey] = mapValue; 
+	}
+	server->storeKwCounters(index, 3, kcc);
 
+}
 void OneChoiceClient::kwCount(int index, unsigned char* key, int count, int r1, int r2)
 {
 	int upCnt = numNEW[index];
@@ -390,7 +424,7 @@ void OneChoiceClient::kwCount(int index, unsigned char* key, int count, int r1, 
 	}
 }
 
-
+/*
 void OneChoiceClient::updateCounters(int index, unsigned char* key, int count, int r1, int r2)
 {
 	//cout <<"updCo:("<<index<<")"<<endl;
@@ -422,10 +456,10 @@ void OneChoiceClient::updateCounters(int index, unsigned char* key, int count, i
 	}
 	server->storeKwCounters(index, 3, kcc);
 }
+*/
 
 void OneChoiceClient::updateCounters(int index, unsigned char* key)
 {
-	cout <<"updCo:("<<index<<")"<<endl;
 	int upCnt = numNEW[index];
 	vector<prf_type> all= server->getNEW(index, 0, NEWsize[index], true);
 	map <prf_type, prf_type> kcc;
@@ -588,57 +622,30 @@ bool OneChoiceClient::sorted(int index, unsigned char* key)
 		return issorted(decoded);
 	}
 }
-
-void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int index, unsigned char* key)
+void OneChoiceClient::deAmortizedBitSortC(int step, int count, int size, int index, unsigned char* key)
 {
-	//cout<<"index:"<<index<<" size:"<<size<<endl;
-	cout <<"index:"<<index<<":"<<NEWsize[index]<<" "<<KWsize[index]<<endl;
 	assert(NEWsize[index]==KWsize[index]);
 	vector<int> curMem = getSeq(step, count, size);
 	std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
 	vector<int> ncm = remDup(curMem);
 
-	vector<prf_type> encNEW = server->getNEW(index,0, NEWsize[index], true);
 	vector<prf_type> encKW = server->getNEW(index,0, KWsize[index], false);
-
-	assert(size == NEWsize[index]);
-	assert(encNEW.size() == NEWsize[index]);
-	vector<prf_type> elToSort1;
 	vector<prf_type> elToSort2;
 	for(int k = 0; k<ncm.size(); k++)
 	{
-		elToSort1.push_back(encNEW[ncm[k]]);
 		elToSort2.push_back(encKW[ncm[k]]);
 	}
-	assert(elToSort1.size() == ncm.size());
 	assert(elToSort2.size() == ncm.size());
-	vector<prf_type> decodedNEW;	
 	vector<prf_type> decodedKW;	
-	for(auto n : elToSort1)
-	{
-		prf_type dec;// = n;
-	    Utilities::decode(n, dec, key);
-		decodedNEW.push_back(dec);
-	}
 	for(auto n : elToSort2)
 	{
 		prf_type dec;// = n;
 	    Utilities::decode(n, dec, key);
 		decodedKW.push_back(dec);
 	}
-	assert(elToSort1.size() == decodedNEW.size());
 	assert(elToSort2.size() == decodedKW.size());
-	sort(decodedNEW.begin(), decodedNEW.end(), cmpp);
 	sort(decodedKW.begin(), decodedKW.end(), cmpp2);//
-	assert(issorted(decodedNEW));
-	assert(issorted(decodedKW));
-	vector<prf_type> sorted1;
-	for(auto n : decodedNEW)
-	{
-		prf_type enc;// = n;
-		enc = Utilities::encode(n.data(), key);
-		sorted1.push_back(enc);
-	}
+	assert(issortedC(decodedKW));
 	vector<prf_type> sorted2;
 	for(auto n : decodedKW)
 	{
@@ -649,14 +656,56 @@ void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int inde
 	int cnt = 0;
 	for(int i =0; i<ncm.size(); i++)
 	{
-		encNEW[ncm[i]] = sorted1[cnt];
 		encKW[ncm[i]] = sorted2[cnt];
 		cnt++;
 	}
-	assert(encNEW.size() == size);
 	assert(encKW.size() == size);
+	server->putNEW(index, 4, encKW);
+
+}
+
+void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int index, unsigned char* key)
+{
+	assert(NEWsize[index]==KWsize[index]);
+	vector<int> curMem = getSeq(step, count, size);
+	std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
+	vector<int> ncm = remDup(curMem);
+
+	vector<prf_type> encNEW = server->getNEW(index,0, NEWsize[index], true);
+
+	assert(size == NEWsize[index]);
+	assert(encNEW.size() == NEWsize[index]);
+	vector<prf_type> elToSort1;
+	for(int k = 0; k<ncm.size(); k++)
+	{
+		elToSort1.push_back(encNEW[ncm[k]]);
+	}
+	assert(elToSort1.size() == ncm.size());
+	vector<prf_type> decodedNEW;	
+	for(auto n : elToSort1)
+	{
+		prf_type dec;// = n;
+	    Utilities::decode(n, dec, key);
+		decodedNEW.push_back(dec);
+	}
+	assert(elToSort1.size() == decodedNEW.size());
+	sort(decodedNEW.begin(), decodedNEW.end(), cmpp);
+	assert(issorted(decodedNEW));
+	vector<prf_type> sorted1;
+	for(auto n : decodedNEW)
+	{
+		prf_type enc;// = n;
+		enc = Utilities::encode(n.data(), key);
+		sorted1.push_back(enc);
+	}
+	int cnt = 0;
+	for(int i =0; i<ncm.size(); i++)
+	{
+		encNEW[ncm[i]] = sorted1[cnt];
+		cnt++;
+	}
+	assert(encNEW.size() == size);
 	server->putNEW(index, 3, encNEW);
-	server->putNEW(index, 4, encNEW);
 }
 
 
