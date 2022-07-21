@@ -40,6 +40,7 @@ public:
 	int numOfIndices;
 	vector<int> numNEW;
 	vector<int> NEWsize;
+	vector<int> KWsize;
 	int b;
 
     vector<vector<bool>> exist;
@@ -51,6 +52,7 @@ public:
 	void move(int index, int toInstance, int fromInstance);
 	void copy(int index, int toInstance);
 	void append(int instance, prf_type keyVal, unsigned char* key);
+	void appendTokwCounter(int instance, prf_type keyVal, unsigned char* key);
 	void destroy(int index, int instance);
 	void resize(int index, int size);
 	void reSize(int index, int size);
@@ -63,8 +65,10 @@ public:
 	vector<prf_type> searchNEW(int index, string keyword);
 	void ensureNEWSize(int index, int bin, int cnt);
     int getNEWsize(int index);
-	void pad(int index, int newSize, unsigned char* key);
+	void pad(int index, int newSize, int r, unsigned char* key);
 	void updateCounters(int index, unsigned char* key);
+	void updateCounters(int index, unsigned char* key, int count, int r1, int r2);
+	void kwCount(int index, unsigned char* key, int count, int r1, int r2);
 	void updateOMAP(int index, string keyword, unsigned char* key);
 	bool sorted(int index, unsigned char* key);
 };

@@ -27,6 +27,7 @@ public:
     vector<string> batchSearch(vector<Bid> keys);
     void setDummy(int i);
     string incrementCnt(Bid key);
+	string decrementCnt(Bid key);
 };
 
 #endif /* OMAP_H */

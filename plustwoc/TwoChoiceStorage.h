@@ -27,6 +27,7 @@ private:
     vector<string> filenames;
     vector<string> stashes;
     vector<vector<string>> stashfilenames;
+	vector<vector<long>> cuckooStashLen;
     vector<vector<vector<string>>> cuckoofilenames;
     prf_type nullKey;
     string fileAddressPrefix = "/tmp/";

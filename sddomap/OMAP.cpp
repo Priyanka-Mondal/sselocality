@@ -120,3 +120,26 @@ string OMAP::incrementCnt(Bid key)
     treeHandler->finishOperation(false, rootKey, rootPos);
     return res;
 }
+
+string OMAP::decrementCnt(Bid key) 
+{
+    string res = "";
+    treeHandler->startOperation();
+    Node* node = new Node();
+    node->key = rootKey;
+    node->pos = rootPos;
+    res = treeHandler->incrementCnt(node, key);
+    if (res == "") 
+	{
+        string value = "";
+        rootKey = treeHandler->insert(rootKey, rootPos, key, value);
+		res = "99999";
+    }
+    if (res != "") 
+	{
+        string value = "";
+        rootKey = treeHandler->insert(rootKey, rootPos, key, value);
+    }
+    treeHandler->finishOperation(false, rootKey, rootPos);
+    return res;
+}

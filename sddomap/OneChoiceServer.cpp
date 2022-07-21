@@ -133,18 +133,29 @@ void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size
    	data = storage->getAllData(index, fromInstance);
 	assert(data.size()==size);
 	storage->insertAll(index, toInstance, data);
-
 	map<prf_type,prf_type> wordCount;
 	//cout <<"get all data from counters:"<<index<<"|"<<fromInstance<<" to"<<toInstance<<endl;
    	wordCount = keyworkCounters->getAllData(index, fromInstance);
 	keyworkCounters->insert(index, toInstance, wordCount);
 }
-
-
-
+/*
+vector<pair<prf_type,prf_type>> OneChoiceServer::getCounters(int index, int start, int size)
+{
+	//return keyworkCounters->getCounters(index, start, size);
+	return keyworkCounters->getAll(index,0) ;
+}
+*/
 int OneChoiceServer::writeToNEW(int index, prf_type keyVal, int pos)
 {
 	int last = storage->writeToNEW(index, keyVal, pos);
+	return last;
+	//cout <<index<<":"<<NEW[index].size()<<"<="<<6*pow(2,index)<<endl;
+	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
+}
+
+int OneChoiceServer::writeToKW(int index, prf_type keyVal, int pos)
+{
+	int last = storage->writeToKW(index, keyVal, pos);
 	return last;
 	//cout <<index<<":"<<NEW[index].size()<<"<="<<6*pow(2,index)<<endl;
 	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
@@ -170,14 +181,14 @@ vector<prf_type> OneChoiceServer::getElements(int index, int instance, int start
 	return storage->getElements(index, instance, start, end);
 }
 
-vector< prf_type> OneChoiceServer::getNEW(int index, int size)
+vector< prf_type> OneChoiceServer::getNEW(int index, int count, int size, bool NEW)
 {
-	return storage->getNEW(index, size);
+	return storage->getNEW(index, count, size, NEW);
 }
 
-void OneChoiceServer::putNEW(int index, vector<prf_type> sorted)//insertAll
+void OneChoiceServer::putNEW(int index, int instance, vector<prf_type> sorted)//insertAll
 {
-	storage->clear(index,3);
-	storage->insertAll(index, 3, sorted);
+	storage->clear(index,instance);
+	storage->insertAll(index, instance, sorted);
 }
 

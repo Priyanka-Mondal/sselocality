@@ -402,7 +402,7 @@ vector<prf_type> TwoChoiceClient::search(long index, string keyword, unsigned ch
 				}
 			}
 		}
-		totalCommunication += cuckooCiphers.size()* sizeof(prf_type);
+		totalCommunication += oneChoiceCiphers.size()* sizeof(prf_type);
 	}
 
 	long tableNum = (long)ceil(log2(keywordCnt));

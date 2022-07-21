@@ -106,7 +106,65 @@ void Storage::insert(int dataIndex, int instance, map<prf_type, prf_type> cipher
         //}
     }
 }
+/*
+map<prf_type,prf_type> Storage::getCounters(int dataIndex, int start, int length) 
+{
+    map<prf_type, prf_type> results;
+    stream file(filenames[dataIndex][3].c_str(), ios::binary | ios::in | ios::ate);
+    if (file.fail()) 
+        cerr << "Error in read: " << strerror(errno);
+    int size = file.tellg();
+	int readLength = length*KEY_VALUE_SIZE;
+	int readPos = start*KEY_VALUE_SIZE;
+    file.seekg(readPos, ios::beg);
+    char* keyValue = new char[readLength];
+    file.read(keyValue, size);
+    for (int i = 0; i < size / KEY_VALUE_SIZE; i++) 
+	{
+        prf_type tmp, restmp;
+        std::copy(keyValue + i*KEY_VALUE_SIZE, keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
+        std::copy(keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
+        if (tmp != nullKey) 
+		{
+            results[tmp]=restmp;
+        }
+    }
 
+    file.close();
+    delete keyValue;
+    return results;
+}
+*/
+
+
+vector<pair<prf_type,prf_type>> Storage::getAll(int dataIndex, int instance) 
+{
+    vector<pair<prf_type, prf_type>> results;
+    fstream file(filenames[dataIndex][instance].c_str(), ios::binary | ios::in | ios::ate);
+    if (file.fail()) {
+        cerr << "Error in read: " << strerror(errno);
+    }
+    int size = file.tellg();
+    file.seekg(0, ios::beg);
+    char* keyValue = new char[size];
+    file.read(keyValue, size);
+
+    for (int i = 0; i < size / KEY_VALUE_SIZE; i++) 
+	{
+        prf_type tmp, restmp;
+        std::copy(keyValue + i*KEY_VALUE_SIZE, keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
+        std::copy(keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
+        if (tmp != nullKey) 
+		{
+			
+            results.push_back(make_pair(tmp,restmp));
+        }
+    }
+
+    file.close();
+    delete keyValue;
+    return results;
+}
 map<prf_type,prf_type> Storage::getAllData(int dataIndex, int instance) 
 {
     map<prf_type, prf_type> results;

@@ -38,6 +38,7 @@ public:
     bool setup(bool overwrite);
     void insert(int dataIndex, int instance, map<prf_type, prf_type> ciphers);
     map<prf_type,prf_type> getAllData(int dataIndex, int instance);
+    vector<pair<prf_type,prf_type>> getAll(int dataIndex, int instance);
     void clear(int index, int instance);
     prf_type find(int index, int instance, prf_type mapKey, bool& found);
     virtual ~Storage();

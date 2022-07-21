@@ -117,6 +117,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		int mi = numberOfBins[j]; 
 		int r1 = ceil((float)(2*floor(by(indexSize[i-1],s))));
 		int r2 = r1 + ceil(by(mi,s));
+		int r3 = r1 + ceil(by(mi,s));
 		//cout <<"index:"<<i<<" r1:"<<r1<<" r2:"<<r2<<endl;
 		assert(r1<r2);
 		assert(r2<=pow(2,j));
@@ -134,10 +135,14 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			{
 				L->addDummy(i, (cnt[i]-r1), keys[i][3], s, r1, r2);
 			}
-			if (r2 <= cnt[i] && cnt[i] <=pow(2,j))
+			if(r2<=cnt[i] && cnt[i] <= r3)
 			{
-				int count = cnt[i]-r2;
-				int times = pow(2,j)-r2;
+				L->kwCount(i, keys[i][3], (cnt[i]-r2), r2, r3);
+			}
+			if (r3 <= cnt[i] && cnt[i] <=pow(2,j))
+			{
+				int count = cnt[i]-r3;
+				int times = pow(2,j)-r3;
 				int N = L->getNEWsize(i);
 				int totStepsi = 2*ceil(by(N*log2(N)*(log2(N)+1),4));
 				int stepi = 2*ceil(by(by(totStepsi, times),2));
