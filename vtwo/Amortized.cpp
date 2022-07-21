@@ -3,6 +3,8 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <string.h>
+#include<cstdlib>
+#include<stdlib.h>
 
 using namespace std;
 
@@ -149,7 +151,7 @@ vector<long> Amortized::search(string keyword)
 	    {
                 printf("level %d:\n", i);
             }
-            auto tmpRes = L->search(i, keyword, keys[i]);
+            auto tmpRes = L->searchLoc(i, keyword, keys[i]);
             encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
         }
     }
@@ -161,18 +163,26 @@ vector<long> Amortized::search(string keyword)
         printf("Amortized Search time:%f\n", searchTime);
         Utilities::startTimer(99);
     }
+    map<long, long> add;
     map<long, long> remove;
+
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
     {
         prf_type decodedString = *i;
-        long plaintext = *(long*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
-        remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
+        long id = *(long*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
+		int op = ((byte) decodedString.data()[AES_KEY_SIZE - 6]);
+		if(op == 0)
+			add[id] = -1;
+		if(op == 1)
+			remove[id] = 1;
+		add[id]=add[id]+remove[id];
     }
-    for (auto const& cur : remove) 
+	cout <<"add:"<<add.size()<<endl;
+    for (auto const& cur : add) 
     {
-        if (cur.second < 0) 
-	{
-            finalRes.emplace_back(cur.first);
+        if (cur.second<0) 
+		{
+           	finalRes.emplace_back(cur.first);
         }
     }
     if (profile) 

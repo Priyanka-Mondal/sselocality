@@ -10,7 +10,7 @@ TwoChoiceClient::~TwoChoiceClient()
 
 TwoChoiceClient::TwoChoiceClient(long numOfDataSets, bool inMemory, bool overwrite, bool profile) 
 {
-	cout <<"===============RUNNING SDa+TwoChoice+(OneChoice version 2)(long) ================="<<endl;
+	cout <<"======RUNNING SDa+TwoChoice+(OneChoice version 2)(long)========LOCALITY:"<<LOC<<endl;
 	this->profile = profile;
 	server = new TwoChoiceServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
@@ -151,85 +151,85 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
        	 	}
     	}
 		//for the firt LOC*mpl elements
-		long times = floor((float) pss/(float) mpl);
+		long times = ceil((float) pss/(float) mpl);
 		if(times>LOC)
 			times = LOC;
 	  	for(long t=0; t<times;t++)
 		{ 
-		int localpss;
-		int newsize = mpl;
-		if((t+1)*mpl<pss)	
-			localpss = mpl;
-		else
-		{
-			localpss = 	pss-(t+1)*mpl;
-			newsize = pow(2, (long)ceil(log2(localpss)));
-		}
-		if(newsize > mpl)
-			newsize = mpl;
-		string temp = pair.first;
-		temp = temp.append("1");
-		temp = temp.append(to_string(t));
-		prf_type K1 = Utilities::encode(temp, key);
-    	unsigned char cntstr[AES_KEY_SIZE];
-		memset(cntstr, 0, AES_KEY_SIZE);
-		*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-		prf_type mapKey1 = Utilities::generatePRF(cntstr, K1.data());
-		unsigned char* hash1 = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
-
-		temp = pair.first;
-		temp = temp.append("2");
-		temp = temp.append(to_string(t));
-		prf_type K2 = Utilities::encode(temp, key);
-		memset(cntstr, 0, AES_KEY_SIZE);
-		*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-		prf_type mapKey2 = Utilities::generatePRF(cntstr, K2.data());
-		unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
-
-		long superBins = ceil((float) numberOfBins[index]/newsize); 
-		long pos1 = (unsigned long) (*((long*) hash1)) % superBins;
-		long pos2 = (unsigned long) (*((long*) hash2)) % superBins; 
-
-		long totalItems1 = countTotal(fullness, pos1*newsize, newsize);
-		long totalItems2 = countTotal(fullness, pos2*newsize, newsize);
-		long cipherIndex ;
-		if(totalItems1>totalItems2)
-			cipherIndex = pos2*newsize;
-		else
-			cipherIndex = pos1*newsize;
-		if(fullness[cipherIndex]<sizeOfEachBin[index])
-		{
-		   	//for (unsigned long i = 0; i < pss; i++) 
-		   	for (unsigned long i = t*localpss; i < (t+1)*localpss; i++) 
-		   	{
-				prf_type K = Utilities::encode(pair.first, key);
-				unsigned char cntstr[AES_KEY_SIZE];
-				memset(cntstr, 0, AES_KEY_SIZE);
-				*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
-				prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
-				prf_type mapValue = Utilities::encode(pair.second[i].data(), key);
-				auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
-				assert(fullness[cipherIndex]<sizeOfEachBin[index]);
-				ciphers[cipherIndex].push_back(p);
-				fullness[cipherIndex] = fullness[cipherIndex]+1;
-				assert(cipherIndex <ciphers.size());
-				cipherIndex++;
+			int localpss = mpl;
+			int newsize = mpl;
+			if((t+1)*mpl<pss)	
+				localpss = mpl;
+			else
+			{
+				localpss = 	pss-t*mpl;
+				newsize = pow(2, (long)ceil(log2(localpss)));
 			}
-		   	for(long i = pss; i<newsize; i++)
-		   	{
-		   		prf_type dummy;
-				memset(dummy.data(), 0, AES_KEY_SIZE);
-				auto dummypair = std::pair<prf_type, prf_type>(dummy, dummy);
-				ciphers[cipherIndex].push_back(dummypair);
-				fullness[cipherIndex] = fullness[cipherIndex]+1;
-			   	cipherIndex++;
+			if(newsize > mpl)
+				newsize = mpl;
+			string temp = pair.first;
+			temp = temp.append("1");
+			temp = temp.append(to_string(t));
+			prf_type K1 = Utilities::encode(temp, key);
+    		unsigned char cntstr[AES_KEY_SIZE];
+			memset(cntstr, 0, AES_KEY_SIZE);
+			*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+			prf_type mapKey1 = Utilities::generatePRF(cntstr, K1.data());
+			unsigned char* hash1 = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
+
+			temp = pair.first;
+			temp = temp.append("2");
+			temp = temp.append(to_string(t));
+			prf_type K2 = Utilities::encode(temp, key);
+			memset(cntstr, 0, AES_KEY_SIZE);
+			*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+			prf_type mapKey2 = Utilities::generatePRF(cntstr, K2.data());
+			unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
+
+			long superBins = ceil((float) numberOfBins[index]/newsize); 
+			long pos1 = (unsigned long) (*((long*) hash1)) % superBins;
+			long pos2 = (unsigned long) (*((long*) hash2)) % superBins; 
+
+			long totalItems1 = countTotal(fullness, pos1*newsize, newsize);
+			long totalItems2 = countTotal(fullness, pos2*newsize, newsize);
+			long cipherIndex ;
+			if(totalItems1>totalItems2)
+				cipherIndex = pos2*newsize;
+			else
+				cipherIndex = pos1*newsize;
+			if(fullness[cipherIndex]<sizeOfEachBin[index])
+			{
+			   	//for (unsigned long i = 0; i < pss; i++) 
+			   	for (unsigned long i = t*mpl; i < t*mpl+localpss; i++) 
+			   	{
+					prf_type K = Utilities::encode(pair.first, key);
+					unsigned char cntstr[AES_KEY_SIZE];
+					memset(cntstr, 0, AES_KEY_SIZE);
+					*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = i;
+					prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
+					prf_type mapValue = Utilities::encode(pair.second[i].data(), key);
+					auto p = std::pair<prf_type, prf_type>(mapKey, mapValue);
+					assert(fullness[cipherIndex]<sizeOfEachBin[index]);
+					ciphers[cipherIndex].push_back(p);
+					fullness[cipherIndex] = fullness[cipherIndex]+1;
+					assert(cipherIndex <ciphers.size());
+					cipherIndex++;
+				}
+			   	for(long i = localpss; i<newsize; i++)
+			   	{
+			   		prf_type dummy;
+					memset(dummy.data(), 0, AES_KEY_SIZE);
+					auto dummypair = std::pair<prf_type, prf_type>(dummy, dummy);
+					ciphers[cipherIndex].push_back(dummypair);
+					fullness[cipherIndex] = fullness[cipherIndex]+1;
+				   	cipherIndex++;
+				}
+			 }
+			 else
+			 {	
+				 cout <<fullness[cipherIndex]<<"/"<<sizeOfEachBin[index]<<" BIN OVERFLOW, index:"<<index<<endl;
+			 
 			}
-		 }
-		 else
-		 {	
-			 cout <<fullness[cipherIndex]<<"/"<<sizeOfEachBin[index]<<" BIN OVERFLOW, index:"<<index<<endl;
-		 
-		}
 		}
 		prf_type K = Utilities::encode(pair.first, key);
 		unsigned char cntstr[AES_KEY_SIZE];
@@ -277,6 +277,121 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 	one->storeCiphers(index,ciphersOne);
 }
 
+vector<prf_type> TwoChoiceClient::searchLoc(long index, string keyword, unsigned char* key) 
+{
+	double searchPreparation = 0, searchDecryption = 0;
+	long flag = 0;
+	if (profile) 
+		Utilities::startTimer(65);
+	vector<prf_type> finalRes;
+	prf_type hashtoken;
+	prf_type token = Utilities::encode(keyword, key);
+	long keywordCnt = server->getCounter(index,token);
+
+	vector<prf_type> ciphers;
+	ciphers.resize(0);
+	vector<prf_type> oneChoiceCiphers;
+	long mpl = maxPossibleLen(index);
+	//cout <<"index:"<<index<<" keywordCounter:"<<keywordCnt<<" mpl:"<<mpl<<" nb:"<<numberOfBins[index]<<endl;
+	if(keywordCnt > mpl)
+	{
+		oneChoiceCiphers = one->search(index,token,(keywordCnt-mpl));
+		if(oneChoiceCiphers.size()>0)
+		{
+			for (auto item : oneChoiceCiphers) 
+			{
+				prf_type plaintext;
+				Utilities::decode(item, plaintext, key);
+				if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+				{
+					finalRes.push_back(plaintext);
+				}
+			}
+		}
+		totalCommunication += oneChoiceCiphers.size()* sizeof(prf_type);
+	}
+	if(keywordCnt>0)
+	{
+		if(finalRes.size()>0)
+			cout <<index<<": retrieved from One choice:"<<finalRes.size()<<endl;
+		int f1 = finalRes.size();
+		long times = ceil((float) keywordCnt/(float) mpl);
+		if(times>LOC)
+			times = LOC;
+		for(long t=0; t<times;t++)
+		{ 
+			int localpss;
+			int newsize = mpl;
+			if((t+1)*mpl<keywordCnt)	
+				localpss = mpl;
+			else
+			{
+				localpss = 	keywordCnt-t*mpl;
+				newsize = pow(2, (long)ceil(log2(localpss)));
+			}
+			if(newsize > mpl)
+				newsize = mpl;
+			long flag = 0;
+			for(long s = 1 ;s<=2; s++)
+			{
+				string temp = keyword;
+				prf_type hashtoken;
+				if(s==1)
+				{
+					temp = temp.append("1");
+					temp = temp.append(to_string(t));
+					hashtoken = Utilities::encode(temp, key);
+		    		//unsigned char cntstr[AES_KEY_SIZE];
+					//memset(cntstr, 0, AES_KEY_SIZE);
+					//*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+					//prf_type mapKey1 = Utilities::generatePRF(cntstr, K1.data());
+					//hash = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
+				}
+				else if(s==2)
+				{
+					temp = temp.append("2");
+					temp = temp.append(to_string(t));
+					hashtoken = Utilities::encode(temp, key);
+		    		//unsigned char cntstr[AES_KEY_SIZE];
+					//memset(cntstr, 0, AES_KEY_SIZE);
+					//*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+					//prf_type mapKey2 = Utilities::generatePRF(cntstr, K2.data());
+					//hash = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
+				}
+				ciphers = server->searchLoc(index, hashtoken, newsize);
+				vector<prf_type> localfinalRes;
+				localfinalRes.resize(0);
+				if(flag < localpss)
+				{
+					flag = 0;
+					for (auto item : ciphers) 
+					{
+				 		prf_type plaintext;
+				 		Utilities::decode(item, plaintext, key);
+				 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+						{
+				 			localfinalRes.push_back(plaintext);
+				 			//finalRes.push_back(plaintext);
+							flag++;
+				 		}
+					}
+				}
+				if(localfinalRes.size()>=localpss)
+				{
+					for(auto a: localfinalRes)
+					{
+						finalRes.push_back(a);
+					}
+				}
+				totalCommunication += ciphers.size()* sizeof(prf_type);
+		//cout <<index<<": localfinalRes:"<<localfinalRes.size()<<" localpss:"<<localpss<<" ns:"<<newsize<<" ";
+		//		cout<<"from 2 choice LOC t:"<< t<<" s:"<<s<<" :"<<finalRes.size()-f1<<" cc:"<<ciphers.size()<<endl;
+				f1 = finalRes.size();
+			}
+		}
+	}
+	return finalRes;
+}
 vector<prf_type> TwoChoiceClient::search(long index, string keyword, unsigned char* key) 
 {
 	double searchPreparation = 0, searchDecryption = 0;
@@ -307,13 +422,14 @@ vector<prf_type> TwoChoiceClient::search(long index, string keyword, unsigned ch
 			hashtoken = Utilities::encode(newkeyword, key);
 		}
 		
-		ciphers = server->search(index, token, hashtoken, keywordCnt, mpl);
+		//ciphers = server->search(index, token, hashtoken, keywordCnt, mpl);
+	auto cipherss = server->getAllData(index);
 		if(flag == 0)
 		{
-			for (auto item : ciphers) 
+			for (auto item : cipherss) 
 			{
 		 		prf_type plaintext;
-		 		Utilities::decode(item, plaintext, key);
+		 		Utilities::decode(item.second, plaintext, key);
 		 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 				{
 		 			finalRes.push_back(plaintext);

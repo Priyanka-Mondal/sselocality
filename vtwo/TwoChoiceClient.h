@@ -39,6 +39,7 @@ public:
     void destry(long index);
     void setup(long index, map<string, vector<prf_type> >pairs, unsigned char* key);
     vector<prf_type> search(long index, string keyword, unsigned char* key);
+    vector<prf_type> searchLoc(long index, string keyword, unsigned char* key);
     vector<prf_type> newsearch(long index, string keyword, unsigned char* key);
     vector<prf_type> getAllData(long index, unsigned char* key);
     void truncateToMpl(long pss, long mpl, long index, string keyword, vector<prf_type> fileids, unsigned char* key);

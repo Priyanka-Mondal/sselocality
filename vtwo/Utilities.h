@@ -306,7 +306,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
                 //for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
 		for(uint k =0; k<sz;k++)
 		{
-                    long fileName = ((rand() % 1000)) + 10000000;
+                    long fileName = ((rand() % 10000000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }

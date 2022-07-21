@@ -10,7 +10,7 @@
 // The main type for passing around raw file data
 #define ID_SIZE 16
 #define SO 4
-#define LOC 2
+#define LOC 3
 
 using byte_t = uint8_t;
 using block = std::vector<byte_t>;

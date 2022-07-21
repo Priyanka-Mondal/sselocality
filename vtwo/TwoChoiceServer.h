@@ -18,10 +18,12 @@ public:
     virtual ~TwoChoiceServer();
     void storeCiphers(long dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters);
     vector<prf_type> search(long dataIndex, prf_type tokkw, prf_type token, long & keywordCnt, long num);
+	vector<prf_type> searchLoc(long dataIndex, prf_type hashtoken, long num) ;
     vector<pair<prf_type, prf_type> > getAllData(long dataIndex);
     vector<prf_type> getStash(long dataIndex);
     //vector<prf_type> newsearch(long dataIndex , prf_type hashtoken, long keywordCnt, long pos);
 	void printStashSizes();
+	long getCounter(long dataIndex, prf_type tokkw);
 
 };
 
