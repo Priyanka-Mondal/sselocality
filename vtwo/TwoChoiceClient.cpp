@@ -116,12 +116,12 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 	}
 
 	long mpl = maxPossibleLen(index);
+
 	vector<pair<string,vector<prf_type>>> sorted = sort(pairs);
 	for (auto pair : sorted) 
 	{
 		long pss = pair.second.size();
-		long newsize = pss;
-		if(pss > mpl)
+		if(pss > LOC*mpl)
 		{
 	   		assert(pair.first != "");
        		prf_type K1 = Utilities::encode(pair.first, key);
@@ -133,7 +133,7 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
         	unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
         	long pos = ((unsigned long) (*((long*) hash))) % nB[index];
         	long cipherIndex = pos;
-       		for (unsigned long i = mpl; i < pair.second.size(); i++) 
+       		for (unsigned long i = LOC*mpl; i < pair.second.size(); i++) 
 	   	 	{
        	        prf_type mapKey, mapValue;
        	        unsigned char cntstr[AES_KEY_SIZE];
@@ -150,14 +150,26 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
        	        }
        	 	}
     	}
-		if(pss>mpl)	
-			pss = mpl;
-		newsize = pow(2, (long)ceil(log2(pss)));
+		//for the firt LOC*mpl elements
+		long times = floor((float) pss/(float) mpl);
+		if(times>LOC)
+			times = LOC;
+	  	for(long t=0; t<times;t++)
+		{ 
+		int localpss;
+		int newsize = mpl;
+		if((t+1)*mpl<pss)	
+			localpss = mpl;
+		else
+		{
+			localpss = 	pss-(t+1)*mpl;
+			newsize = pow(2, (long)ceil(log2(localpss)));
+		}
 		if(newsize > mpl)
 			newsize = mpl;
-	   
 		string temp = pair.first;
 		temp = temp.append("1");
+		temp = temp.append(to_string(t));
 		prf_type K1 = Utilities::encode(temp, key);
     	unsigned char cntstr[AES_KEY_SIZE];
 		memset(cntstr, 0, AES_KEY_SIZE);
@@ -167,6 +179,7 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 
 		temp = pair.first;
 		temp = temp.append("2");
+		temp = temp.append(to_string(t));
 		prf_type K2 = Utilities::encode(temp, key);
 		memset(cntstr, 0, AES_KEY_SIZE);
 		*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
@@ -186,7 +199,8 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 			cipherIndex = pos1*newsize;
 		if(fullness[cipherIndex]<sizeOfEachBin[index])
 		{
-		   	for (unsigned long i = 0; i < pss; i++) 
+		   	//for (unsigned long i = 0; i < pss; i++) 
+		   	for (unsigned long i = t*localpss; i < (t+1)*localpss; i++) 
 		   	{
 				prf_type K = Utilities::encode(pair.first, key);
 				unsigned char cntstr[AES_KEY_SIZE];
@@ -214,8 +228,11 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 		 else
 		 {	
 			 cout <<fullness[cipherIndex]<<"/"<<sizeOfEachBin[index]<<" BIN OVERFLOW, index:"<<index<<endl;
-		 }
+		 
+		}
+		}
 		prf_type K = Utilities::encode(pair.first, key);
+		unsigned char cntstr[AES_KEY_SIZE];
 		memset(cntstr, 0, AES_KEY_SIZE);
 		*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
 		prf_type mapKey = Utilities::generatePRF(cntstr, K.data());

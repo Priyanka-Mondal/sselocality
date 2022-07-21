@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/vone/vone configs/config.txt |tee results/v1.txt 
+dist/Debug/GNU-Linux/vtwo/vtwo configs/config.txt |tee results/v1.txt 

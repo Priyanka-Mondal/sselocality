@@ -10,6 +10,8 @@
 #define B 1
 #define S 2
 #define INF 99999999
+#define SO 4
+#define LOC 1
 
 // The main type for passing around raw file data
 #define ID_SIZE 16
