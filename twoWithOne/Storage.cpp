@@ -1,7 +1,7 @@
 #include "Storage.h"
 #include<string.h>
 
-Storage::Storage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) {
+Storage::Storage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile) {
     this->inMemoryStorage = inMemory;
     this->fileAddressPrefix = fileAddressPrefix;
     this->dataIndex = dataIndex;
@@ -13,18 +13,18 @@ Storage::Storage(bool inMemory, int dataIndex, string fileAddressPrefix, bool pr
 bool Storage::setup(bool overwrite) 
 {
     if (inMemoryStorage) {
-        for (int i = 0; i < dataIndex; i++) {
+        for (long i = 0; i < dataIndex; i++) {
             unordered_map<prf_type, prf_type, PRFHasher> curData;
             data.push_back(curData);
         }
     } else {
         /*if (USE_XXL) {
             diskData = new stxxl::unordered_map<prf_type, prf_type, PRFHasher, CompareLess, SUB_BLOCK_SIZE, SUB_BLOCKS_PER_BLOCK>*[dataIndex];
-            for (int i = 0; i < dataIndex; i++) {
+            for (long i = 0; i < dataIndex; i++) {
                 diskData[i] = new stxxl::unordered_map<prf_type, prf_type, PRFHasher, CompareLess, SUB_BLOCK_SIZE, SUB_BLOCKS_PER_BLOCK>();
             }
         } else {*/
-            for (int i = 0; i < dataIndex; i++) 
+            for (long i = 0; i < dataIndex; i++) 
 	    {
                 string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
                 filenames.push_back(filename);
@@ -35,15 +35,15 @@ bool Storage::setup(bool overwrite)
                     fstream file(filename.c_str(), std::ofstream::out);
                     if (file.fail()) 
                         cerr << "Error: " << strerror(errno);
-                    int maxSize = pow(2, i);
-                    int nextPtr = 0;
-                    for (int j = 0; j < maxSize; j++) 
+                    long maxSize = pow(2, i);
+                    long nextPtr = 0;
+                    for (long j = 0; j < maxSize; j++) 
 		    {
                         file.write((char*) nullKey.data(), AES_KEY_SIZE);
                         file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                        file.write((char*) &nextPtr, sizeof (int));
+                        file.write((char*) &nextPtr, sizeof (long));
                     }
-                    //                file.write((char*) &nextPtr, sizeof (int));
+                    //                file.write((char*) &nextPtr, sizeof (long));
                     file.close();
                 }
             }
@@ -52,7 +52,7 @@ bool Storage::setup(bool overwrite)
     }
 }
 
-void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers) 
+void Storage::insert(long dataIndex, map<prf_type, prf_type> ciphers) 
 {
     if (inMemoryStorage) 
     {
@@ -65,7 +65,7 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers)
                 diskData[dataIndex]->insert(std::make_pair(item.first, item.second));
             }
         } else {*/
-            int maxSize = pow(2, dataIndex);
+            long maxSize = pow(2, dataIndex);
             for (auto item : ciphers) 
 	    {
                 unsigned char newRecord[KEY_VALUE_SIZE];
@@ -74,7 +74,7 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers)
                 std::copy(item.second.begin(), item.second.end(), newRecord + AES_KEY_SIZE);
 
                 unsigned char* hash = Utilities::sha256((char*) item.first.data(), AES_KEY_SIZE);
-                int pos = (unsigned int) (*((int*) hash)) % maxSize;
+                long pos = (unsigned long) (*((long*) hash)) % maxSize;
 
                 fstream file(filenames[dataIndex].c_str(), ios::binary | ios::in | ios::out | ios::ate);
                 if (file.fail()) 
@@ -82,13 +82,13 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers)
 		    cout <<"xx:"<<dataIndex<<endl;
                     cerr << "[Error in insert: " << strerror(errno)<<"]"<<endl;
                 }
-                int tmpNextPos = file.tellp();
+                long tmpNextPos = file.tellp();
                 file.seekg(pos * KEY_VALUE_SIZE, ios::beg);
 
 
                 char chainHead[KEY_VALUE_SIZE];
                 file.read(chainHead, KEY_VALUE_SIZE);
-                int nextPos = 0;
+                long nextPos = 0;
 
                 prf_type tmp;
                 std::copy(chainHead, chainHead + KEY_VALUE_SIZE, tmp.begin());
@@ -99,8 +99,8 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers)
                     file.write(chainHead, KEY_VALUE_SIZE);
                 }
 
-                memcpy(&newRecord[2 * AES_KEY_SIZE], &nextPos, sizeof (int));
-                //                for (int i = 0; i < 36; i++) {
+                memcpy(&newRecord[2 * AES_KEY_SIZE], &nextPos, sizeof (long));
+                //                for (long i = 0; i < 36; i++) {
                 //                    printf("%X ", newRecord[i]);
                 //                }
                 //                printf("\n");
@@ -115,7 +115,7 @@ void Storage::insert(int dataIndex, map<prf_type, prf_type> ciphers)
     }
 }
 
-vector<prf_type> Storage::getAllData(int dataIndex) 
+vector<prf_type> Storage::getAllData(long dataIndex) 
 {
     vector<prf_type> results;
     if (inMemoryStorage) {
@@ -133,12 +133,12 @@ vector<prf_type> Storage::getAllData(int dataIndex)
             if (file.fail()) {
                 cerr << "Error in read: " << strerror(errno);
             }
-            int size = file.tellg();
+            long size = file.tellg();
             file.seekg(0, ios::beg);
             char* keyValue = new char[size];
             file.read(keyValue, size);
 
-            for (int i = 0; i < size / KEY_VALUE_SIZE; i++) {
+            for (long i = 0; i < size / KEY_VALUE_SIZE; i++) {
                 prf_type tmp, restmp;
                 std::copy(keyValue + i*KEY_VALUE_SIZE, keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE, tmp.begin());
                 std::copy(keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE, keyValue + i * KEY_VALUE_SIZE + AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
@@ -155,7 +155,7 @@ vector<prf_type> Storage::getAllData(int dataIndex)
     return results;
 }
 
-void Storage::clear(int index) {
+void Storage::clear(long index) {
     if (inMemoryStorage) {
         data[index].clear();
     } else {
@@ -167,12 +167,12 @@ void Storage::clear(int index) {
             if (file.fail()) {
                 cerr << "Error: " << strerror(errno);
             }
-            int maxSize = pow(2, index);
-            int nextPtr = 0;
-            for (int j = 0; j < maxSize; j++) {
+            long maxSize = pow(2, index);
+            long nextPtr = 0;
+            for (long j = 0; j < maxSize; j++) {
                 file.write((char*) nullKey.data(), AES_KEY_SIZE);
                 file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                file.write((char*) &nextPtr, sizeof (int));
+                file.write((char*) &nextPtr, sizeof (long));
             }
             file.close();
         //}
@@ -182,7 +182,7 @@ void Storage::clear(int index) {
 Storage::~Storage() {
 }
 
-prf_type Storage::find(int index, prf_type mapKey, bool& found) {
+prf_type Storage::find(long index, prf_type mapKey, bool& found) {
     prf_type result;
     if (inMemoryStorage) {
         if (data[index].count(mapKey) == 0) {
@@ -209,8 +209,8 @@ prf_type Storage::find(int index, prf_type mapKey, bool& found) {
                 cerr << "Error in read: " << strerror(errno);
             }
             unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
-            int maxSize = pow(2, index);
-            int readPos = (unsigned int) (*((int*) hash)) % maxSize;
+            long maxSize = pow(2, index);
+            long readPos = (unsigned long) (*((long*) hash)) % maxSize;
             readPos = readPos*KEY_VALUE_SIZE;
 
             do {
@@ -223,7 +223,7 @@ prf_type Storage::find(int index, prf_type mapKey, bool& found) {
                 prf_type tmp, restmp;
                 std::copy(chain, chain + AES_KEY_SIZE, tmp.begin());
                 std::copy(chain + AES_KEY_SIZE, chain + (2 * AES_KEY_SIZE), restmp.begin());
-                memcpy(&readPos, chain + 2 * AES_KEY_SIZE, sizeof (int));
+                memcpy(&readPos, chain + 2 * AES_KEY_SIZE, sizeof (long));
                 if (tmp == mapKey) {
                     file.close();
                     found = true;

@@ -222,19 +222,19 @@ public:
         getline(infile, tmp);
         overwrite = (tmp == "true") ? true : false;
         getline(infile, tmp);
-        int totalTests = stoi(tmp);
-        for (int i = 0; i < totalTests; i++) 
+        long totalTests = stoi(tmp);
+        for (long i = 0; i < totalTests; i++) 
 	{
             TC<T> testCase;
             getline(infile, tmp);
-			int N = stoi(tmp);
-			testCase.N = pow(2, (int)floor((float)log2(N)));
+			long N = stoi(tmp);
+			testCase.N = pow(2, (long)floor((float)log2(N)));
 			std::cout <<"test:"<<testCase.N<<endl;
             getline(infile, tmp);
             testCase.K = stoi(tmp);
             getline(infile, tmp);
-            int qNum = stoi(tmp); //#of queries
-            for (int i = 0; i < qNum; i++) 
+            long qNum = stoi(tmp); //#of queries
+            for (long i = 0; i < qNum; i++) 
 	    {
                 getline(infile, tmp);
                 testCase.Qs.push_back(stoi(tmp));
@@ -287,7 +287,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
             for (uint j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 std::vector<T> files;
-	        //testCases[i].Qs[j] = pow(2, (int)ceil(log2(testCases[i].Qs[j])));	
+	        //testCases[i].Qs[j] = pow(2, (long)ceil(log2(testCases[i].Qs[j])));	
                 for (uint k = 0; k < testCases[i].Qs[j]; k++)   //add file ids based on number in config file
 		{
                     files.push_back(k);
@@ -301,12 +301,12 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
             for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
 	    {
                 std::vector<T> files;
-		int sz=rand()%((int)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
-		//sz = pow(2, (int)ceil(log2(sz)));
+		long sz=rand()%((long)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
+		//sz = pow(2, (long)ceil(log2(sz)));
                 //for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
 		for(uint k =0; k<sz;k++)
 		{
-                    int fileName = ((rand() % 1000)) + 10000000;
+                    long fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }
@@ -366,7 +366,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
                 std::vector<T> files;
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
 		{
-                    int fileName = ((rand() % 1000)) + 10000000;
+                    long fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }
@@ -378,7 +378,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
     };
 
     template <typename T>
-    static void generateTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned int seed, std::vector<std::string> testKeywords) {
+    static void generateTestCases(std::vector<TC<T> >& testCases, uint keywordLength, unsigned long seed, std::vector<std::string> testKeywords) {
         char alphanum[] =
                 "0123456789"
                 "!@#$%^&*"
@@ -427,7 +427,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
                 std::vector<T> files;
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) 
 		{
-                    int fileName = ((rand() % 1000)) + 10000000;
+                    long fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }

@@ -1,7 +1,7 @@
 #include "TwoChoiceServer.h"
 #include <string.h>
 
-TwoChoiceServer::TwoChoiceServer(int dataIndex, bool inMemory, bool overwrite, bool profile) 
+TwoChoiceServer::TwoChoiceServer(long dataIndex, bool inMemory, bool overwrite, bool profile) 
 {
     this->profile = profile;
     storage = new TwoChoiceStorage(inMemory, dataIndex, "/tmp/", profile);
@@ -13,14 +13,14 @@ TwoChoiceServer::TwoChoiceServer(int dataIndex, bool inMemory, bool overwrite, b
 TwoChoiceServer::~TwoChoiceServer() {}
 
 
-void TwoChoiceServer::storeCiphers(int dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters) 
+void TwoChoiceServer::storeCiphers(long dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters) 
 {
     storage->insertAll(dataIndex, ciphers);
     keyworkCounters->insert(dataIndex, keywordCounters);
 }
 
 
-vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type hashtoken, int& keywordCnt, int num) 
+vector<prf_type> TwoChoiceServer::search(long dataIndex, prf_type tokkw, prf_type hashtoken, long& keywordCnt, long num) 
 {
     keyworkCounters->seekgCount = 0;
     storage->readBytes = 0;
@@ -31,7 +31,7 @@ vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type
     prf_type curToken = tokkw;
     unsigned char cntstr[AES_KEY_SIZE];
     memset(cntstr, 0, AES_KEY_SIZE);
-    *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+    *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
     prf_type keywordMapKey = Utilities::generatePRF(cntstr, curToken.data());
     bool found = false;
     prf_type res = keyworkCounters->find(dataIndex, keywordMapKey, found);
@@ -47,12 +47,12 @@ vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type
     {
         prf_type plaintext;
         Utilities::decode(res, plaintext, curToken.data());
-        keywordCnt = *(int*) (&(plaintext[0]));
+        keywordCnt = *(long*) (&(plaintext[0]));
 		if(keywordCnt>num)
 			return result;
         curToken = hashtoken;
         memset(cntstr, 0, AES_KEY_SIZE);
-        *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+        *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
         keywordMapKey = Utilities::generatePRF(cntstr, curToken.data());
         result = storage->find(dataIndex, keywordMapKey, keywordCnt);
         if (profile) 
@@ -65,17 +65,17 @@ vector<prf_type> TwoChoiceServer::search(int dataIndex, prf_type tokkw, prf_type
 }
 
 
-vector<pair<prf_type, prf_type> > TwoChoiceServer::getAllData(int dataIndex) 
+vector<pair<prf_type, prf_type> > TwoChoiceServer::getAllData(long dataIndex) 
 {
     return storage->getAllData(dataIndex);
 }
 
-vector<prf_type> TwoChoiceServer::getStash(int dataIndex) 
+vector<prf_type> TwoChoiceServer::getStash(long dataIndex) 
 {
     return storage->getStash(dataIndex);
 }
 
-void TwoChoiceServer::clear(int index) 
+void TwoChoiceServer::clear(long index) 
 {
     storage->clear(index);
     keyworkCounters->clear(index);

@@ -6,12 +6,12 @@
 
 using namespace std;
 
-Amortized::Amortized(int N, bool inMemory, bool overwrite) 
+Amortized::Amortized(long N, bool inMemory, bool overwrite) 
 {
     L = new TwoChoiceClient(ceil(log2(N)), inMemory, overwrite, profile);
-    for (int i = 0; i < ceil(log2(N)); i++) 
+    for (long i = 0; i < ceil(log2(N)); i++) 
         keys.push_back(NULL);
-    for (int i = 0; i < localSize; i++) 
+    for (long i = 0; i < localSize; i++) 
         data.push_back(unordered_map<string, vector<prf_type> >());
     if (!overwrite) 
     {
@@ -21,7 +21,7 @@ Amortized::Amortized(int N, bool inMemory, bool overwrite)
             file.close();
             return;
         }
-        for (unsigned int i = localSize; i < L->exist.size(); i++) 
+        for (unsigned long i = localSize; i < L->exist.size(); i++) 
 		{
             string data;
             getline(file, data);
@@ -48,7 +48,7 @@ Amortized::~Amortized()
     {
         cerr << "Error: " << strerror(errno);
     }
-    for (unsigned int i = localSize; i < L->exist.size(); i++) 
+    for (unsigned long i = localSize; i < L->exist.size(); i++) 
     {
         if (L->exist[i]) 
             file << "true" << endl;
@@ -58,15 +58,15 @@ Amortized::~Amortized()
     file.close();
 }
 
-void Amortized::update(OP op, string keyword, int ind, bool setup) 
+void Amortized::update(OP op, string keyword, long ind, bool setup) 
 {
     totalUpdateCommSize = 0;
     L->totalCommunication = 0;
-    int rm0 = log2((~updateCounter & (updateCounter + 1)));
+    long rm0 = log2((~updateCounter & (updateCounter + 1)));
     updateCounter++;
     map<string, vector<prf_type> > previousData;
 
-    for (int i = 0; i < min(rm0, localSize); i++) 
+    for (long i = 0; i < min(rm0, localSize); i++) 
     {
         for (auto item : data[i]) 
 	{
@@ -79,7 +79,7 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
         data[i].clear();
     }
     
-    for (int i = localSize; i < rm0; i++) 
+    for (long i = localSize; i < rm0; i++) 
     {
         vector<prf_type> curData = L->getAllData(i, keys[i]);
         for (auto item : curData) 
@@ -101,7 +101,7 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
     prf_type value;
     std::fill(value.begin(), value.end(), 0);
     std::copy(keyword.begin(), keyword.end(), value.begin());
-    *(int*) (&(value.data()[AES_KEY_SIZE - 5])) = ind;
+    *(long*) (&(value.data()[AES_KEY_SIZE - 5])) = ind;
     value.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);
 
     if (previousData.count(keyword) == 0) 
@@ -123,7 +123,7 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
     }
 }
 
-vector<int> Amortized::search(string keyword) 
+vector<long> Amortized::search(string keyword) 
 {
     totalSearchCommSize = 0;
     if (profile) 
@@ -131,17 +131,17 @@ vector<int> Amortized::search(string keyword)
         Utilities::startTimer(33);
     }
     L->totalCommunication = 0;
-    vector<int> finalRes;
+    vector<long> finalRes;
     vector<prf_type> encIndexes;
-    int s = data.size();
-    for (int i = 0; i < min(localSize, s); i++) 
+    long s = data.size();
+    for (long i = 0; i < min(localSize, s); i++) 
     {
         if (data[i][keyword].size() > 0) 
 	{
             encIndexes.insert(encIndexes.end(), data[i][keyword].begin(), data[i][keyword].end());
         }
     }
-    for (unsigned int i = localSize; i < L->exist.size(); i++) 
+    for (unsigned long i = localSize; i < L->exist.size(); i++) 
     {
         if (L->exist[i]) 
 	{
@@ -161,11 +161,11 @@ vector<int> Amortized::search(string keyword)
         printf("Amortized Search time:%f\n", searchTime);
         Utilities::startTimer(99);
     }
-    map<int, int> remove;
+    map<long, long> remove;
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
     {
         prf_type decodedString = *i;
-        int plaintext = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
+        long plaintext = *(long*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
         remove[plaintext] += (2 * ((byte) decodedString.data()[AES_KEY_SIZE - 6]) - 1);
     }
     for (auto const& cur : remove) 
@@ -184,7 +184,7 @@ vector<int> Amortized::search(string keyword)
     return finalRes;
 }
 
-prf_type Amortized::bitwiseXOR(int input1, int op, prf_type input2) 
+prf_type Amortized::bitwiseXOR(long input1, long op, prf_type input2) 
 {
     prf_type result;
     result[3] = input2[3] ^ ((input1 >> 24) & 0xFF);
@@ -192,7 +192,7 @@ prf_type Amortized::bitwiseXOR(int input1, int op, prf_type input2)
     result[1] = input2[1] ^ ((input1 >> 8) & 0xFF);
     result[0] = input2[0] ^ (input1 & 0xFF);
     result[4] = input2[4] ^ (op & 0xFF);
-    for (int i = 5; i < AES_KEY_SIZE; i++) 
+    for (long i = 5; i < AES_KEY_SIZE; i++) 
     {
         result[i] = (rand() % 255) ^ input2[i];
     }
@@ -202,7 +202,7 @@ prf_type Amortized::bitwiseXOR(int input1, int op, prf_type input2)
 prf_type Amortized::bitwiseXOR(prf_type input1, prf_type input2) 
 {
     prf_type result;
-    for (unsigned int i = 0; i < input2.size(); i++) 
+    for (unsigned long i = 0; i < input2.size(); i++) 
     {
         result[i] = input1.at(i) ^ input2[i];
     }

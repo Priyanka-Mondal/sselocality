@@ -26,25 +26,25 @@ private:
 
 public:
     virtual ~TwoChoiceClient();
-    TwoChoiceClient(int maxUpdate, bool inMemory, bool overwrite, bool profile);
+    TwoChoiceClient(long maxUpdate, bool inMemory, bool overwrite, bool profile);
 	prf_type nullKey;
-    int totalCommunication = 0;
-    vector<int> numberOfBins;
-    vector<int> sizeOfEachBin;
-    map<int,int> position;
+    long totalCommunication = 0;
+    vector<long> numberOfBins;
+    vector<long> sizeOfEachBin;
+    map<long,long> position;
     vector<bool> exist;
     vector<bool> stashExist;
-	vector<int> nB;
-	vector<int> sEB;
-    void destry(int index);
-    void setup(int index, map<string, vector<prf_type> >pairs, unsigned char* key);
-    vector<prf_type> search(int index, string keyword, unsigned char* key);
-    vector<prf_type> newsearch(int index, string keyword, unsigned char* key);
-    vector<prf_type> getAllData(int index, unsigned char* key);
-    void truncateToMpl(int pss, int mpl, int index, string keyword, vector<prf_type> fileids, unsigned char* key);
-void writeToStash(int pss, int mpl, vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers);
+	vector<long> nB;
+	vector<long> sEB;
+    void destry(long index);
+    void setup(long index, map<string, vector<prf_type> >pairs, unsigned char* key);
+    vector<prf_type> search(long index, string keyword, unsigned char* key);
+    vector<prf_type> newsearch(long index, string keyword, unsigned char* key);
+    vector<prf_type> getAllData(long index, unsigned char* key);
+    void truncateToMpl(long pss, long mpl, long index, string keyword, vector<prf_type> fileids, unsigned char* key);
+void writeToStash(long pss, long mpl, vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers);
 	void printStashSizes();
-	int maxPossibleLen(int index);
+	long maxPossibleLen(long index);
 };
 
 #endif /* TWOCHOICECLIENT_H */
