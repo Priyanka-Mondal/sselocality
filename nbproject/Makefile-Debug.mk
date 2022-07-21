@@ -31,6 +31,7 @@ SDDO=sddomap
 DYN=dynStashplus
 TWOONE=twoWithOne
 V1=vone
+V2=vtwo
 
 # Include project Makefile
 include Makefile
@@ -43,6 +44,7 @@ SDDOOBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/${SDDO}
 DYNOBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/${DYN}
 TWOONEOBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/${TWOONE}
 V1OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/${V1}
+V2OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/${V2}
 
 
 # Object Files
@@ -74,6 +76,21 @@ V1OBJECTFILES= \
 	${OBJECTDIR}/${V1}/utils.o \
 	${OBJECTDIR}/v1main.o 
 
+
+V2OBJECTFILES= \
+	${OBJECTDIR}/${V2}/AES.o \
+	${OBJECTDIR}/${V2}/Amortized.o \
+	${OBJECTDIR}/${V2}/OneChoiceServer.o \
+	${OBJECTDIR}/${V2}/OneChoiceStorage.o \
+	${OBJECTDIR}/${V2}/TwoChoiceClient.o \
+	${OBJECTDIR}/${V2}/TwoChoiceServer.o \
+	${OBJECTDIR}/${V2}/TwoChoiceStorage.o \
+	${OBJECTDIR}/${V2}/Server.o \
+	${OBJECTDIR}/${V2}/Storage.o \
+	${OBJECTDIR}/${V2}/Utilities.o \
+	${OBJECTDIR}/${V2}/logger.o \
+	${OBJECTDIR}/${V2}/utils.o \
+	${OBJECTDIR}/v2main.o 
 
 #twoOne
 TWOONEOBJECTFILES= \
@@ -176,12 +193,19 @@ LDLIBSOPTIONS=-lcrypto -lssl #-lstxxl_debug
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${V2}/vtwo
+
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/twochoice-sda
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${PLUS_TWO}/plustwo-sda
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${SDDO}/onechoice-sdd
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${DYN}/dynstash
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWOONE}/twoone
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${V1}/vone
+	
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${V2}/vtwo: ${V2OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${V2}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${V2}/vtwo ${V2OBJECTFILES} ${LDLIBSOPTIONS} -lpthread
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}/twochoice-sda: ${TWOOBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWO_CHOICE}
@@ -206,6 +230,80 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWOONE}/twoone: ${TWOONEOBJECTFILES
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${V1}/vone: ${V1OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${V1}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${V1}/vone ${V1OBJECTFILES} ${LDLIBSOPTIONS} -lpthread
+
+
+
+#v2##################################################
+
+${OBJECTDIR}/${V2}/AES.o: ${V2}/AES.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/AES.o ${V2}/AES.cpp
+
+${OBJECTDIR}/${V2}/Amortized.o: ${V2}/Amortized.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/Amortized.o ${V2}/Amortized.cpp
+
+${V2OBJECTDIR}/OneChoiceServer.o: ${V2}/OneChoiceServer.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/OneChoiceServer.o ${V2}/OneChoiceServer.cpp
+
+${V2OBJECTDIR}/OneChoiceStorage.o: ${V2}/OneChoiceStorage.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/OneChoiceStorage.o ${V2}/OneChoiceStorage.cpp
+
+${OBJECTDIR}/${V2}/TwoChoiceClient.o: ${V2}/TwoChoiceClient.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceClient.o ${V2}/TwoChoiceClient.cpp
+
+${OBJECTDIR}/${V2}/TwoChoiceServer.o: ${V2}/TwoChoiceServer.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceServer.o ${V2}/TwoChoiceServer.cpp
+
+${OBJECTDIR}/${V2}/TwoChoiceStorage.o: ${V2}/TwoChoiceStorage.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceStorage.o ${V2}/TwoChoiceStorage.cpp
+
+${OBJECTDIR}/${V2}/Server.o: ${V2}/Server.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/Server.o ${V2}/Server.cpp
+
+${OBJECTDIR}/${V2}/Storage.o: ${V2}/Storage.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/Storage.o ${V2}/Storage.cpp
+
+${OBJECTDIR}/${V2}/Utilities.o: ${V2}/Utilities.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/Utilities.o ${V2}/Utilities.cpp
+
+${OBJECTDIR}/${V2}/logger.o: ${V2}/logger.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/logger.o ${V2}/logger.cpp
+
+${OBJECTDIR}/${V2}/utils.o: ${V2}/utils.cpp
+	${MKDIR} -p ${OBJECTDIR}/${V2}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/utils.o ${V2}/utils.cpp
+
+${OBJECTDIR}/v2main.o: v2main.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/v2main.o v2main.cpp
+
+
+
+
+
 
 #v1##################################################
 
