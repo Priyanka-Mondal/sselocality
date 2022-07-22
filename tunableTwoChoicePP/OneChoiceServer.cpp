@@ -10,9 +10,14 @@ OneChoiceServer::OneChoiceServer(long dataIndex, bool inMemory, bool overwrite, 
 OneChoiceServer::~OneChoiceServer() {
 }
 
-void OneChoiceServer::storeCiphers(long dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers) 
+void OneChoiceServer::storeCiphers(long dataIndex, vector<vector<prf_type > > ciphers) 
 {
     storage->insertAll(dataIndex, ciphers);
+}
+
+void OneChoiceServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun) 
+{
+    storage->insertAll(dataIndex, ciphers, true, firstRun);
 }
 
 vector<prf_type> OneChoiceServer::search(long dataIndex, prf_type token, long keywordCnt) 
@@ -42,7 +47,7 @@ vector<prf_type> OneChoiceServer::search(long dataIndex, prf_type token, long ke
     return result;
 }
 
-vector<pair<prf_type, prf_type> > OneChoiceServer::getAllData(long dataIndex) 
+vector<prf_type> OneChoiceServer::getAllData(long dataIndex) 
 {
     return storage->getAllData(dataIndex);
 }

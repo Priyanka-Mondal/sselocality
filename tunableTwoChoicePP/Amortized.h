@@ -9,8 +9,7 @@
 #include <iostream>
 #include <sstream>
 #include "Utilities.h"
-#include "AmortizedBASClient.h"
-#include "TwoChoiceClient.h"
+#include "TwoChoicePPClientTL.h"
 #include "AES.hpp"
 #include <set>
 #include <unordered_map>
@@ -28,7 +27,7 @@ private:
     vector<unsigned char*> keys;
     //        AmortizedBASClient* L;
     //OneChoiceClient* L;
-    TwoChoiceClient* L;
+    TwoChoicePPClientTL* L;
     long updateCounter = 0;
     double totalUpdateCommSize;
     double totalSearchCommSize;
@@ -39,6 +38,7 @@ private:
 public:
     Amortized(long N, bool inMemory, bool overwrite);
     void update(OP op, string keyword, long ind, bool setup);
+    void update2(OP op, string keyword, long ind, bool setup);
     vector<long> search(string keyword);
     virtual ~Amortized();
     double getTotalSearchCommSize() const;

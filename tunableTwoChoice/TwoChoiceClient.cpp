@@ -218,9 +218,8 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 			 }
 			 else
 			 {	
-				 cout <<fullness[cipherIndex]<<"/"<<sizeOfEachBin[index]<<" BIN OVERFLOW, index:"<<index<<endl;
-			 
-			}
+				 cout<<fullness[cipherIndex]<<"/"<<sizeOfEachBin[index]<<" BIN OVERFLOW,index:"<<index<<endl;
+			 }
 		}
 		prf_type K = Utilities::encode(pair.first, key);
 		unsigned char cntstr[AES_KEY_SIZE];
@@ -268,7 +267,7 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 	one->storeCiphers(index,ciphersOne);
 }
 
-vector<prf_type> TwoChoiceClient::searchLoc(long index, string keyword, unsigned char* key) 
+vector<prf_type> TwoChoiceClient::search(long index, string keyword, unsigned char* key) 
 {
 	double searchPreparation = 0, searchDecryption = 0;
 	long flag = 0;

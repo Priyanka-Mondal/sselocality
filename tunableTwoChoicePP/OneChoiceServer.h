@@ -16,9 +16,10 @@ public:
     OneChoiceServer(long dataIndex, bool inMemory, bool overwrite, bool profile);
     void clear(long index);
     virtual ~OneChoiceServer();
-    void storeCiphers(long dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers);
+    void storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers);
+	void storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun);
     vector<prf_type> search(long dataIndex, prf_type token, long  keywordCnt);
-    vector<pair<prf_type, prf_type> > getAllData(long dataIndex);
+    vector<prf_type> getAllData(long dataIndex);
 
 };
 

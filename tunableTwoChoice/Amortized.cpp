@@ -151,7 +151,7 @@ vector<long> Amortized::search(string keyword)
 	    {
                 printf("level %d:\n", i);
             }
-            auto tmpRes = L->searchLoc(i, keyword, keys[i]);
+            auto tmpRes = L->search(i, keyword, keys[i]);
             encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
         }
     }

@@ -6,7 +6,7 @@
 #include <iostream>
 
 #define USE_XXL 0
-
+#define LOC 1
 // The main type for passing around raw file data
 #define ID_SIZE 16
 
@@ -14,8 +14,11 @@ using byte_t = uint8_t;
 using block = std::vector<byte_t>;
 
 #define AES_KEY_SIZE 16
+#define TMP_AES_KEY_SIZE 16
+#define DROP_CACHE 0
 
 typedef std::array<uint8_t, AES_KEY_SIZE> prf_type;
+typedef std::array<uint8_t, TMP_AES_KEY_SIZE> tmp_prf_type;
 
 typedef unsigned char byte;
 

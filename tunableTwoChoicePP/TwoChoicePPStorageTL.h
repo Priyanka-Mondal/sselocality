@@ -20,12 +20,12 @@
 
 using namespace std;
 
-class TwoChoiceStorage {
+class TwoChoicePPStorageTL {
 private:
     bool inMemoryStorage;
     bool profile = false;
     vector<string> filenames;
-    vector<string> stashes;
+    //vector<string> stashes;
     vector<vector<string>> stashfilenames;
 	vector<vector<long>> cuckooStashLen;
     vector<vector<vector<string>>> cuckoofilenames;
@@ -41,19 +41,21 @@ private:
 public:
     long readBytes = 0;
     long SeekG = 0;
-    TwoChoiceStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
+	double cacheTime;
+    TwoChoicePPStorageTL(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
-    void insertAll(long dataIndex, vector<vector< pair<prf_type, prf_type> > > ciphers);
-    void insertStash(long dataIndex, vector<prf_type> ciphers);
+    void insertAll(long dataIndex, vector<vector< prf_type> > ciphers);
+    //void insertStash(long dataIndex, vector<prf_type> ciphers);
     pair<prf_type, vector<prf_type>> insertCuckooHT(long index, long tableNum, long cuckooID, long hash, prf_type keyw, vector<prf_type> fileids);
-    vector<pair<prf_type, prf_type> > getAllData(long dataIndex);
-    vector<prf_type> getStash(long index); 
+    vector<prf_type> getAllData(long dataIndex);
+    //vector<prf_type> getStash(long index); 
     void insertCuckooStash(long index, long tableNum, vector<prf_type> ctCiphers);
     vector<prf_type> getCuckooHT(long index); 
     vector <prf_type> cuckooSearch(long index, long tableNum, long h[2]);
     void clear(long index);
     vector<prf_type> find(long index, prf_type mapKey, long cnt);
-    virtual ~TwoChoiceStorage();
+    virtual ~TwoChoicePPStorageTL();
+	void insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun);
 };
 
 #endif /* TWOCHOICESTORAGE_H */

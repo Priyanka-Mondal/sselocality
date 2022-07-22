@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/vtwo/vtwo configs/bconfig.txt |tee results/sdd1.txt 
+dist/Debug/GNU-Linux/tunableTwoChoicePP/vptwo configs/mconfig.txt |tee results/sdd1.txt 

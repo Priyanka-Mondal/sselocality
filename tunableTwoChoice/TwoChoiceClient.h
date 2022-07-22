@@ -14,12 +14,11 @@
 #include "Server.h"
 #include "Utilities.h"
 #include "AES.hpp"
-#include "TwoChoiceServer.h"
 #include "OneChoiceServer.h"
+#include "TwoChoiceServer.h"
 #include <unordered_map>
 
-class TwoChoiceClient 
-{
+class TwoChoiceClient {
 private:
     TwoChoiceServer* server;
 	OneChoiceServer* one;
@@ -28,24 +27,21 @@ private:
 public:
     virtual ~TwoChoiceClient();
     TwoChoiceClient(long maxUpdate, bool inMemory, bool overwrite, bool profile);
+	prf_type nullKey;
     long totalCommunication = 0;
     vector<long> numberOfBins;
-	vector<long> nB;
-    prf_type nullKey;
     vector<long> sizeOfEachBin;
-    vector<long> sEB;
+    map<long,long> position;
     vector<bool> exist;
-    vector<bool> existone;
+    vector<bool> stashExist;
+	vector<long> nB;
+	vector<long> sEB;
     void destry(long index);
-    void setup(long index, map<string, vector<prf_type> >pairs, unsigned char* key);
+    void setup(long index, map<string, vector<prf_type>>pairs, unsigned char* key);
     vector<prf_type> search(long index, string keyword, unsigned char* key);
-    vector<prf_type> newsearch(long index, string keyword, unsigned char* key);
     vector<prf_type> getAllData(long index, unsigned char* key);
-    void writeToCuckooHT(long index, long mpl, string keyword, vector<prf_type> fileids, unsigned char* key);
-    void writeToCuckooStash(vector<prf_type> fileids, long cnt, long index, long tableNum, unsigned char* key);
-void place(string keyw,vector<prf_type> fileids,long cuckooID, long cnt, long index,long tableNum,unsigned char* key);
-void writeToStash(long pss,long mpl,vector<prf_type> fileids,unsigned char* key,vector<prf_type> &stashCiphers);
-long maxPossibleLen(long index);
+	void printStashSizes();
+	long maxPossibleLen(long index);
 };
 
 #endif /* TWOCHOICECLIENT_H */
