@@ -10,7 +10,7 @@ OneChoiceServer::OneChoiceServer(long dataIndex, bool inMemory, bool overwrite, 
 OneChoiceServer::~OneChoiceServer() {
 }
 
-void OneChoiceServer::storeCiphers(long dataIndex, vector<vector<prf_type>> ciphers) 
+void OneChoiceServer::storeCiphers(long dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers) 
 {
     storage->insertAll(dataIndex, ciphers);
 }
@@ -33,15 +33,16 @@ vector<prf_type> OneChoiceServer::search(long dataIndex, prf_type token, long ke
     }
 
     vector<prf_type> result;
-    result = storage->find(dataIndex, keywordMapKey, keywordCnt);
-    if (profile) {
-           serverSearchTime = Utilities::stopTimer(45);
+	
+        result = storage->find(dataIndex, keywordMapKey, keywordCnt);
+        if (profile) {
+            serverSearchTime = Utilities::stopTimer(45);
             printf("server Search Time:%f number of SeekG:%d number of read bytes:%d\n", serverSearchTime, storage->SeekG, storage->readBytes);
         }
     return result;
 }
 
-vector<prf_type> OneChoiceServer::getAllData(long dataIndex) 
+vector<pair<prf_type, prf_type> > OneChoiceServer::getAllData(long dataIndex) 
 {
     return storage->getAllData(dataIndex);
 }

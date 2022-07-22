@@ -20,8 +20,7 @@
 
 using namespace std;
 
-class OneChoiceStorage 
-{
+class OneChoiceStorage {
 private:
     bool inMemoryStorage;
     bool profile = false;
@@ -31,18 +30,22 @@ private:
     long dataIndex;
     vector<long> numberOfBins;
     vector<long> sizeOfEachBin;
-    vector< vector<prf_type> > data;
+    long KEY_VALUE_SIZE = (2 * AES_KEY_SIZE);
+    vector< vector<pair<prf_type, prf_type> > > data;
+    //stxxl::VECTOR_GENERATOR< pair<prf_type, prf_type>, 4, 8, 1 * 1024 * 1024, stxxl::RC, stxxl::lru >::result** diskData;
 
 public:
     long readBytes = 0;
     long SeekG = 0;
     OneChoiceStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
-    void insertAll(long dataIndex, vector<vector< prf_type> > ciphers);
-    vector<prf_type> getAllData(long dataIndex);
+    void insertAll(long dataIndex, vector<vector< pair<prf_type, prf_type> > > ciphers);
+    vector<pair<prf_type, prf_type> > getAllData(long dataIndex);
     void clear(long index);
     vector<prf_type> find(long index, prf_type mapKey, long cnt);
     virtual ~OneChoiceStorage();
+
+
 };
 
 #endif /* ONECHOICESTORAGE_H */

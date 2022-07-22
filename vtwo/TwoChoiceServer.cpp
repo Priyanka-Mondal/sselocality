@@ -13,7 +13,7 @@ TwoChoiceServer::TwoChoiceServer(long dataIndex, bool inMemory, bool overwrite, 
 TwoChoiceServer::~TwoChoiceServer() {}
 
 
-void TwoChoiceServer::storeCiphers(long dataIndex, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters) 
+void TwoChoiceServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, map<prf_type, prf_type> keywordCounters) 
 {
     storage->insertAll(dataIndex, ciphers);
     keyworkCounters->insert(dataIndex, keywordCounters);
@@ -96,14 +96,14 @@ long TwoChoiceServer::getCounter(long dataIndex, prf_type tokkw)
 	return keywordCnt;
 }
 
-vector<pair<prf_type, prf_type> > TwoChoiceServer::getAllData(long dataIndex) 
+vector<prf_type> TwoChoiceServer::getAllData(long dataIndex) 
 {
     return storage->getAllData(dataIndex);
 }
 
 vector<prf_type> TwoChoiceServer::getStash(long dataIndex) 
 {
-    return storage->getStash(dataIndex);
+//    return storage->getStash(dataIndex);
 }
 
 void TwoChoiceServer::clear(long index) 
