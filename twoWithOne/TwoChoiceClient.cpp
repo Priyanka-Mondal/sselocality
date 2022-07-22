@@ -15,7 +15,7 @@ TwoChoiceClient::TwoChoiceClient(long numOfDataSets, bool inMemory, bool overwri
 	server = new TwoChoiceServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
 	memset(nullKey.data(), 0, AES_KEY_SIZE);
-    for (long i = 0; i < numOfDataSets; i++) 
+    for (long i = 0; i <= numOfDataSets; i++) 
     {
         exist.push_back(false);
         long curNumberOfBins = i > 3 ? ((long) ceil((float) pow(2, i) / ((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
@@ -23,15 +23,16 @@ TwoChoiceClient::TwoChoiceClient(long numOfDataSets, bool inMemory, bool overwri
      	long curSizeOfEachBin = i > 3 ? ceil(2*(log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))) : 2;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
-    //    printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
     }
-   	for (long j = 0; j <numOfDataSets; j++) 
+	nB.resize(0);
+   	for (long j = 0; j <= numOfDataSets; j++) 
 	{
         long curNumberOfBins = j > 1 ? 
 			(long) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
         long curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
         nB.push_back(curNumberOfBins);
         sEB.push_back(curSizeOfEachBin);
+//        printf("Level:%d number of Bins:%d size of bin:%d\n", j, curNumberOfBins, curSizeOfEachBin);
     }
 	sleep(1);
 }
@@ -174,7 +175,6 @@ void TwoChoiceClient::setup(long index, map<string, vector<prf_type> > pairs, un
 			*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
 			prf_type mapKey2 = Utilities::generatePRF(cntstr, K2.data());
 			unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
-
 			long superBins = ceil((float) numberOfBins[index]/newsize); 
 			long pos1 = (unsigned long) (*((long*) hash1)) % superBins;
 			long pos2 = (unsigned long) (*((long*) hash2)) % superBins; 
@@ -275,44 +275,47 @@ vector<prf_type> TwoChoiceClient::search(long index, string keyword, unsigned ch
 	if (profile) 
 		Utilities::startTimer(65);
 	vector<prf_type> finalRes;
-	long keywordCnt = 0;
 	prf_type hashtoken;
 	prf_type token = Utilities::encode(keyword, key);
 	vector<prf_type> ciphers;
 	ciphers.resize(0);
-	vector<prf_type> cuckooCiphers;
 	vector<prf_type> oneChoiceCiphers;
-	for(long s = 1 ;s<=2; s++)
+	long keywordCnt = server->getCounter(index,token);
+	int mpl = maxPossibleLen(index);
+	if(keywordCnt <= mpl)
 	{
-		string newkeyword = keyword;
-		if(s==1) 
+		for(long s = 1 ;s<=2; s++)
 		{
-	    	newkeyword = newkeyword.append("1");
-			hashtoken = Utilities::encode(newkeyword, key);
-		}
-		else if(s==2)
-		{
-			newkeyword = keyword;
-			newkeyword = newkeyword.append("2");
-			hashtoken = Utilities::encode(newkeyword, key);
-		}
-		ciphers = server->search(index, token, hashtoken, keywordCnt, numberOfBins[index]);
-		if(flag == 0)
-		{
-			for (auto item : ciphers) 
+			string newkeyword = keyword;
+			if(s==1) 
 			{
-		 		prf_type plaintext;
-		 		Utilities::decode(item, plaintext, key);
-		 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-				{
-		 			finalRes.push_back(plaintext);
-					flag++;
-		 		}
+		    	newkeyword = newkeyword.append("1");
+				hashtoken = Utilities::encode(newkeyword, key);
 			}
+			else if(s==2)
+			{
+				newkeyword = keyword;
+				newkeyword = newkeyword.append("2");
+				hashtoken = Utilities::encode(newkeyword, key);
+			}
+			ciphers = server->search(index, hashtoken, keywordCnt, mpl);
+			if(flag == 0)
+			{
+				for (auto item : ciphers) 
+				{
+			 		prf_type plaintext;
+			 		Utilities::decode(item, plaintext, key);
+			 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+					{
+			 			finalRes.push_back(plaintext);
+						flag++;
+			 		}
+				}
+			}
+			totalCommunication += ciphers.size()* sizeof(prf_type);
 		}
-		totalCommunication += ciphers.size()* sizeof(prf_type);
 	}
-	if(keywordCnt > maxPossibleLen(index))
+	else if (keywordCnt > mpl)
 	{
 		oneChoiceCiphers = one->search(index,token,keywordCnt);
 		cout <<"Searching ["<<keyword<<"] in One choice bins of index:"<<index<<endl;
@@ -328,33 +331,7 @@ vector<prf_type> TwoChoiceClient::search(long index, string keyword, unsigned ch
 				}
 			}
 		}
-		totalCommunication += cuckooCiphers.size()* sizeof(prf_type);
-	}
-
-	long tableNum = (long)ceil(log2(keywordCnt));
-	if(keywordCnt>0)
-	{
-		string newkeyword = keyword;
-		newkeyword = newkeyword.append("0");
-		prf_type hashtoken1 = Utilities::encode(newkeyword, key);
-		newkeyword = keyword;
-		newkeyword = newkeyword.append("1");
-		prf_type hashtoken2 = Utilities::encode(newkeyword, key);
-		//cuckooCiphers = server->cuckooSearch(index, tableNum, hashtoken1, hashtoken2);//search HT+cuckoostash
-		if(cuckooCiphers.size()>0)
-		{
-			for (auto item : cuckooCiphers) 
-			{
-				prf_type plaintext;
-				Utilities::decode(item, plaintext, key);
-				if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-				{
-						finalRes.push_back(plaintext);
-				}
-				cout <<"cuckoo data:"<<plaintext.data()<<endl;
-			}
-		}
-		totalCommunication += cuckooCiphers.size()* sizeof(prf_type);
+		totalCommunication += oneChoiceCiphers.size()* sizeof(prf_type);
 	}
 	return finalRes;
 }

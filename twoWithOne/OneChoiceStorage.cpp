@@ -8,7 +8,7 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, long dataIndex, string fileAdd
     this->dataIndex = dataIndex;
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-   	for (long j = 0; j <dataIndex; j++) 
+   	for (long j = 0; j <=dataIndex; j++) 
 	{
         long curNumberOfBins = j > 1 ? 
 			(long) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;

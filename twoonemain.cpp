@@ -76,7 +76,7 @@ int main(int argc, char** argv)
         for (j = 0; j < cur->second.size(); j++) 
 		{
                     client.update(OP::INS, cur->first, cur->second[j], true);
-             if (cnt % 20 == 0) 
+             if (cnt % 200 == 0) 
 		     {
                    cout << "Initial Insertions::" << cnt << "/" << to_string(testCases[i].N) << endl;
              }

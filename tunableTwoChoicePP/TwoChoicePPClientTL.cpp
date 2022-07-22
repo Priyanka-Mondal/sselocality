@@ -182,7 +182,6 @@ void TwoChoicePPClientTL::writeToCuckooHT2(long index, long size, string keyword
 
         prf_type mapValue;
         mapValue = Utilities::encode(newvalue.data(), key);
-
         ctCiphers.push_back(mapValue);
     }
     ctCiphers.resize(size);
@@ -266,71 +265,71 @@ void TwoChoicePPClientTL::setup2(long index, unordered_map<string, vector<tmp_pr
 			}
 			if(newsize > mpl)
 				newsize = mpl;
-        string temp = pair.first;
-        temp = temp.append("1");
-        prf_type K1 = Utilities::encode(temp, key);
-        unsigned char cntstr[AES_KEY_SIZE];
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        prf_type mapKey1 = Utilities::generatePRF(cntstr, K1.data());
-        unsigned char* hash1 = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
+       		string temp = pair.first;
+       		temp = temp.append("1");
+       		prf_type K1 = Utilities::encode(temp, key);
+       		unsigned char cntstr[AES_KEY_SIZE];
+       		memset(cntstr, 0, AES_KEY_SIZE);
+       		*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+       		prf_type mapKey1 = Utilities::generatePRF(cntstr, K1.data());
+       		unsigned char* hash1 = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
 
-        temp = pair.first;
-        temp = temp.append("2");
-        prf_type K2 = Utilities::encode(temp, key);
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        prf_type mapKey2 = Utilities::generatePRF(cntstr, K2.data());
-        unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
+       		temp = pair.first;
+       		temp = temp.append("2");
+       		prf_type K2 = Utilities::encode(temp, key);
+       		memset(cntstr, 0, AES_KEY_SIZE);
+       		*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+       		prf_type mapKey2 = Utilities::generatePRF(cntstr, K2.data());
+       		unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
 
-        long superBins = ceil((float) numberOfBins[index] / newsize);
-        long pos1 = (unsigned long) (*((long*) hash1)) % superBins;
-        long pos2 = (unsigned long) (*((long*) hash2)) % superBins;
+       		long superBins = ceil((float) numberOfBins[index] / newsize);
+       		long pos1 = (unsigned long) (*((long*) hash1)) % superBins;
+       		long pos2 = (unsigned long) (*((long*) hash2)) % superBins;
 
-        long totalItems1 = countTotal(fullness, pos1*newsize, newsize);
-        long totalItems2 = countTotal(fullness, pos2*newsize, newsize);
-        long cipherIndex;
-        if (totalItems1 > totalItems2) {
-            cipherIndex = pos2 * newsize;
-        } else {
-            cipherIndex = pos1*newsize;
-        }
-        if (fullness[cipherIndex] < sizeOfEachBin[index]) 
-		{
-			for (unsigned long i = t*mpl; i < t*mpl+localpss; i++) 
-			{
-                std::pair<string, long> mapKey;
-                tmp_prf_type mapValue;
-                mapKey.first = pair.first;
-                mapKey.second = i;
-                mapValue = pair.second[i];
-                auto p = std::pair< std::pair<string, long>, tmp_prf_type>(mapKey, mapValue);
-                ciphers[cipherIndex].push_back(p);
-                fullness[cipherIndex] = fullness[cipherIndex] + 1;
-                cipherIndex++;
-            }
-            tmp_prf_type dummy;
-            memset(dummy.data(), 0, TMP_AES_KEY_SIZE);
-            auto dummypair = std::pair<std::pair<string, long>, tmp_prf_type>(std::pair<string, long>("", -1), dummy);
-            for (long i = localpss; i < newsize; i++) 
-			{
-                ciphers[cipherIndex].push_back(dummypair);
-                fullness[cipherIndex] = fullness[cipherIndex] + 1;
-                cipherIndex++;
-            }
-        } else {
-            writeToCuckooHT2(index, newsize, pair.first, pair.second, key);
-        }
-		}
-        prf_type K = Utilities::encode(pair.first, key);
-        unsigned char cntstr[AES_KEY_SIZE];
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
-        prf_type valueTmp, totalTmp;
-        *(long*) (&(valueTmp[0])) = pair.second.size(); 
-        prf_type mapValue = Utilities::encode(valueTmp.data(), K.data());
-        keywordCntCiphers[mapKey] = mapValue;
+       		long totalItems1 = countTotal(fullness, pos1*newsize, newsize);
+       		long totalItems2 = countTotal(fullness, pos2*newsize, newsize);
+       		long cipherIndex;
+       		if (totalItems1 > totalItems2) {
+       		    cipherIndex = pos2 * newsize;
+       		} else {
+       		    cipherIndex = pos1*newsize;
+       		}
+       		if (fullness[cipherIndex] < sizeOfEachBin[index]) 
+	   		{
+	   			for (unsigned long i = t*mpl; i < t*mpl+localpss; i++) 
+	   			{
+       		        std::pair<string, long> mapKey;
+       		        tmp_prf_type mapValue;
+       		        mapKey.first = pair.first;
+       		        mapKey.second = i;
+       		        mapValue = pair.second[i];
+       		        auto p = std::pair< std::pair<string, long>, tmp_prf_type>(mapKey, mapValue);
+       		        ciphers[cipherIndex].push_back(p);
+       		        fullness[cipherIndex] = fullness[cipherIndex] + 1;
+       		        cipherIndex++;
+       		    }
+       		    tmp_prf_type dummy;
+       		    memset(dummy.data(), 0, TMP_AES_KEY_SIZE);
+       		    auto dummypair = std::pair<std::pair<string, long>, tmp_prf_type>(std::pair<string, long>("", -1), dummy);
+       		    for (long i = localpss; i < newsize; i++) 
+	   			{
+       		        ciphers[cipherIndex].push_back(dummypair);
+       		        fullness[cipherIndex] = fullness[cipherIndex] + 1;
+       		        cipherIndex++;
+       		    }
+       		} else {
+       		     writeToCuckooHT2(index, newsize, pair.first, pair.second, key);
+       		}
+	   	 }
+       	 prf_type K = Utilities::encode(pair.first, key);
+       	 unsigned char cntstr[AES_KEY_SIZE];
+       	 memset(cntstr, 0, AES_KEY_SIZE);
+       	 *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+       	 prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
+       	 prf_type valueTmp, totalTmp;
+       	 *(long*) (&(valueTmp[0])) = pair.second.size(); 
+       	 prf_type mapValue = Utilities::encode(valueTmp.data(), K.data());
+       	 keywordCntCiphers[mapKey] = mapValue;
     }
     tmp_prf_type dummy;
     memset(dummy.data(), 0, TMP_AES_KEY_SIZE);
@@ -486,7 +485,8 @@ void TwoChoicePPClientTL::setup(long index, unordered_map<string, vector<prf_typ
 			   	{
 			   		prf_type dummy;
 					memset(dummy.data(), 0, AES_KEY_SIZE);
-					ciphers[cipherIndex].push_back(dummy);
+					prf_type mapValue = Utilities::encode(dummy.data(), key);
+					ciphers[cipherIndex].push_back(mapValue);
 					fullness[cipherIndex] = fullness[cipherIndex]+1;
 				   	cipherIndex++;
 				}
@@ -506,18 +506,19 @@ void TwoChoicePPClientTL::setup(long index, unordered_map<string, vector<prf_typ
 	}
 	prf_type dummy;
 	memset(dummy.data(), 0, AES_KEY_SIZE);
+	prf_type mapValue = Utilities::encode(dummy.data(), key);
 	for (long i = 0; i < numberOfBins[index]; i++)  //filling up each bin to maximum capacity
 	{
 		long curSize = ciphers[i].size();
 		for (long j = curSize; j < sizeOfEachBin[index]; j++) 
-			ciphers[i].push_back(dummy);
+			ciphers[i].push_back(mapValue);
 	}
     for (long i = 0; i < nB[index]; i++) 
 	{
         long curSize = ciphersOne[i].size();
         for (long j = curSize; j < sEB[index]; j++) 
 		{
-            ciphersOne[i].push_back(dummy);
+            ciphersOne[i].push_back(mapValue);
         }
     }
 	prf_type randomKey;
@@ -810,7 +811,7 @@ vector<prf_type> TwoChoicePPClientTL::getAllData(long index, unsigned char* key)
 	vector<prf_type> cuckooCiphers = server->getCuckooHT(index); // also fetches the cuckoo stash
 	for (auto cipher : ciphers) 
 	{
-		if(cipher!=nullKey)
+		//if(cipher!=nullKey)
 		{
 		prf_type plaintext;
 		Utilities::decode(cipher, plaintext, key);
@@ -819,7 +820,7 @@ vector<prf_type> TwoChoicePPClientTL::getAllData(long index, unsigned char* key)
 	}
 	for (auto cipher : oneChoiceCiphers) 
 	{
-		if(cipher!=nullKey)
+		//if(cipher!=nullKey)
 		{
 		prf_type plaintext;
 		Utilities::decode(cipher, plaintext, key);
@@ -831,7 +832,7 @@ vector<prf_type> TwoChoicePPClientTL::getAllData(long index, unsigned char* key)
 		cout <<"getAllData:size of cuckoo ciphers:"<<cuckooCiphers.size()<<endl;
 		for(auto b : cuckooCiphers)
 		{
-		if(b!=nullKey)
+		//if(b!=nullKey)
 		{
 	   		prf_type plaintext;
 	   		Utilities::decode(b, plaintext, key);

@@ -79,7 +79,7 @@ int main(int argc, char** argv)
 		     {
                    cout << "Initial Insertions::" << cnt << "/" << to_string(testCases[i].N) << endl;
              }
-                    client.update2(OP::INS, cur->first, cur->second[j], true);
+                    client.update(OP::INS, cur->first, cur->second[j], true);
 			cnt++;
          }
 	        //cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;

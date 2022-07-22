@@ -8,7 +8,7 @@ TwoChoiceStorage::TwoChoiceStorage(bool inMemory, long dataIndex, string fileAdd
     this->dataIndex = dataIndex;
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-    for (long i = 0; i < dataIndex; i++) 
+    for (long i = 0; i <= dataIndex; i++) 
     {
         long curNumberOfBins = i > 3 ? ((long) ceil((float) pow(2, i) / ((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
 	curNumberOfBins = pow(2, (long)ceil(log2(curNumberOfBins))); 
