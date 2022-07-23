@@ -5,6 +5,7 @@
 #include <string.h>
 #include <vector>
 #include<cstdlib>
+#include<algorithm>
 using namespace std;
 
 DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite) 
@@ -112,27 +113,35 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	int prof = 0;
 	for(int i=numOfIndices; i>0; i--)
 	{
-		int s = i>1? 6:2;
+		//int s = i>2? (2*(i-1)*(i-1)):(i>1? 6: 2);
+		int s = i>1? 12: 2;
 		int j = b+i;
 		int mi = numberOfBins[j]; 
-		int r1 = ceil((float)(2*floor(by(indexSize[i-1],s))));
+		int r1 = ceil((float)(2*ceil(by(indexSize[i-1],s))));
 		int r2 = r1 + ceil(by(mi,s));
 		int r3 = r1 + ceil(by(mi,s));
-		//cout <<"index:"<<i<<" r1:"<<r1<<" r2:"<<r2<<endl;
-		assert(r1<r2);
+		if(r2>pow(2,j))
+		{
+			r2 = pow(2,j);
+			r3 = pow(2,j);
+		}
+		//cout <<"index:"<<i<<" s:"<<s<<" r1:"<<r1<<" r2:"<<r2<<endl;
+		assert(r1<=r2);
 		assert(r2<=pow(2,j));
+		//sleep(1);
 
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
+		//cout <<"index:"<<i<<" s:"<<s<<" ne:"<<indexSize[i-1]<<" r1:"<<r1<<" r2:"<<r2<<" cnt[i]:"<<cnt[i]<<endl;
 			if(cnt[i] <= r1)
 			{
-				if(i==prof) 
-					cout <<j <<" GETBIN:"<<cnt[i]<<"/"<<r1<<"/"<<pow(2,j)<<endl;
+		//cout <<"getbin s:"<<s<<" ne:"<<indexSize[i-1]<<" r1:"<<r1<<" r2:"<<r2<<" cnt[i]:"<<cnt[i]<<endl;
 				L->getBin(i, 0, cnt[i]*(s/2),(s/2), keys[i-1][0], keys[i][3]);
 				L->getBin(i, 1, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
 			}
-			if (r1 <=cnt[i] &&  cnt[i]<= r2)
+			if ((i==1 && r1 <=cnt[i] &&  cnt[i]<= r2) || (r1 < cnt[i] &&  cnt[i]<= r2))
 			{
+		cout <<"adddummy s:"<<s<<" ne:"<<indexSize[i-1]<<" r1:"<<r1<<" r2:"<<r2<<" cnt[i]:"<<cnt[i]<<endl;
 				L->addDummy(i, (cnt[i]-r1), keys[i][3], s, r1, r2);
 			}
 			if(r2<=cnt[i] && cnt[i] <= r3)
@@ -147,7 +156,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				int totStepsi = 2*ceil(by(N*log2(N)*(log2(N)+1),4));
 				int stepi = 2*ceil(by(by(totStepsi, times),2));
 				if(i==prof) 
-					cout <<j<<" SORTING: N:"<<N<<" "<<cnt[i]<<"/"<<pow(2,j)<<"/"<<pow(2,j)<<" totstep:"<<totStepsi<<" stepi:"<<stepi<<endl;
+					cout <<j<<" SORTING: N:"<<N<<" "<<cnt[i]<<"/"<<r3<<"/"<<pow(2,j)<<" totstep:"<<totStepsi<<" stepi:"<<stepi<<endl;
 				L->deAmortizedBitSortC(stepi, count, N, i, keys[i][3]);
 				L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
 			}

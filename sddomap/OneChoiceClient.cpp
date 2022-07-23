@@ -226,9 +226,9 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 							 unsigned char* key1, unsigned char* key2)
 {
 	assert(index>=1);
-	//cout <<"["<<index-1<<" start:"<<start<<" numOfEl:"<<end<<"]"<<"actual numOfEl:"<<numberOfBins[index-1]*sizeOfEachBin[index-1];
 	if(start <numberOfBins[index-1]*sizeOfEachBin[index-1])
 	{
+	//cout <<"["<<index-1<<" start:"<<start<<" numOfEl:"<<end<<"]"<<"actual numOfEl:"<<numberOfBins[index-1]*sizeOfEachBin[index-1];
 		if(start+end>numberOfBins[index-1]*sizeOfEachBin[index-1])
 			end = numberOfBins[index-1]*sizeOfEachBin[index-1] - start;
 		vector<prf_type> ciphers = server->getElements(index-1, instance, start, end);
@@ -268,14 +268,15 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 }
 void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s, int r1, int r2)
 {
-	//cout<<"adding dummy at:"<<index<<":"<<NEWsize[index]<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<"s:"<<s<<endl;
+	cout<<"adding dummy at:"<<index<<":"<<NEWsize[index]<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<"s:"<<s<<endl;
 	assert(index>=1);
 	assert(count>=0);
+	cout <<"index:"<<index<<" "<<NEWsize[index]<<">="<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
 	assert(NEWsize[index] >= 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
     int upCnt = numNEW[index];
 	if(count+r1 == r2)
 	{
-		assert(NEWsize[index] == 2*indexSize[index]+2*indexSize[index-1]);
+		//assert(NEWsize[index] == 2*indexSize[index]+2*indexSize[index-1]);
 		int newSize = ceil((float)log2(2*indexSize[index]+2*indexSize[index-1]));
 		newSize = pow(2,newSize);
 		pad(index,newSize,r2, key);
@@ -466,6 +467,7 @@ void OneChoiceClient::updateCounters(int index, unsigned char* key)
 	for(auto c: all)
 	{
 	    prf_type plaintext;// = c;
+		cout <<"decoding:"<<endl;
 	    Utilities::decode(c, plaintext, key);
 	    string w((char*) plaintext.data());
 		if(w!="")
