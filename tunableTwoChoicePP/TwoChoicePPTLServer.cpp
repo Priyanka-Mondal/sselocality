@@ -1,42 +1,42 @@
-#include "TwoChoicePPServerTL.h"
+#include "TwoChoicePPTLServer.h"
 #include <string.h>
 
-TwoChoicePPServerTL::TwoChoicePPServerTL(long dataIndex, bool inMemory, bool overwrite, bool profile) 
+TwoChoicePPTLServer::TwoChoicePPTLServer(long dataIndex, bool inMemory, bool overwrite, bool profile) 
 {
     this->profile = profile;
-    storage = new TwoChoicePPStorageTL(inMemory, dataIndex, "/tmp/", profile);
+    storage = new TwoChoicePPTLStorage(inMemory, dataIndex, "/tmp/", profile);
     storage->setup(overwrite);
     keywordCounters = new Storage(inMemory, dataIndex, "/tmp/keyword-", profile);
     keywordCounters->setup(overwrite);
 }
 
-TwoChoicePPServerTL::~TwoChoicePPServerTL() {}
+TwoChoicePPTLServer::~TwoChoicePPTLServer() {}
 
-void TwoChoicePPServerTL::storeKeywordAndStashCounters(long dataIndex, vector<prf_type> stashCiphers, map<prf_type, prf_type> kwCounters){
+void TwoChoicePPTLServer::storeKeywordAndStashCounters(long dataIndex, vector<prf_type> stashCiphers, map<prf_type, prf_type> kwCounters){
     keywordCounters->insert(dataIndex, kwCounters);
     //storage->insertStash(dataIndex, stashCiphers);
 }
-void TwoChoicePPServerTL::storeKeywordCounters(long dataIndex, map<prf_type, prf_type> kwCounters){
+void TwoChoicePPTLServer::storeKeywordCounters(long dataIndex, map<prf_type, prf_type> kwCounters){
     keywordCounters->insert(dataIndex, kwCounters);
 }
-void TwoChoicePPServerTL::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun) {
+void TwoChoicePPTLServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun) {
     storage->insertAll(dataIndex, ciphers, true, firstRun);
 }
 
-void TwoChoicePPServerTL::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, 
+void TwoChoicePPTLServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, 
 				 map<prf_type, prf_type> keywordCounter) 
 {
     storage->insertAll(dataIndex, ciphers);
     keywordCounters->insert(dataIndex, keywordCounter);
 }
 
-pair<prf_type, vector<prf_type>> TwoChoicePPServerTL::insertCuckooHT(long index, long tableNum, long cuckooID, 
+pair<prf_type, vector<prf_type>> TwoChoicePPTLServer::insertCuckooHT(long index, long tableNum, long cuckooID, 
 						long hash, prf_type keyw, vector<prf_type> fileids)
 {
 	return storage->insertCuckooHT(index, tableNum, cuckooID, hash, keyw, fileids);
 }
 
-vector<prf_type> TwoChoicePPServerTL::searchLoc(long dataIndex, prf_type hashToken, long kwc) 
+vector<prf_type> TwoChoicePPTLServer::searchLoc(long dataIndex, prf_type hashToken, long kwc) 
 {
     vector<prf_type> result;
 	result.resize(0);
@@ -48,7 +48,7 @@ vector<prf_type> TwoChoicePPServerTL::searchLoc(long dataIndex, prf_type hashTok
     return result;
 }
 
-long TwoChoicePPServerTL::getCounter(long dataIndex, prf_type tokkw) 
+long TwoChoicePPTLServer::getCounter(long dataIndex, prf_type tokkw) 
 {
     prf_type curToken = tokkw;
     unsigned char cntstr[AES_KEY_SIZE];
@@ -66,7 +66,7 @@ long TwoChoicePPServerTL::getCounter(long dataIndex, prf_type tokkw)
 	}
 	return keywordCnt;
 }
-vector<prf_type> TwoChoicePPServerTL::search(long dataIndex, prf_type tokkw, prf_type hashtoken, 
+vector<prf_type> TwoChoicePPTLServer::search(long dataIndex, prf_type tokkw, prf_type hashtoken, 
 					long& keywordCnt, long num) 
 {
     keywordCounters->seekgCount = 0;
@@ -116,22 +116,22 @@ vector<prf_type> TwoChoicePPServerTL::search(long dataIndex, prf_type tokkw, prf
 }
 
 
-vector<prf_type> TwoChoicePPServerTL::getAllData(long dataIndex) 
+vector<prf_type> TwoChoicePPTLServer::getAllData(long dataIndex) 
 {
     return storage->getAllData(dataIndex);
 }
 
-vector<prf_type> TwoChoicePPServerTL::getCuckooHT(long dataIndex) 
+vector<prf_type> TwoChoicePPTLServer::getCuckooHT(long dataIndex) 
 {
     return storage->getCuckooHT(dataIndex);
 }
 
-void TwoChoicePPServerTL::insertCuckooStash(long index, long tableNum, vector<prf_type> ctCiphers)
+void TwoChoicePPTLServer::insertCuckooStash(long index, long tableNum, vector<prf_type> ctCiphers)
 {
     storage->insertCuckooStash(index, tableNum, ctCiphers);
 }
 
-vector<prf_type> TwoChoicePPServerTL::cuckooSearch(long index, long tableNum, 
+vector<prf_type> TwoChoicePPTLServer::cuckooSearch(long index, long tableNum, 
 		        prf_type hashtoken1, prf_type hashtoken2)
 {
 	vector<prf_type> results;
@@ -155,7 +155,7 @@ vector<prf_type> TwoChoicePPServerTL::cuckooSearch(long index, long tableNum,
 	return results;
 }
 
-void TwoChoicePPServerTL::clear(long index) 
+void TwoChoicePPTLServer::clear(long index) 
 {
     storage->clear(index);
     keywordCounters->clear(index);

@@ -20,7 +20,7 @@
 
 using namespace std;
 
-class TwoChoicePPStorageTL {
+class TwoChoicePPTLStorage {
 private:
     bool inMemoryStorage;
     bool profile = false;
@@ -42,7 +42,7 @@ public:
     long readBytes = 0;
     long SeekG = 0;
 	double cacheTime;
-    TwoChoicePPStorageTL(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
+    TwoChoicePPTLStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
     void insertAll(long dataIndex, vector<vector< prf_type> > ciphers);
     //void insertStash(long dataIndex, vector<prf_type> ciphers);
@@ -54,7 +54,7 @@ public:
     vector <prf_type> cuckooSearch(long index, long tableNum, long h[2]);
     void clear(long index);
     vector<prf_type> find(long index, prf_type mapKey, long cnt);
-    virtual ~TwoChoicePPStorageTL();
+    virtual ~TwoChoicePPTLStorage();
 	void insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun);
 };
 

@@ -37,6 +37,7 @@ private:
 public:
     long readBytes = 0;
     long SeekG = 0;
+	double cacheTime;
     TwoChoiceTLStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
     void insertAll(long dataIndex, vector<vector<prf_type> > ciphers);

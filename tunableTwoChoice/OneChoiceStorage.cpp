@@ -99,6 +99,13 @@ vector<prf_type> OneChoiceStorage::getAllData(long index)
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
     long size = file.tellg();
+ if (DROP_CACHE) {
+            Utilities::startTimer(113);
+            system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
+            auto t = Utilities::stopTimer(113);
+            printf("drop cache time:%f\n", t);
+            cacheTime += t;
+        }
     file.seekg(0, ios::beg);
     char* keyValues = new char[size];
     file.read(keyValues, size);
@@ -168,6 +175,13 @@ vector<prf_type> OneChoiceStorage::find(long index, prf_type mapKey, long cnt)
             readLength = totalReadLength;
             totalReadLength = 0;
         }
+ if (DROP_CACHE) {
+            Utilities::startTimer(113);
+            system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
+            auto t = Utilities::stopTimer(113);
+            printf("drop cache time:%f\n", t);
+            cacheTime += t;
+        }
         file.seekg(readPos, ios::beg);
         SeekG++;
         char* keyValues = new char[readLength];
@@ -182,6 +196,13 @@ vector<prf_type> OneChoiceStorage::find(long index, prf_type mapKey, long cnt)
         if (totalReadLength > 0) 
 		{
             readLength = totalReadLength;
+ if (DROP_CACHE) {
+            Utilities::startTimer(113);
+            system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
+            auto t = Utilities::stopTimer(113);
+            printf("drop cache time:%f\n", t);
+            cacheTime += t;
+        }
             file.seekg(0, ios::beg);
             char* keyValues = new char[readLength];
             file.read(keyValues, readLength);

@@ -1,22 +1,22 @@
 #ifndef TWOCHOICESERVER_H
 #define TWOCHOICESERVER_H
 
-#include "TwoChoicePPStorageTL.h"
+#include "TwoChoicePPTLStorage.h"
 #include "Storage.h"
 
-class TwoChoicePPServerTL 
+class TwoChoicePPTLServer 
 {
 private:
-    TwoChoicePPStorageTL* storage;
+    TwoChoicePPTLStorage* storage;
     Storage* keywordCounters;
     void getAESRandomValue(unsigned char* keyword, long cnt, unsigned char* result);
     long numberOfBins, sizeOfEachBin;
     bool profile = false;
 
 public:
-    TwoChoicePPServerTL(long dataIndex, bool inMemory, bool overwrite, bool profile);
+    TwoChoicePPTLServer(long dataIndex, bool inMemory, bool overwrite, bool profile);
     void clear(long index);
-    virtual ~TwoChoicePPServerTL();
+    virtual ~TwoChoicePPTLServer();
     void storeCiphers(long dataIndex, vector<vector<prf_type > > ciphers,  map<prf_type, prf_type> keywordCounters);
     void storeCiphers(long dataIndex, vector<vector<prf_type > > ciphers,  bool firstrun);
 	void storeKeywordAndStashCounters(long dataIndex, vector<prf_type> stashCiphers, map<prf_type, prf_type> kwCounters);

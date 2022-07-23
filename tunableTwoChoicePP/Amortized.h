@@ -9,7 +9,7 @@
 #include <iostream>
 #include <sstream>
 #include "Utilities.h"
-#include "TwoChoicePPClientTL.h"
+#include "TwoChoicePPTLClient.h"
 #include "AES.hpp"
 #include <set>
 #include <unordered_map>
@@ -27,7 +27,7 @@ private:
     vector<unsigned char*> keys;
     //        AmortizedBASClient* L;
     //OneChoiceClient* L;
-    TwoChoicePPClientTL* L;
+    TwoChoicePPTLClient* L;
     long updateCounter = 0;
     double totalUpdateCommSize;
     double totalSearchCommSize;

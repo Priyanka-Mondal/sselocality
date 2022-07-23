@@ -1,17 +1,17 @@
-#include "TwoChoicePPClientTL.h"
+#include "TwoChoicePPTLClient.h"
 #include<vector>
 #include<algorithm>
 
-TwoChoicePPClientTL::~TwoChoicePPClientTL() 
+TwoChoicePPTLClient::~TwoChoicePPTLClient() 
 {
 	delete server;
 	delete one;
 }
 
-TwoChoicePPClientTL::TwoChoicePPClientTL(long numOfDataSets, bool inMemory, bool overwrite, bool profile) 
+TwoChoicePPTLClient::TwoChoicePPTLClient(long numOfDataSets, bool inMemory, bool overwrite, bool profile) 
 {
 	this->profile = profile;
-	server = new TwoChoicePPServerTL(numOfDataSets, inMemory, overwrite, profile);
+	server = new TwoChoicePPTLServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
 	cout <<"===================RUNNING SDa+TwoChoicePLUSPLUS version 2 (long) ====LOCALITY="<<LOC<<endl;
 	memset(nullKey.data(), 0, AES_KEY_SIZE);
@@ -35,7 +35,7 @@ TwoChoicePPClientTL::TwoChoicePPClientTL(long numOfDataSets, bool inMemory, bool
     }
 }
 
-long TwoChoicePPClientTL::countTotal(vector<long> fullness, long bin, long size)
+long TwoChoicePPTLClient::countTotal(vector<long> fullness, long bin, long size)
 {
 	long full = 0;
 	for(long i = 0; i< size; i++)
@@ -72,7 +72,7 @@ vector<pair<string, vector<prf_type>>> sort(unordered_map<string, vector<prf_typ
 	return A;
 }
 
-long TwoChoicePPClientTL::maxPossibleLen(long index)
+long TwoChoicePPTLClient::maxPossibleLen(long index)
 {
 	long N = pow(2, index);
 	if(N == 1) return 1;
@@ -86,7 +86,7 @@ long TwoChoicePPClientTL::maxPossibleLen(long index)
 
 
 
-void TwoChoicePPClientTL::writeToCuckooStash(vector<prf_type> fileids, long cnt, 
+void TwoChoicePPTLClient::writeToCuckooStash(vector<prf_type> fileids, long cnt, 
 		long index, long tableNum, unsigned char* key)
 {
 	long entrySize = pow(2, tableNum);
@@ -107,7 +107,7 @@ void TwoChoicePPClientTL::writeToCuckooStash(vector<prf_type> fileids, long cnt,
 	server->insertCuckooStash(index, tableNum, ctCiphers);
 }
 
-void TwoChoicePPClientTL::place(string keyword, vector<prf_type> fileids, long cuckooID, 
+void TwoChoicePPTLClient::place(string keyword, vector<prf_type> fileids, long cuckooID, 
 		long cnt, long index, long tableNum, unsigned char* key)
 {
 	if(cnt == (pow(2,index-tableNum))+1) // check this condition
@@ -142,7 +142,7 @@ void TwoChoicePPClientTL::place(string keyword, vector<prf_type> fileids, long c
 		place(keyw, dis.second, cnt+1, ((cuckooID+1)%2), index, tableNum, key);
 	}
 }
-void TwoChoicePPClientTL::writeToCuckooHT(long index, long size, string keyword, 
+void TwoChoicePPTLClient::writeToCuckooHT(long index, long size, string keyword, 
 				vector<prf_type> fileids, unsigned char* key)
 {
 	assert(fileids.size() > 0);
@@ -164,7 +164,7 @@ void TwoChoicePPClientTL::writeToCuckooHT(long index, long size, string keyword,
 	}
 	place(keyword, ctCiphers, 0, 0, index, tableNum, key);
 }
-void TwoChoicePPClientTL::writeToCuckooHT2(long index, long size, string keyword, vector<tmp_prf_type> fileids, unsigned char* key) {
+void TwoChoicePPTLClient::writeToCuckooHT2(long index, long size, string keyword, vector<tmp_prf_type> fileids, unsigned char* key) {
     assert(fileids.size() > 0);
     long tableNum = (long) ceil((float) log2(size));
 
@@ -196,7 +196,7 @@ void TwoChoicePPClientTL::writeToCuckooHT2(long index, long size, string keyword
     place(keyword, ctCiphers, 0, 0, index, tableNum, key);
 }
 
-void TwoChoicePPClientTL::setup2(long index, unordered_map<string, vector<tmp_prf_type> > pairs, unsigned char* key) {
+void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_type> > pairs, unsigned char* key) {
     exist[index] = true;
     vector<vector<pair<pair<string, long>, tmp_prf_type> > > ciphers;
     for (long i = 0; i < numberOfBins[index]; i++) {
@@ -376,7 +376,7 @@ void TwoChoicePPClientTL::setup2(long index, unordered_map<string, vector<tmp_pr
 }
 
 
-void TwoChoicePPClientTL::setup(long index, unordered_map<string, vector<prf_type> > pairs, unsigned char* key) 
+void TwoChoicePPTLClient::setup(long index, unordered_map<string, vector<prf_type> > pairs, unsigned char* key) 
 {
 	exist[index] = true;
 	vector<vector<prf_type>> ciphers;
@@ -540,7 +540,7 @@ void TwoChoicePPClientTL::setup(long index, unordered_map<string, vector<prf_typ
 	one->storeCiphers(index,ciphersOne);
 }
 
-vector<vector<prf_type> > TwoChoicePPClientTL::convertTmpCiphersToFinalCipher(vector<pair<std::pair<string, long>, tmp_prf_type> > ciphers, unsigned char* key) {
+vector<vector<prf_type> > TwoChoicePPTLClient::convertTmpCiphersToFinalCipher(vector<pair<std::pair<string, long>, tmp_prf_type> > ciphers, unsigned char* key) {
     vector<vector<prf_type> > results;
     results.push_back(vector<prf_type>());
     for (long i = 0; i < ciphers.size(); i++) {
@@ -573,7 +573,7 @@ vector<vector<prf_type> > TwoChoicePPClientTL::convertTmpCiphersToFinalCipher(ve
     return results;
 }
 
-vector<prf_type> TwoChoicePPClientTL::searchLoc(long index, string keyword, unsigned char* key) 
+vector<prf_type> TwoChoicePPTLClient::searchLoc(long index, string keyword, unsigned char* key) 
 {
 	double searchPreparation = 0, searchDecryption = 0;
 	long flag = 0;
@@ -712,7 +712,7 @@ vector<prf_type> TwoChoicePPClientTL::searchLoc(long index, string keyword, unsi
 }
 
 
-vector<prf_type> TwoChoicePPClientTL::search(long index, string keyword, unsigned char* key) 
+vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigned char* key) 
 {
 	double searchPreparation = 0, searchDecryption = 0;
 	long flag = 0;
@@ -803,7 +803,7 @@ vector<prf_type> TwoChoicePPClientTL::search(long index, string keyword, unsigne
 	return finalRes;
 }
 
-vector<prf_type> TwoChoicePPClientTL::getAllData(long index, unsigned char* key) 
+vector<prf_type> TwoChoicePPTLClient::getAllData(long index, unsigned char* key) 
 {
 	vector<prf_type> finalRes = vector<prf_type>();
 	auto ciphers = server->getAllData(index);
@@ -844,7 +844,7 @@ vector<prf_type> TwoChoicePPClientTL::getAllData(long index, unsigned char* key)
 	return finalRes;
 }
 
-void TwoChoicePPClientTL::destry(long index) 
+void TwoChoicePPTLClient::destry(long index) 
 {
 	server->clear(index);
 	one->clear(index);

@@ -1,9 +1,9 @@
-#include "TwoChoicePPStorageTL.h"
+#include "TwoChoicePPTLStorage.h"
 #include<string.h>
 #include<assert.h>
 #include "Utilities.h"
 
-TwoChoicePPStorageTL::TwoChoicePPStorageTL(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile) 
+TwoChoicePPTLStorage::TwoChoicePPTLStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile) 
 {
     this->inMemoryStorage = inMemory;
     this->fileAddressPrefix = fileAddressPrefix;
@@ -22,7 +22,7 @@ TwoChoicePPStorageTL::TwoChoicePPStorageTL(bool inMemory, long dataIndex, string
     }
 }
 
-bool TwoChoicePPStorageTL::setup(bool overwrite) 
+bool TwoChoicePPTLStorage::setup(bool overwrite) 
 {
 	cuckoofilenames.resize(dataIndex);
 	stashfilenames.resize(dataIndex);
@@ -112,7 +112,7 @@ bool TwoChoicePPStorageTL::setup(bool overwrite)
     }
 }
 
-void TwoChoicePPStorageTL::insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun) {
+void TwoChoicePPTLStorage::insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun) {
             if (append && !firstRun) 
 			{
                 fstream file(filenames[index].c_str(), ios::binary | std::ios::app);
@@ -142,7 +142,7 @@ void TwoChoicePPStorageTL::insertAll(int index, vector<vector< prf_type > > ciph
             }
 }
 
-pair<prf_type, vector<prf_type>> TwoChoicePPStorageTL::insertCuckooHT(long index,long tableNum,long cuckooID, 
+pair<prf_type, vector<prf_type>> TwoChoicePPTLStorage::insertCuckooHT(long index,long tableNum,long cuckooID, 
 		long hash, prf_type keyword, vector<prf_type> fileids)
 {
 	fstream cuckoo(cuckoofilenames[index][tableNum][cuckooID].c_str(), 
@@ -154,13 +154,6 @@ pair<prf_type, vector<prf_type>> TwoChoicePPStorageTL::insertCuckooHT(long index
 	vector<prf_type> results;
 	long entrySize = pow(2, tableNum);
     long readPos = hash *(entrySize+1)* AES_KEY_SIZE;
- if (DROP_CACHE) {
-            Utilities::startTimer(113);
-            system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
-            auto t = Utilities::stopTimer(113);
-            printf("drop cache time:%f\n", t);
-            cacheTime += t;
-        }
  if (DROP_CACHE) {
             Utilities::startTimer(113);
             system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
@@ -234,7 +227,7 @@ pair<prf_type, vector<prf_type>> TwoChoicePPStorageTL::insertCuckooHT(long index
 }
 
 
-void TwoChoicePPStorageTL::insertCuckooStash(long index, long tableNum, vector<prf_type> ctCiphers)
+void TwoChoicePPTLStorage::insertCuckooStash(long index, long tableNum, vector<prf_type> ctCiphers)
 {
       fstream file(stashfilenames[index][tableNum].c_str(), ios::binary | ios::out | ios::ate);
       if (file.fail()) 
@@ -251,7 +244,7 @@ void TwoChoicePPStorageTL::insertCuckooStash(long index, long tableNum, vector<p
       file.close();
 }
 /*
-void TwoChoicePPStorageTL::insertStash(long index, vector<prf_type> ciphers) 
+void TwoChoicePPTLStorage::insertStash(long index, vector<prf_type> ciphers) 
 {
       fstream file(stashes[index].c_str(), ios::binary | ios::out);
       if (file.fail()) 
@@ -269,7 +262,7 @@ void TwoChoicePPStorageTL::insertStash(long index, vector<prf_type> ciphers)
       file.close();
 }
 
-vector<prf_type> TwoChoicePPStorageTL::getStash(long index) 
+vector<prf_type> TwoChoicePPTLStorage::getStash(long index) 
 {
       vector<prf_type> results;
       fstream file(stashes[index].c_str(), ios::binary | ios::in | ios::ate);
@@ -303,7 +296,7 @@ vector<prf_type> TwoChoicePPStorageTL::getStash(long index)
 }
 */
 
-vector<prf_type> TwoChoicePPStorageTL::getCuckooHT(long index) 
+vector<prf_type> TwoChoicePPTLStorage::getCuckooHT(long index) 
 {
       vector<prf_type> results;
       for(long tn = 0; tn < index; tn++)
@@ -376,7 +369,7 @@ vector<prf_type> TwoChoicePPStorageTL::getCuckooHT(long index)
       return results;
 }
 
-void TwoChoicePPStorageTL::insertAll(long index, vector<vector< prf_type > > ciphers) 
+void TwoChoicePPTLStorage::insertAll(long index, vector<vector< prf_type > > ciphers) 
 {
    fstream file(filenames[index].c_str(), ios::binary | ios::out);
    if (file.fail()) 
@@ -397,7 +390,7 @@ void TwoChoicePPStorageTL::insertAll(long index, vector<vector< prf_type > > cip
    file.close();
 }
 
-vector<prf_type> TwoChoicePPStorageTL::getAllData(long index) 
+vector<prf_type> TwoChoicePPTLStorage::getAllData(long index) 
 {
    vector<prf_type> results;
    fstream file(filenames[index].c_str(), ios::binary | ios::in | ios::ate);
@@ -427,7 +420,7 @@ vector<prf_type> TwoChoicePPStorageTL::getAllData(long index)
    return results;
 }
 
-void TwoChoicePPStorageTL::clear(long index) 
+void TwoChoicePPTLStorage::clear(long index) 
 {
     if (inMemoryStorage) 
         data[index].clear();
@@ -482,10 +475,10 @@ void TwoChoicePPStorageTL::clear(long index)
     }
 }
 
-TwoChoicePPStorageTL::~TwoChoicePPStorageTL() {
+TwoChoicePPTLStorage::~TwoChoicePPTLStorage() {
 }
 
-vector <prf_type> TwoChoicePPStorageTL::cuckooSearch(long index, long tableNum, long h[2])
+vector <prf_type> TwoChoicePPTLStorage::cuckooSearch(long index, long tableNum, long h[2])
 {
    vector<prf_type> results;
    //results.resize(0);
@@ -553,7 +546,7 @@ vector <prf_type> TwoChoicePPStorageTL::cuckooSearch(long index, long tableNum, 
    delete keyValues;
    return results;
 }
-vector<prf_type> TwoChoicePPStorageTL::find(long index, prf_type mapKey, long cnt) 
+vector<prf_type> TwoChoicePPTLStorage::find(long index, prf_type mapKey, long cnt) 
 {
      vector<prf_type> results;
      std::fstream file(filenames[index].c_str(), ios::binary | ios::in);

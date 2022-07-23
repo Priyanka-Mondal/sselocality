@@ -14,20 +14,20 @@
 #include "Server.h"
 #include "Utilities.h"
 #include "AES.hpp"
-#include "TwoChoicePPServerTL.h"
+#include "TwoChoicePPTLServer.h"
 #include "OneChoiceServer.h"
 #include <unordered_map>
 
-class TwoChoicePPClientTL 
+class TwoChoicePPTLClient 
 {
 private:
-    TwoChoicePPServerTL* server;
+    TwoChoicePPTLServer* server;
 	OneChoiceServer* one;
     bool profile = false;
 
 public:
-    virtual ~TwoChoicePPClientTL();
-    TwoChoicePPClientTL(long maxUpdate, bool inMemory, bool overwrite, bool profile);
+    virtual ~TwoChoicePPTLClient();
+    TwoChoicePPTLClient(long maxUpdate, bool inMemory, bool overwrite, bool profile);
     long totalCommunication = 0;
     vector<long> numberOfBins;
 	vector<long> nB;

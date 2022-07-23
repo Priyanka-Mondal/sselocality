@@ -8,7 +8,7 @@ using namespace std;
 
 Amortized::Amortized(long N, bool inMemory, bool overwrite) 
 {
-    L = new TwoChoicePPClientTL(ceil(log2(N)), inMemory, overwrite, profile);
+    L = new TwoChoicePPTLClient(ceil(log2(N)), inMemory, overwrite, profile);
     for (long i = 0; i < ceil(log2(N)); i++) 
         keys.push_back(NULL);
     for (long i = 0; i < localSize; i++) 
