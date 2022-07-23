@@ -1,13 +1,13 @@
 #ifndef ONECHOICESERVER_H
 #define ONECHOICESERVER_H
 
-#include "OneChoiceStorage.h"
+#include "OneChoiceSDdNoOMAPStorage.h"
 #include "Storage.h"
 #include "OMAP.h"
 
-class OneChoiceServer {
+class OneChoiceSDdNoOMAPServer {
 private:
-    OneChoiceStorage* storage;
+    OneChoiceSDdNoOMAPStorage* storage;
     Storage* keyworkCounters;
     void getAESRandomValue(unsigned char* keyword, int cnt, unsigned char* result);
     int numberOfBins, sizeOfEachBin, dataIndex;
@@ -15,9 +15,9 @@ private:
 	vector<vector<prf_type>> NEW;
 
 public:
-    OneChoiceServer(int dataIndex, bool inMemory, bool overwrite, bool profile);
+    OneChoiceSDdNoOMAPServer(int dataIndex, bool inMemory, bool overwrite, bool profile);
     void clear(int index, int instance);
-    virtual ~OneChoiceServer();
+    virtual ~OneChoiceSDdNoOMAPServer();
 	void storeKwCounters(int dataIndex, int instance, map<prf_type, prf_type> keywordCounters);
 	prf_type findCounter(int dataIndex, int instance, prf_type token);
     vector<prf_type> searchBin(int dataIndex, int instance, int bin);

@@ -1,8 +1,8 @@
-#include "OneChoiceStorage.h"
+#include "OneChoiceSDdNoOMAPStorage.h"
 #include<assert.h>
 #include<string.h>
 
-OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) 
+OneChoiceSDdNoOMAPStorage::OneChoiceSDdNoOMAPStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile) 
 {
     this->inMemoryStorage = inMemory;
     this->fileAddressPrefix = fileAddressPrefix;
@@ -32,7 +32,7 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
 
 }
 
-bool OneChoiceStorage::setup(bool overwrite) 
+bool OneChoiceSDdNoOMAPStorage::setup(bool overwrite) 
 {
 	filenames.resize(dataIndex+1);
 	fileCounter.resize(dataIndex+1);
@@ -88,7 +88,7 @@ bool OneChoiceStorage::setup(bool overwrite)
 	}
 }
 
-void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphers) 
+void OneChoiceSDdNoOMAPStorage::insertAll(int index, int instance, vector<prf_type> ciphers) 
 {
 	fstream file;
 	if(instance<=3)
@@ -111,7 +111,7 @@ void OneChoiceStorage::insertAll(int index, int instance, vector<prf_type> ciphe
 }
 
 
-vector<prf_type> OneChoiceStorage::getAllData(int index, int instance) 
+vector<prf_type> OneChoiceSDdNoOMAPStorage::getAllData(int index, int instance) 
 {
     vector<prf_type> results;
     fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
@@ -139,7 +139,7 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
 }
 
 
-vector<prf_type> OneChoiceStorage::getNEW(int index, int cnt, int ressize, bool NEW) //get all of NEW
+vector<prf_type> OneChoiceSDdNoOMAPStorage::getNEW(int index, int cnt, int ressize, bool NEW) //get all of NEW
 {
     vector<prf_type> results;
 	fstream file;
@@ -176,7 +176,7 @@ vector<prf_type> OneChoiceStorage::getNEW(int index, int cnt, int ressize, bool 
 }
 
 
-void OneChoiceStorage::truncate(int index, int size, int fileSize)
+void OneChoiceSDdNoOMAPStorage::truncate(int index, int size, int fileSize)
 {
 	fstream file(filenames[index][3].c_str(), ios::binary | ios::out | ios::in | ios::ate);
     if (file.fail()) 
@@ -193,7 +193,7 @@ void OneChoiceStorage::truncate(int index, int size, int fileSize)
     file.close();
 }
 
-int OneChoiceStorage::writeToKW(int index, prf_type keyVal, int pos)
+int OneChoiceSDdNoOMAPStorage::writeToKW(int index, prf_type keyVal, int pos)
 {
 	fstream file(fileCounter[index].c_str(), ios::binary | ios::out | ios::in| ios::ate);
     if (file.fail()) 
@@ -210,7 +210,7 @@ int OneChoiceStorage::writeToKW(int index, prf_type keyVal, int pos)
 	return last;
 }
 
-int OneChoiceStorage::writeToNEW(int index, prf_type keyVal, int pos)
+int OneChoiceSDdNoOMAPStorage::writeToNEW(int index, prf_type keyVal, int pos)
 {
 	fstream file(filenames[index][3].c_str(), ios::binary | ios::out | ios::in| ios::ate);
     if (file.fail()) 
@@ -226,7 +226,7 @@ int OneChoiceStorage::writeToNEW(int index, prf_type keyVal, int pos)
 	file.close();
 	return last;
 }
-vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int start, int numOfEl)
+vector<prf_type> OneChoiceSDdNoOMAPStorage::getElements(int index, int instance, int start, int numOfEl)
 {
 	assert(instance<2);
 	vector<prf_type> results;
@@ -259,7 +259,7 @@ vector<prf_type> OneChoiceStorage::getElements(int index, int instance, int star
 	return results;
 }
 
-void OneChoiceStorage::clear(int index, int instance) 
+void OneChoiceSDdNoOMAPStorage::clear(int index, int instance) 
 {
     if (inMemoryStorage) 
 	{
@@ -297,9 +297,9 @@ void OneChoiceStorage::clear(int index, int instance)
     }
 }
 
-OneChoiceStorage::~OneChoiceStorage() {}
+OneChoiceSDdNoOMAPStorage::~OneChoiceSDdNoOMAPStorage() {}
 
-vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin) 
+vector<prf_type> OneChoiceSDdNoOMAPStorage::searchBin(int index, int instance, int bin) 
 {
     vector<prf_type> results;
     std::fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
@@ -340,7 +340,7 @@ vector<prf_type> OneChoiceStorage::searchBin(int index, int instance, int bin)
     return results;
 }
 
-vector<prf_type> OneChoiceStorage::find(int index, int instance, prf_type mapKey, int cnt) 
+vector<prf_type> OneChoiceSDdNoOMAPStorage::find(int index, int instance, prf_type mapKey, int cnt) 
 {
     vector<prf_type> results;
     std::fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);

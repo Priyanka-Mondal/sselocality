@@ -11,7 +11,7 @@
 #include <sstream>
 #include "Utilities.h"
 #include "AES.hpp"
-#include "OneChoiceClient.h"
+#include "OneChoiceSDdNoOMAPClient.h"
 #include "OMAP.h"
 //#include "mitra/Server.h"
 //#include <boost/algorithm/string/split.hpp>
@@ -41,7 +41,7 @@ private:
     vector<int> indexSize;
     //vector< map<Bid, string> > setupOMAPS;
     //vector<int> setupOMAPSDummies;
-    OneChoiceClient* L;
+    OneChoiceSDdNoOMAPClient* L;
     vector<vector< unordered_map<string, prf_type> > > data; //OLDEST, OLDER, OLD, NEW;
     vector<map<string, string> > localmap;
     int updateCounter = 0;

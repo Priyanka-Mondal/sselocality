@@ -1,4 +1,4 @@
-#include "SDDnoOMAP/DeAmortized.h"
+#include "SDDnoOMAP/DeAmortizedSDdNoOMAP.h"
 #include "SDDnoOMAP/Utilities.h"
 #include<cstring>
 #include <algorithm>

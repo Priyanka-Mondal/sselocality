@@ -20,7 +20,7 @@
 
 using namespace std;
 
-class OneChoiceStorage {
+class OneChoiceSDdNoOMAPStorage {
 private:
     bool inMemoryStorage;
     bool profile = false;
@@ -39,7 +39,7 @@ public:
     int readBytes = 0;
     int SeekG = 0;
 	int b;
-    OneChoiceStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile);
+    OneChoiceSDdNoOMAPStorage(bool inMemory, int dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
     void insertAll(int dataIndex, int instance, vector<prf_type> ciphers);
     vector<prf_type> getAllData(int dataIndex, int instance);
@@ -47,7 +47,7 @@ public:
     void clear(int index, int instance);
     vector<prf_type> find(int index, int instance, prf_type mapKey, int cnt);
     vector<prf_type> searchBin(int index, int instance, int bin);
-    virtual ~OneChoiceStorage();
+    virtual ~OneChoiceSDdNoOMAPStorage();
     vector<prf_type> getElements(int index, int instance, int start, int end);
 	void copy(int index, int toInstance, int fromInstance);
 	int writeToNEW(int index, prf_type keyVal, int pos);

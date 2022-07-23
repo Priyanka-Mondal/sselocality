@@ -1,11 +1,11 @@
-#include "OneChoiceServer.h"
+#include "OneChoiceSDdNoOMAPServer.h"
 #include <string>
 
-OneChoiceServer::OneChoiceServer(int dataIndex, bool inMemory, bool overwrite, bool profile) 
+OneChoiceSDdNoOMAPServer::OneChoiceSDdNoOMAPServer(int dataIndex, bool inMemory, bool overwrite, bool profile) 
 {
     this->profile = profile;
 	this->dataIndex = dataIndex;
-    storage = new OneChoiceStorage(inMemory, dataIndex, "/tmp/", profile);
+    storage = new OneChoiceSDdNoOMAPStorage(inMemory, dataIndex, "/tmp/", profile);
     storage->setup(overwrite);
     keyworkCounters = new Storage(inMemory, dataIndex, "/tmp/keyword-", profile);
     keyworkCounters->setup(overwrite);
@@ -13,26 +13,26 @@ OneChoiceServer::OneChoiceServer(int dataIndex, bool inMemory, bool overwrite, b
     	NEW.push_back(vector<prf_type>());
 }
 
-OneChoiceServer::~OneChoiceServer() {}
+OneChoiceSDdNoOMAPServer::~OneChoiceSDdNoOMAPServer() {}
 
 
 /*
-void OneChoiceServer::storeCiphers(int dataIndex, int instance, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters) {
+void OneChoiceSDdNoOMAPServer::storeCiphers(int dataIndex, int instance, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters) {
     storage->insertAll(dataIndex, instance, ciphers);
     keyworkCounters->insert(dataIndex, keywordCounters);
 }
 */
-void OneChoiceServer::storeKwCounters(int dataIndex, int instance, map<prf_type, prf_type> kc) 
+void OneChoiceSDdNoOMAPServer::storeKwCounters(int dataIndex, int instance, map<prf_type, prf_type> kc) 
 {
     keyworkCounters->insert(dataIndex, instance, kc);
 }
-prf_type OneChoiceServer::findCounter(int dataIndex, int instance, prf_type token)
+prf_type OneChoiceSDdNoOMAPServer::findCounter(int dataIndex, int instance, prf_type token)
 {
 	bool found;
     prf_type res = keyworkCounters->find(dataIndex, instance, token, found);
 	return res;
 }
-vector<prf_type> OneChoiceServer::search(int dataIndex, int instance, prf_type token, int & keywordCnt)
+vector<prf_type> OneChoiceSDdNoOMAPServer::search(int dataIndex, int instance, prf_type token, int & keywordCnt)
 {
     vector<prf_type> result;
     keyworkCounters->seekgCount = 0;
@@ -73,7 +73,7 @@ vector<prf_type> OneChoiceServer::search(int dataIndex, int instance, prf_type t
     return result;
 }
 
-vector<prf_type> OneChoiceServer::searchBin(int index, int instance, int bin) 
+vector<prf_type> OneChoiceSDdNoOMAPServer::searchBin(int index, int instance, int bin) 
 {
     vector<prf_type> result;
 	/*
@@ -116,18 +116,18 @@ vector<prf_type> OneChoiceServer::searchBin(int index, int instance, int bin)
     return result;
 }
 
-vector<prf_type> OneChoiceServer::getAllData(int dataIndex, int instance) 
+vector<prf_type> OneChoiceSDdNoOMAPServer::getAllData(int dataIndex, int instance) 
 {
     return storage->getAllData(dataIndex, instance);
 }
 
-void OneChoiceServer::clear(int index, int instance) 
+void OneChoiceSDdNoOMAPServer::clear(int index, int instance) 
 {
     storage->clear(index, instance);
     keyworkCounters->clear(index, instance);
 }
 
-void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size)
+void OneChoiceSDdNoOMAPServer::move(int index, int toInstance, int fromInstance, int size)
 {
 	vector<prf_type> data;
    	data = storage->getAllData(index, fromInstance);
@@ -139,13 +139,13 @@ void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size
 	keyworkCounters->insert(index, toInstance, wordCount);
 }
 /*
-vector<pair<prf_type,prf_type>> OneChoiceServer::getCounters(int index, int start, int size)
+vector<pair<prf_type,prf_type>> OneChoiceSDdNoOMAPServer::getCounters(int index, int start, int size)
 {
 	//return keyworkCounters->getCounters(index, start, size);
 	return keyworkCounters->getAll(index,0) ;
 }
 */
-int OneChoiceServer::writeToNEW(int index, prf_type keyVal, int pos)
+int OneChoiceSDdNoOMAPServer::writeToNEW(int index, prf_type keyVal, int pos)
 {
 	int last = storage->writeToNEW(index, keyVal, pos);
 	return last;
@@ -153,7 +153,7 @@ int OneChoiceServer::writeToNEW(int index, prf_type keyVal, int pos)
 	//assert(NEW[index].size() <= 6*pow(2, index)); // index+log B
 }
 
-int OneChoiceServer::writeToKW(int index, prf_type keyVal, int pos)
+int OneChoiceSDdNoOMAPServer::writeToKW(int index, prf_type keyVal, int pos)
 {
 	int last = storage->writeToKW(index, keyVal, pos);
 	return last;
@@ -162,31 +162,31 @@ int OneChoiceServer::writeToKW(int index, prf_type keyVal, int pos)
 }
 
 
-void OneChoiceServer::destroy(int index, int instance)
+void OneChoiceSDdNoOMAPServer::destroy(int index, int instance)
 {
 	clear(index,instance);
 }
 
-void OneChoiceServer::resize(int index, int size)
+void OneChoiceSDdNoOMAPServer::resize(int index, int size)
 {
 	NEW[index].resize(size);
 }
-void OneChoiceServer::truncate(int index, int size, int filesize)
+void OneChoiceSDdNoOMAPServer::truncate(int index, int size, int filesize)
 {
 	storage->truncate(index,size,filesize);
 }
 
-vector<prf_type> OneChoiceServer::getElements(int index, int instance, int start, int end)
+vector<prf_type> OneChoiceSDdNoOMAPServer::getElements(int index, int instance, int start, int end)
 {
 	return storage->getElements(index, instance, start, end);
 }
 
-vector< prf_type> OneChoiceServer::getNEW(int index, int count, int size, bool NEW)
+vector< prf_type> OneChoiceSDdNoOMAPServer::getNEW(int index, int count, int size, bool NEW)
 {
 	return storage->getNEW(index, count, size, NEW);
 }
 
-void OneChoiceServer::putNEW(int index, int instance, vector<prf_type> sorted)//insertAll
+void OneChoiceSDdNoOMAPServer::putNEW(int index, int instance, vector<prf_type> sorted)//insertAll
 {
 	storage->clear(index,instance);
 	storage->insertAll(index, instance, sorted);

@@ -13,7 +13,7 @@
 #include "Server.h"
 #include "Utilities.h"
 #include "AES.hpp"
-#include "OneChoiceServer.h"
+#include "OneChoiceSDdNoOMAPServer.h"
 #include "OMAP.h"
 #include <unordered_map>
 
@@ -22,16 +22,16 @@ enum OP
     INS, DEL
 };
 
-class OneChoiceClient 
+class OneChoiceSDdNoOMAPClient 
 {
 private:
-    OneChoiceServer* server;
+    OneChoiceSDdNoOMAPServer* server;
     bool profile = false;
 
 public:
     vector<OMAP*> omaps;
-    virtual ~OneChoiceClient();
-    OneChoiceClient(int maxUpdate, bool inMemory, bool overwrite, bool profile);
+    virtual ~OneChoiceSDdNoOMAPClient();
+    OneChoiceSDdNoOMAPClient(int maxUpdate, bool inMemory, bool overwrite, bool profile);
     int totalCommunication = 0;
     vector<int> numberOfBins;
     vector<int> sizeOfEachBin;

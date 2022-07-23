@@ -11,7 +11,7 @@ using namespace std;
 DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite) 
 {
 	cout <<"=====================Running SDd+OneChoiceAllocation======================"<<endl;
-    L = new OneChoiceClient(N, inMemory, overwrite, true);
+    L = new OneChoiceSDdNoOMAPClient(N, inMemory, overwrite, true);
 	this->overwrite = overwrite;
    	this->deleteFiles = deleteFiles;
 	l = ceil((float)log2(N));

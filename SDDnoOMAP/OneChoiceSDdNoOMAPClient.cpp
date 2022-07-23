@@ -1,4 +1,4 @@
-#include "OneChoiceClient.h"
+#include "OneChoiceSDdNoOMAPClient.h"
 #include<string>
 #include<map>
 #include<vector>
@@ -6,12 +6,12 @@
 
 
 using namespace::std;
-OneChoiceClient::~OneChoiceClient() 
+OneChoiceSDdNoOMAPClient::~OneChoiceSDdNoOMAPClient() 
 {
     delete server;
 }
 
-OneChoiceClient::OneChoiceClient(int N,
+OneChoiceSDdNoOMAPClient::OneChoiceSDdNoOMAPClient(int N,
 		bool inMemory, bool overwrite, bool profile) 
 {
     this->profile = profile;
@@ -19,7 +19,7 @@ OneChoiceClient::OneChoiceClient(int N,
     memset(nullKey.data(), 0, AES_KEY_SIZE);
 	b = ceil((float)log2(B));
 	this->numOfIndices = l - b;
-    server = new OneChoiceServer(numOfIndices, inMemory, overwrite, profile);
+    server = new OneChoiceSDdNoOMAPServer(numOfIndices, inMemory, overwrite, profile);
     for (int i = 0; i <=numOfIndices; i++) 
 	{
 		int j = i + b;
@@ -76,7 +76,7 @@ int issortedC(vector<prf_type> A)
 	}
 	return 1;
 }
-vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword, unsigned char* key) 
+vector<prf_type> OneChoiceSDdNoOMAPClient::search(int index, int instance, string keyword, unsigned char* key) 
 {
     double searchPreparation = 0, searchDecryption = 0;
     if (profile) 
@@ -128,7 +128,7 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
     return finalRes;
 }
 
-vector<prf_type> OneChoiceClient::NIsearch(int index, int instance, string keyword, unsigned char* key) 
+vector<prf_type> OneChoiceSDdNoOMAPClient::NIsearch(int index, int instance, string keyword, unsigned char* key) 
 {
     double searchPreparation = 0, searchDecryption = 0;
     if (profile) 
@@ -167,7 +167,7 @@ vector<prf_type> OneChoiceClient::NIsearch(int index, int instance, string keywo
     return finalRes;
 }
 
-void OneChoiceClient::move(int index, int toInstance, int fromInstance)
+void OneChoiceSDdNoOMAPClient::move(int index, int toInstance, int fromInstance)
 {
 	//cout <<"move:("<<index<<","<<toInstance<<")<-("<<index<<","<<fromInstance<<")"<<endl;
 	server->clear(index, toInstance);
@@ -183,7 +183,7 @@ void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 	}
 }
 
-void OneChoiceClient::appendTokwCounter(int index, prf_type keyVal, unsigned char* key)
+void OneChoiceSDdNoOMAPClient::appendTokwCounter(int index, prf_type keyVal, unsigned char* key)
 {
 	exist[index][3] = true;
 	prf_type encKeyVal;
@@ -192,7 +192,7 @@ void OneChoiceClient::appendTokwCounter(int index, prf_type keyVal, unsigned cha
 	KWsize[index]=KWsize[index]+1;
 	//assert(last == KWsize[index]*AES_KEY_SIZE);
 }
-void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
+void OneChoiceSDdNoOMAPClient::append(int index, prf_type keyVal, unsigned char* key)
 {
 	exist[index][3] = true;
 	prf_type encKeyVal;
@@ -202,7 +202,7 @@ void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 	//assert(last == NEWsize[index]*AES_KEY_SIZE);
 }
 
-void OneChoiceClient::destroy(int index, int instance)
+void OneChoiceSDdNoOMAPClient::destroy(int index, int instance)
 {
     server->clear(index, instance);
     exist[index][instance] = false;
@@ -216,13 +216,13 @@ void OneChoiceClient::destroy(int index, int instance)
 		KWsize[index]=0;
 	}
 }
-void OneChoiceClient::resize(int index, int size)
+void OneChoiceSDdNoOMAPClient::resize(int index, int size)
 {
 	server->truncate(index,size, NEWsize[index]);
 	NEWsize[index]=size;
 }
 
-void OneChoiceClient::getBin(int index, int instance, int start, int end,
+void OneChoiceSDdNoOMAPClient::getBin(int index, int instance, int start, int end,
 							 unsigned char* key1, unsigned char* key2)
 {
 	assert(index>=1);
@@ -266,7 +266,7 @@ void OneChoiceClient::getBin(int index, int instance, int start, int end,
 		}
 	}
 }
-void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s, int r1, int r2)
+void OneChoiceSDdNoOMAPClient::addDummy(int index, int count, unsigned char* key , int s, int r1, int r2)
 {
 	cout<<"adding dummy at:"<<index<<":"<<NEWsize[index]<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<"s:"<<s<<endl;
 	assert(index>=1);
@@ -333,7 +333,7 @@ void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s,
 	}
 }
 
-void OneChoiceClient::pad(int index, int newSize, int r, unsigned char* key)
+void OneChoiceSDdNoOMAPClient::pad(int index, int newSize, int r, unsigned char* key)
 {
 	assert(index>=1);
 	int size = NEWsize[index];
@@ -354,13 +354,13 @@ void OneChoiceClient::pad(int index, int newSize, int r, unsigned char* key)
 	//updateCounters(index, key);
 }
 
-void OneChoiceClient::updateOMAP(int index, string keyword, unsigned char* key)
+void OneChoiceSDdNoOMAPClient::updateOMAP(int index, string keyword, unsigned char* key)
 {
 	int upCnt = numNEW[index];
 	string ob = omaps[index]->incrementCnt(getBid(keyword,upCnt));
 }
 
-void OneChoiceClient::updateHashTable(int index, unsigned char* key)
+void OneChoiceSDdNoOMAPClient::updateHashTable(int index, unsigned char* key)
 {
 	vector<prf_type> some = server->getNEW(index, 0, pow(2,index), false);
 	map <prf_type, prf_type> kcc;
@@ -384,7 +384,7 @@ void OneChoiceClient::updateHashTable(int index, unsigned char* key)
 	server->storeKwCounters(index, 3, kcc);
 
 }
-void OneChoiceClient::kwCount(int index, unsigned char* key, int count, int r1, int r2)
+void OneChoiceSDdNoOMAPClient::kwCount(int index, unsigned char* key, int count, int r1, int r2)
 {
 	int upCnt = numNEW[index];
 	int totalSteps = r2-r1+1;
@@ -426,7 +426,7 @@ void OneChoiceClient::kwCount(int index, unsigned char* key, int count, int r1, 
 }
 
 /*
-void OneChoiceClient::updateCounters(int index, unsigned char* key, int count, int r1, int r2)
+void OneChoiceSDdNoOMAPClient::updateCounters(int index, unsigned char* key, int count, int r1, int r2)
 {
 	//cout <<"updCo:("<<index<<")"<<endl;
 	int upCnt = numNEW[index];
@@ -459,7 +459,7 @@ void OneChoiceClient::updateCounters(int index, unsigned char* key, int count, i
 }
 */
 
-void OneChoiceClient::updateCounters(int index, unsigned char* key)
+void OneChoiceSDdNoOMAPClient::updateCounters(int index, unsigned char* key)
 {
 	int upCnt = numNEW[index];
 	vector<prf_type> all= server->getNEW(index, 0, NEWsize[index], true);
@@ -488,7 +488,7 @@ void OneChoiceClient::updateCounters(int index, unsigned char* key)
 }
 
 
-Bid OneChoiceClient::getBid(string input, int cnt) 
+Bid OneChoiceSDdNoOMAPClient::getBid(string input, int cnt) 
 {
     std::array< uint8_t, ID_SIZE> value;
     std::fill(value.begin(), value.end(), 0);
@@ -497,7 +497,7 @@ Bid OneChoiceClient::getBid(string input, int cnt)
     Bid res(value);
     return res;
 }
-int OneChoiceClient::hashKey(string w, int cnt, int index, unsigned char* key)
+int OneChoiceSDdNoOMAPClient::hashKey(string w, int cnt, int index, unsigned char* key)
 {
 	if(w=="")
 		return INF;
@@ -611,7 +611,7 @@ vector<int> remDup(vector<int> v)
     v.resize(std::distance(v.begin(), ip));
 	return v;
 }
-bool OneChoiceClient::sorted(int index, unsigned char* key)
+bool OneChoiceSDdNoOMAPClient::sorted(int index, unsigned char* key)
 {
 	vector<prf_type> els = server->getNEW(index, 0,NEWsize[index], true);
 	vector<prf_type> decoded;
@@ -623,7 +623,7 @@ bool OneChoiceClient::sorted(int index, unsigned char* key)
 		return issorted(decoded);
 	}
 }
-void OneChoiceClient::deAmortizedBitSortC(int step, int count, int size, int index, unsigned char* key)
+void OneChoiceSDdNoOMAPClient::deAmortizedBitSortC(int step, int count, int size, int index, unsigned char* key)
 {
 	assert(NEWsize[index]==KWsize[index]);
 	vector<int> curMem = getSeq(step, count, size);
@@ -665,7 +665,7 @@ void OneChoiceClient::deAmortizedBitSortC(int step, int count, int size, int ind
 
 }
 
-void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int index, unsigned char* key)
+void OneChoiceSDdNoOMAPClient::deAmortizedBitSort(int step, int count, int size, int index, unsigned char* key)
 {
 	assert(NEWsize[index]==KWsize[index]);
 	vector<int> curMem = getSeq(step, count, size);
@@ -734,7 +734,7 @@ void OneChoiceClient::deAmortizedBitSort(int step, int count, int size, int inde
 return A;
 }
 */
-void OneChoiceClient::nonOblSort(int index, unsigned char* key)
+void OneChoiceSDdNoOMAPClient::nonOblSort(int index, unsigned char* key)
 {
 	vector<prf_type> encNEWi = server->getNEW(index,0, NEWsize[index],true);
 	int newSize = pow(2,floor((float)log2(2*indexSize[index]+2*indexSize[index-1])));
@@ -783,23 +783,23 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 	//	cout <<"ALREADY SORTED:"<<index<<endl;
 	//assert(issorted(encNEWi));
 }
-int OneChoiceClient::getNEWsize(int index)
+int OneChoiceSDdNoOMAPClient::getNEWsize(int index)
 {
 	return NEWsize[index];
 }
 
-void OneChoiceClient::Phase1()
+void OneChoiceSDdNoOMAPClient::Phase1()
 {
 }
-void OneChoiceClient::Phase2()
+void OneChoiceSDdNoOMAPClient::Phase2()
 {
 }
-void OneChoiceClient::LinearScanBinCount()
+void OneChoiceSDdNoOMAPClient::LinearScanBinCount()
 {
 }
-void OneChoiceClient::addDummy()
+void OneChoiceSDdNoOMAPClient::addDummy()
 {
 }
-void OneChoiceClient::deAmortizedBitSort()
+void OneChoiceSDdNoOMAPClient::deAmortizedBitSort()
 {
 }
