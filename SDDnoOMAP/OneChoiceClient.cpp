@@ -190,7 +190,7 @@ void OneChoiceClient::appendTokwCounter(int index, prf_type keyVal, unsigned cha
 	encKeyVal = Utilities::encode(keyVal.data(), key);
 	int last = server->writeToKW(index, encKeyVal, KWsize[index]);
 	KWsize[index]=KWsize[index]+1;
-	assert(last == KWsize[index]*AES_KEY_SIZE);
+	//assert(last == KWsize[index]*AES_KEY_SIZE);
 }
 void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 {
@@ -199,7 +199,7 @@ void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 	encKeyVal = Utilities::encode(keyVal.data(), key);
 	int last = server->writeToNEW(index, encKeyVal, NEWsize[index]);
 	NEWsize[index]=NEWsize[index]+1;
-	assert(last == NEWsize[index]*AES_KEY_SIZE);
+	//assert(last == NEWsize[index]*AES_KEY_SIZE);
 }
 
 void OneChoiceClient::destroy(int index, int instance)
@@ -467,7 +467,6 @@ void OneChoiceClient::updateCounters(int index, unsigned char* key)
 	for(auto c: all)
 	{
 	    prf_type plaintext;// = c;
-		cout <<"decoding:"<<endl;
 	    Utilities::decode(c, plaintext, key);
 	    string w((char*) plaintext.data());
 		if(w!="")
@@ -787,4 +786,20 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 int OneChoiceClient::getNEWsize(int index)
 {
 	return NEWsize[index];
+}
+
+void OneChoiceClient::Phase1()
+{
+}
+void OneChoiceClient::Phase2()
+{
+}
+void OneChoiceClient::LinearScanBinCount()
+{
+}
+void OneChoiceClient::addDummy()
+{
+}
+void OneChoiceClient::deAmortizedBitSort()
+{
 }

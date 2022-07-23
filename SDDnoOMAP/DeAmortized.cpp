@@ -22,8 +22,8 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 	{
 		int j = i + b;
         int curNumberOfBins = j > 1 ? 
-			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
-        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
+			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : pow(2,j);
+        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : 1;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		int is = curNumberOfBins*curSizeOfEachBin;
@@ -110,48 +110,48 @@ float by(int a, int b)
 
 void DeAmortized::update(OP op, string keyword, int ind, bool setup) 
 {
-	int prof = 0;
 	for(int i=numOfIndices; i>0; i--)
 	{
-		int s = i>1? 6:2;
-		int j = b+i;
-		int mi = numberOfBins[j]; 
-		int r1 = ceil((float)(2*floor(by(indexSize[i-1],s))));
-		int r2 = r1 + ceil(by(mi,s));
-		int r3 = r1 + ceil(by(mi,s));
-		assert(r1<r2);
-		assert(r2<=pow(2,j));
-
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
-			if(cnt[i] <= r1)
+			int t = numberOfBins[i-1];
+			int m = numberOfBins[i];
+			if(i>3)
 			{
-				L->getBin(i, 0, cnt[i]*(s/2),(s/2), keys[i-1][0], keys[i][3]);
-				L->getBin(i, 1, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
+				assert(2*t+2*m<pow(2,i));
+				if(0 <= cnt[i] && cnt[i] < t)
+				{
+					L->Phase1();
+				}
+				else if(t <= cnt[i] && cnt[i] < 2*t)
+				{
+					L->Phase2();
+				}
+				else if (2*t <= cnt[i] && cnt[i] < 2*t+m)
+				{
+					L->LinearScanBinCount();
+				}
+				else if(2*t+m <= cnt[i] && cnt[i] < 2*t+2*m)
+				{
+					L->addDummy();
+				}
+				else if (2*t+2*m <= cnt[i] && cnt[i] <pow(2,i))
+				{
+					L->deAmortizedBitSort();
+				}
 			}
-			if (r1 <=cnt[i] &&  cnt[i]<= r2)
+			else if(i<=3)
 			{
-				L->addDummy(i, (cnt[i]-r1), keys[i][3], s, r1, r2);
-			}
-			if(r2<=cnt[i] && cnt[i] <= r3)
-			{
-				L->kwCount(i, keys[i][3], (cnt[i]-r2), r2, r3);
-			}
-			if (r3 <= cnt[i] && cnt[i] <=pow(2,j))
-			{
-				int count = cnt[i]-r3;
-				int times = pow(2,j)-r3;
-				int N = L->getNEWsize(i);
-				int totStepsi = 2*ceil(by(N*log2(N)*(log2(N)+1),4));
-				int stepi = 2*ceil(by(by(totStepsi, times),2));
-				L->deAmortizedBitSortC(stepi, count, N, i, keys[i][3]);
-				L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
+				L->Phase1();
+				L->Phase2();
+				L->LinearScanBinCount();
+				L->addDummy();
+				L->deAmortizedBitSort();
 			}
 			cnt[i] = cnt[i]+1;
-			if(cnt[i] == pow(2,j))
+			if(cnt[i] == pow(2,i))
 			{
-				assert(L->sorted(i,keys[i][3]));
-				L->updateHashTable(i, keys[i][3]);
+				//L->updateHashTable(i, keys[i][3]);
 				L->resize(i,indexSize[i]); 
 				L->move(i-1,0,2); 
 				updateKey(i-1,0,2);
@@ -184,30 +184,25 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	L->append(0, keyVal, keys[0][3]);
 	L->updateOMAP(0,keyword, keys[0][3]);
 	L->updateCounters(0, keys[0][3]);
-	//cnt[0]=cnt[0]+1;
-	//if(cnt[0]==B)
-	//{
-		if(!(L->exist[0][0]))
-		{
-			L->move(0,0,3);
-			updateKey(0,0,3);
-		}
-		else if(!(L->exist[0][1]))
-		{
-			L->move(0,1,3);
-			updateKey(0,1,3);
-		}
-		else
-		{
-			L->move(0,2,3);
-			updateKey(0,2,3);
-		}
-		//L->destroy(0,3);
-       	unsigned char* newKey = new unsigned char[16];
-       	memset(newKey, 0, 16);
-       	keys[0][3] = newKey;
-	//	cnt[0] = 0;
-	//}
+	if(!(L->exist[0][0]))
+	{
+		L->move(0,0,3);
+		updateKey(0,0,3);
+	}
+	else if(!(L->exist[0][1]))
+	{
+		L->move(0,1,3);
+		updateKey(0,1,3);
+	}
+	else
+	{
+		L->move(0,2,3);
+		updateKey(0,2,3);
+	}
+	//L->destroy(0,3);
+    unsigned char* newKey = new unsigned char[16];
+    memset(newKey, 0, 16);
+    keys[0][3] = newKey;
     updateCounter++;
 }
 

@@ -113,7 +113,8 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	int prof = 0;
 	for(int i=numOfIndices; i>0; i--)
 	{
-		int s = i>1? 6:2;
+		//int s = i>1? 6:2;
+		int s = 2*sizeOfEachBin[i-1];
 		int j = b+i;
 		int mi = numberOfBins[j]; 
 		int r1 = ceil((float)(2*floor(by(indexSize[i-1],s))));

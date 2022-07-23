@@ -31,6 +31,7 @@ private:
     inline prf_type bitwiseXOR(int input1, int op, prf_type input2);
     inline prf_type bitwiseXOR(prf_type input1, prf_type input2);
     inline void getAESRandomValue(unsigned char* keyword, int op, int srcCnt, int counter, unsigned char* result);
+	vector<vector<bool>> flags;
     bool deleteFiles;
     vector< vector<unsigned char*> > keys;
     vector<int> cnt;

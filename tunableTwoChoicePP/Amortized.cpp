@@ -119,8 +119,8 @@ void Amortized::update(OP op, string keyword, long ind, bool setup)
         unsigned char* newKey = new unsigned char[16];
         memset(newKey, 0, 16);
         keys[rm0] = newKey;
-        //L->setup(rm0, previousData, newKey);
-        L->setup2(rm0, previousData, newKey);
+        L->setup(rm0, previousData, newKey);
+        //L->setup2(rm0, previousData, newKey);
         totalUpdateCommSize += L->totalCommunication;
     }
 }

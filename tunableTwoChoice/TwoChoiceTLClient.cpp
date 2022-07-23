@@ -29,7 +29,7 @@ TwoChoiceTLClient::TwoChoiceTLClient(long numOfDataSets, bool inMemory, bool ove
 	{
         long curNumberOfBins = j > 1 ? 
 			(long) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
-        long curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
+        long curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*(log2(log2(pow(2, j))))) : pow(2,j);
         nB.push_back(curNumberOfBins);
         sEB.push_back(curSizeOfEachBin);
     }

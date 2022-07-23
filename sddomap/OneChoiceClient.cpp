@@ -14,6 +14,8 @@ OneChoiceClient::~OneChoiceClient()
 OneChoiceClient::OneChoiceClient(int N,
 		bool inMemory, bool overwrite, bool profile) 
 {
+	cout <<"s=size of bin"<<endl;
+	sleep(4);
     this->profile = profile;
 	int l = ceil((float)log2(N));
     memset(nullKey.data(), 0, AES_KEY_SIZE);

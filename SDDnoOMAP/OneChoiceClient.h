@@ -73,6 +73,13 @@ public:
 	void kwCount(int index, unsigned char* key, int count, int r1, int r2);
 	void updateOMAP(int index, string keyword, unsigned char* key);
 	bool sorted(int index, unsigned char* key);
+
+	///SDd without OMAP
+	void Phase1();
+	void Phase2();
+	void LinearScanBinCount();
+	void addDummy();
+	void deAmortizedBitSort();
 };
 
 #endif /* ONECHOICECLIENT_H */

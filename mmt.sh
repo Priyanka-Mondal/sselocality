@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/sddomap/onechoice-sdd configs/mconfig.txt |tee results/v1.txt 
+dist/Debug/GNU-Linux/SDDnoOMAP/onechoice-sddn configs/mconfig.txt |tee results/v1.txt 
