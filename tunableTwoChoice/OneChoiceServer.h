@@ -15,6 +15,7 @@ public:
     void clear(long index);
     virtual ~OneChoiceServer();
     void storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers);
+	void storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun);
     vector<prf_type> search(long dataIndex, prf_type token, long  keywordCnt);
     vector<prf_type> getAllData(long dataIndex);
 

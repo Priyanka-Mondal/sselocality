@@ -8,7 +8,7 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, long dataIndex, string fileAdd
     this->dataIndex = dataIndex;
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-   	for (long j = 0; j <dataIndex; j++) 
+   	for (long j = 0; j <=dataIndex; j++) 
 	{
         long curNumberOfBins = j > 1 ? 
 			(long) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
@@ -43,6 +43,35 @@ bool OneChoiceStorage::setup(bool overwrite)
 
 }
 
+void OneChoiceStorage::insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun) {
+            if (append && !firstRun) 
+			{
+                fstream file(filenames[index].c_str(), ios::binary | std::ios::app);
+                if (file.fail()) {
+                    cerr << "Error in insert: " << strerror(errno);
+                }
+                for (auto item : ciphers) 
+				{
+                    for (auto pair : item) {
+                        file.write((char*) pair.data(), AES_KEY_SIZE);
+                    }
+                }
+                file.close();
+            } 
+			else 
+			{
+                fstream file(filenames[index].c_str(), ios::binary | ios::out);
+                if (file.fail()) {
+                    cerr << "Error in insert: " << strerror(errno);
+                }
+                for (auto item : ciphers) {
+                    for (auto pair : item) {
+                        file.write((char*) pair.data(), AES_KEY_SIZE);
+                    }
+                }
+                file.close();
+            }
+}
 void OneChoiceStorage::insertAll(long index, vector<vector<prf_type > > ciphers) 
 {
      fstream file(filenames[index].c_str(), ios::binary | ios::out);
@@ -79,8 +108,7 @@ vector<prf_type> OneChoiceStorage::getAllData(long index)
 	{
         prf_type tmp;
         std::copy(keyValues + i*AES_KEY_SIZE, keyValues + i * AES_KEY_SIZE + AES_KEY_SIZE, tmp.begin());
-        if (tmp != nullKey) 
-            results.push_back(tmp);
+        results.push_back(tmp);
     }
     delete keyValues;
     return results;
@@ -119,8 +147,7 @@ vector<prf_type> OneChoiceStorage::find(long index, prf_type mapKey, long cnt)
 		{
             prf_type restmp;
             std::copy(keyValues + i * AES_KEY_SIZE , keyValues + i * AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
-            if (restmp != nullKey) 
-                results.push_back(restmp);
+            results.push_back(restmp);
         }
     } 
 	else 
@@ -150,8 +177,7 @@ vector<prf_type> OneChoiceStorage::find(long index, prf_type mapKey, long cnt)
 		{
             prf_type restmp;
             std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, restmp.begin());
-            if (restmp != nullKey) 
-                results.push_back(restmp);
+            results.push_back(restmp);
         }
         if (totalReadLength > 0) 
 		{
@@ -165,8 +191,7 @@ vector<prf_type> OneChoiceStorage::find(long index, prf_type mapKey, long cnt)
 			{
                 prf_type restmp;
                 std::copy(keyValues + i * AES_KEY_SIZE, keyValues + i * AES_KEY_SIZE + AES_KEY_SIZE, restmp.begin());
-                if (restmp != nullKey) 
-                    results.push_back(restmp);
+                results.push_back(restmp);
             }
         }
     }

@@ -39,6 +39,7 @@ public:
     OneChoiceStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
     void insertAll(long dataIndex, vector<vector< prf_type> > ciphers);
+	void insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun);
     vector<prf_type> getAllData(long dataIndex);
     void clear(long index);
     vector<prf_type> find(long index, prf_type mapKey, long cnt);

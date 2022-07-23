@@ -10,7 +10,7 @@
 #include <sstream>
 #include "Server.h"
 #include "Utilities.h"
-#include "TwoChoiceClient.h"
+#include "TwoChoiceTLClient.h"
 #include "AES.hpp"
 #include <set>
 #include <unordered_map>
@@ -28,7 +28,7 @@ private:
     vector<unsigned char*> keys;
     //        AmortizedBASClient* L;
     //OneChoiceClient* L;
-    TwoChoiceClient* L;
+    TwoChoiceTLClient* L;
     long updateCounter = 0;
     double totalUpdateCommSize;
     double totalSearchCommSize;

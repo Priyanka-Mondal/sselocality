@@ -20,7 +20,7 @@
 
 using namespace std;
 
-class TwoChoiceStorage {
+class TwoChoiceTLStorage {
 private:
     bool inMemoryStorage;
     bool profile = false;
@@ -37,14 +37,15 @@ private:
 public:
     long readBytes = 0;
     long SeekG = 0;
-    TwoChoiceStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
+    TwoChoiceTLStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
     void insertAll(long dataIndex, vector<vector<prf_type> > ciphers);
+	void insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun);
     void insertStash(long dataIndex, vector<prf_type> ciphers);
     vector<prf_type> getAllData(long dataIndex);
     void clear(long index);
     vector<prf_type> find(long index, prf_type mapKey, long cnt);
-    virtual ~TwoChoiceStorage();
+    virtual ~TwoChoiceTLStorage();
 	void printStashSizes();
 };
 

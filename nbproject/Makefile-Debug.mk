@@ -103,9 +103,9 @@ V2OBJECTFILES= \
 	${OBJECTDIR}/${V2}/Amortized.o \
 	${OBJECTDIR}/${V2}/OneChoiceServer.o \
 	${OBJECTDIR}/${V2}/OneChoiceStorage.o \
-	${OBJECTDIR}/${V2}/TwoChoiceClient.o \
-	${OBJECTDIR}/${V2}/TwoChoiceServer.o \
-	${OBJECTDIR}/${V2}/TwoChoiceStorage.o \
+	${OBJECTDIR}/${V2}/TwoChoiceTLClient.o \
+	${OBJECTDIR}/${V2}/TwoChoiceTLServer.o \
+	${OBJECTDIR}/${V2}/TwoChoiceTLStorage.o \
 	${OBJECTDIR}/${V2}/Server.o \
 	${OBJECTDIR}/${V2}/Storage.o \
 	${OBJECTDIR}/${V2}/Utilities.o \
@@ -350,20 +350,20 @@ ${V2OBJECTDIR}/OneChoiceStorage.o: ${V2}/OneChoiceStorage.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/OneChoiceStorage.o ${V2}/OneChoiceStorage.cpp
 
-${OBJECTDIR}/${V2}/TwoChoiceClient.o: ${V2}/TwoChoiceClient.cpp
+${OBJECTDIR}/${V2}/TwoChoiceTLClient.o: ${V2}/TwoChoiceTLClient.cpp
 	${MKDIR} -p ${OBJECTDIR}/${V2}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceClient.o ${V2}/TwoChoiceClient.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceTLClient.o ${V2}/TwoChoiceTLClient.cpp
 
-${OBJECTDIR}/${V2}/TwoChoiceServer.o: ${V2}/TwoChoiceServer.cpp
+${OBJECTDIR}/${V2}/TwoChoiceTLServer.o: ${V2}/TwoChoiceTLServer.cpp
 	${MKDIR} -p ${OBJECTDIR}/${V2}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceServer.o ${V2}/TwoChoiceServer.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceTLServer.o ${V2}/TwoChoiceTLServer.cpp
 
-${OBJECTDIR}/${V2}/TwoChoiceStorage.o: ${V2}/TwoChoiceStorage.cpp
+${OBJECTDIR}/${V2}/TwoChoiceTLStorage.o: ${V2}/TwoChoiceTLStorage.cpp
 	${MKDIR} -p ${OBJECTDIR}/${V2}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceStorage.o ${V2}/TwoChoiceStorage.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceTLStorage.o ${V2}/TwoChoiceTLStorage.cpp
 
 ${OBJECTDIR}/${V2}/Server.o: ${V2}/Server.cpp
 	${MKDIR} -p ${OBJECTDIR}/${V2}

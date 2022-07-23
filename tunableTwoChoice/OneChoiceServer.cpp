@@ -14,6 +14,9 @@ void OneChoiceServer::storeCiphers(long dataIndex, vector<vector<prf_type>> ciph
 {
     storage->insertAll(dataIndex, ciphers);
 }
+void OneChoiceServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun) {
+    storage->insertAll(dataIndex, ciphers, true, firstRun);
+}
 
 vector<prf_type> OneChoiceServer::search(long dataIndex, prf_type token, long keywordCnt) 
 {

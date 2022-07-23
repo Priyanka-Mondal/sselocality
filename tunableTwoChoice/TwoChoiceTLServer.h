@@ -1,28 +1,29 @@
 #ifndef TWOCHOICESERVER_H
 #define TWOCHOICESERVER_H
 
-#include "TwoChoiceStorage.h"
+#include "TwoChoiceTLStorage.h"
 #include "Storage.h"
 
-class TwoChoiceServer {
+class TwoChoiceTLServer {
 private:
-    TwoChoiceStorage* storage;
-    Storage* keyworkCounters;
+    TwoChoiceTLStorage* storage;
+    Storage* keywordCounters;
     void getAESRandomValue(unsigned char* keyword, long cnt, unsigned char* result);
     long numberOfBins, sizeOfEachBin;
     bool profile = false;
 
 public:
-    TwoChoiceServer(long dataIndex, bool inMemory, bool overwrite, bool profile);
+    TwoChoiceTLServer(long dataIndex, bool inMemory, bool overwrite, bool profile);
     void clear(long index);
-    virtual ~TwoChoiceServer();
+    virtual ~TwoChoiceTLServer();
     void storeCiphers(long dataIndex, vector<vector<prf_type>> ciphers, map<prf_type, prf_type> keywordCounters);
     vector<prf_type> search(long dataIndex, prf_type tokkw, prf_type token, long & keywordCnt, long num);
 	vector<prf_type> searchLoc(long dataIndex, prf_type hashtoken, long num) ;
 	long getCounter(long dataIndex, prf_type tokkw);
     vector<prf_type> getAllData(long dataIndex);
     vector<prf_type> getStash(long dataIndex);
-    //vector<prf_type> newsearch(long dataIndex , prf_type hashtoken, long keywordCnt, long pos);
+    void storeCiphers(long dataIndex, vector<vector<prf_type > > ciphers,  bool firstrun);
+	void storeKeywordCounters(long dataIndex, map<prf_type, prf_type> kwCounters);
 	void printStashSizes();
 
 };

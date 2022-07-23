@@ -10,7 +10,7 @@ using namespace std;
 
 Amortized::Amortized(long N, bool inMemory, bool overwrite) 
 {
-    L = new TwoChoiceClient(ceil(log2(N)), inMemory, overwrite, profile);
+    L = new TwoChoiceTLClient(ceil(log2(N)), inMemory, overwrite, profile);
     for (long i = 0; i < ceil(log2(N)); i++) 
         keys.push_back(NULL);
     for (long i = 0; i < localSize; i++) 
@@ -66,7 +66,7 @@ void Amortized::update(OP op, string keyword, long ind, bool setup)
     L->totalCommunication = 0;
     long rm0 = log2((~updateCounter & (updateCounter + 1)));
     updateCounter++;
-    map<string, vector<prf_type> > previousData;
+    unordered_map<string, vector<prf_type> > previousData;
 
     for (long i = 0; i < min(rm0, localSize); i++) 
     {
@@ -87,7 +87,8 @@ void Amortized::update(OP op, string keyword, long ind, bool setup)
         for (auto item : curData) 
 	{
             string curKeyword((char*) item.data());
-	    if (curKeyword == "") cout<<"[[curKeyword NULL]]"<<endl;
+	    if (curKeyword == "") 
+			continue;
             if (previousData.count(curKeyword) == 0) 
 	    {
                 previousData[curKeyword] = vector < prf_type>();
@@ -121,6 +122,7 @@ void Amortized::update(OP op, string keyword, long ind, bool setup)
         memset(newKey, 0, 16);
         keys[rm0] = newKey;
         L->setup(rm0, previousData, newKey);
+        //L->setup2(rm0, previousData, newKey);
         totalUpdateCommSize += L->totalCommunication;
     }
 }
@@ -177,7 +179,7 @@ vector<long> Amortized::search(string keyword)
 			remove[id] = 1;
 		add[id]=add[id]+remove[id];
     }
-	cout <<"add:"<<add.size()<<endl;
+	cout<<"add:"<<add.size()<<endl;
     for (auto const& cur : add) 
     {
         if (cur.second<0) 

@@ -75,12 +75,12 @@ int main(int argc, char** argv)
 		long j;
         for (j = 0; j < cur->second.size(); j++) 
 		{
-                    client.update(OP::INS, cur->first, cur->second[j], true);
-             if (cnt % 1000 == 0) 
-		     {
-                   cout << "Initial Insertions::" << cnt << "/" << to_string(testCases[i].N) << endl;
-             }
 			cnt++;
+                   cout <<endl<< "Initial Insertions::" << cnt << "/" << to_string(testCases[i].N) << endl;
+                    client.update(OP::INS, cur->first, cur->second[j], true);
+             //if (cnt % 1000 == 0) 
+		     {
+             }
          }
 	        //cout <<" SIZE of file ids:"<<j<<"/"<<cur->second.size()<<endl;
             }
