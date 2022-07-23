@@ -281,7 +281,7 @@ vector<vector<prf_type> > TwoChoiceTLClient::convertTmpCiphersToFinalCipher(vect
         string keyword = KV.first.first;
         long cnt = KV.first.second;
         tmp_prf_type value = KV.second;
-        long ind = *(long*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
+        int ind = *(int*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
         byte op = *(byte*) (&(value.data()[TMP_AES_KEY_SIZE - 6]));
 
         if (cnt == -1) {
@@ -294,7 +294,7 @@ vector<vector<prf_type> > TwoChoiceTLClient::convertTmpCiphersToFinalCipher(vect
             prf_type newvalue;
             std::fill(newvalue.begin(), newvalue.end(), 0);
             std::copy(keyword.begin(), keyword.end(), newvalue.begin());
-            *(long*) (&(newvalue.data()[AES_KEY_SIZE - 5])) = ind;
+            *(int*) (&(newvalue.data()[AES_KEY_SIZE - 5])) = ind;
             newvalue.data()[AES_KEY_SIZE - 6] = op;
 
             prf_type mapValue;

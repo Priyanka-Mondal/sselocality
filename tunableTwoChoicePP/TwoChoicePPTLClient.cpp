@@ -197,6 +197,7 @@ void TwoChoicePPTLClient::writeToCuckooHT2(long index, long size, string keyword
 }
 
 void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_type> > pairs, unsigned char* key) {
+	cout <<"setup2"<<endl;
     exist[index] = true;
     vector<vector<pair<pair<string, long>, tmp_prf_type> > > ciphers;
     for (long i = 0; i < numberOfBins[index]; i++) {
@@ -548,7 +549,7 @@ vector<vector<prf_type> > TwoChoicePPTLClient::convertTmpCiphersToFinalCipher(ve
         string keyword = KV.first.first;
         long cnt = KV.first.second;
         tmp_prf_type value = KV.second;
-        long ind = *(long*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
+        int ind = *(int*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
         byte op = *(byte*) (&(value.data()[TMP_AES_KEY_SIZE - 6]));
 
         if (cnt == -1) {

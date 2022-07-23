@@ -104,7 +104,7 @@ void Amortized::update(OP op, string keyword, long ind, bool setup)
     prf_type value;
     std::fill(value.begin(), value.end(), 0);
     std::copy(keyword.begin(), keyword.end(), value.begin());
-    *(long*) (&(value.data()[AES_KEY_SIZE - 5])) = ind;
+    *(int*) (&(value.data()[AES_KEY_SIZE - 5])) = ind;
     value.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);
 
     if (previousData.count(keyword) == 0) 
@@ -121,8 +121,8 @@ void Amortized::update(OP op, string keyword, long ind, bool setup)
         unsigned char* newKey = new unsigned char[16];
         memset(newKey, 0, 16);
         keys[rm0] = newKey;
-        L->setup(rm0, previousData, newKey);
-        //L->setup2(rm0, previousData, newKey);
+        //L->setup(rm0, previousData, newKey);
+        L->setup2(rm0, previousData, newKey);
         totalUpdateCommSize += L->totalCommunication;
     }
 }
