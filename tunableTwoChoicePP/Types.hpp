@@ -6,7 +6,7 @@
 #include <iostream>
 
 #define USE_XXL 0
-#define LOC 1
+#define LOC 5
 // The main type for passing around raw file data
 #define ID_SIZE 16
 

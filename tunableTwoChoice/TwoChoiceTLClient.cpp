@@ -10,7 +10,7 @@ TwoChoiceTLClient::~TwoChoiceTLClient()
 
 TwoChoiceTLClient::TwoChoiceTLClient(long numOfDataSets, bool inMemory, bool overwrite, bool profile) 
 {
-	cout <<"======RUNNING SDa+TwoChoice+(OneChoice version 2)(long)========LOCALITY:"<<LOC<<endl;
+	cout <<"======RUNNING SDa+TwoChoice+(+OneChoice version 2)(long)==TUNABLE LOCALITY:"<<LOC<<endl;
 	this->profile = profile;
 	server = new TwoChoiceTLServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);

@@ -13,7 +13,7 @@ TwoChoicePPTLClient::TwoChoicePPTLClient(long numOfDataSets, bool inMemory, bool
 	this->profile = profile;
 	server = new TwoChoicePPTLServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
-	cout <<"===================RUNNING SDa+TwoChoicePLUSPLUS version 2 (long) ====LOCALITY="<<LOC<<endl;
+	cout <<"=============RUNNING SDa+TwoChoicePLUSPLUS version 2 (long) ====TUNABLE LOCALITY="<<LOC<<endl;
 	memset(nullKey.data(), 0, AES_KEY_SIZE);
 	for (long i = 0; i < numOfDataSets; i++) //why not <=
 	{
@@ -583,9 +583,7 @@ vector<prf_type> TwoChoicePPTLClient::searchLoc(long index, string keyword, unsi
 	prf_type hashtoken;
 	prf_type token = Utilities::encode(keyword, key);
 	long keywordCnt = server->getCounter(index,token);
-	if(keywordCnt>0)
-	{
-	cout <<"keyWordCounter:["<<keywordCnt<<"]"<<endl;;
+	//cout <<"keyWordCounter:["<<keywordCnt<<"]"<<endl;;
 	vector<prf_type> ciphers;
 	ciphers.resize(0);
 	vector<prf_type> oneChoiceCiphers;
@@ -675,15 +673,14 @@ vector<prf_type> TwoChoicePPTLClient::searchLoc(long index, string keyword, unsi
 					}
 				}
 				totalCommunication += ciphers.size()* sizeof(prf_type);
-		cout <<index<<": localfinalRes:"<<localfinalRes.size()<<" localpss:"<<localpss<<" ns:"<<newsize<<" ";
-				cout<<"from 2 choice LOC t:"<< t<<" s:"<<s<<" :"<<finalRes.size()-f1<<" cc:"<<ciphers.size()<<endl;
+		//cout <<index<<":localfinal:"<<localfinalRes.size()<<" localpss:"<<localpss<<" ns:"<<newsize<<" ";
+		//		cout<<" t:"<< t<<" s:"<<s<<" :"<<finalRes.size()-f1<<" cc:"<<ciphers.size()<<endl;
 				f1 = finalRes.size();
 			}
 		}
-	}
-	long tableNum = (long)ceil(log2(keywordCnt));
 	if(keywordCnt>0)
 	{
+		long tableNum = (long)ceil(log2(keywordCnt));
 		string newkeyword = keyword;
 		newkeyword = newkeyword.append("0");
 		prf_type hashtoken1 = Utilities::encode(newkeyword, key);
