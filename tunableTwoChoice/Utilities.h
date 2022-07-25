@@ -222,19 +222,19 @@ public:
         getline(infile, tmp);
         overwrite = (tmp == "true") ? true : false;
         getline(infile, tmp);
-        long totalTests = stoi(tmp);
-        for (long i = 0; i < totalTests; i++) 
+        int totalTests = stoi(tmp);
+        for (int i = 0; i < totalTests; i++) 
 	{
             TC<T> testCase;
             getline(infile, tmp);
-			long N = stoi(tmp);
-			testCase.N = pow(2, (long)floor((float)log2(N)));
+			int N = stoi(tmp);
+			testCase.N = pow(2, (int)floor((float)log2(N)));
 			std::cout <<"test:"<<testCase.N<<endl;
             getline(infile, tmp);
             testCase.K = stoi(tmp);
             getline(infile, tmp);
-            long qNum = stoi(tmp); //#of queries
-            for (long i = 0; i < qNum; i++) 
+            int qNum = stoi(tmp); //#of queries
+            for (int i = 0; i < qNum; i++) 
 	    {
                 getline(infile, tmp);
                 testCase.Qs.push_back(stoi(tmp));
@@ -301,12 +301,12 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
             for (uint j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
 	    {
                 std::vector<T> files;
-		long sz=rand()%((long)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
-		//sz = pow(2, (long)ceil(log2(sz)));
+		int sz=rand()%((int)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
+		//sz = pow(2, (int)ceil(log2(sz)));
                 //for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
 		for(uint k =0; k<sz;k++)
 		{
-                    long fileName = ((rand() % 10000000)) + 10000000;
+                    int fileName = ((rand() % 10000000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }
@@ -365,7 +365,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, uint keyw
                 std::vector<T> files;
                 for (uint k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
 		{
-                    long fileName = ((rand() % 1000)) + 10000000;
+                    int fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }

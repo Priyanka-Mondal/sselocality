@@ -509,8 +509,9 @@ vector<prf_type> TwoChoiceTLClient::search(long index, string keyword, unsigned 
 	}
 	if(keywordCnt>0)
 	{
+		cout <<"kw:"<<keywordCnt<<" index:"<<index<<endl;
 		if(finalRes.size()>0)
-			cout <<index<<": retrieved from One choice:"<<finalRes.size()<<endl;
+			cout <<" retrieved from One choice:"<<finalRes.size()<<endl;
 		int f1 = finalRes.size();
 		long times = ceil((float) keywordCnt/(float) mpl);
 		if(times>LOC)
@@ -561,7 +562,7 @@ vector<prf_type> TwoChoiceTLClient::search(long index, string keyword, unsigned 
 				 			localfinalRes.push_back(plaintext);
 				 			finalRes.push_back(plaintext);
 							flag++;
-        					long id = *(long*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
+        					int id = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
 							int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]);
 				 		}
 					}
