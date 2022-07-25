@@ -15,6 +15,7 @@ std::map<std::string, std::ofstream*> Utilities::handlers;
 std::map<int, double> timehist;
 unsigned char Utilities::key[16];
 unsigned char Utilities::iv[16];
+std::string Utilities::rootAddress ="/tmp/";
 
 Utilities::Utilities() {
     memset(key, 0x00, 16);

@@ -1,5 +1,5 @@
-#ifndef BAS_H
-#define BAS_H
+#ifndef AMORTIZE_H
+#define AMORTIZE_H
 
 #include <string>
 #include <map>
@@ -9,7 +9,7 @@
 #include <iostream>
 #include <sstream>
 #include "Utilities.h"
-#include "TwoChoicePPTLClient.h"
+#include "TwoChoicePPWithTunableLocalityClient.h"
 #include "AES.hpp"
 #include <set>
 #include <unordered_map>
@@ -25,9 +25,9 @@ private:
     inline prf_type bitwiseXOR(long input1, long op, prf_type input2);
     inline prf_type bitwiseXOR(prf_type input1, prf_type input2);
     vector<unsigned char*> keys;
-    //        AmortizedBASClient* L;
+    //        AmortizedAMORTIZEClient* L;
     //OneChoiceClient* L;
-    TwoChoicePPTLClient* L;
+    TwoChoicePPWithTunableLocalityClient* L;
     long updateCounter = 0;
     double totalUpdateCommSize;
     double totalSearchCommSize;
@@ -46,5 +46,5 @@ public:
 
 };
 
-#endif /* BAS_H */
+#endif /* AMORTIZE_H */
 

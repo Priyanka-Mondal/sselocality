@@ -1,42 +1,41 @@
-#include "TwoChoicePPTLServer.h"
+#include "TwoChoicePPWithTunableLocalityServer.h"
 #include <string.h>
 
-TwoChoicePPTLServer::TwoChoicePPTLServer(long dataIndex, bool inMemory, bool overwrite, bool profile) 
+TwoChoicePPWithTunableLocalityServer::TwoChoicePPWithTunableLocalityServer(long dataIndex, bool inMemory, bool overwrite, bool profile) 
 {
     this->profile = profile;
-    storage = new TwoChoicePPTLStorage(inMemory, dataIndex, "/tmp/", profile);
+    storage = new TwoChoicePPWithTunableLocalityStorage(inMemory, dataIndex, Utilities::rootAddress+"2CH-Locality-", profile);
     storage->setup(overwrite);
-    keywordCounters = new Storage(inMemory, dataIndex, "/tmp/keyword-", profile);
+    keywordCounters = new Storage(inMemory,dataIndex,Utilities::rootAddress+"2CH-Locality-keyword-",profile);
     keywordCounters->setup(overwrite);
 }
 
-TwoChoicePPTLServer::~TwoChoicePPTLServer() {}
+TwoChoicePPWithTunableLocalityServer::~TwoChoicePPWithTunableLocalityServer() {}
 
-void TwoChoicePPTLServer::storeKeywordAndStashCounters(long dataIndex, vector<prf_type> stashCiphers, map<prf_type, prf_type> kwCounters){
-    keywordCounters->insert(dataIndex, kwCounters);
-    //storage->insertStash(dataIndex, stashCiphers);
-}
-void TwoChoicePPTLServer::storeKeywordCounters(long dataIndex, map<prf_type, prf_type> kwCounters){
+void TwoChoicePPWithTunableLocalityServer::storeKeywordAndStashCounters(long dataIndex, vector<prf_type> stashCiphers, map<prf_type, prf_type> kwCounters){
     keywordCounters->insert(dataIndex, kwCounters);
 }
-void TwoChoicePPTLServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun) {
+void TwoChoicePPWithTunableLocalityServer::storeKeywordCounters(long dataIndex, map<prf_type, prf_type> kwCounters){
+    keywordCounters->insert(dataIndex, kwCounters);
+}
+void TwoChoicePPWithTunableLocalityServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun) {
     storage->insertAll(dataIndex, ciphers, true, firstRun);
 }
 
-void TwoChoicePPTLServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, 
+void TwoChoicePPWithTunableLocalityServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, 
 				 map<prf_type, prf_type> keywordCounter) 
 {
     storage->insertAll(dataIndex, ciphers);
     keywordCounters->insert(dataIndex, keywordCounter);
 }
 
-pair<prf_type, vector<prf_type>> TwoChoicePPTLServer::insertCuckooHT(long index, long tableNum, long cuckooID, 
+pair<prf_type, vector<prf_type>> TwoChoicePPWithTunableLocalityServer::insertCuckooHT(long index, long tableNum, long cuckooID, 
 						long hash, prf_type keyw, vector<prf_type> fileids)
 {
 	return storage->insertCuckooHT(index, tableNum, cuckooID, hash, keyw, fileids);
 }
 
-vector<prf_type> TwoChoicePPTLServer::search(long dataIndex, prf_type hashToken, long kwc) 
+vector<prf_type> TwoChoicePPWithTunableLocalityServer::search(long dataIndex, prf_type hashToken, long kwc) 
 {
     vector<prf_type> result;
 	result.resize(0);
@@ -48,7 +47,7 @@ vector<prf_type> TwoChoicePPTLServer::search(long dataIndex, prf_type hashToken,
     return result;
 }
 
-long TwoChoicePPTLServer::getCounter(long dataIndex, prf_type tokkw) 
+long TwoChoicePPWithTunableLocalityServer::getCounter(long dataIndex, prf_type tokkw) 
 {
     prf_type curToken = tokkw;
     unsigned char cntstr[AES_KEY_SIZE];
@@ -66,7 +65,7 @@ long TwoChoicePPTLServer::getCounter(long dataIndex, prf_type tokkw)
 	}
 	return keywordCnt;
 }
-vector<prf_type> TwoChoicePPTLServer::search(long dataIndex, prf_type tokkw, prf_type hashtoken, 
+vector<prf_type> TwoChoicePPWithTunableLocalityServer::search(long dataIndex, prf_type tokkw, prf_type hashtoken, 
 					long& keywordCnt, long num) 
 {
     keywordCounters->seekgCount = 0;
@@ -116,46 +115,46 @@ vector<prf_type> TwoChoicePPTLServer::search(long dataIndex, prf_type tokkw, prf
 }
 
 
-vector<prf_type> TwoChoicePPTLServer::getAllData(long dataIndex) 
+vector<prf_type> TwoChoicePPWithTunableLocalityServer::getAllData(long dataIndex) 
 {
     return storage->getAllData(dataIndex);
 }
 
-vector<prf_type> TwoChoicePPTLServer::getCuckooHT(long dataIndex) 
+vector<prf_type> TwoChoicePPWithTunableLocalityServer::getCuckooHT(long dataIndex) 
 {
     return storage->getCuckooHT(dataIndex);
 }
 
-void TwoChoicePPTLServer::insertCuckooStash(long index, long tableNum, vector<prf_type> ctCiphers)
+void TwoChoicePPWithTunableLocalityServer::insertCuckooStash(long index, long tableNum, vector<prf_type> ctCiphers)
 {
     storage->insertCuckooStash(index, tableNum, ctCiphers);
 }
 
-vector<prf_type> TwoChoicePPTLServer::cuckooSearch(long index, long tableNum, 
+vector<prf_type> TwoChoicePPWithTunableLocalityServer::cuckooSearch(long index, long tableNum, 
 		        prf_type hashtoken1, prf_type hashtoken2)
 {
 	vector<prf_type> results;
-        unsigned char cntstr[AES_KEY_SIZE];
+    unsigned char cntstr[AES_KEY_SIZE];
 	long entryNum = pow(2,(index-tableNum));
 	long h[2];
 
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        prf_type mapKey1 = Utilities::generatePRF(cntstr, hashtoken1.data());
-        unsigned char* hash1 = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
-    	h[0] = (unsigned long) (*((long*) hash1)) % entryNum;
+    memset(cntstr, 0, AES_KEY_SIZE);
+    *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+    prf_type mapKey1 = Utilities::generatePRF(cntstr, hashtoken1.data());
+    unsigned char* hash1 = Utilities::sha256((char*) (mapKey1.data()), AES_KEY_SIZE);
+    h[0] = (unsigned long) (*((long*) hash1)) % entryNum;
 
-        memset(cntstr, 0, AES_KEY_SIZE);
-        *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
-        prf_type mapKey2 = Utilities::generatePRF(cntstr, hashtoken2.data());
-        unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
-    	h[1] = (unsigned long) (*((long*) hash2)) % entryNum;
+    memset(cntstr, 0, AES_KEY_SIZE);
+    *(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+    prf_type mapKey2 = Utilities::generatePRF(cntstr, hashtoken2.data());
+    unsigned char* hash2 = Utilities::sha256((char*) (mapKey2.data()), AES_KEY_SIZE);
+    h[1] = (unsigned long) (*((long*) hash2)) % entryNum;
 
 	results = storage->cuckooSearch(index, tableNum, h);
 	return results;
 }
 
-void TwoChoicePPTLServer::clear(long index) 
+void TwoChoicePPWithTunableLocalityServer::clear(long index) 
 {
     storage->clear(index);
     keywordCounters->clear(index);

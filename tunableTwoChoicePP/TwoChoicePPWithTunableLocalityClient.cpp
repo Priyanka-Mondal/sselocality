@@ -1,21 +1,21 @@
-#include "TwoChoicePPTLClient.h"
+#include "TwoChoicePPWithTunableLocalityClient.h"
 #include<vector>
 #include<algorithm>
 
-TwoChoicePPTLClient::~TwoChoicePPTLClient() 
+TwoChoicePPWithTunableLocalityClient::~TwoChoicePPWithTunableLocalityClient() 
 {
 	delete server;
-	delete one;
+	delete oneChoiceServer;
 }
 
-TwoChoicePPTLClient::TwoChoicePPTLClient(long numOfDataSets, bool inMemory, bool overwrite, bool profile) 
+TwoChoicePPWithTunableLocalityClient::TwoChoicePPWithTunableLocalityClient(long numOfDataSets, bool inMemory, bool overwrite, bool profile) 
 {
 	this->profile = profile;
-	server = new TwoChoicePPTLServer(numOfDataSets, inMemory, overwrite, profile);
-    one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
+	server = new TwoChoicePPWithTunableLocalityServer(numOfDataSets, inMemory, overwrite, profile);
+    oneChoiceServer = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
 	cout <<"=============RUNNING SDa+TwoChoicePLUSPLUS version 2 (long) ====TUNABLE LOCALITY="<<LOCALITY<<endl;
 	memset(nullKey.data(), 0, AES_KEY_SIZE);
-	for (long i = 0; i < numOfDataSets; i++) //why not <=
+	for (long i = 0; i < numOfDataSets; i++) 
 	{
 		exist.push_back(false);
 		long curNumberOfBins = i > 3 ? ((long) ceil((float) pow(2, i) / (log2(log2(log2(pow(2,i))))))) : pow(2,i);
@@ -35,7 +35,7 @@ TwoChoicePPTLClient::TwoChoicePPTLClient(long numOfDataSets, bool inMemory, bool
     }
 }
 
-long TwoChoicePPTLClient::countTotal(vector<long> fullness, long bin, long size)
+long TwoChoicePPWithTunableLocalityClient::countTotal(vector<long> fullness, long bin, long size)
 {
 	long full = 0;
 	for(long i = 0; i< size; i++)
@@ -72,7 +72,7 @@ vector<pair<string, vector<prf_type>>> sort(unordered_map<string, vector<prf_typ
 	return A;
 }
 
-long TwoChoicePPTLClient::maxPossibleLen(long index)
+long TwoChoicePPWithTunableLocalityClient::maxPossibleLen(long index)
 {
 	long N = pow(2, index);
 	if(N == 1) return 1;
@@ -85,8 +85,7 @@ long TwoChoicePPTLClient::maxPossibleLen(long index)
 }
 
 
-
-void TwoChoicePPTLClient::writeToCuckooStash(vector<prf_type> fileids, long cnt, 
+void TwoChoicePPWithTunableLocalityClient::writeToCuckooStash(vector<prf_type> fileids, long cnt, 
 		long index, long tableNum, unsigned char* key)
 {
 	long entrySize = pow(2, tableNum);
@@ -97,20 +96,21 @@ void TwoChoicePPTLClient::writeToCuckooStash(vector<prf_type> fileids, long cnt,
 		value = Utilities::encode(c.data(), key);
 		ctCiphers.push_back(value);
 	}
+	prf_type dummy;
+	memset(dummy.data(), 0, AES_KEY_SIZE);
+	prf_type dummyV = Utilities::encode(dummy.data(),key);
 	if(fileids.size()<entrySize)
 	{
-		prf_type dummy;
-		memset(dummy.data(), 0, AES_KEY_SIZE);
 		for(long i = fileids.size(); i<entrySize ; i++)
-		ctCiphers.push_back(dummy);
+		ctCiphers.push_back(dummyV);
 	}
 	server->insertCuckooStash(index, tableNum, ctCiphers);
 }
 
-void TwoChoicePPTLClient::place(string keyword, vector<prf_type> fileids, long cuckooID, 
+void TwoChoicePPWithTunableLocalityClient::place(string keyword, vector<prf_type> fileids, long cuckooID, 
 		long cnt, long index, long tableNum, unsigned char* key)
 {
-	if(cnt == (pow(2,index-tableNum))+1) //circle occured
+	if(cnt == (pow(2,index-tableNum))+1) //cycle occured
 	{
 		cout <<"****Cuckoo overflow: write in cuckooStash:"<<" index:"<<index<<" tableNum:"<<tableNum<<endl;
 		writeToCuckooStash(fileids, cnt, index, tableNum, key);
@@ -142,12 +142,12 @@ void TwoChoicePPTLClient::place(string keyword, vector<prf_type> fileids, long c
 		place(keyw, dis.second, cnt+1, ((cuckooID+1)%2), index, tableNum, key);
 	}
 }
-void TwoChoicePPTLClient::writeToCuckooHT(long index, long size, string keyword, 
+void TwoChoicePPWithTunableLocalityClient::writeToCuckooHT(long index, long size, string keyword, 
 				vector<prf_type> fileids, unsigned char* key)
 {
+	cout <<"writeToCuckooht"<<endl;
 	assert(fileids.size() > 0);
 	long tableNum = (long)ceil((float) log2(size));
-
 	vector<prf_type> ctCiphers;
 	for(long i = 0; i<fileids.size(); i++)
 	{
@@ -159,12 +159,14 @@ void TwoChoicePPTLClient::writeToCuckooHT(long index, long size, string keyword,
 	{
 		prf_type dummy;
 		memset(dummy.data(), 0, AES_KEY_SIZE);
+		prf_type dummyV = Utilities::encode(dummy.data(), key);
 		for(long i = fileids.size(); i<size ; i++)
-		ctCiphers.push_back(dummy);
+			ctCiphers.push_back(dummy);
 	}
 	place(keyword, ctCiphers, 0, 0, index, tableNum, key);
 }
-void TwoChoicePPTLClient::writeToCuckooHT2(long index, long size, string keyword, vector<tmp_prf_type> fileids, unsigned char* key) {
+void TwoChoicePPWithTunableLocalityClient::writeToCuckooHT2(long index, long size, string keyword, vector<tmp_prf_type> fileids, unsigned char* key) {
+	cout <<"writeToCuckooHT2:"<<index<<endl;
     assert(fileids.size() > 0);
     long tableNum = (long) ceil((float) log2(size));
 
@@ -177,26 +179,25 @@ void TwoChoicePPTLClient::writeToCuckooHT2(long index, long size, string keyword
         prf_type newvalue;
         std::fill(newvalue.begin(), newvalue.end(), 0);
         std::copy(keyword.begin(), keyword.end(), newvalue.begin());
-        *(long*) (&(newvalue.data()[AES_KEY_SIZE - 5])) = ind;
+        *(int*) (&(newvalue.data()[AES_KEY_SIZE - 5])) = ind;
         newvalue.data()[AES_KEY_SIZE - 6] = op;
-
         prf_type mapValue;
         mapValue = Utilities::encode(newvalue.data(), key);
         ctCiphers.push_back(mapValue);
     }
-    ctCiphers.resize(size);
+    //ctCiphers.resize(size);
+    prf_type dummy;
+	memset(dummy.data(), 0, AES_KEY_SIZE);
+    prf_type dummyV = Utilities::encode(dummy.data(), key);
     if (fileids.size() < size) {
         for (long i = fileids.size(); i < size; i++) {
-            prf_type dummy;
-			memset(dummy.data(), 0, AES_KEY_SIZE);
-            prf_type dummyV = Utilities::encode(dummy.data(), key);
             ctCiphers.push_back(dummyV);
         }
     }
     place(keyword, ctCiphers, 0, 0, index, tableNum, key);
 }
 
-void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_type> > pairs, unsigned char* key) {
+void TwoChoicePPWithTunableLocalityClient::setup2(long index, unordered_map<string, vector<tmp_prf_type> > pairs, unsigned char* key) {
     exist[index] = true;
     vector<vector<pair<pair<string, long>, tmp_prf_type> > > ciphers;
     for (long i = 0; i < numberOfBins[index]; i++) {
@@ -364,7 +365,6 @@ void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_pr
         keywordCntCiphers[mapKey] = mapValue;
     }
     totalCommunication += ciphers.size() * sizeof (prf_type)*2 + ciphersOne.size() * sizeof (prf_type);
-    //printf("stash cipher size of level:%d is %d\n", index, stashCiphers.size());
     server->storeKeywordCounters(index, keywordCntCiphers);
     for (long i = 0; i < ciphers.size(); i++) {
         vector<vector<prf_type> > finalCiphers = convertTmpCiphersToFinalCipher(ciphers[i], key);
@@ -372,12 +372,41 @@ void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_pr
     }
     for (long i = 0; i < ciphersOne.size(); i++) {
         vector<vector<prf_type> > finalCiphers = convertTmpCiphersToFinalCipher(ciphersOne[i], key);
-        one->storeCiphers(index, finalCiphers, i == 0);
+        oneChoiceServer->storeCiphers(index, finalCiphers, i == 0);
 	}
 }
 
+vector<vector<prf_type> > TwoChoicePPWithTunableLocalityClient::convertTmpCiphersToFinalCipher(vector<pair<std::pair<string, long>, tmp_prf_type> > ciphers, unsigned char* key) {
+    vector<vector<prf_type> > results;
+    results.push_back(vector<prf_type>());
+    for (long i = 0; i < ciphers.size(); i++) {
+        auto KV = ciphers[i];
+        string keyword = KV.first.first;
+        long cnt = KV.first.second;
+        tmp_prf_type value = KV.second;
+        long ind = *(long*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
+        byte op = *(byte*) (&(value.data()[TMP_AES_KEY_SIZE - 6]));
 
-void TwoChoicePPTLClient::setup(long index, unordered_map<string, vector<prf_type> > pairs, unsigned char* key) 
+        if (cnt == -1) {
+            prf_type dummy; 
+			memset(dummy.data(), 0, AES_KEY_SIZE);
+            prf_type dummyV = Utilities::encode(dummy.data(), key);
+            results[0].push_back(dummyV);
+        } else {
+            prf_type newvalue;
+            std::fill(newvalue.begin(), newvalue.end(), 0);
+            std::copy(keyword.begin(), keyword.end(), newvalue.begin());
+            *(int*) (&(newvalue.data()[AES_KEY_SIZE - 5])) = ind;
+            newvalue.data()[AES_KEY_SIZE - 6] = op;
+            prf_type mapValue;
+            mapValue = Utilities::encode(newvalue.data(), key);
+            results[0].push_back(mapValue);
+        }
+    }
+    return results;
+}
+
+void TwoChoicePPWithTunableLocalityClient::setup(long index, unordered_map<string, vector<prf_type> > pairs, unsigned char* key) 
 {
 	exist[index] = true;
 	vector<vector<prf_type>> ciphers;
@@ -507,19 +536,19 @@ void TwoChoicePPTLClient::setup(long index, unordered_map<string, vector<prf_typ
 	}
 	prf_type dummy;
 	memset(dummy.data(), 0, AES_KEY_SIZE);
-	prf_type mapValue = Utilities::encode(dummy.data(), key);
+	prf_type dummyV = Utilities::encode(dummy.data(), key);
 	for (long i = 0; i < numberOfBins[index]; i++)  
 	{
 		long curSize = ciphers[i].size();
 		for (long j = curSize; j < sizeOfEachBin[index]; j++) 
-			ciphers[i].push_back(mapValue);
+			ciphers[i].push_back(dummyV);
 	}
     for (long i = 0; i < nB[index]; i++) 
 	{
         long curSize = ciphersOne[i].size();
         for (long j = curSize; j < sEB[index]; j++) 
 		{
-            ciphersOne[i].push_back(mapValue);
+            ciphersOne[i].push_back(dummyV);
         }
     }
 	prf_type randomKey;
@@ -538,43 +567,11 @@ void TwoChoicePPTLClient::setup(long index, unordered_map<string, vector<prf_typ
 	}
 	totalCommunication += ciphers.size() * sizeof (prf_type)*2 + ciphersOne.size() * sizeof(prf_type);
 	server->storeCiphers(index, ciphers, keywordCntCiphers);
-	one->storeCiphers(index,ciphersOne);
+	oneChoiceServer->storeCiphers(index,ciphersOne);
 }
 
-vector<vector<prf_type> > TwoChoicePPTLClient::convertTmpCiphersToFinalCipher(vector<pair<std::pair<string, long>, tmp_prf_type> > ciphers, unsigned char* key) {
-    vector<vector<prf_type> > results;
-    results.push_back(vector<prf_type>());
-    for (long i = 0; i < ciphers.size(); i++) {
-        auto KV = ciphers[i];
-        string keyword = KV.first.first;
-        long cnt = KV.first.second;
-        tmp_prf_type value = KV.second;
-        long ind = *(long*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
-        byte op = *(byte*) (&(value.data()[TMP_AES_KEY_SIZE - 6]));
 
-        if (cnt == -1) {
-            prf_type dummy; 
-			memset(dummy.data(), 0, AES_KEY_SIZE);
-            prf_type dummyV = Utilities::encode(dummy.data(), key);
-            results[0].push_back(dummyV);
-        } else {
-
-            prf_type newvalue;
-            std::fill(newvalue.begin(), newvalue.end(), 0);
-            std::copy(keyword.begin(), keyword.end(), newvalue.begin());
-            *(int*) (&(newvalue.data()[AES_KEY_SIZE - 5])) = ind;
-            newvalue.data()[AES_KEY_SIZE - 6] = op;
-
-            prf_type mapValue;
-            mapValue = Utilities::encode(newvalue.data(), key);
-            results[0].push_back(mapValue);
-        }
-
-    }
-    return results;
-}
-
-vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigned char* key) 
+vector<prf_type> TwoChoicePPWithTunableLocalityClient::search(long index, string keyword, unsigned char* key) 
 {
 	double searchPreparation = 0, searchDecryption = 0;
 	long flag = 0;
@@ -584,14 +581,13 @@ vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigne
 	prf_type hashtoken;
 	prf_type token = Utilities::encode(keyword, key);
 	long keywordCnt = server->getCounter(index,token);
-	//cout <<"keyWordCounter:["<<keywordCnt<<"]"<<endl;;
 	vector<prf_type> ciphers;
 	ciphers.resize(0);
 	vector<prf_type> oneChoiceCiphers;
 	long mpl = maxPossibleLen(index);
 	if(keywordCnt > mpl)
 	{
-		oneChoiceCiphers = one->search(index,token,(keywordCnt-mpl));
+		oneChoiceCiphers = oneChoiceServer->search(index,token,(keywordCnt-mpl));
 		if(oneChoiceCiphers.size()>0)
 		{
 			for (auto item : oneChoiceCiphers) 
@@ -608,9 +604,9 @@ vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigne
 	}
 	if(keywordCnt>0)
 	{
+		cout<<index <<" kw:["<<keywordCnt<<"]"<<endl;;
 		if(finalRes.size()>0)
-			cout <<index<<": retrieved from One choice:"<<finalRes.size()<<" mpl:"<<mpl<<endl;
-		long f1 = finalRes.size();
+			cout <<index<<": retrieved from One choice:"<<finalRes.size()<<" mpl:"<<mpl<<"loc:"<<LOC<<endl;
 		long times = ceil((float) keywordCnt/(float) mpl);
 		if(times>LOCALITY)
 			times = LOCALITY;
@@ -644,10 +640,10 @@ vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigne
 					temp = temp.append(to_string(t));
 					hashtoken = Utilities::encode(temp, key);
 				}
-				//ciphers = server->search(index, token, hashtoken, kw,newsize);
 				ciphers = server->search(index, hashtoken, newsize);
-				vector<prf_type> localfinalRes;
-				localfinalRes.resize(0);
+				//ciphers = server->getAllData(index);
+				//vector<prf_type> localfinalRes;
+				//localfinalRes.resize(0);
 				//if(flag < localpss)
 				{
 					flag = 0;
@@ -655,30 +651,31 @@ vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigne
 					{
 						if(item!=nullKey)
 						{
-				 		prf_type plaintext;
-				 		Utilities::decode(item, plaintext, key);
-				 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
-						{
-				 			localfinalRes.push_back(plaintext);
-				 			//finalRes.push_back(plaintext);
-							flag++;
-				 		}
+				 			prf_type plaintext;
+				 			Utilities::decode(item, plaintext, key);
+				 			if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+							{
+				 				//localfinalRes.push_back(plaintext);
+				 				finalRes.push_back(plaintext);
+								flag++;
+				 			}
 						}
 					}
 				}
-				if(localfinalRes.size()>=localpss)
-				{
-					for(auto a: localfinalRes)
-					{
-						finalRes.push_back(a);
-					}
-				}
+			//	if(localfinalRes.size()>=localpss)
+			//	{
+			//		for(auto a: localfinalRes)
+			//		{
+			//			finalRes.push_back(a);
+			//		}
+			//	}
 				totalCommunication += ciphers.size()* sizeof(prf_type);
 		//cout <<index<<":localfinal:"<<localfinalRes.size()<<" localpss:"<<localpss<<" ns:"<<newsize<<" ";
 		//		cout<<" t:"<< t<<" s:"<<s<<" :"<<finalRes.size()-f1<<" cc:"<<ciphers.size()<<endl;
-				f1 = finalRes.size();
+			
 			}
 		}
+		cout <<"f1:"<<finalRes.size()<<endl;
 	if(keywordCnt>0)
 	{
 		long tableNum = (long)ceil(log2(keywordCnt));
@@ -694,13 +691,13 @@ vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigne
 		{
 			for (auto item : cuckooCiphers) 
 			{
-				prf_type plalongext;
-				Utilities::decode(item, plalongext, key);
-				if (strcmp((char*) plalongext.data(), keyword.data()) == 0) 
+				prf_type plaintext;
+				Utilities::decode(item, plaintext, key);
+				if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 				{
-						finalRes.push_back(plalongext);
+						finalRes.push_back(plaintext);
+						cout <<"cuckoo data:"<<plaintext.data()<<endl;
 				}
-				cout <<"cuckoo data:"<<plalongext.data()<<endl;
 			}
 		}
 		totalCommunication += cuckooCiphers.size()* sizeof(prf_type);
@@ -709,103 +706,12 @@ vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigne
 	return finalRes;
 }
 
-/*
-vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigned char* key) 
-{
-	double searchPreparation = 0, searchDecryption = 0;
-	long flag = 0;
-	if (profile) 
-		Utilities::startTimer(65);
-	vector<prf_type> finalRes;
-	long keywordCnt = 0;
-	prf_type hashtoken;
-	prf_type token = Utilities::encode(keyword, key);
-	vector<prf_type> ciphers;
-	ciphers.resize(0);
-	vector<prf_type> cuckooCiphers;
-	vector<prf_type> oneChoiceCiphers;
-	for(long s = 1 ;s<=2; s++)
-	{
-		string newkeyword = keyword;
-		if(s==1) 
-		{
-	    	newkeyword = newkeyword.append("1");
-			hashtoken = Utilities::encode(newkeyword, key);
-		}
-		else if(s==2)
-		{
-			newkeyword = keyword;
-			newkeyword = newkeyword.append("2");
-			hashtoken = Utilities::encode(newkeyword, key);
-		}
-		ciphers = server->search(index, token, hashtoken, keywordCnt, numberOfBins[index]);
-		if(flag == 0)
-		{
-			for (auto item : ciphers) 
-			{
-		 		prf_type plalongext;
-		 		Utilities::decode(item, plalongext, key);
-		 		if (strcmp((char*) plalongext.data(), keyword.data()) == 0) 
-				{
-		 			finalRes.push_back(plalongext);
-					flag++;
-		 		}
-			}
-		}
-		totalCommunication += ciphers.size()* sizeof(prf_type);
-	}
-	if(keywordCnt > maxPossibleLen(index))
-	{
-		oneChoiceCiphers = one->search(index,token,keywordCnt);
-		cout <<"Searching ["<<keyword<<"] in One choice bins of index:"<<index<<endl;
-		if(oneChoiceCiphers.size()>0)
-		{
-			for (auto item : oneChoiceCiphers) 
-			{
-				prf_type plalongext;
-				Utilities::decode(item, plalongext, key);
-				if (strcmp((char*) plalongext.data(), keyword.data()) == 0) 
-				{
-						finalRes.push_back(plalongext);
-				}
-			}
-		}
-		totalCommunication += oneChoiceCiphers.size()* sizeof(prf_type);
-	}
 
-	long tableNum = (long)ceil(log2(keywordCnt));
-	if(keywordCnt>0)
-	{
-		string newkeyword = keyword;
-		newkeyword = newkeyword.append("0");
-		prf_type hashtoken1 = Utilities::encode(newkeyword, key);
-		newkeyword = keyword;
-		newkeyword = newkeyword.append("1");
-		prf_type hashtoken2 = Utilities::encode(newkeyword, key);
-		cuckooCiphers = server->cuckooSearch(index, tableNum, hashtoken1, hashtoken2);//search HT+cuckoostash
-		if(cuckooCiphers.size()>0)
-		{
-			for (auto item : cuckooCiphers) 
-			{
-				prf_type plalongext;
-				Utilities::decode(item, plalongext, key);
-				if (strcmp((char*) plalongext.data(), keyword.data()) == 0) 
-				{
-						finalRes.push_back(plalongext);
-				}
-				cout <<"cuckoo data:"<<plalongext.data()<<endl;
-			}
-		}
-		totalCommunication += cuckooCiphers.size()* sizeof(prf_type);
-	}
-	return finalRes;
-}*/
-
-vector<prf_type> TwoChoicePPTLClient::getAllData(long index, unsigned char* key) 
+vector<prf_type> TwoChoicePPWithTunableLocalityClient::getAllData(long index, unsigned char* key) 
 {
 	vector<prf_type> finalRes = vector<prf_type>();
 	auto ciphers = server->getAllData(index);
-	auto oneChoiceCiphers = one->getAllData(index);
+	auto oneChoiceCiphers = oneChoiceServer->getAllData(index);
 	vector<prf_type> cuckooCiphers = server->getCuckooHT(index); // also fetches the cuckoo stash
 	for (auto cipher : ciphers) 
 	{
@@ -842,10 +748,10 @@ vector<prf_type> TwoChoicePPTLClient::getAllData(long index, unsigned char* key)
 	return finalRes;
 }
 
-void TwoChoicePPTLClient::destry(long index) 
+void TwoChoicePPWithTunableLocalityClient::destry(long index) 
 {
 	server->clear(index);
-	one->clear(index);
+	oneChoiceServer->clear(index);
 	exist[index] = false;
 	totalCommunication += sizeof (long);
 }

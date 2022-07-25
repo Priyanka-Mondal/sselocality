@@ -8,7 +8,7 @@ using namespace std;
 
 Amortized::Amortized(long N, bool inMemory, bool overwrite) 
 {
-    L = new TwoChoicePPTLClient(ceil(log2(N)), inMemory, overwrite, profile);
+    L = new TwoChoicePPWithTunableLocalityClient(ceil(log2(N)), inMemory, overwrite, profile);
     for (long i = 0; i < ceil(log2(N)); i++) 
         keys.push_back(NULL);
     for (long i = 0; i < localSize; i++) 
@@ -119,8 +119,8 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
         unsigned char* newKey = new unsigned char[16];
         memset(newKey, 0, 16);
         keys[rm0] = newKey;
-        L->setup(rm0, previousData, newKey);
-        //L->setup2(rm0, previousData, newKey);
+        //L->setup(rm0, previousData, newKey);
+        L->setup2(rm0, previousData, newKey);
         totalUpdateCommSize += L->totalCommunication;
     }
 }

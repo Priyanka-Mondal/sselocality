@@ -1,5 +1,5 @@
-#ifndef TWOCHOICESTORAGE_H
-#define TWOCHOICESTORAGE_H
+#ifndef TWOCHOICEPPWITHTUNABLELOCALITYSTORAGE_H
+#define TWOCHOICEPPWITHTUNABLELOCALITYSTORAGE_H
 
 #include <string>
 #include <map>
@@ -20,14 +20,14 @@
 
 using namespace std;
 
-class TwoChoicePPTLStorage {
+class TwoChoicePPWithTunableLocalityStorage {
 private:
     bool inMemoryStorage;
     bool profile = false;
     vector<string> filenames;
     //vector<string> stashes;
-    vector<vector<string>> stashfilenames;
-	vector<vector<long>> cuckooStashLen;
+    vector<vector<string>> cuckooStashfilenames;
+	vector<vector<long>> cuckooStashLength;
     vector<vector<vector<string>>> cuckoofilenames;
     prf_type nullKey;
     string fileAddressPrefix = "/tmp/";
@@ -42,7 +42,7 @@ public:
     long readBytes = 0;
     long SeekG = 0;
 	double cacheTime;
-    TwoChoicePPTLStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
+    TwoChoicePPWithTunableLocalityStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile);
     bool setup(bool overwrite);
     void insertAll(long dataIndex, vector<vector< prf_type> > ciphers);
     //void insertStash(long dataIndex, vector<prf_type> ciphers);
@@ -54,9 +54,9 @@ public:
     vector <prf_type> cuckooSearch(long index, long tableNum, long h[2]);
     void clear(long index);
     vector<prf_type> find(long index, prf_type mapKey, long cnt);
-    virtual ~TwoChoicePPTLStorage();
+    virtual ~TwoChoicePPWithTunableLocalityStorage();
 	void insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun);
 };
 
-#endif /* TWOCHOICESTORAGE_H */
+#endif /* TWOCHOICEPPWITHTUNABLELOCALITYSTORAGE_H */
 

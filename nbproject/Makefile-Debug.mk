@@ -89,9 +89,9 @@ VP2OBJECTFILES= \
 	${OBJECTDIR}/${VP2}/Amortized.o \
 	${OBJECTDIR}/${VP2}/OneChoiceServer.o \
 	${OBJECTDIR}/${VP2}/OneChoiceStorage.o \
-	${OBJECTDIR}/${VP2}/TwoChoicePPTLClient.o \
-	${OBJECTDIR}/${VP2}/TwoChoicePPTLServer.o \
-	${OBJECTDIR}/${VP2}/TwoChoicePPTLStorage.o \
+	${OBJECTDIR}/${VP2}/TwoChoicePPWithTunableLocalityClient.o \
+	${OBJECTDIR}/${VP2}/TwoChoicePPWithTunableLocalityServer.o \
+	${OBJECTDIR}/${VP2}/TwoChoicePPWithTunableLocalityStorage.o \
 	${OBJECTDIR}/${VP2}/Server.o \
 	${OBJECTDIR}/${VP2}/Storage.o \
 	${OBJECTDIR}/${VP2}/Utilities.o \
@@ -311,20 +311,20 @@ ${VP2OBJECTDIR}/OneChoiceStorage.o: ${VP2}/OneChoiceStorage.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${VP2}/OneChoiceStorage.o ${VP2}/OneChoiceStorage.cpp
 
-${OBJECTDIR}/${VP2}/TwoChoicePPTLClient.o: ${VP2}/TwoChoicePPTLClient.cpp
+${OBJECTDIR}/${VP2}/TwoChoicePPWithTunableLocalityClient.o: ${VP2}/TwoChoicePPWithTunableLocalityClient.cpp
 	${MKDIR} -p ${OBJECTDIR}/${VP2}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${VP2}/TwoChoicePPTLClient.o ${VP2}/TwoChoicePPTLClient.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${VP2}/TwoChoicePPWithTunableLocalityClient.o ${VP2}/TwoChoicePPWithTunableLocalityClient.cpp
 
-${OBJECTDIR}/${VP2}/TwoChoicePPTLServer.o: ${VP2}/TwoChoicePPTLServer.cpp
+${OBJECTDIR}/${VP2}/TwoChoicePPWithTunableLocalityServer.o: ${VP2}/TwoChoicePPWithTunableLocalityServer.cpp
 	${MKDIR} -p ${OBJECTDIR}/${VP2}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${VP2}/TwoChoicePPTLServer.o ${VP2}/TwoChoicePPTLServer.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${VP2}/TwoChoicePPWithTunableLocalityServer.o ${VP2}/TwoChoicePPWithTunableLocalityServer.cpp
 
-${OBJECTDIR}/${VP2}/TwoChoicePPTLStorage.o: ${VP2}/TwoChoicePPTLStorage.cpp
+${OBJECTDIR}/${VP2}/TwoChoicePPWithTunableLocalityStorage.o: ${VP2}/TwoChoicePPWithTunableLocalityStorage.cpp
 	${MKDIR} -p ${OBJECTDIR}/${VP2}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${VP2}/TwoChoicePPTLStorage.o ${VP2}/TwoChoicePPTLStorage.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${VP2}/TwoChoicePPWithTunableLocalityStorage.o ${VP2}/TwoChoicePPWithTunableLocalityStorage.cpp
 
 ${OBJECTDIR}/${VP2}/Server.o: ${VP2}/Server.cpp
 	${MKDIR} -p ${OBJECTDIR}/${VP2}

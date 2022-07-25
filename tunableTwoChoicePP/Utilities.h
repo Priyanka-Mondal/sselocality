@@ -108,6 +108,7 @@ public:
     static void logTime(std::string filename, std::string content);
     static void initializeLogging(std::string filename);
     static void finalizeLogging(std::string filename);
+	static std::string rootAddress;
     static std::array<uint8_t, 16> convertToArray(std::string value);
     static int getMem();
     static double getTimeFromHist(int id);

@@ -1,5 +1,5 @@
-#ifndef TWOCHOICECLIENT_H
-#define TWOCHOICECLIENT_H
+#ifndef TWOCHOICEPPWITHTUNABLELOCALITYCLIENT_H
+#define TWOCHOICEPPWITHTUNABLELOCALITYCLIENT_H
 
 #include <string>
 #include <stdio.h>
@@ -14,20 +14,20 @@
 #include "Server.h"
 #include "Utilities.h"
 #include "AES.hpp"
-#include "TwoChoicePPTLServer.h"
+#include "TwoChoicePPWithTunableLocalityServer.h"
 #include "OneChoiceServer.h"
 #include <unordered_map>
 
-class TwoChoicePPTLClient 
+class TwoChoicePPWithTunableLocalityClient 
 {
 private:
-    TwoChoicePPTLServer* server;
-	OneChoiceServer* one;
+    TwoChoicePPWithTunableLocalityServer* server;
+	OneChoiceServer* oneChoiceServer;
     bool profile = false;
 
 public:
-    virtual ~TwoChoicePPTLClient();
-    TwoChoicePPTLClient(long maxUpdate, bool inMemory, bool overwrite, bool profile);
+    virtual ~TwoChoicePPWithTunableLocalityClient();
+    TwoChoicePPWithTunableLocalityClient(long maxUpdate, bool inMemory, bool overwrite, bool profile);
     long totalCommunication = 0;
 	int LOC = 5;
     vector<long> numberOfBins;
@@ -53,5 +53,5 @@ public:
 long countTotal(vector<long> fullness, long bin, long size);
 };
 
-#endif /* TWOCHOICECLIENT_H */
+#endif /* TWOCHOICEPPWITHTUNABLELOCALITYCLIENT_H */
 

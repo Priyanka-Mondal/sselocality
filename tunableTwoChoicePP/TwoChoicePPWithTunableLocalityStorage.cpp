@@ -1,9 +1,9 @@
-#include "TwoChoicePPTLStorage.h"
+#include "TwoChoicePPWithTunableLocalityStorage.h"
 #include<string.h>
 #include<assert.h>
 #include "Utilities.h"
 
-TwoChoicePPTLStorage::TwoChoicePPTLStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile) 
+TwoChoicePPWithTunableLocalityStorage::TwoChoicePPWithTunableLocalityStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile) 
 {
     this->inMemoryStorage = inMemory;
     this->fileAddressPrefix = fileAddressPrefix;
@@ -12,21 +12,20 @@ TwoChoicePPTLStorage::TwoChoicePPTLStorage(bool inMemory, long dataIndex, string
     memset(nullKey.data(), 0, AES_KEY_SIZE);
     for (long i = 0; i < dataIndex; i++) 
     {
-        long curNumberOfBins = i > 3 ? ((long) ceil((float) pow(2, i)/(log2(log2(log2(pow(2,i))))))) 
-		                    : pow(2,i);
-	curNumberOfBins = pow(2, (long)ceil(log2(curNumberOfBins))); 
+        long curNumberOfBins = i > 3 ? ((long)ceil((float)pow(2,i)/(log2(log2(log2(pow(2,i))))))) : pow(2,i);
+		curNumberOfBins = pow(2, (long)ceil(log2(curNumberOfBins))); 
         long curSizeOfEachBin = i > 3 ? 3*ceil((log2(log2(log2(pow(2,i)))))) : 3;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
-	cout<<"Level:"<<i<<" number of bins:"<<curNumberOfBins<<" size of each bin:"<<curSizeOfEachBin<<endl;
+		cout<<"Level:"<<i<<" number of bins:"<<curNumberOfBins<<" size of each bin:"<<curSizeOfEachBin<<endl;
     }
 }
 
-bool TwoChoicePPTLStorage::setup(bool overwrite) 
+bool TwoChoicePPWithTunableLocalityStorage::setup(bool overwrite) 
 {
 	cuckoofilenames.resize(dataIndex);
-	stashfilenames.resize(dataIndex);
-	cuckooStashLen.resize(dataIndex);
+	cuckooStashfilenames.resize(dataIndex);
+	cuckooStashLength.resize(dataIndex);
     for (long i = 0; i < dataIndex; i++) 
 	{
         string filename = fileAddressPrefix + "MAP-" + to_string(i) + ".dat";
@@ -44,87 +43,84 @@ bool TwoChoicePPTLStorage::setup(bool overwrite)
             for (long j = 0; j < maxSize; j++) 
 	    	{
                 file.write((char*) nullKey.data(), AES_KEY_SIZE);
-                file.write((char*) nullKey.data(), AES_KEY_SIZE);
             }
             file.close();
         }
-	cuckoofilenames[i].resize(dataIndex);
-	stashfilenames[i].resize(dataIndex);
-	cuckooStashLen[i].resize(dataIndex);
-	for(long k = 0; k< dataIndex; k++) // k < log2(pow(2, dataIndex))
-	{
-	     cuckoofilenames[i][k].resize(2);
-		 for(long c = 0; c<2; c++)
-	 {
-	     string cuckoo = fileAddressPrefix+"CUCKOO-"+to_string(i)+"-"
-	     		+to_string(k) +"-"+to_string(c)+ ".dat";
-	     cuckoofilenames[i][k][c]=cuckoo;
-       	     fstream cfile(cuckoo.c_str(), std::ofstream::in);
-       	     if (cfile.fail() || overwrite) 
-	     {
-       	         cfile.close();
-       	         fstream c1file(cuckoo.c_str(), std::ofstream::out);
-       	         if (c1file.fail()) 
-       	             cerr << "Error: " << strerror(errno);
-       	         long maxSize = 2* pow(2,i);//numberOfBins[i] * sizeOfEachBin[i];
-       	     	 for (long j = 0; j < maxSize; j++) 
-	             c1file.write((char*) nullKey.data(), AES_KEY_SIZE);
-       	         c1file.close();
-       	     }
-	 }
-       	 string stashfilename = fileAddressPrefix + "CUCKOOSTASH-" 
-	            +to_string(i)+"-"+to_string(k) + ".dat";
-	 stashfilenames[i][k]=stashfilename;
-       	 fstream tfile(stashfilename.c_str(), std::ofstream::in);
-       	 if (tfile.fail() || overwrite) 
-	 	{
-       	     tfile.close();
-       	     fstream sfile(stashfilename.c_str(), std::ofstream::out);
-       	     if (sfile.fail()) 
-       	         cerr << "Error: " << strerror(errno);
-    //       long maxSize = 2*pow(2,i);//numberOfBins[i] * sizeOfEachBin[i]; 
-       	     long maxSize = cuckooStashLen[i][k];//numberOfBins[i] * sizeOfEachBin[i]; 
-       	     for (long j = 0; j < maxSize; j++) 
-       	         sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
-       	     sfile.close();
-	 		cuckooStashLen[i][k]=0;
-       	 }
-	}
+		cuckoofilenames[i].resize(dataIndex);
+		cuckooStashfilenames[i].resize(dataIndex);
+		cuckooStashLength[i].resize(dataIndex);
+		for(long k = 0; k< dataIndex; k++)
+		{
+		    cuckoofilenames[i][k].resize(2);
+			for(long c = 0; c<2; c++)
+		 	{
+		    	string cuckoo = fileAddressPrefix+"CUCKOO-"+to_string(i)+"-"+
+					to_string(k) +"-"+to_string(c)+ ".dat";
+		    	cuckoofilenames[i][k][c]=cuckoo;
+	       	    fstream cfile(cuckoo.c_str(), std::ofstream::in);
+	       	    if (cfile.fail() || overwrite) 
+		    	{
+	       	        cfile.close();
+	       	        fstream c1file(cuckoo.c_str(), std::ofstream::out);
+	       	        if (c1file.fail()) 
+	       	            cerr << "Error: " << strerror(errno);
+	       	        long maxSize = 2* pow(2,i);
+	       	    	for (long j = 0; j < maxSize; j++) 
+		            c1file.write((char*) nullKey.data(), AES_KEY_SIZE);
+	       	        c1file.close();
+	       	    }
+		 	 }
+	    	 string cuckooStashfilename = fileAddressPrefix + "CUCKOOSTASH-" 
+			        +to_string(i)+"-"+to_string(k) + ".dat";
+			 cuckooStashfilenames[i][k]=cuckooStashfilename;
+	    	 fstream tfile(cuckooStashfilename.c_str(), std::ofstream::in);
+	    	 if (tfile.fail() || overwrite) 
+			 {
+	    	      tfile.close();
+	    	      fstream sfile(cuckooStashfilename.c_str(), std::ofstream::out);
+	    	      if (sfile.fail()) 
+	    	          cerr << "Error: " << strerror(errno);
+	    	      long maxSize = 2* pow(2,i);//cuckooStashLength[i][k]; 
+	    	      for (long j = 0; j < maxSize; j++) 
+	    	          sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
+	    	      sfile.close();
+			      cuckooStashLength[i][k]=0;
+	    	  }
+		}
     }
 }
 
-void TwoChoicePPTLStorage::insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun) {
-            if (append && !firstRun) 
-			{
-                fstream file(filenames[index].c_str(), ios::binary | std::ios::app);
-                if (file.fail()) {
-                    cerr << "Error in insert: " << strerror(errno);
-                }
-                for (auto item : ciphers) 
-				{
-                    for (auto pair : item) {
-                        file.write((char*) pair.data(), AES_KEY_SIZE);
-                    }
-                }
-                file.close();
-            } 
-			else 
-			{
-                fstream file(filenames[index].c_str(), ios::binary | ios::out);
-                if (file.fail()) {
-                    cerr << "Error in insert: " << strerror(errno);
-                }
-                for (auto item : ciphers) {
-                    for (auto pair : item) {
-                        file.write((char*) pair.data(), AES_KEY_SIZE);
-                    }
-                }
-                file.close();
-            }
+void TwoChoicePPWithTunableLocalityStorage::insertAll(int index, vector<vector<prf_type>> ciphers, bool append, bool firstRun){
+   if (append && !firstRun) 
+   {
+       fstream file(filenames[index].c_str(), ios::binary | std::ios::app);
+       if (file.fail()) {
+           cerr << "Error in insert: " << strerror(errno);
+       }
+       for (auto item : ciphers) 
+   	   {
+           for (auto pair : item) {
+               file.write((char*) pair.data(), AES_KEY_SIZE);
+           }
+       }
+       file.close();
+   } 
+   else 
+   {
+       fstream file(filenames[index].c_str(), ios::binary | ios::out);
+       if (file.fail()) {
+           cerr << "Error in insert: " << strerror(errno);
+       }
+       for (auto item : ciphers) {
+           for (auto pair : item) {
+               file.write((char*) pair.data(), AES_KEY_SIZE);
+           }
+       }
+       file.close();
+   }
 }
 
-pair<prf_type, vector<prf_type>> TwoChoicePPTLStorage::insertCuckooHT(long index,long tableNum,long cuckooID, 
-		long hash, prf_type keyword, vector<prf_type> fileids)
+pair<prf_type, vector<prf_type>> TwoChoicePPWithTunableLocalityStorage::insertCuckooHT(long index,long tableNum,long cuckooID, long hash, prf_type keyword, vector<prf_type> fileids)
 {
 	fstream cuckoo(cuckoofilenames[index][tableNum][cuckooID].c_str(), 
 				ios::binary | ios::out | ios::in);
@@ -170,17 +166,14 @@ pair<prf_type, vector<prf_type>> TwoChoicePPTLStorage::insertCuckooHT(long index
 	    {
             prf_type tmp;
             std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-            //if (tmp != nullKey)
-	        //{
-                   results.push_back(tmp);
-                //}
-            }
+            results.push_back(tmp);
+        }
 	}
 	else
 	{
 	    cuckoo.clear();
         long readPos = hash *(entrySize+1)* AES_KEY_SIZE;
- if (DROP_CACHE) {
+		if (DROP_CACHE) {
             Utilities::startTimer(113);
             system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
             auto t = Utilities::stopTimer(113);
@@ -195,9 +188,9 @@ pair<prf_type, vector<prf_type>> TwoChoicePPTLStorage::insertCuckooHT(long index
         cuckoo.write((char*) newRecord, AES_KEY_SIZE);
 	    for(auto c : fileids)
 	    {
-                memset(newRecord, 0, AES_KEY_SIZE);
-                std::copy(c.begin(), c.end(), newRecord);
-                cuckoo.write((char*) newRecord, AES_KEY_SIZE);
+            memset(newRecord, 0, AES_KEY_SIZE);
+            std::copy(c.begin(), c.end(), newRecord);
+            cuckoo.write((char*) newRecord, AES_KEY_SIZE);
 	    }
 	}
 	cuckoo.close();
@@ -206,37 +199,48 @@ pair<prf_type, vector<prf_type>> TwoChoicePPTLStorage::insertCuckooHT(long index
 }
 
 
-void TwoChoicePPTLStorage::insertCuckooStash(long index, long tableNum, vector<prf_type> ctCiphers)
+void TwoChoicePPWithTunableLocalityStorage::insertCuckooStash(long index, long tableNum, vector<prf_type> ctCiphers)
 {
-      fstream file(stashfilenames[index][tableNum].c_str(), ios::binary | ios::out | ios::ate);
-      if (file.fail()) 
-          cerr << "(Error in Cuckoo Stash insert: " << strerror(errno)<<")"<<endl;
-	  cuckooStashLen[index][tableNum]= cuckooStashLen[index][tableNum]+ctCiphers.size();
+    fstream file(cuckooStashfilenames[index][tableNum].c_str(), ios::binary | ios::out | ios::ate);
+    if (file.fail()) 
+        cerr << "(Error in Cuckoo Stash insert: " << strerror(errno)<<")"<<endl;
 
-      for (auto item : ctCiphers) 
-      {
-          unsigned char newRecord[AES_KEY_SIZE];
-          memset(newRecord, 0, AES_KEY_SIZE);
-          std::copy(item.begin(), item.end(), newRecord);
-          file.write((char*) newRecord, AES_KEY_SIZE);
-      }
-      file.close();
+	int readPos = cuckooStashLength[index][tableNum]*AES_KEY_SIZE;
+ 	if (DROP_CACHE) {
+            Utilities::startTimer(113);
+            system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
+            auto t = Utilities::stopTimer(113);
+            printf("drop cache time:%f\n", t);
+            cacheTime += t;
+        }
+	file.seekg(readPos, ios::beg);
+	SeekG++;
+	cuckooStashLength[index][tableNum]= cuckooStashLength[index][tableNum]+ctCiphers.size();
+
+    for (auto item : ctCiphers) 
+    {
+        unsigned char newRecord[AES_KEY_SIZE];
+        memset(newRecord, 0, AES_KEY_SIZE);
+        std::copy(item.begin(), item.end(), newRecord);
+        file.write((char*) newRecord, AES_KEY_SIZE);
+    }
+    file.close();
 }
 
-vector<prf_type> TwoChoicePPTLStorage::getCuckooHT(long index) 
+vector<prf_type> TwoChoicePPWithTunableLocalityStorage::getCuckooHT(long index) 
 {
       vector<prf_type> results;
       for(long tn = 0; tn < index; tn++)
       {
          for(long c = 0; c<2; c++ )
-	 {
+	 	{
 	    fstream cuckoo(cuckoofilenames[index][tn][c].c_str(), ios::binary | ios::in | ios::ate);
       	    if (cuckoo.fail()) 
            	cerr << "Error in getCuckooHT read: " << strerror(errno);
 	    long entryNum = pow(2, (index-tn));
 	    long entrySize = pow(2, tn);
-      	    long size = cuckoo.tellg();
- if (DROP_CACHE) {
+      	long size = cuckoo.tellg();
+		if (DROP_CACHE) {
             Utilities::startTimer(113);
             system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
             auto t = Utilities::stopTimer(113);
@@ -247,38 +251,38 @@ vector<prf_type> TwoChoicePPTLStorage::getCuckooHT(long index)
        	    SeekG++;
             char* keyValues = new char[size];
       	    cuckoo.read(keyValues, size);
-	    for(long e = 0; e< entryNum; e++)
+	    for(long e = 0; e < entryNum; e++)
 	    {
-		for(long es = 0; es<=entrySize; es++) // one extra entry for the keyword
-		{
-		    prf_type entry;
-            std::copy(keyValues+e*es*AES_KEY_SIZE, 
-				keyValues+e*es*AES_KEY_SIZE+AES_KEY_SIZE, entry.begin());
-		    if(es !=0 )//&& entry != nullKey)
-		    {
-				results.push_back(entry);
-		    } 
-		    //if(es == 0)
-		    //	cout <<"cuckoo key(encrypted):["<<entry.data()<<"]"<<endl;
+			for(long es = 0; es<=entrySize; es++) // one extra entry for the keyword
+			{
+		   	 prf_type entry;
+           	 std::copy(keyValues+e*es*AES_KEY_SIZE, 
+		   	 	keyValues+e*es*AES_KEY_SIZE+AES_KEY_SIZE, entry.begin());
+		   	 if(es !=0 && entry != nullKey)
+		   	 {
+		   	 	results.push_back(entry);
+		   	 } 
+		   	 //if(es == 0)
+		   	 //	cout <<"cuckoo key(encrypted):["<<entry.data()<<"]"<<endl;
 			}
 	    }
       	    delete keyValues;
             cuckoo.close();
 	 }
-         fstream file(stashfilenames[index][tn].c_str(), ios::binary | ios::in | ios::ate);
+         fstream file(cuckooStashfilenames[index][tn].c_str(), ios::binary | ios::in | ios::ate);
          if (file.fail()) 
              cerr << "Error in cuckooStash read: " << strerror(errno);
          //long size = file.tellg();
-		 long size = cuckooStashLen[index][tn];
- if (DROP_CACHE) {
+		 long size = cuckooStashLength[index][tn];
+		 if (DROP_CACHE) {
             Utilities::startTimer(113);
             system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
             auto t = Utilities::stopTimer(113);
             printf("drop cache time:%f\n", t);
             cacheTime += t;
-        }
+        	}
          file.seekg(0, ios::beg);
-	 SeekG++;
+	 	 SeekG++;
          char* keyValues = new char[size];
          file.read(keyValues, size);
          file.close();
@@ -293,7 +297,7 @@ vector<prf_type> TwoChoicePPTLStorage::getCuckooHT(long index)
       return results;
 }
 
-void TwoChoicePPTLStorage::insertAll(long index, vector<vector< prf_type > > ciphers) 
+void TwoChoicePPWithTunableLocalityStorage::insertAll(long index, vector<vector< prf_type > > ciphers) 
 {
    fstream file(filenames[index].c_str(), ios::binary | ios::out);
    if (file.fail()) 
@@ -314,7 +318,7 @@ void TwoChoicePPTLStorage::insertAll(long index, vector<vector< prf_type > > cip
    file.close();
 }
 
-vector<prf_type> TwoChoicePPTLStorage::getAllData(long index) 
+vector<prf_type> TwoChoicePPWithTunableLocalityStorage::getAllData(long index) 
 {
    vector<prf_type> results;
    fstream file(filenames[index].c_str(), ios::binary | ios::in | ios::ate);
@@ -322,7 +326,7 @@ vector<prf_type> TwoChoicePPTLStorage::getAllData(long index)
        cerr << "Error in getAllData read: " << strerror(errno);
    }
    long size = file.tellg();
- if (DROP_CACHE) {
+   if (DROP_CACHE) {
             Utilities::startTimer(113);
             system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
             auto t = Utilities::stopTimer(113);
@@ -344,7 +348,7 @@ vector<prf_type> TwoChoicePPTLStorage::getAllData(long index)
    return results;
 }
 
-void TwoChoicePPTLStorage::clear(long index) 
+void TwoChoicePPWithTunableLocalityStorage::clear(long index) 
 {
     if (inMemoryStorage) 
         data[index].clear();
@@ -361,14 +365,14 @@ void TwoChoicePPTLStorage::clear(long index)
        file.close();
        for(long k=0; k<index; k++)
        {
-           fstream sfile(stashfilenames[index][k].c_str(), std::ios::binary | std::ofstream::out);
+           fstream sfile(cuckooStashfilenames[index][k].c_str(), std::ios::binary | std::ofstream::out);
            if (sfile.fail()) 
                cerr << "Error: " << strerror(errno);
-       	   long maxSize = 2*pow(2,index);
+       	   long maxSize = cuckooStashLength[index][k];
            for (long j = 0; j < maxSize; j++) 
                sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
            sfile.close();
-		   cuckooStashLen[index][k] = 0;
+		   cuckooStashLength[index][k] = 0;
 
        }
        for(long k=0; k<index; k++)
@@ -388,10 +392,10 @@ void TwoChoicePPTLStorage::clear(long index)
     }
 }
 
-TwoChoicePPTLStorage::~TwoChoicePPTLStorage() {
+TwoChoicePPWithTunableLocalityStorage::~TwoChoicePPWithTunableLocalityStorage() {
 }
 
-vector <prf_type> TwoChoicePPTLStorage::cuckooSearch(long index, long tableNum, long h[2])
+vector <prf_type> TwoChoicePPWithTunableLocalityStorage::cuckooSearch(long index, long tableNum, long h[2])
 {
    vector<prf_type> results;
    //results.resize(0);
@@ -404,14 +408,14 @@ vector <prf_type> TwoChoicePPTLStorage::cuckooSearch(long index, long tableNum, 
         long readPos = h[c]*(entrySize+1)*AES_KEY_SIZE;
         readPos = readPos + AES_KEY_SIZE;
         long readLength = entrySize*AES_KEY_SIZE;
- if (DROP_CACHE) {
+		if (DROP_CACHE) {
             Utilities::startTimer(113);
             system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
             auto t = Utilities::stopTimer(113);
             printf("drop cache time:%f\n", t);
             cacheTime += t;
         }
-        cuckoo.seekg(readPos,ios::beg);
+        cuckoo.seekg(readPos, ios::beg);
         SeekG++;
         char* keyValues = new char[readLength];
         cuckoo.read(keyValues, readLength);
@@ -421,17 +425,17 @@ vector <prf_type> TwoChoicePPTLStorage::cuckooSearch(long index, long tableNum, 
         {
             prf_type tmp;
             std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-                results.push_back(tmp);
-            	cout <<"cuckoo result SIZE:"<<results.size()<<endl;
+			if(tmp != nullKey)   //**PLEASE DONT REMOVE THIS LINE
+            	results.push_back(tmp);
         }
         cuckoo.close();
    }
-   fstream file(stashfilenames[index][tableNum].c_str(), ios::binary | ios::in | ios::ate);
+   fstream file(cuckooStashfilenames[index][tableNum].c_str(), ios::binary | ios::in | ios::ate);
    if (file.fail()) 
        cerr << "Error in cuckoo Stash read: " << strerror(errno);
    //long size = file.tellg();
-	long size = cuckooStashLen[index][tableNum];
- if (DROP_CACHE) {
+	long size = cuckooStashLength[index][tableNum];
+ 	if (DROP_CACHE) {
             Utilities::startTimer(113);
             system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
             auto t = Utilities::stopTimer(113);
@@ -453,7 +457,7 @@ vector <prf_type> TwoChoicePPTLStorage::cuckooSearch(long index, long tableNum, 
    delete keyValues;
    return results;
 }
-vector<prf_type> TwoChoicePPTLStorage::find(long index, prf_type mapKey, long cnt) 
+vector<prf_type> TwoChoicePPWithTunableLocalityStorage::find(long index, prf_type mapKey, long cnt) 
 {
      vector<prf_type> results;
      std::fstream file(filenames[index].c_str(), ios::binary | ios::in);
@@ -546,6 +550,4 @@ vector<prf_type> TwoChoicePPTLStorage::find(long index, prf_type mapKey, long cn
      file.close();
      return results;
 }
-
-
 
