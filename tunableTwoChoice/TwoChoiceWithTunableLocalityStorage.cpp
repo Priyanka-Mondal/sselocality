@@ -1,7 +1,7 @@
-#include "TwoChoiceTLStorage.h"
+#include "TwoChoiceWithTunableLocalityStorage.h"
 #include<string.h>
 
-TwoChoiceTLStorage::TwoChoiceTLStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile) 
+TwoChoiceWithTunableLocalityStorage::TwoChoiceWithTunableLocalityStorage(bool inMemory, long dataIndex, string fileAddressPrefix, bool profile) 
 {
     this->inMemoryStorage = inMemory;
     this->fileAddressPrefix = fileAddressPrefix;
@@ -19,7 +19,7 @@ TwoChoiceTLStorage::TwoChoiceTLStorage(bool inMemory, long dataIndex, string fil
     }
 }
 
-bool TwoChoiceTLStorage::setup(bool overwrite) 
+bool TwoChoiceWithTunableLocalityStorage::setup(bool overwrite) 
 {
     for (long i = 0; i < dataIndex; i++) 
 	{
@@ -43,7 +43,7 @@ bool TwoChoiceTLStorage::setup(bool overwrite)
 }
 
 
-void TwoChoiceTLStorage::insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun) {
+void TwoChoiceWithTunableLocalityStorage::insertAll(int index, vector<vector< prf_type > > ciphers, bool append, bool firstRun) {
             if (append && !firstRun) 
 			{
                 fstream file(filenames[index].c_str(), ios::binary | std::ios::app);
@@ -73,7 +73,7 @@ void TwoChoiceTLStorage::insertAll(int index, vector<vector< prf_type > > cipher
             }
 }
 
-void TwoChoiceTLStorage::insertAll(long index, vector<vector< prf_type > > ciphers) 
+void TwoChoiceWithTunableLocalityStorage::insertAll(long index, vector<vector< prf_type > > ciphers) 
 {
     fstream file(filenames[index].c_str(), ios::binary | ios::out);
     if (file.fail()) 
@@ -94,7 +94,7 @@ void TwoChoiceTLStorage::insertAll(long index, vector<vector< prf_type > > ciphe
     file.close();
 }
 
-vector<prf_type> TwoChoiceTLStorage::getAllData(long index) 
+vector<prf_type> TwoChoiceWithTunableLocalityStorage::getAllData(long index) 
 {
     vector<prf_type > results;
     fstream file(filenames[index].c_str(), ios::binary | ios::in | ios::ate);
@@ -123,7 +123,7 @@ vector<prf_type> TwoChoiceTLStorage::getAllData(long index)
     return results;
 }
 
-void TwoChoiceTLStorage::clear(long index) 
+void TwoChoiceWithTunableLocalityStorage::clear(long index) 
 {
 	fstream file(filenames[index].c_str(), std::ios::binary | std::ofstream::out);
 	if (file.fail()) 
@@ -136,16 +136,15 @@ void TwoChoiceTLStorage::clear(long index)
 	file.close();
 }
 
-TwoChoiceTLStorage::~TwoChoiceTLStorage() {
+TwoChoiceWithTunableLocalityStorage::~TwoChoiceWithTunableLocalityStorage() {
 }
 
-vector<prf_type> TwoChoiceTLStorage::find(long index, prf_type mapKey, long cnt) 
+vector<prf_type> TwoChoiceWithTunableLocalityStorage::find(long index, prf_type mapKey, long cnt) 
 {
     vector<prf_type> results;
     std::fstream file(filenames[index].c_str(), ios::binary | ios::in);
     if (file.fail()) 
         cerr << "Error in read: " << strerror(errno);
-    unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
     if (cnt >= numberOfBins[index]) 
 	{
         long fileLength = numberOfBins[index] * sizeOfEachBin[index] * AES_KEY_SIZE;
@@ -162,6 +161,7 @@ vector<prf_type> TwoChoiceTLStorage::find(long index, prf_type mapKey, long cnt)
     } 
 	else 
 	{
+    	unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
 		long superBins = ceil((float) numberOfBins[index]/cnt); 
         long pos = (unsigned long) (*((long*) hash)) % superBins; //numberOfBins[index];
         long readPos = pos *cnt* AES_KEY_SIZE * sizeOfEachBin[index];

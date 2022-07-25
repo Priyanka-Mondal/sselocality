@@ -15,18 +15,18 @@
 #include "Utilities.h"
 #include "AES.hpp"
 #include "OneChoiceServer.h"
-#include "TwoChoiceTLServer.h"
+#include "TwoChoiceWithTunableLocalityServer.h"
 #include <unordered_map>
 
-class TwoChoiceTLClient {
+class TwoChoiceWithTunableLocalityClient {
 private:
-    TwoChoiceTLServer* server;
+    TwoChoiceWithTunableLocalityServer* server;
 	OneChoiceServer* one;
     bool profile = false;
 
 public:
-    virtual ~TwoChoiceTLClient();
-    TwoChoiceTLClient(long maxUpdate, bool inMemory, bool overwrite, bool profile);
+    virtual ~TwoChoiceWithTunableLocalityClient();
+    TwoChoiceWithTunableLocalityClient(long maxUpdate, bool inMemory, bool overwrite, bool profile);
 	prf_type nullKey;
     long totalCommunication = 0;
     vector<long> numberOfBins;

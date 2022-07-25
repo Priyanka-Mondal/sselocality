@@ -1,24 +1,24 @@
 #ifndef TWOCHOICESERVER_H
 #define TWOCHOICESERVER_H
 
-#include "TwoChoiceTLStorage.h"
+#include "TwoChoiceWithTunableLocalityStorage.h"
 #include "Storage.h"
 
-class TwoChoiceTLServer {
+class TwoChoiceWithTunableLocalityServer {
 private:
-    TwoChoiceTLStorage* storage;
+    TwoChoiceWithTunableLocalityStorage* storage;
     Storage* keywordCounters;
     void getAESRandomValue(unsigned char* keyword, long cnt, unsigned char* result);
     long numberOfBins, sizeOfEachBin;
     bool profile = false;
 
 public:
-    TwoChoiceTLServer(long dataIndex, bool inMemory, bool overwrite, bool profile);
+    TwoChoiceWithTunableLocalityServer(long dataIndex, bool inMemory, bool overwrite, bool profile);
     void clear(long index);
-    virtual ~TwoChoiceTLServer();
+    virtual ~TwoChoiceWithTunableLocalityServer();
     void storeCiphers(long dataIndex, vector<vector<prf_type>> ciphers, map<prf_type, prf_type> keywordCounters);
     vector<prf_type> search(long dataIndex, prf_type tokkw, prf_type token, long & keywordCnt, long num);
-	vector<prf_type> searchLoc(long dataIndex, prf_type hashtoken, long num) ;
+	vector<prf_type> search(long dataIndex, prf_type hashtoken, long num) ;
 	long getCounter(long dataIndex, prf_type tokkw);
     vector<prf_type> getAllData(long dataIndex);
     vector<prf_type> getStash(long dataIndex);

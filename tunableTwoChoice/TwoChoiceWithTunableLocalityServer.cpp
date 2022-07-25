@@ -1,31 +1,31 @@
-#include "TwoChoiceTLServer.h"
+#include "TwoChoiceWithTunableLocalityServer.h"
 #include <string.h>
 
-TwoChoiceTLServer::TwoChoiceTLServer(long dataIndex, bool inMemory, bool overwrite, bool profile) 
+TwoChoiceWithTunableLocalityServer::TwoChoiceWithTunableLocalityServer(long dataIndex, bool inMemory, bool overwrite, bool profile) 
 {
     this->profile = profile;
-    storage = new TwoChoiceTLStorage(inMemory, dataIndex, "/tmp/", profile);
+    storage = new TwoChoiceWithTunableLocalityStorage(inMemory, dataIndex, "/tmp/", profile);
     storage->setup(overwrite);
     keywordCounters = new Storage(inMemory, dataIndex, "/tmp/keyword-", profile);
     keywordCounters->setup(overwrite);
 }
 
-TwoChoiceTLServer::~TwoChoiceTLServer() {}
+TwoChoiceWithTunableLocalityServer::~TwoChoiceWithTunableLocalityServer() {}
 
 
-void TwoChoiceTLServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, map<prf_type, prf_type> keywordCnters) 
+void TwoChoiceWithTunableLocalityServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, map<prf_type, prf_type> keywordCnters) 
 {
     storage->insertAll(dataIndex, ciphers);
     keywordCounters->insert(dataIndex, keywordCnters);
 }
 
-void TwoChoiceTLServer::storeKeywordCounters(long dataIndex, map<prf_type, prf_type> kwCounters){
+void TwoChoiceWithTunableLocalityServer::storeKeywordCounters(long dataIndex, map<prf_type, prf_type> kwCounters){
     keywordCounters->insert(dataIndex, kwCounters);
 }
-void TwoChoiceTLServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun) {
+void TwoChoiceWithTunableLocalityServer::storeCiphers(long dataIndex, vector<vector<prf_type> > ciphers, bool firstRun) {
     storage->insertAll(dataIndex, ciphers, true, firstRun);
 }
-vector<prf_type> TwoChoiceTLServer::search(long dataIndex, prf_type tokkw, prf_type hashtoken, long& keywordCnt, long num) 
+vector<prf_type> TwoChoiceWithTunableLocalityServer::search(long dataIndex, prf_type tokkw, prf_type hashtoken, long& keywordCnt, long num) 
 {
     keywordCounters->seekgCount = 0;
     storage->readBytes = 0;
@@ -71,7 +71,7 @@ vector<prf_type> TwoChoiceTLServer::search(long dataIndex, prf_type tokkw, prf_t
     return result;
 }
 
-vector<prf_type> TwoChoiceTLServer::searchLoc(long dataIndex, prf_type hashToken, long kwc) 
+vector<prf_type> TwoChoiceWithTunableLocalityServer::search(long dataIndex, prf_type hashToken, long kwc) 
 {
     vector<prf_type> result;
 	result.resize(0);
@@ -83,7 +83,7 @@ vector<prf_type> TwoChoiceTLServer::searchLoc(long dataIndex, prf_type hashToken
     return result;
 }
 
-long TwoChoiceTLServer::getCounter(long dataIndex, prf_type tokkw) 
+long TwoChoiceWithTunableLocalityServer::getCounter(long dataIndex, prf_type tokkw) 
 {
     prf_type curToken = tokkw;
     unsigned char cntstr[AES_KEY_SIZE];
@@ -102,17 +102,17 @@ long TwoChoiceTLServer::getCounter(long dataIndex, prf_type tokkw)
 	return keywordCnt;
 }
 
-vector<prf_type> TwoChoiceTLServer::getAllData(long dataIndex) 
+vector<prf_type> TwoChoiceWithTunableLocalityServer::getAllData(long dataIndex) 
 {
     return storage->getAllData(dataIndex);
 }
 
-vector<prf_type> TwoChoiceTLServer::getStash(long dataIndex) 
+vector<prf_type> TwoChoiceWithTunableLocalityServer::getStash(long dataIndex) 
 {
 //    return storage->getStash(dataIndex);
 }
 
-void TwoChoiceTLServer::clear(long index) 
+void TwoChoiceWithTunableLocalityServer::clear(long index) 
 {
     storage->clear(index);
     keywordCounters->clear(index);

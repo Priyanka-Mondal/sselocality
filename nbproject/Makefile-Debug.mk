@@ -107,9 +107,9 @@ V2OBJECTFILES= \
 	${OBJECTDIR}/${V2}/Amortized.o \
 	${OBJECTDIR}/${V2}/OneChoiceServer.o \
 	${OBJECTDIR}/${V2}/OneChoiceStorage.o \
-	${OBJECTDIR}/${V2}/TwoChoiceTLClient.o \
-	${OBJECTDIR}/${V2}/TwoChoiceTLServer.o \
-	${OBJECTDIR}/${V2}/TwoChoiceTLStorage.o \
+	${OBJECTDIR}/${V2}/TwoChoiceWithTunableLocalityClient.o \
+	${OBJECTDIR}/${V2}/TwoChoiceWithTunableLocalityServer.o \
+	${OBJECTDIR}/${V2}/TwoChoiceWithTunableLocalityStorage.o \
 	${OBJECTDIR}/${V2}/Server.o \
 	${OBJECTDIR}/${V2}/Storage.o \
 	${OBJECTDIR}/${V2}/Utilities.o \
@@ -236,8 +236,8 @@ LDLIBSOPTIONS=-lcrypto -lssl #-lstxxl_debug
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${VP2}/vptwo
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${V2}/vtwo
+#	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${VP2}/vptwo
 #	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${TWOONE}/twoone
 #	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${SDDNO}/onechoice-sddn
 #	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/${SDDO}/onechoice-sdd
@@ -378,20 +378,20 @@ ${V2OBJECTDIR}/OneChoiceStorage.o: ${V2}/OneChoiceStorage.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/OneChoiceStorage.o ${V2}/OneChoiceStorage.cpp
 
-${OBJECTDIR}/${V2}/TwoChoiceTLClient.o: ${V2}/TwoChoiceTLClient.cpp
+${OBJECTDIR}/${V2}/TwoChoiceWithTunableLocalityClient.o: ${V2}/TwoChoiceWithTunableLocalityClient.cpp
 	${MKDIR} -p ${OBJECTDIR}/${V2}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceTLClient.o ${V2}/TwoChoiceTLClient.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceWithTunableLocalityClient.o ${V2}/TwoChoiceWithTunableLocalityClient.cpp
 
-${OBJECTDIR}/${V2}/TwoChoiceTLServer.o: ${V2}/TwoChoiceTLServer.cpp
+${OBJECTDIR}/${V2}/TwoChoiceWithTunableLocalityServer.o: ${V2}/TwoChoiceWithTunableLocalityServer.cpp
 	${MKDIR} -p ${OBJECTDIR}/${V2}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceTLServer.o ${V2}/TwoChoiceTLServer.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceWithTunableLocalityServer.o ${V2}/TwoChoiceWithTunableLocalityServer.cpp
 
-${OBJECTDIR}/${V2}/TwoChoiceTLStorage.o: ${V2}/TwoChoiceTLStorage.cpp
+${OBJECTDIR}/${V2}/TwoChoiceWithTunableLocalityStorage.o: ${V2}/TwoChoiceWithTunableLocalityStorage.cpp
 	${MKDIR} -p ${OBJECTDIR}/${V2}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceTLStorage.o ${V2}/TwoChoiceTLStorage.cpp
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/${V2}/TwoChoiceWithTunableLocalityStorage.o ${V2}/TwoChoiceWithTunableLocalityStorage.cpp
 
 ${OBJECTDIR}/${V2}/Server.o: ${V2}/Server.cpp
 	${MKDIR} -p ${OBJECTDIR}/${V2}

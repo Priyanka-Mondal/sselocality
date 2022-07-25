@@ -10,7 +10,7 @@ using namespace std;
 
 Amortized::Amortized(long N, bool inMemory, bool overwrite) 
 {
-    L = new TwoChoiceTLClient(ceil(log2(N)), inMemory, overwrite, profile);
+    L = new TwoChoiceWithTunableLocalityClient(ceil(log2(N)), inMemory, overwrite, profile);
     for (long i = 0; i < ceil(log2(N)); i++) 
         keys.push_back(NULL);
     for (long i = 0; i < localSize; i++) 
@@ -71,9 +71,9 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
     for (long i = 0; i < min(rm0, localSize); i++) 
     {
         for (auto item : data[i]) 
-	{
+		{
             if (previousData.count(item.first) == 0) 
-	    {
+	    	{
                 previousData[item.first] = vector<prf_type>();
             }
             previousData[item.first].insert(previousData[item.first].end(), item.second.begin(), item.second.end());
@@ -90,7 +90,7 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
 	    if (curKeyword == "") 
 			continue;
             if (previousData.count(curKeyword) == 0) 
-	    {
+	    	{
                 previousData[curKeyword] = vector < prf_type>();
             }
             previousData[curKeyword].push_back(item);
@@ -184,6 +184,7 @@ vector<int> Amortized::search(string keyword)
     {
         if (cur.second<0) 
 		{
+			assert(cur.second == -1);
            	finalRes.emplace_back(cur.first);
         }
     }

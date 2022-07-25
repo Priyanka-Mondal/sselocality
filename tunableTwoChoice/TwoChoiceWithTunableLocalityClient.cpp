@@ -1,18 +1,18 @@
-#include "TwoChoiceTLClient.h"
+#include "TwoChoiceWithTunableLocalityClient.h"
 #include<vector>
 #include<algorithm>
 
-TwoChoiceTLClient::~TwoChoiceTLClient() 
+TwoChoiceWithTunableLocalityClient::~TwoChoiceWithTunableLocalityClient() 
 {
 	delete server;
 	delete one;
 }
 
-TwoChoiceTLClient::TwoChoiceTLClient(long numOfDataSets, bool inMemory, bool overwrite, bool profile) 
+TwoChoiceWithTunableLocalityClient::TwoChoiceWithTunableLocalityClient(long numOfDataSets, bool inMemory, bool overwrite, bool profile) 
 {
 	cout <<"======RUNNING SDa+TwoChoice+(+OneChoice version 2)(long)==TUNABLE LOCALITY:"<<LOC<<endl;
 	this->profile = profile;
-	server = new TwoChoiceTLServer(numOfDataSets, inMemory, overwrite, profile);
+	server = new TwoChoiceWithTunableLocalityServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
 	memset(nullKey.data(), 0, AES_KEY_SIZE);
     for (long i = 0; i <= numOfDataSets; i++) 
@@ -60,7 +60,7 @@ vector<pair<string, vector<prf_type>>> sort(unordered_map<string, vector<prf_typ
 	return A;
 }
 
-long TwoChoiceTLClient::maxPossibleLen(long index)
+long TwoChoiceWithTunableLocalityClient::maxPossibleLen(long index)
 {
 	long N = pow(2,index);
 	long bins = numberOfBins[index];
@@ -94,7 +94,7 @@ vector<pair<string, vector<tmp_prf_type>>> sort2(unordered_map<string, vector<tm
     sort(A.begin(), A.end(), cmpp2);
     return A;
 }
-void TwoChoiceTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_type> > pairs, unsigned char* key) {
+void TwoChoiceWithTunableLocalityClient::setup2(long index, unordered_map<string, vector<tmp_prf_type> > pairs, unsigned char* key) {
     exist[index] = true;
     vector<vector<pair<pair<string, long>, tmp_prf_type> > > ciphers;
     for (long i = 0; i < numberOfBins[index]; i++) {
@@ -149,7 +149,6 @@ void TwoChoiceTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_
 		long times = ceil((float) pss/(float) mpl);
 		if(times>LOC)
 			times = LOC;
-		//cout <<index<<" mpl:"<<mpl<<" pss:"<<pss<<" times:"<<times<<endl;
 	  	for(long t=0; t<times;t++)
 		{ 
 			long localpss = mpl;
@@ -165,6 +164,7 @@ void TwoChoiceTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_
 				newsize = mpl;
        		string temp = pair.first;
        		temp = temp.append("1");
+			temp = temp.append(to_string(t));
        		prf_type K1 = Utilities::encode(temp, key);
        		unsigned char cntstr[AES_KEY_SIZE];
        		memset(cntstr, 0, AES_KEY_SIZE);
@@ -174,6 +174,7 @@ void TwoChoiceTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_
 
        		temp = pair.first;
        		temp = temp.append("2");
+			temp = temp.append(to_string(t));
        		prf_type K2 = Utilities::encode(temp, key);
        		memset(cntstr, 0, AES_KEY_SIZE);
        		*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
@@ -261,7 +262,6 @@ void TwoChoiceTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_
         keywordCntCiphers[mapKey] = mapValue;
     }
     totalCommunication += ciphers.size() * sizeof (prf_type)*2 + ciphersOne.size() * sizeof (prf_type);
-    //printf("stash cipher size of level:%d is %d\n", index, stashCiphers.size());
     server->storeKeywordCounters(index, keywordCntCiphers);
     for (long i = 0; i < ciphers.size(); i++) {
         vector<vector<prf_type> > finalCiphers = convertTmpCiphersToFinalCipher(ciphers[i], key);
@@ -273,7 +273,7 @@ void TwoChoiceTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_
 	}
 }
 
-vector<vector<prf_type> > TwoChoiceTLClient::convertTmpCiphersToFinalCipher(vector<pair<std::pair<string, long>, tmp_prf_type> > ciphers, unsigned char* key) {
+vector<vector<prf_type> > TwoChoiceWithTunableLocalityClient::convertTmpCiphersToFinalCipher(vector<pair<std::pair<string, long>, tmp_prf_type> > ciphers, unsigned char* key) {
     vector<vector<prf_type> > results;
     results.push_back(vector<prf_type>());
     for (long i = 0; i < ciphers.size(); i++) {
@@ -281,7 +281,7 @@ vector<vector<prf_type> > TwoChoiceTLClient::convertTmpCiphersToFinalCipher(vect
         string keyword = KV.first.first;
         long cnt = KV.first.second;
         tmp_prf_type value = KV.second;
-        int ind = *(int*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
+        long ind = *(long*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
         byte op = *(byte*) (&(value.data()[TMP_AES_KEY_SIZE - 6]));
 
         if (cnt == -1) {
@@ -290,23 +290,19 @@ vector<vector<prf_type> > TwoChoiceTLClient::convertTmpCiphersToFinalCipher(vect
             prf_type dummyV = Utilities::encode(dummy.data(), key);
             results[0].push_back(dummyV);
         } else {
-
             prf_type newvalue;
             std::fill(newvalue.begin(), newvalue.end(), 0);
             std::copy(keyword.begin(), keyword.end(), newvalue.begin());
             *(int*) (&(newvalue.data()[AES_KEY_SIZE - 5])) = ind;
             newvalue.data()[AES_KEY_SIZE - 6] = op;
-
             prf_type mapValue;
             mapValue = Utilities::encode(newvalue.data(), key);
             results[0].push_back(mapValue);
         }
-
     }
     return results;
 }
-void TwoChoiceTLClient::setup(long index, unordered_map<string, vector<prf_type> > pairs, unsigned char* key) 
-{
+void TwoChoiceWithTunableLocalityClient::setup(long index, unordered_map<string, vector<prf_type> > pairs, unsigned char* key) {
 	exist[index] = true;
 	//vector<vector<pair<prf_type, prf_type>>> ciphers;
 	//vector<vector<pair<prf_type, prf_type>>> ciphersOne;
@@ -475,7 +471,7 @@ void TwoChoiceTLClient::setup(long index, unordered_map<string, vector<prf_type>
 	one->storeCiphers(index,ciphersOne);
 }
 
-vector<prf_type> TwoChoiceTLClient::search(long index, string keyword, unsigned char* key) 
+vector<prf_type> TwoChoiceWithTunableLocalityClient::search(long index, string keyword, unsigned char* key) 
 {
 	double searchPreparation = 0, searchDecryption = 0;
 	long flag = 0;
@@ -546,10 +542,9 @@ vector<prf_type> TwoChoiceTLClient::search(long index, string keyword, unsigned 
 					temp = temp.append(to_string(t));
 					hashtoken = Utilities::encode(temp, key);
 				}
-				ciphers = server->searchLoc(index, hashtoken, newsize);
-				//ciphers = server->getAllData(index);
-				vector<prf_type> localfinalRes;
-				localfinalRes.resize(0);
+				ciphers = server->search(index, hashtoken, newsize);
+				//vector<prf_type> localfinalRes;
+				//localfinalRes.resize(0);
 				//if(flag < localpss)
 				//{
 				//	flag = 0;
@@ -559,7 +554,7 @@ vector<prf_type> TwoChoiceTLClient::search(long index, string keyword, unsigned 
 				 		Utilities::decode(item, plaintext, key);
 				 		if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 						{
-				 			localfinalRes.push_back(plaintext);
+				 			//localfinalRes.push_back(plaintext);
 				 			finalRes.push_back(plaintext);
 							flag++;
         					int id = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
@@ -567,13 +562,14 @@ vector<prf_type> TwoChoiceTLClient::search(long index, string keyword, unsigned 
 				 		}
 					}
 				//}
+				/*
 				if(localfinalRes.size()>=localpss)
 				{
 					for(auto a: localfinalRes)
 					{
 						finalRes.push_back(a);
 					}
-				}
+				}*/
 				totalCommunication += ciphers.size()* sizeof(prf_type);
 		//cout <<index<<": localfinal:"<<localfinalRes.size()<<" localpss:"<<localpss<<" ns:"<<newsize<<" ";
 		//		cout<<"t:"<<t<<" s:"<<s<<" :"<<finalRes.size()-f1<<" cc:"<<ciphers.size()<<endl;
@@ -584,7 +580,7 @@ vector<prf_type> TwoChoiceTLClient::search(long index, string keyword, unsigned 
 	return finalRes;
 }
 
-vector<prf_type> TwoChoiceTLClient::getAllData(long index, unsigned char* key) 
+vector<prf_type> TwoChoiceWithTunableLocalityClient::getAllData(long index, unsigned char* key) 
 {
 	vector<prf_type> finalRes = vector<prf_type>();
 	auto ciphers = server->getAllData(index);
@@ -606,7 +602,7 @@ vector<prf_type> TwoChoiceTLClient::getAllData(long index, unsigned char* key)
 	return finalRes;
 }
 
-void TwoChoiceTLClient::destry(long index) 
+void TwoChoiceWithTunableLocalityClient::destry(long index) 
 {
 	server->clear(index);
 	one->clear(index);
