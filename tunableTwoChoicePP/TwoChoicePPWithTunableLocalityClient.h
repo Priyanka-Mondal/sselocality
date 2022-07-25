@@ -29,7 +29,6 @@ public:
     virtual ~TwoChoicePPWithTunableLocalityClient();
     TwoChoicePPWithTunableLocalityClient(long maxUpdate, bool inMemory, bool overwrite, bool profile);
     long totalCommunication = 0;
-	int LOC = 5;
     vector<long> numberOfBins;
 	vector<long> nB;
     prf_type nullKey;

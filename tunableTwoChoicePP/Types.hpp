@@ -8,7 +8,8 @@
 #define USE_XXL 0
 // The main type for passing around raw file data
 #define ID_SIZE 16
-#define LOCALITY 5
+#define LOCALITY 4
+#define SPACE_OVERHEAD 3
 
 using byte_t = uint8_t;
 using block = std::vector<byte_t>;

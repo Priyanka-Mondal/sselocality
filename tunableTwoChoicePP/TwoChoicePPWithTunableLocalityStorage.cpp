@@ -14,7 +14,7 @@ TwoChoicePPWithTunableLocalityStorage::TwoChoicePPWithTunableLocalityStorage(boo
     {
         long curNumberOfBins = i > 3 ? ((long)ceil((float)pow(2,i)/(log2(log2(log2(pow(2,i))))))) : pow(2,i);
 		curNumberOfBins = pow(2, (long)ceil(log2(curNumberOfBins))); 
-        long curSizeOfEachBin = i > 3 ? 3*ceil((log2(log2(log2(pow(2,i)))))) : 3;
+        long curSizeOfEachBin = i > 3 ? SPACE_OVERHEAD*ceil((log2(log2(log2(pow(2,i)))))) : SPACE_OVERHEAD;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		cout<<"Level:"<<i<<" number of bins:"<<curNumberOfBins<<" size of each bin:"<<curSizeOfEachBin<<endl;
@@ -435,6 +435,7 @@ vector <prf_type> TwoChoicePPWithTunableLocalityStorage::cuckooSearch(long index
        cerr << "Error in cuckoo Stash read: " << strerror(errno);
    //long size = file.tellg();
 	long size = cuckooStashLength[index][tableNum];
+	//cout <<"CUCKOO_STASH SIZE:"<<cuckooStashLength[index][tableNum]<<endl;
  	if (DROP_CACHE) {
             Utilities::startTimer(113);
             system("echo 3 | sudo tee /proc/sys/vm/drop_caches");

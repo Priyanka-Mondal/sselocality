@@ -18,9 +18,9 @@ TwoChoicePPWithTunableLocalityClient::TwoChoicePPWithTunableLocalityClient(long 
 	for (long i = 0; i < numOfDataSets; i++) 
 	{
 		exist.push_back(false);
-		long curNumberOfBins = i > 3 ? ((long) ceil((float) pow(2, i) / (log2(log2(log2(pow(2,i))))))) : pow(2,i);
+		long curNumberOfBins = i > 3 ? ((long)ceil((float)pow(2,i)/(log2(log2(log2(pow(2,i))))))) : pow(2,i);
 		curNumberOfBins = pow(2, (long)ceil(log2(curNumberOfBins)));
-	 	long curSizeOfEachBin = i > 3 ? 3*ceil((log2(log2(log2(pow(2,i)))))) : 3;
+	 	long curSizeOfEachBin = i > 3 ? SPACE_OVERHEAD*ceil((log2(log2(log2(pow(2,i)))))) : SPACE_OVERHEAD;
 		numberOfBins.push_back(curNumberOfBins);
 		sizeOfEachBin.push_back(curSizeOfEachBin);
 	}
@@ -29,7 +29,7 @@ TwoChoicePPWithTunableLocalityClient::TwoChoicePPWithTunableLocalityClient(long 
 	{
         long curNumberOfBins = j > 1 ? 
 			(long) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
-        long curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*(log2(log2(pow(2, j))))) : pow(2,j);
+        long curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*(log2(log2(pow(2, j))))) : 3;
         nB.push_back(curNumberOfBins);
         sEB.push_back(curSizeOfEachBin);
     }
@@ -166,7 +166,6 @@ void TwoChoicePPWithTunableLocalityClient::writeToCuckooHT(long index, long size
 	place(keyword, ctCiphers, 0, 0, index, tableNum, key);
 }
 void TwoChoicePPWithTunableLocalityClient::writeToCuckooHT2(long index, long size, string keyword, vector<tmp_prf_type> fileids, unsigned char* key) {
-	cout <<"writeToCuckooHT2:"<<index<<endl;
     assert(fileids.size() > 0);
     long tableNum = (long) ceil((float) log2(size));
 
@@ -321,6 +320,7 @@ void TwoChoicePPWithTunableLocalityClient::setup2(long index, unordered_map<stri
        		    }
        		} else {
        		     writeToCuckooHT2(index, newsize, pair.first, pair.second, key);
+					cout <<"writtenToCuckooHT2:"<<index<<endl;
        		}
 	   	 }
        	 prf_type K = Utilities::encode(pair.first, key);
@@ -604,9 +604,9 @@ vector<prf_type> TwoChoicePPWithTunableLocalityClient::search(long index, string
 	}
 	if(keywordCnt>0)
 	{
-		cout<<index <<" kw:["<<keywordCnt<<"]"<<endl;;
+		//cout<<index <<" kw:["<<keywordCnt<<"]"<<endl;;
 		if(finalRes.size()>0)
-			cout <<index<<": retrieved from One choice:"<<finalRes.size()<<" mpl:"<<mpl<<"loc:"<<LOC<<endl;
+			cout <<index<<": retrieved from One choice:"<<finalRes.size()<<" mpl:"<<mpl<<"loc:"<<LOCALITY<<endl;
 		long times = ceil((float) keywordCnt/(float) mpl);
 		if(times>LOCALITY)
 			times = LOCALITY;
@@ -645,7 +645,7 @@ vector<prf_type> TwoChoicePPWithTunableLocalityClient::search(long index, string
 				//vector<prf_type> localfinalRes;
 				//localfinalRes.resize(0);
 				//if(flag < localpss)
-				{
+				//{
 					flag = 0;
 					for (auto item : ciphers) 
 					{
@@ -661,7 +661,7 @@ vector<prf_type> TwoChoicePPWithTunableLocalityClient::search(long index, string
 				 			}
 						}
 					}
-				}
+		    //	}
 			//	if(localfinalRes.size()>=localpss)
 			//	{
 			//		for(auto a: localfinalRes)
@@ -675,7 +675,7 @@ vector<prf_type> TwoChoicePPWithTunableLocalityClient::search(long index, string
 			
 			}
 		}
-		cout <<"f1:"<<finalRes.size()<<endl;
+	//	cout <<"f1:"<<finalRes.size()<<endl;
 	if(keywordCnt>0)
 	{
 		long tableNum = (long)ceil(log2(keywordCnt));
@@ -687,8 +687,10 @@ vector<prf_type> TwoChoicePPWithTunableLocalityClient::search(long index, string
 		prf_type hashtoken2 = Utilities::encode(newkeyword, key);
 		vector<prf_type> cuckooCiphers;
 		cuckooCiphers = server->cuckooSearch(index, tableNum, hashtoken1, hashtoken2);//search HT+cuckoostash
+		//vector<prf_type> tempRes;
 		if(cuckooCiphers.size()>0)
 		{
+						cout <<"cuckoo data size:"<<cuckooCiphers.size()<<endl;
 			for (auto item : cuckooCiphers) 
 			{
 				prf_type plaintext;
@@ -696,10 +698,26 @@ vector<prf_type> TwoChoicePPWithTunableLocalityClient::search(long index, string
 				if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
 				{
 						finalRes.push_back(plaintext);
-						cout <<"cuckoo data:"<<plaintext.data()<<endl;
 				}
 			}
 		}
+		//vector<prf_type> cuckooCiphers1 = server->getCuckooHT(index); // also fetches the cuckoo stash
+		/*vector<prf_type> tempRes1;
+		if(cuckooCiphers1.size()>0)
+		{
+			for (auto item : cuckooCiphers) 
+			{
+				prf_type plaintext;
+				Utilities::decode(item, plaintext, key);
+				if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+				{
+						tempRes1.push_back(plaintext);
+						finalRes.push_back(plaintext);
+				}
+			}
+		}
+		cout <<"cuckoo data size:"<<tempRes.size()<<"|"<<tempRes1.size()<<endl;
+		*/
 		totalCommunication += cuckooCiphers.size()* sizeof(prf_type);
 	}
 	}

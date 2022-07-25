@@ -84,14 +84,13 @@ void Amortized::update(OP op, string keyword, int ind, bool setup)
    	     for (auto item : curData) 
    	 	 {
    	         string curKeyword((char*) item.data());
-   	     if (curKeyword != "") 
-		 {
+   	     	if (curKeyword == "") 
+				 continue;
    	         if (previousData.count(curKeyword) == 0) 
-   	     {
+   	     	 {
    	             previousData[curKeyword] = vector < prf_type>();
    	         }
    	         previousData[curKeyword].push_back(item);
-   	     }
 		 }
 
    	     L->destry(i);
