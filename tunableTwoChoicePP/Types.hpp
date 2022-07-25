@@ -6,9 +6,9 @@
 #include <iostream>
 
 #define USE_XXL 0
-#define LOC 5
 // The main type for passing around raw file data
 #define ID_SIZE 16
+#define LOCALITY 5
 
 using byte_t = uint8_t;
 using block = std::vector<byte_t>;

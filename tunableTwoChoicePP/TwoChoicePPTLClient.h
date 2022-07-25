@@ -29,6 +29,7 @@ public:
     virtual ~TwoChoicePPTLClient();
     TwoChoicePPTLClient(long maxUpdate, bool inMemory, bool overwrite, bool profile);
     long totalCommunication = 0;
+	int LOC = 5;
     vector<long> numberOfBins;
 	vector<long> nB;
     prf_type nullKey;
@@ -38,8 +39,8 @@ public:
     vector<bool> existone;
     void destry(long index);
     void setup(long index, unordered_map<string, vector<prf_type> >pairs, unsigned char* key);
+    //vector<prf_type> search(long index, string keyword, unsigned char* key);
     vector<prf_type> search(long index, string keyword, unsigned char* key);
-    vector<prf_type> searchLoc(long index, string keyword, unsigned char* key);
     vector<prf_type> getAllData(long index, unsigned char* key);
     void writeToCuckooHT(long index, long mpl, string keyword, vector<prf_type> fileids, unsigned char* key);
     void writeToCuckooStash(vector<prf_type> fileids, long cnt, long index, long tableNum, unsigned char* key);

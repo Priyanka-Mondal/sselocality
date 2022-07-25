@@ -13,7 +13,7 @@ TwoChoicePPTLClient::TwoChoicePPTLClient(long numOfDataSets, bool inMemory, bool
 	this->profile = profile;
 	server = new TwoChoicePPTLServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
-	cout <<"=============RUNNING SDa+TwoChoicePLUSPLUS version 2 (long) ====TUNABLE LOCALITY="<<LOC<<endl;
+	cout <<"=============RUNNING SDa+TwoChoicePLUSPLUS version 2 (long) ====TUNABLE LOCALITY="<<LOCALITY<<endl;
 	memset(nullKey.data(), 0, AES_KEY_SIZE);
 	for (long i = 0; i < numOfDataSets; i++) //why not <=
 	{
@@ -110,9 +110,9 @@ void TwoChoicePPTLClient::writeToCuckooStash(vector<prf_type> fileids, long cnt,
 void TwoChoicePPTLClient::place(string keyword, vector<prf_type> fileids, long cuckooID, 
 		long cnt, long index, long tableNum, unsigned char* key)
 {
-	if(cnt == (pow(2,index-tableNum))+1) // check this condition
+	if(cnt == (pow(2,index-tableNum))+1) //circle occured
 	{
-		cout <<"Cuckoo overflow: write in cuckooStash:"<<" index:"<<index<<" tableNum:"<<tableNum<<endl;
+		cout <<"****Cuckoo overflow: write in cuckooStash:"<<" index:"<<index<<" tableNum:"<<tableNum<<endl;
 		writeToCuckooStash(fileids, cnt, index, tableNum, key);
 		return;
 	}
@@ -197,7 +197,6 @@ void TwoChoicePPTLClient::writeToCuckooHT2(long index, long size, string keyword
 }
 
 void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_prf_type> > pairs, unsigned char* key) {
-	cout <<"setup2"<<endl;
     exist[index] = true;
     vector<vector<pair<pair<string, long>, tmp_prf_type> > > ciphers;
     for (long i = 0; i < numberOfBins[index]; i++) {
@@ -220,9 +219,8 @@ void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_pr
     for (auto pair : sorted) 
 	{
 		long pss = pair.second.size();
-		if(pss > LOC*mpl)
+		if(pss > LOCALITY*mpl)
 		{
-			cout <<index<<":ONE CHOICE pss:"<<pss<<" mpl:"<<mpl<<" #bins:"<<numberOfBins[index]<<endl;
 	   		assert(pair.first != "");
        		prf_type K1 = Utilities::encode(pair.first, key);
        		prf_type mapKey, mapValue;
@@ -233,7 +231,7 @@ void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_pr
         	unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
         	long pos = ((unsigned long) (*((long*) hash))) % nB[index];
         	long cipherIndex = pos;
-       		for (unsigned long i = LOC*mpl; i < pair.second.size(); i++) 
+       		for (unsigned long i = LOCALITY*mpl; i < pair.second.size(); i++) 
 	   	 	{
                 std::pair<string, long> mapKey;
                 tmp_prf_type mapValue;
@@ -251,8 +249,8 @@ void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_pr
        	 	}
     	}
 		long times = ceil((float) pss/(float) mpl);
-		if(times>LOC)
-			times = LOC;
+		if(times>LOCALITY)
+			times = LOCALITY;
 	  	for(long t=0; t<times;t++)
 		{ 
 			long localpss = mpl;
@@ -268,6 +266,7 @@ void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_pr
 				newsize = mpl;
        		string temp = pair.first;
        		temp = temp.append("1");
+			temp = temp.append(to_string(t));
        		prf_type K1 = Utilities::encode(temp, key);
        		unsigned char cntstr[AES_KEY_SIZE];
        		memset(cntstr, 0, AES_KEY_SIZE);
@@ -277,6 +276,7 @@ void TwoChoicePPTLClient::setup2(long index, unordered_map<string, vector<tmp_pr
 
        		temp = pair.first;
        		temp = temp.append("2");
+			temp = temp.append(to_string(t));
        		prf_type K2 = Utilities::encode(temp, key);
        		memset(cntstr, 0, AES_KEY_SIZE);
        		*(long*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
@@ -401,7 +401,7 @@ void TwoChoicePPTLClient::setup(long index, unordered_map<string, vector<prf_typ
 	for (auto pair : sorted) 
 	{
 		long pss = pair.second.size();
-		if(pss > LOC*mpl)
+		if(pss > LOCALITY*mpl)
 		{
 	   		assert(pair.first != "");
        		prf_type K1 = Utilities::encode(pair.first, key);
@@ -413,7 +413,7 @@ void TwoChoicePPTLClient::setup(long index, unordered_map<string, vector<prf_typ
         	unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
         	long pos = ((unsigned long) (*((long*) hash))) % nB[index];
         	long cipherIndex = pos;
-       		for (unsigned long i = LOC*mpl; i < pair.second.size(); i++) 
+       		for (unsigned long i = LOCALITY*mpl; i < pair.second.size(); i++) 
 	   	 	{
        	        prf_type mapKey, mapValue;
        	        mapValue = Utilities::encode(pair.second[i].data(), key);
@@ -426,8 +426,8 @@ void TwoChoicePPTLClient::setup(long index, unordered_map<string, vector<prf_typ
        	 	}
     	}
 		long times = ceil((float) pss/(float) mpl);
-		if(times>LOC)
-			times = LOC;
+		if(times>LOCALITY)
+			times = LOCALITY;
 	  	for(long t=0; t<times;t++)
 		{ 
 			long localpss = mpl;
@@ -549,7 +549,7 @@ vector<vector<prf_type> > TwoChoicePPTLClient::convertTmpCiphersToFinalCipher(ve
         string keyword = KV.first.first;
         long cnt = KV.first.second;
         tmp_prf_type value = KV.second;
-        int ind = *(int*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
+        long ind = *(long*) (&(value.data()[TMP_AES_KEY_SIZE - 5]));
         byte op = *(byte*) (&(value.data()[TMP_AES_KEY_SIZE - 6]));
 
         if (cnt == -1) {
@@ -562,7 +562,7 @@ vector<vector<prf_type> > TwoChoicePPTLClient::convertTmpCiphersToFinalCipher(ve
             prf_type newvalue;
             std::fill(newvalue.begin(), newvalue.end(), 0);
             std::copy(keyword.begin(), keyword.end(), newvalue.begin());
-            *(long*) (&(newvalue.data()[AES_KEY_SIZE - 5])) = ind;
+            *(int*) (&(newvalue.data()[AES_KEY_SIZE - 5])) = ind;
             newvalue.data()[AES_KEY_SIZE - 6] = op;
 
             prf_type mapValue;
@@ -574,7 +574,7 @@ vector<vector<prf_type> > TwoChoicePPTLClient::convertTmpCiphersToFinalCipher(ve
     return results;
 }
 
-vector<prf_type> TwoChoicePPTLClient::searchLoc(long index, string keyword, unsigned char* key) 
+vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigned char* key) 
 {
 	double searchPreparation = 0, searchDecryption = 0;
 	long flag = 0;
@@ -612,8 +612,8 @@ vector<prf_type> TwoChoicePPTLClient::searchLoc(long index, string keyword, unsi
 			cout <<index<<": retrieved from One choice:"<<finalRes.size()<<" mpl:"<<mpl<<endl;
 		long f1 = finalRes.size();
 		long times = ceil((float) keywordCnt/(float) mpl);
-		if(times>LOC)
-			times = LOC;
+		if(times>LOCALITY)
+			times = LOCALITY;
 		for(long t=0; t<times;t++)
 		{ 
 			long localpss;
@@ -645,7 +645,7 @@ vector<prf_type> TwoChoicePPTLClient::searchLoc(long index, string keyword, unsi
 					hashtoken = Utilities::encode(temp, key);
 				}
 				//ciphers = server->search(index, token, hashtoken, kw,newsize);
-				ciphers = server->searchLoc(index, hashtoken, newsize);
+				ciphers = server->search(index, hashtoken, newsize);
 				vector<prf_type> localfinalRes;
 				localfinalRes.resize(0);
 				//if(flag < localpss)
@@ -709,7 +709,7 @@ vector<prf_type> TwoChoicePPTLClient::searchLoc(long index, string keyword, unsi
 	return finalRes;
 }
 
-
+/*
 vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigned char* key) 
 {
 	double searchPreparation = 0, searchDecryption = 0;
@@ -799,7 +799,7 @@ vector<prf_type> TwoChoicePPTLClient::search(long index, string keyword, unsigne
 		totalCommunication += cuckooCiphers.size()* sizeof(prf_type);
 	}
 	return finalRes;
-}
+}*/
 
 vector<prf_type> TwoChoicePPTLClient::getAllData(long index, unsigned char* key) 
 {
@@ -827,7 +827,7 @@ vector<prf_type> TwoChoicePPTLClient::getAllData(long index, unsigned char* key)
 	}
 	if(cuckooCiphers.size()>0)
 	{
-		cout <<"getAllData:size of cuckoo ciphers:"<<cuckooCiphers.size()<<endl;
+		//cout <<"getAllData:size of cuckoo ciphers:"<<cuckooCiphers.size()<<endl;
 		for(auto b : cuckooCiphers)
 		{
 		//if(b!=nullKey)

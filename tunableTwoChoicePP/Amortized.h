@@ -37,9 +37,8 @@ private:
 
 public:
     Amortized(long N, bool inMemory, bool overwrite);
-    void update(OP op, string keyword, long ind, bool setup);
-    void update2(OP op, string keyword, long ind, bool setup);
-    vector<long> search(string keyword);
+    void update(OP op, string keyword, int ind, bool setup);
+    vector<int> search(string keyword);
     virtual ~Amortized();
     double getTotalSearchCommSize() const;
     double getTotalUpdateCommSize() const;

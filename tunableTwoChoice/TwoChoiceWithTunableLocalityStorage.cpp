@@ -12,7 +12,7 @@ TwoChoiceWithTunableLocalityStorage::TwoChoiceWithTunableLocalityStorage(bool in
     {
         long curNumberOfBins = i > 3 ? ((long) ceil((float) pow(2, i) / ((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
 	curNumberOfBins = pow(2, (long)ceil(log2(curNumberOfBins))); 
-     	long curSizeOfEachBin = i > 3 ? ceil(SO*(log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))) : SO;
+     	long curSizeOfEachBin = i > 3 ? ceil(SPACE_OVERHEAD*(log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))) : SPACE_OVERHEAD;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
         printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);

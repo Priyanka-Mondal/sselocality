@@ -75,7 +75,7 @@ int main(int argc, char** argv)
 		int j;
         for (j = 0; j < cur->second.size(); j++) 
 		{
-             //if (cnt % 1000 == 0) 
+             if (cnt % 10000 == 0) 
 		     {
                    cout << "Initial Insertions::" << cnt << "/" << to_string(testCases[i].N) << endl;
              }

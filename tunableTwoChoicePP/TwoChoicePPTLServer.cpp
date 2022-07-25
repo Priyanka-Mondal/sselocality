@@ -36,7 +36,7 @@ pair<prf_type, vector<prf_type>> TwoChoicePPTLServer::insertCuckooHT(long index,
 	return storage->insertCuckooHT(index, tableNum, cuckooID, hash, keyw, fileids);
 }
 
-vector<prf_type> TwoChoicePPTLServer::searchLoc(long dataIndex, prf_type hashToken, long kwc) 
+vector<prf_type> TwoChoicePPTLServer::search(long dataIndex, prf_type hashToken, long kwc) 
 {
     vector<prf_type> result;
 	result.resize(0);

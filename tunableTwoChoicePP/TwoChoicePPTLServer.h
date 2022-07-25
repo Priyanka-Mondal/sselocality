@@ -21,7 +21,7 @@ public:
     void storeCiphers(long dataIndex, vector<vector<prf_type > > ciphers,  bool firstrun);
 	void storeKeywordAndStashCounters(long dataIndex, vector<prf_type> stashCiphers, map<prf_type, prf_type> kwCounters);
 	void storeKeywordCounters(long dataIndex, map<prf_type, prf_type> kwCounters);
-	vector<prf_type> searchLoc(long dataIndex, prf_type hashtoken, long num) ;
+	vector<prf_type> search(long dataIndex, prf_type hashtoken, long num) ;
 	long getCounter(long dataIndex, prf_type tokkw);
     vector<prf_type> search(long dataIndex, prf_type tokkw, prf_type token, long & keywordCnt, long sEB);
     vector<prf_type> getAllData(long dataIndex);

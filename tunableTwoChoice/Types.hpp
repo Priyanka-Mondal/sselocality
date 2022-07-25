@@ -9,8 +9,8 @@
 
 // The main type for passing around raw file data
 #define ID_SIZE 16
-#define SO 4
-#define LOC 1
+#define SPACE_OVERHEAD 4
+#define LOCALITY 5
 
 #define DROP_CACHE 0
 using byte_t = uint8_t;

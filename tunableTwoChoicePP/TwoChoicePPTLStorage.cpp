@@ -48,25 +48,6 @@ bool TwoChoicePPTLStorage::setup(bool overwrite)
             }
             file.close();
         }
-		/*
-        string st = fileAddressPrefix + "STASH-" + to_string(i) + ".dat";
-        stashes.push_back(st);
-        fstream stest(st.c_str(), std::ofstream::in);
-        if (stest.fail() || overwrite) 
-	{
-            stest.close();
-            fstream sfile(st.c_str(), std::ofstream::out);
-            if (sfile.fail()) 
-	    {
-                cerr << "Error: " << strerror(errno);
-            }
-            long maxSize = pow(2,i);//numberOfBins[i] * sizeOfEachBin[i];
-            for (long j = 0; j < maxSize; j++) 
-	    {
-                sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
-            }
-            sfile.close();
-        }*/
 	cuckoofilenames[i].resize(dataIndex);
 	stashfilenames[i].resize(dataIndex);
 	cuckooStashLen[i].resize(dataIndex);
@@ -147,7 +128,6 @@ pair<prf_type, vector<prf_type>> TwoChoicePPTLStorage::insertCuckooHT(long index
 {
 	fstream cuckoo(cuckoofilenames[index][tableNum][cuckooID].c_str(), 
 				ios::binary | ios::out | ios::in);
-	cout <<"insertCuckooHT:"<<cuckoofilenames[index][tableNum][cuckooID].c_str()<<endl;
         if (cuckoo.fail()) 
             cerr << "Error in cuckoo hash table read: " << strerror(errno);
 
@@ -173,7 +153,6 @@ pair<prf_type, vector<prf_type>> TwoChoicePPTLStorage::insertCuckooHT(long index
 
 	results.resize(entrySize);
     long readLength = entrySize*AES_KEY_SIZE;
-	//cout <<"["<<keyw.data()<<"]"<<" " <<"["<<nullKey.data()<<"]"<<endl;
  if (DROP_CACHE) {
             Utilities::startTimer(113);
             system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
@@ -243,58 +222,6 @@ void TwoChoicePPTLStorage::insertCuckooStash(long index, long tableNum, vector<p
       }
       file.close();
 }
-/*
-void TwoChoicePPTLStorage::insertStash(long index, vector<prf_type> ciphers) 
-{
-      fstream file(stashes[index].c_str(), ios::binary | ios::out);
-      if (file.fail()) 
-      {
-          cout <<"StashXX:"<<index<<endl;
-          cerr << "(Error in Stash insert: " << strerror(errno)<<")"<<endl;
-      }
-      for (auto item : ciphers) 
-      {
-          unsigned char newRecord[AES_KEY_SIZE];
-          memset(newRecord, 0, AES_KEY_SIZE);
-          std::copy(item.begin(), item.end(), newRecord);
-          file.write((char*) newRecord, AES_KEY_SIZE);
-      }
-      file.close();
-}
-
-vector<prf_type> TwoChoicePPTLStorage::getStash(long index) 
-{
-      vector<prf_type> results;
-      fstream file(stashes[index].c_str(), ios::binary | ios::in | ios::ate);
-      if (file.fail()) 
-          cerr << "Error in read: " << strerror(errno);
-      long size = file.tellg();
- if (DROP_CACHE) {
-            Utilities::startTimer(113);
-            system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
-            auto t = Utilities::stopTimer(113);
-            printf("drop cache time:%f\n", t);
-            cacheTime += t;
-        }
-      file.seekg(0, ios::beg);
-      SeekG++;
-      char* keyValues = new char[size];
-      file.read(keyValues, size);
-      file.close();
-
-      for (long i = 0; i < size/AES_KEY_SIZE ; i++) 
-      {
-          prf_type tmp;
-          std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-          if (tmp != nullKey) 
-          {
-              results.push_back(tmp);
-          }
-      }
-      delete keyValues;
-      return results;
-}
-*/
 
 vector<prf_type> TwoChoicePPTLStorage::getCuckooHT(long index) 
 {
@@ -305,7 +232,7 @@ vector<prf_type> TwoChoicePPTLStorage::getCuckooHT(long index)
 	 {
 	    fstream cuckoo(cuckoofilenames[index][tn][c].c_str(), ios::binary | ios::in | ios::ate);
       	    if (cuckoo.fail()) 
-           	cerr << "Error in read: " << strerror(errno);
+           	cerr << "Error in getCuckooHT read: " << strerror(errno);
 	    long entryNum = pow(2, (index-tn));
 	    long entrySize = pow(2, tn);
       	    long size = cuckoo.tellg();
@@ -325,24 +252,22 @@ vector<prf_type> TwoChoicePPTLStorage::getCuckooHT(long index)
 		for(long es = 0; es<=entrySize; es++) // one extra entry for the keyword
 		{
 		    prf_type entry;
-          	    //std::copy(keyValues+(e+1)*es*AES_KEY_SIZE, 
-		    //		keyValues+(e+1)*es*AES_KEY_SIZE+AES_KEY_SIZE, entry.begin());
-          	    std::copy(keyValues+e*es*AES_KEY_SIZE, 
+            std::copy(keyValues+e*es*AES_KEY_SIZE, 
 				keyValues+e*es*AES_KEY_SIZE+AES_KEY_SIZE, entry.begin());
-		    if(es !=0 && entry != nullKey)
+		    if(es !=0 )//&& entry != nullKey)
 		    {
-			results.push_back(entry);
+				results.push_back(entry);
 		    } 
-		    if(es == 0 && entry!=nullKey)
-		    	cout <<"cuckoo key(encrypted):["<<entry.data()<<"]"<<endl;
-		}
+		    //if(es == 0)
+		    //	cout <<"cuckoo key(encrypted):["<<entry.data()<<"]"<<endl;
+			}
 	    }
       	    delete keyValues;
             cuckoo.close();
 	 }
          fstream file(stashfilenames[index][tn].c_str(), ios::binary | ios::in | ios::ate);
          if (file.fail()) 
-             cerr << "Error in read: " << strerror(errno);
+             cerr << "Error in cuckooStash read: " << strerror(errno);
          //long size = file.tellg();
 		 long size = cuckooStashLen[index][tn];
  if (DROP_CACHE) {
@@ -361,8 +286,7 @@ vector<prf_type> TwoChoicePPTLStorage::getCuckooHT(long index)
          {
              prf_type tmp;
              std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-             if (tmp != nullKey) 
-                 results.push_back(tmp);
+             results.push_back(tmp);
          }
          delete keyValues;
       }
@@ -375,7 +299,7 @@ void TwoChoicePPTLStorage::insertAll(long index, vector<vector< prf_type > > cip
    if (file.fail()) 
    {
 		cout <<"XX:"<<index<<endl;
-        cerr << "(Error in insert: " << strerror(errno)<<")"<<endl;
+        cerr << "(Error in insertALL: " << strerror(errno)<<")"<<endl;
    }
    for (auto item : ciphers) 
    {
@@ -395,7 +319,7 @@ vector<prf_type> TwoChoicePPTLStorage::getAllData(long index)
    vector<prf_type> results;
    fstream file(filenames[index].c_str(), ios::binary | ios::in | ios::ate);
    if (file.fail()) {
-       cerr << "Error in read: " << strerror(errno);
+       cerr << "Error in getAllData read: " << strerror(errno);
    }
    long size = file.tellg();
  if (DROP_CACHE) {
@@ -435,17 +359,6 @@ void TwoChoicePPTLStorage::clear(long index)
            file.write((char*) nullKey.data(), AES_KEY_SIZE);
        }
        file.close();
-	   /*
-       fstream sfile(stashes[index].c_str(), std::ios::binary | std::ofstream::out);
-       if (sfile.fail()) 
-           cerr << "Error: " << strerror(errno);
-       maxSize = pow(2,index);
-       for (long j = 0; j < maxSize; j++) 
-       {
-           sfile.write((char*) nullKey.data(), AES_KEY_SIZE);
-       }
-       sfile.close();
-	   */
        for(long k=0; k<index; k++)
        {
            fstream sfile(stashfilenames[index][k].c_str(), std::ios::binary | std::ofstream::out);
@@ -486,7 +399,7 @@ vector <prf_type> TwoChoicePPTLStorage::cuckooSearch(long index, long tableNum, 
    { 
         std::fstream cuckoo(cuckoofilenames[index][tableNum][c].c_str(), ios::binary | ios::in | ios::ate);
         if (cuckoo.fail()) 
-            cerr << "Error in read: " << strerror(errno);
+            cerr << "Error in cuckooSearch read: " << strerror(errno);
         long entrySize = pow(2, tableNum);
         long readPos = h[c]*(entrySize+1)*AES_KEY_SIZE;
         readPos = readPos + AES_KEY_SIZE;
@@ -508,17 +421,14 @@ vector <prf_type> TwoChoicePPTLStorage::cuckooSearch(long index, long tableNum, 
         {
             prf_type tmp;
             std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-            if (tmp != nullKey) 
-            {
                 results.push_back(tmp);
             	cout <<"cuckoo result SIZE:"<<results.size()<<endl;
-            }
         }
         cuckoo.close();
    }
    fstream file(stashfilenames[index][tableNum].c_str(), ios::binary | ios::in | ios::ate);
    if (file.fail()) 
-       cerr << "Error in read: " << strerror(errno);
+       cerr << "Error in cuckoo Stash read: " << strerror(errno);
    //long size = file.tellg();
 	long size = cuckooStashLen[index][tableNum];
  if (DROP_CACHE) {
@@ -538,10 +448,7 @@ vector <prf_type> TwoChoicePPTLStorage::cuckooSearch(long index, long tableNum, 
    {
        prf_type tmp;
        std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-       if (tmp != nullKey) 
-       {
-           results.push_back(tmp);
-       }
+       results.push_back(tmp);
    }
    delete keyValues;
    return results;
@@ -551,7 +458,7 @@ vector<prf_type> TwoChoicePPTLStorage::find(long index, prf_type mapKey, long cn
      vector<prf_type> results;
      std::fstream file(filenames[index].c_str(), ios::binary | ios::in);
      if (file.fail()) 
-         cerr << "Error in read: " << strerror(errno);
+         cerr << "Error in read in find: " << strerror(errno);
      unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
      if (cnt >= numberOfBins[index]) 
      {

@@ -78,10 +78,10 @@ template <typename T>
 class TC 
 {
 public:
-    long N;
-    long K;
-    std::vector<long> Qs;
-    std::vector<long> delNumber;
+    int N;
+    int K;
+    std::vector<int> Qs;
+    std::vector<int> delNumber;
     std::vector<std::string> keywords;
     std::vector<std::string> testKeywords;
     std::vector<std::pair<std::string, std::vector<T>>> filePairs;
@@ -222,8 +222,8 @@ public:
         getline(infile, tmp);
         overwrite = (tmp == "true") ? true : false;
         getline(infile, tmp);
-        long totalTests = stoi(tmp);
-        for (long i = 0; i < totalTests; i++) 
+        int totalTests = stoi(tmp);
+        for (int i = 0; i < totalTests; i++) 
 	{
             TC<T> testCase;
             getline(infile, tmp);
@@ -233,8 +233,8 @@ public:
             getline(infile, tmp);
             testCase.K = stoi(tmp);
             getline(infile, tmp);
-            long qNum = stoi(tmp); //#of queries
-            for (long i = 0; i < qNum; i++) 
+            int qNum = stoi(tmp); //#of queries
+            for (int i = 0; i < qNum; i++) 
 	    {
                 getline(infile, tmp);
                 testCase.Qs.push_back(stoi(tmp));
@@ -249,7 +249,7 @@ public:
 
 
     template <typename T>
-static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, ulong keywordLength, unsigned long seed, bool overwrite, vector<string> testKeywords)	
+static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, ulong keywordLength, unsigned int seed, bool overwrite, vector<string> testKeywords)	
     {
         char alphanum[] =
                 "0123456789"
@@ -287,7 +287,7 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, ulong key
             for (ulong j = 0; j < testCases[i].Qs.size(); j++) 
 	    {
                 std::vector<T> files;
-	        //testCases[i].Qs[j] = pow(2, (long)ceil(log2(testCases[i].Qs[j])));	
+	        //testCases[i].Qs[j] = pow(2, (int)ceil(log2(testCases[i].Qs[j])));	
                 for (ulong k = 0; k < testCases[i].Qs[j]; k++)   //add file ids based on number in config file
 		{
                     files.push_back(k);
@@ -301,12 +301,12 @@ static void generateTwoChoiceTestCases(std::vector<TC<T> >& testCases, ulong key
             for (ulong j = testCases[i].testKeywords.size(); j < testCases[i].keywords.size(); j++) 
 	    {
                 std::vector<T> files;
-		long sz=rand()%((long)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
-		//sz = pow(2, (long)ceil(log2(sz)));
+		int sz=rand()%((int)(ceil((double)(testCases[i].N-totalCounter)/(double)reminderKeywords)));
+		//sz = pow(2, (int)ceil(log2(sz)));
                 //for (ulong k = 0; k < ceil((double) (testCases[i].N - totalCounter) / (double) reminderKeywords) && totalPairNumber < testCases[i].N; k++) // add rest of file ids randomly generated
 		for(ulong k =0; k<sz;k++)
 		{
-                    long fileName = ((rand() % 1000)) + 10000000;
+                    int fileName = ((rand() % 1000)) + 10000000;
                     files.push_back(fileName);
                     totalPairNumber++;
                 }

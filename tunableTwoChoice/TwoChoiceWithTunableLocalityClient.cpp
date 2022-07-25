@@ -10,7 +10,7 @@ TwoChoiceWithTunableLocalityClient::~TwoChoiceWithTunableLocalityClient()
 
 TwoChoiceWithTunableLocalityClient::TwoChoiceWithTunableLocalityClient(long numOfDataSets, bool inMemory, bool overwrite, bool profile) 
 {
-	cout <<"======RUNNING SDa+TwoChoice+(+OneChoice version 2)(long)==TUNABLE LOCALITY:"<<LOC<<endl;
+	cout <<"======RUNNING SDa+TwoChoice+(+OneChoice version 2)(long)==TUNABLE LOCALITY:"<<LOCALITY<<endl;
 	this->profile = profile;
 	server = new TwoChoiceWithTunableLocalityServer(numOfDataSets, inMemory, overwrite, profile);
     one = new OneChoiceServer(numOfDataSets, inMemory, overwrite, profile);
@@ -20,7 +20,7 @@ TwoChoiceWithTunableLocalityClient::TwoChoiceWithTunableLocalityClient(long numO
         exist.push_back(false);
         long curNumberOfBins = i > 3 ? ((long) ceil((float) pow(2, i) / ((log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))))) : pow(2,i);
 	curNumberOfBins = pow(2, (long)ceil(log2(curNumberOfBins))); 
-     	long curSizeOfEachBin = i > 3 ? ceil(SO*(log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))) : SO;
+     	long curSizeOfEachBin = i > 3 ? ceil(SPACE_OVERHEAD*(log2(log2(pow(2,i))))*(log2(log2(log2(pow(2,i)))))*(log2(log2(log2(pow(2,i)))))) : SPACE_OVERHEAD;
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
     //    printf("Level:%d number of Bins:%d size of bin:%d\n", i, curNumberOfBins, curSizeOfEachBin);
@@ -117,7 +117,7 @@ void TwoChoiceWithTunableLocalityClient::setup2(long index, unordered_map<string
     for (auto pair : sorted) 
 	{
 		long pss = pair.second.size();
-		if(pss > LOC*mpl)
+		if(pss > LOCALITY*mpl)
 		{
 	   		assert(pair.first != "");
        		prf_type K1 = Utilities::encode(pair.first, key);
@@ -129,7 +129,7 @@ void TwoChoiceWithTunableLocalityClient::setup2(long index, unordered_map<string
         	unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
         	long pos = ((unsigned long) (*((long*) hash))) % nB[index];
         	long cipherIndex = pos;
-       		for (unsigned long i = LOC*mpl; i < pair.second.size(); i++) 
+       		for (unsigned long i = LOCALITY*mpl; i < pair.second.size(); i++) 
 	   	 	{
                 std::pair<string, long> mapKey;
                 tmp_prf_type mapValue;
@@ -147,8 +147,8 @@ void TwoChoiceWithTunableLocalityClient::setup2(long index, unordered_map<string
        	 	}
     	}
 		long times = ceil((float) pss/(float) mpl);
-		if(times>LOC)
-			times = LOC;
+		if(times>LOCALITY)
+			times = LOCALITY;
 	  	for(long t=0; t<times;t++)
 		{ 
 			long localpss = mpl;
@@ -327,7 +327,7 @@ void TwoChoiceWithTunableLocalityClient::setup(long index, unordered_map<string,
 	for (auto pair : sorted) 
 	{
 		long pss = pair.second.size();
-		if(pss > LOC*mpl)
+		if(pss > LOCALITY*mpl)
 		{
 			//cout <<index<<":ONE CHOICE pss:"<<pss<<" mpl:"<<mpl<<" #bins:"<<numberOfBins[index]<<endl;
 	   		assert(pair.first != "");
@@ -340,7 +340,7 @@ void TwoChoiceWithTunableLocalityClient::setup(long index, unordered_map<string,
         	unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
         	long pos = ((unsigned long) (*((long*) hash))) % nB[index];
         	long cipherIndex = pos;
-       		for (unsigned long i = LOC*mpl; i < pair.second.size(); i++) 
+       		for (unsigned long i = LOCALITY*mpl; i < pair.second.size(); i++) 
 	   	 	{
        	        prf_type mapKey, mapValue;
        	        mapValue = Utilities::encode(pair.second[i].data(), key);
@@ -353,8 +353,8 @@ void TwoChoiceWithTunableLocalityClient::setup(long index, unordered_map<string,
        	 	}
     	}
 		long times = ceil((float) pss/(float) mpl);
-		if(times>LOC)
-			times = LOC;
+		if(times>LOCALITY)
+			times = LOCALITY;
 	  	for(long t=0; t<times;t++)
 		{ 
 			int localpss = mpl;
@@ -510,8 +510,8 @@ vector<prf_type> TwoChoiceWithTunableLocalityClient::search(long index, string k
 			cout <<" retrieved from One choice:"<<finalRes.size()<<endl;
 		int f1 = finalRes.size();
 		long times = ceil((float) keywordCnt/(float) mpl);
-		if(times>LOC)
-			times = LOC;
+		if(times>LOCALITY)
+			times = LOCALITY;
 		for(long t=0; t<times;t++)
 		{ 
 			int localpss;

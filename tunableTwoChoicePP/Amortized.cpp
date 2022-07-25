@@ -58,7 +58,7 @@ Amortized::~Amortized()
     file.close();
 }
 
-void Amortized::update(OP op, string keyword, long ind, bool setup) 
+void Amortized::update(OP op, string keyword, int ind, bool setup) 
 {
     totalUpdateCommSize = 0;
     L->totalCommunication = 0;
@@ -125,7 +125,7 @@ void Amortized::update(OP op, string keyword, long ind, bool setup)
     }
 }
 
-vector<long> Amortized::search(string keyword) 
+vector<int> Amortized::search(string keyword) 
 {
     totalSearchCommSize = 0;
     if (profile) 
@@ -133,7 +133,7 @@ vector<long> Amortized::search(string keyword)
         Utilities::startTimer(33);
     }
     L->totalCommunication = 0;
-    vector<long> finalRes;
+    vector<int> finalRes;
     vector<prf_type> encIndexes;
     long s = data.size();
     for (long i = 0; i < min(localSize, s); i++) 
@@ -151,7 +151,7 @@ vector<long> Amortized::search(string keyword)
 	    {
                 printf("level %ld:\n", i);
             }
-            auto tmpRes = L->searchLoc(i, keyword, keys[i]);
+            auto tmpRes = L->search(i, keyword, keys[i]);
             encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
         }
     }
@@ -163,13 +163,13 @@ vector<long> Amortized::search(string keyword)
         printf("Amortized Search time:%f\n", searchTime);
         Utilities::startTimer(99);
     }
-    map<long, long> add;
-    map<long, long> remove;
+    map<int, int> add;
+    map<int, int> remove;
 
     for (auto i = encIndexes.begin(); i != encIndexes.end(); i++) 
     {
         prf_type decodedString = *i;
-        long id = *(long*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
+        int id = *(int*) (&(decodedString.data()[AES_KEY_SIZE - 5]));
 		int op = ((byte) decodedString.data()[AES_KEY_SIZE - 6]);
 		if(op == 0)
 			add[id] = -1;
