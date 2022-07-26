@@ -113,40 +113,49 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 	int prof = 0;
 	for(int i=numOfIndices; i>0; i--)
 	{
-		//int s = i>1? 6:2;
-		int s = 2*sizeOfEachBin[i-1];
-		int j = b+i;
-		int mi = numberOfBins[j]; 
-		int r1 = ceil((float)(2*floor(by(indexSize[i-1],s))));
-		int r2 = r1 + ceil(by(mi,s));
-		int r3 = r1 + ceil(by(mi,s));
-		assert(r1<r2);
-		assert(r2<=pow(2,j));
+		int t = numberOfBins[index-1];
+		int m = numberOfBins[index];
 
 		if(L->exist[i-1][0] && L->exist[i-1][1])
 		{
-			if(cnt[i] <= r1)
+			if(i>3)
 			{
-				L->getBin(i, 0, cnt[i]*(s/2),(s/2), keys[i-1][0], keys[i][3]);
-				L->getBin(i, 1, cnt[i]*(s/2),(s/2), keys[i-1][1], keys[i][3]);
+				if(cnt[i] < t)
+				{
+					L->getBin(i, 0, cnt[i], 1 , keys[i-1][0], keys[i][3]);
+					L->getBin(i, 1, cnt[i], 1 , keys[i-1][1], keys[i][3]);
+				}
+				if (t <= cnt[i] &&  cnt[i]< t+m)
+				{
+					L->addDummy(i, cnt[i]-t, 1, keys[i][3]);
+				}
+				if(t+m <= cnt[i] && cnt[i] < t+2*m)
+				{
+					L->kwCount(i, keys[i][3], (cnt[i]-t-m));
+				}
+				if (t+2*m <= cnt[i] && cnt[i] < pow(2,j))
+				{
+					int count = cnt[i]-(t+2*m);
+					int times = pow(2,j)-(t+2*m);
+					int N = L->getNEWsize(i);
+					int totStepsi = 2*ceil(by(N*log2(N)*(log2(N)+1),4));
+					int stepi = 2*ceil(by(by(totStepsi, times),2));
+					L->deAmortizedBitSortC(stepi, count, N, i, keys[i][3]);
+					L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
+				}
 			}
-			if (r1 <=cnt[i] &&  cnt[i]<= r2)
+			else
 			{
-				L->addDummy(i, (cnt[i]-r1), keys[i][3], s, r1, r2);
-			}
-			if(r2<=cnt[i] && cnt[i] <= r3)
-			{
-				L->kwCount(i, keys[i][3], (cnt[i]-r2), r2, r3);
-			}
-			if (r3 <= cnt[i] && cnt[i] <=pow(2,j))
-			{
-				int count = cnt[i]-r3;
-				int times = pow(2,j)-r3;
-				int N = L->getNEWsize(i);
-				int totStepsi = 2*ceil(by(N*log2(N)*(log2(N)+1),4));
-				int stepi = 2*ceil(by(by(totStepsi, times),2));
-				L->deAmortizedBitSortC(stepi, count, N, i, keys[i][3]);
-				L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
+				if(cnt[i]==0)
+				{
+					L->getBin(i, 0, cnt[i], numberOfBins[i-1], keys[i-1][0], keys[i][3]);
+					L->getBin(i, 1, cnt[i], numberOfBins[i-1], keys[i-1][1], keys[i][3]);
+					L->addDummy(i, cnt[i], numberOfBins[i], keys[i][3]);
+					L->kwCount(i, keys[i][3], cnt[i]);
+					int stepi = ?
+					L->deAmortizedBitSortC(stepi, count, N, i, keys[i][3]);
+					L->deAmortizedBitSort(stepi, count, N, i, keys[i][3]);
+				}
 			}
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,j))

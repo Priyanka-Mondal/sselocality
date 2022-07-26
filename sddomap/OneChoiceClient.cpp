@@ -224,124 +224,107 @@ void OneChoiceClient::resize(int index, int size)
 	NEWsize[index]=size;
 }
 
-void OneChoiceClient::getBin(int index, int instance, int start, int end,
+void OneChoiceClient::getBin(int index, int instance, int start, int numOfBins,
 							 unsigned char* key1, unsigned char* key2)
 {
-	assert(index>=1);
+	start = start*sizeOfEachBin[index-1];
 	if(start <numberOfBins[index-1]*sizeOfEachBin[index-1])
 	{
-	//cout <<"["<<index-1<<" start:"<<start<<" numOfEl:"<<end<<"]"<<"actual numOfEl:"<<numberOfBins[index-1]*sizeOfEachBin[index-1];
-		if(start+end>numberOfBins[index-1]*sizeOfEachBin[index-1])
-			end = numberOfBins[index-1]*sizeOfEachBin[index-1] - start;
-		vector<prf_type> ciphers = server->getElements(index-1, instance, start, end);
-		assert(ciphers.size() == end);
+		int readSize = numOfBins*sizeOfEachBin[index-1];
+		vector<prf_type> ciphers = server->getElements(index-1, instance, start, readSize);
 		int upCnt = numNEW[index];
 		int cntw=0;
 		for(prf_type c: ciphers)
 		{
-	        prf_type plaintext;// = c;
+	        prf_type plaintext;
 	        Utilities::decode(c, plaintext, key1);
 	        int ind = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
 	        int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]); 
 	        int oldbin = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 11]));
 	        string w((char*) plaintext.data());
-			int cnt;
+			int cnt = 0;
 			if(w!="")
 				cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
-			else
-				cnt = cntw++;
 			int bin = hashKey(w, cnt, index, key2);		
-			int realbin = bin;
 	    	prf_type keyVal;
     		memset(keyVal.data(), 0, AES_KEY_SIZE);
 	    	std::copy(w.begin(), w.end(), keyVal.begin());//keyword
 	    	*(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind; 
 	    	keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == 0 ? OP::INS : OP::DEL);//op
-	    	*(int*) (&(keyVal.data()[AES_KEY_SIZE - 11])) = realbin;//bin
+	    	*(int*) (&(keyVal.data()[AES_KEY_SIZE - 11])) = bin;//bin
 			append(index, keyVal, key2);
 			if(w!="")
 			{
 				string ob = omaps[index]->incrementCnt(getBid(to_string(realbin),upCnt));
-				//string ob2 = omaps[index]->find(getBid(to_string(realbin),upCnt));
-				//cout <<"incremented OMAP:"<<ob<<" to "<< ob2<<" upcnt:"<<upCnt<<" for bin:"<<realbin<<endl;
 			}
+			//else dummy access
 		}
 	}
 }
-void OneChoiceClient::addDummy(int index, int count, unsigned char* key , int s, int r1, int r2)
+void OneChoiceClient::addDummy(int index, int count, int numOfBins, unsigned char* key)
 {
-	cout<<"adding dummy at:"<<index<<":"<<NEWsize[index]<<"|"<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<"s:"<<s<<endl;
-	assert(index>=1);
-	assert(count>=0);
-	cout <<"index:"<<index<<" "<<NEWsize[index]<<">="<<2*numberOfBins[index-1]*sizeOfEachBin[index-1]<<endl;
 	assert(NEWsize[index] >= 2*numberOfBins[index-1]*sizeOfEachBin[index-1]);
     int upCnt = numNEW[index];
-	if(count+r1 == r2)
+	for(int bin = count; bin<count+numOfBins; t++)
 	{
-		//assert(NEWsize[index] == 2*indexSize[index]+2*indexSize[index-1]);
-		int newSize = ceil((float)log2(2*indexSize[index]+2*indexSize[index-1]));
-		newSize = pow(2,newSize);
-		pad(index,newSize,r2, key);
-		assert(newSize>=2*indexSize[index]);
-	}
-	else
-	{
-		for(int t = 0; t<s; t++)
+		if(bin < numberOfBins[index])
 		{
-			int bin = count*s+t;
-			if(bin < numberOfBins[index])
+			int cbin;
+			string cb = (omaps[index]->find(getBid(to_string(bin),upCnt)));
+			if(cb == "")
+				cbin = 0;
+			else 
+				cbin = stoi(cb);
+			assert(cbin <= sizeOfEachBin[index]);
+			for(int k = cbin; k<sizeOfEachBin[index]; k++)
 			{
-				//assert(NEWsize[index]<2*indexSize[index]+2*indexSize[index-1]);
-				int cbin;
-				string cb = (omaps[index]->find(getBid(to_string(bin),upCnt)));
-				if(cb == "")
-					cbin = 0;
-				else 
-					cbin = stoi(cb);
-				assert(cbin <= sizeOfEachBin[index]);
-				for(int k = cbin; k<sizeOfEachBin[index]; k++)
-				{
-					prf_type value;
-    				memset(value.data(), 0, AES_KEY_SIZE);
-    				*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = INF;//dummy-id
-		    		value.data()[AES_KEY_SIZE - 6] = (byte) (OP::INS);//op
-    				*(int*) (&(value.data()[AES_KEY_SIZE - 11])) = bin;//bin
-					append(index, value, key); // double insertion for bitonic sort in future 
-					string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
-				}
-				for(int k = cbin; k<sizeOfEachBin[index]; k++)
-				{
-					prf_type value;
-    				memset(value.data(), 0, AES_KEY_SIZE);
-    				*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = INF;//dummy-id
-		    		value.data()[AES_KEY_SIZE - 6] = (byte) (OP::INS);//op
-    				*(int*) (&(value.data()[AES_KEY_SIZE - 11])) = INF;//bin
-					append(index, value, key); // double insertion for bitonic sort in future 
-					string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
-				}
-				for(int k = 0; k<cbin ; k++)
-				{ 
-					prf_type value;
-    				memset(value.data(), 0, AES_KEY_SIZE);
-    				*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = INF;//id
-		    		value.data()[AES_KEY_SIZE - 6] = (byte) (OP::INS);//op
-    				*(int*) (&(value.data()[AES_KEY_SIZE - 11])) = INF;//bin
-					append(index, value, key);
-					append(index, value, key);
-					//**dummy omap access here
-				}
+				prf_type value;
+    			memset(value.data(), 0, AES_KEY_SIZE);
+    			*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = INF;//dummy-id
+	    		value.data()[AES_KEY_SIZE - 6] = (byte) (OP::INS);//op
+    			*(int*) (&(value.data()[AES_KEY_SIZE - 11])) = bin;//bin
+				append(index, value, key); // double insertion for bitonic sort in future 
+				string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
+			}
+			for(int k = cbin; k<sizeOfEachBin[index]; k++)
+			{
+				prf_type value;
+    			memset(value.data(), 0, AES_KEY_SIZE);
+    			*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = INF;//dummy-id
+	    		value.data()[AES_KEY_SIZE - 6] = (byte) (OP::INS);//op
+    			*(int*) (&(value.data()[AES_KEY_SIZE - 11])) = INF;//bin
+				append(index, value, key); // double insertion for bitonic sort in future 
+				string ob = omaps[index]->incrementCnt(getBid(to_string(bin),upCnt));
+			}
+			for(int k = 0; k<cbin ; k++)
+			{ 
+				prf_type value;
+    			memset(value.data(), 0, AES_KEY_SIZE);
+    			*(int*) (&(value.data()[AES_KEY_SIZE - 5])) = INF;//id
+	    		value.data()[AES_KEY_SIZE - 6] = (byte) (OP::INS);//op
+    			*(int*) (&(value.data()[AES_KEY_SIZE - 11])) = INF;//bin
+				append(index, value, key);
+				append(index, value, key);
+				//**dummy omap access here
 			}
 		}
+	}
+	if(count == numOfBins[index]-1)
+	{
+		int newSize = ceil((float)log2(2*indexSize[index]+2*indexSize[index-1]));
+		newSize = pow(2,newSize);
+		pad(index, newSize, key);
+		assert(newSize>=2*indexSize[index]);
 	}
 }
 
-void OneChoiceClient::pad(int index, int newSize, int r, unsigned char* key)
+void OneChoiceClient::pad(int index, int newSize, unsigned char* key)
 {
 	assert(index>=1);
 	int size = NEWsize[index];
 	if(size<newSize)
 	{
-		for(int k = 0; k<newSize-size ; k++)
+		for(int k = 0; k < newSize-size ; k++)
 		{ 
 			prf_type value;
     		memset(value.data(), 0, AES_KEY_SIZE);
