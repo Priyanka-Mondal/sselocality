@@ -77,10 +77,7 @@ vector<prf_type> OneChoiceServer::getAllData(int dataIndex, int instance)
 
 void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size)
 {
-	vector<prf_type> data;
-   	data = storage->getAllData(index, fromInstance);
-	assert(data.size()==size);
-	storage->insertAll(index, toInstance, data);
+	storage->move(index, toInstance, fromInstance, size);
 	map<prf_type,prf_type> wordCount;
    	wordCount = keywordCounters->getAllData(index, fromInstance);
 	keywordCounters->insert(index, toInstance, wordCount);

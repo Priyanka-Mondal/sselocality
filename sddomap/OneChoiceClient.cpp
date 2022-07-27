@@ -17,6 +17,7 @@ OneChoiceClient::OneChoiceClient(int N, bool inMemory, bool overwrite, bool prof
     memset(nullKey.data(), 0, AES_KEY_SIZE);
 	this->numOfIndices = l;
     server = new OneChoiceServer(numOfIndices, inMemory, overwrite, profile);
+	bitonic = new Bitonic(N);
     for (int j = 0; j <=numOfIndices; j++) 
 	{
         int curNumberOfBins = j > 1 ? 
@@ -72,7 +73,6 @@ int issortedC(vector<prf_type> A)
 	return 1;
 }
 
-
 vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword, unsigned char* key) 
 {
     double searchPreparation = 0, searchDecryption = 0;
@@ -96,26 +96,12 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 			//cout<<" MATCH:"<<plaintext.data()<<" op:"<<op<<" id:"<<ind<<" index:"<<index<<endl;
 	   	}
 	}
-    if (profile) 
-	{
-        searchPreparation = Utilities::stopTimer(65);
-        //printf("search preparation time:%f include server time\n", searchPreparation);
-        Utilities::startTimer(65);
-    }
-
-    if (profile) 
-	{
-        searchDecryption = Utilities::stopTimer(65);
-        //cout<<"search decryption time:"<<searchDecryption<<" for decrypting:"<<ciphers.size()<<" ciphers"<<endl;
-    }
     return finalRes;
 }
 
 void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 {
-	server->clear(index, toInstance);
 	server->move(index, toInstance, fromInstance, indexSize[index]);
-	server->clear(index, fromInstance);
 	exist[index][toInstance] = true;
 	exist[index][fromInstance] = false;
 	if(fromInstance == 3)
@@ -235,11 +221,11 @@ void OneChoiceClient::addDummy(int index, int count, int numOfBins, unsigned cha
 	assert(NEWsize[index] <= 2*indexSize[index-1]+ indexSize[index]);
     int upCnt = numNEW[index];
 
-	for(int bin = count; bin < count+numOfBins; bin++)
+	for(int bin = count; bin < count + numOfBins; bin++)
 	{
 		assert(bin < numberOfBins[index]);
 		int cbin;
-		string cb = (omaps[index]->find(getBid(to_string(bin),upCnt)));
+		string cb = omaps[index]->find(getBid(to_string(bin),upCnt));
 		if(cb == "")
 			cbin = 0;
 		else 
@@ -359,84 +345,6 @@ vector<prf_type> sort(vector<prf_type> &A)
 	return A;
 }
 
-void compAndSwap(int a[], int i, int j)
-{
-	if ((a[i]>a[j]))
-		swap(a[i],a[j]);
-}
-void bitonicMerge(int a[], int low, int cnt,vector<int>&memseq)
-{
-	if (cnt>1)
-	{
-		int k = cnt/2;
-		for (int i=low; i<low+k; i++)
-		{
-			compAndSwap(a, i, i+k);
-			//cout <<i<<" "<<i+k<<endl;
-			memseq.push_back(i);
-			memseq.push_back(i+k);
-		}
-		bitonicMerge(a, low, k,memseq);
-		bitonicMerge(a, low+k, k, memseq);
-	}
-}
-void bitMerge(int a[], int low, int cnt,vector<int>&memseq)
-{
-	if (cnt>1)
-	{
-		int k = cnt/2;
-		for (int i=low, j = low+cnt-1; i<low+k,j>=low+k; i++,j--)
-		{
-			compAndSwap(a, i, j);
-			memseq.push_back(i);
-			memseq.push_back(j);
-		}
-		bitonicMerge(a, low, k,memseq);
-		bitonicMerge(a, low+k, k,memseq);
-	}
-}
-void bitonicSort(int a[],int low, int cnt, vector<int>&memseq)
-{
-	if (cnt>1)
-	{
-		int k = cnt/2;
-		bitonicSort(a, low, k,memseq);
-		bitonicSort(a, low+k, k,memseq);
-		bitMerge(a,low, cnt,memseq);
-	}
-}
-
-void generateSeq(int a[], int N, vector<int>& memseq)
-{
-	bitonicSort(a,0, N, memseq);
-}
-
-vector<int> getSeq(int step, int count, int size)
-{
-	vector<int> memseq;
-	int a[size];
-	memset(a,0,size);
-	generateSeq(a, size, memseq);
-	//cout <<size<<" "<<memseq.size()<<endl;
-	assert(memseq.size() == 2*ceil((float)(size*log2(size)*(log2(size)+1)/(float)4)));
-	int start = count*step;
-	vector<int> res;
-	for(int i = start; i<start+step; i++)
-	{
-		//cout <<"(("<<memseq[i]<<"))";
-		res.push_back(memseq[i]);
-	}
-	return res;
-}
-
-vector<int> remDup(vector<int> v)
-{
-	int vsize = v.size();
-	vector<int>::iterator ip;
-    ip = std::unique(v.begin(), v.begin() +vsize );
-    v.resize(std::distance(v.begin(), ip));
-	return v;
-}
 bool OneChoiceClient::sorted(int index, unsigned char* key)
 {
 	vector<prf_type> els = server->getNEW(index, 0,NEWsize[index], true);
@@ -452,9 +360,9 @@ bool OneChoiceClient::sorted(int index, unsigned char* key)
 void OneChoiceClient::deAmortBitSortC(int step, int count, int size, int index, unsigned char* key)
 {
 	assert(NEWsize[index]==KWsize[index]);
-	vector<int> curMem = getSeq(step, count, size);
+	vector<int> curMem = bitonic->getSeq(step, count, size);
 	std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
-	vector<int> ncm = remDup(curMem);
+	vector<int> ncm = bitonic->remDup(curMem);
 
 	vector<prf_type> encKW = server->getNEW(index,0, KWsize[index], false);
 	vector<prf_type> elToSort2;
@@ -494,9 +402,9 @@ void OneChoiceClient::deAmortBitSortC(int step, int count, int size, int index, 
 void OneChoiceClient::deAmortBitSort(int step, int count, int size, int index, unsigned char* key)
 {
 	assert(NEWsize[index]==KWsize[index]);
-	vector<int> curMem = getSeq(step, count, size);
+	vector<int> curMem = bitonic->getSeq(step, count, size);
 	std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
-	vector<int> ncm = remDup(curMem);
+	vector<int> ncm = bitonic->remDup(curMem);
 
 	vector<prf_type> encNEW = server->getNEW(index,0, NEWsize[index], true);
 
@@ -526,7 +434,7 @@ void OneChoiceClient::deAmortBitSort(int step, int count, int size, int index, u
 		sorted1.push_back(enc);
 	}
 	int cnt = 0;
-	for(int i =0; i<ncm.size(); i++)
+	for(int i = 0 ; i< ncm.size() ; i++)
 	{
 		encNEW[ncm[i]] = sorted1[cnt];
 		cnt++;
@@ -575,7 +483,7 @@ void OneChoiceClient::nonOblSort(int index, unsigned char* key)
 	}
 	if(!issorted(decodedNEWi))
 	{
-		server->resize(index,0);
+		//server->resize(index,0);
 		sort(decodedNEWi);
 		encNEWi.clear();
 		for(auto n : decodedNEWi)

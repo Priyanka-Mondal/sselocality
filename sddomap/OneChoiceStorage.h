@@ -53,6 +53,7 @@ public:
 	int writeToNEW(int index, prf_type keyVal, int pos);
 	int writeToKW(int index, prf_type keyVal, int pos);
 	void truncate(int index, int size, int filesize);
+	void move(int index, int toInstance, int fromInstance, int size);
 	//vector<prf_type> getNEW(int index, int size);
 
 };

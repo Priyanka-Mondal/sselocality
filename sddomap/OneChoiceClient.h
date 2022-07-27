@@ -15,6 +15,7 @@
 #include "AES.hpp"
 #include "OneChoiceServer.h"
 #include "OMAP.h"
+#include "Bitonic.h"
 #include <unordered_map>
 
 enum OP 
@@ -26,6 +27,7 @@ class OneChoiceClient
 {
 private:
     OneChoiceServer* server;
+	Bitonic* bitonic;
     bool profile = false;
 
 public:

@@ -206,6 +206,7 @@ SDDOOBJECTFILES= \
 	${SDDOOBJECTDIR}/OMAP.o \
 	${SDDOOBJECTDIR}/ORAM.o \
 	${SDDOOBJECTDIR}/AVLTree.o \
+	${SDDOOBJECTDIR}/Bitonic.o \
 	${SDDOOBJECTDIR}/OneChoiceClient.o \
 	${SDDOOBJECTDIR}/OneChoiceServer.o \
 	${SDDOOBJECTDIR}/OneChoiceStorage.o \
@@ -848,6 +849,11 @@ ${SDDOOBJECTDIR}/DeAmortized.o: ${SDDO}/DeAmortized.cpp
 	${MKDIR} -p ${SDDOOBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/DeAmortized.o ${SDDO}/DeAmortized.cpp
+
+${SDDOOBJECTDIR}/Bitonic.o: ${SDDO}/Bitonic.cpp
+	${MKDIR} -p ${SDDOOBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/include/openssl -std=c++14 -MMD -MP -MF "$@.d" -o ${SDDOOBJECTDIR}/Bitonic.o ${SDDO}/Bitonic.cpp
 
 ${SDDOOBJECTDIR}/OneChoiceClient.o: ${SDDO}/OneChoiceClient.cpp
 	${MKDIR} -p ${OBJECTDIR}/${SDDO}

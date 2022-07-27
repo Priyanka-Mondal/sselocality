@@ -184,6 +184,26 @@ void OneChoiceStorage::truncate(int index, int size, int fileSize)
     file.close();
 }
 
+void OneChoiceStorage::move(int index, int toInstance, int fromInstance, int size)
+{
+	fstream infile(filenames[index][fromInstance].c_str(), ios::binary | ios::in);
+    if (infile.fail()) 
+        cerr << "Error in read in move: " << strerror(errno);
+	infile.seekg(0, ios::beg);
+	SeekG++;
+    char* keyValues = new char[size*AES_KEY_SIZE];
+    infile.read(keyValues, size*AES_KEY_SIZE);
+    infile.close();
+
+	fstream outfile(filenames[index][toInstance].c_str(), ios::binary | ios::out);
+    if (outfile.fail()) 
+        cerr << "Error in write in move: " << strerror(errno);
+	outfile.seekg(0, ios::beg);
+	SeekG++;
+    outfile.write(keyValues, size*AES_KEY_SIZE);
+	outfile.close();
+}
+
 int OneChoiceStorage::writeToKW(int index, prf_type keyVal, int pos)
 {
 	fstream file(fileCounter[index].c_str(), ios::binary | ios::out | ios::in| ios::ate);
