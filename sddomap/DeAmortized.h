@@ -54,7 +54,8 @@ private:
 	bool overwrite;
 
 public:
-    void createKeyVal(string keyword, int ind, OP op, prf_type& keyVal);
+    prf_type createKeyVal(string keyword, int ind, OP op);
+    prf_type createKeyVal(string keyword, int cntw);
     DeAmortized(int N, bool inMemory, bool overwrite);
     void update(OP op, string keyword, int ind, bool setup);
     vector<int> search(string keyword);

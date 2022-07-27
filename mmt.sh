@@ -1,1 +1,1 @@
-dist/Debug/GNU-Linux/tunableTwoChoicePP/vptwo configs/mconfig.txt |tee results/v1.txt 
+dist/Debug/GNU-Linux/sddomap/onechoice-sdd configs/mconfig.txt |tee results/v1.txt 

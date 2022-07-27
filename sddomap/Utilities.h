@@ -219,8 +219,8 @@ public:
             for (uint j = 0; j < testCases[i].Qs.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < testCases[i].Qs[j]; k++) {
-                    int fileName = ((rand() % 10000000))+10000000; //////here
-                    files.push_back(fileName);
+                    //int fileName = ((rand() % 10000000))+10000000; //////here
+                    files.push_back(k);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
                 }
@@ -275,8 +275,8 @@ public:
             for (uint j = 0; j < testCases[i].Qs.size(); j++) {
                 std::vector<T> files;
                 for (uint k = 0; k < testCases[i].Qs[j]; k++) {
-                    int fileName = ((rand() % 10000000))+10000000;
-                    files.push_back(fileName);
+                    //int fileName = ((rand() % 10000000))+10000000;
+                    files.push_back(k);
 					//cout<<"++"<<fileName<<"++"<<endl;
                     totalPairNumber++;
                 }

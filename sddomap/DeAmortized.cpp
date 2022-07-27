@@ -11,7 +11,7 @@ using namespace std;
 DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite) 
 {
 	cout <<"=====================Running SDd+OneChoiceAllocation======================"<<endl;
-    L = new OneChoiceClient(N, inMemory, overwrite, true);
+    L = new OneChoiceClient(N, inMemory, overwrite, false);
 	this->overwrite = overwrite;
    	this->deleteFiles = deleteFiles;
 	l = ceil((float)log2(N));
@@ -119,7 +119,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 		{
 			if(i>3)
 			{
-				assert(2*t+m < pow(2,i));
+				assert(2*t+m+2 < pow(2,i) || i<= 3);
 				if(0 <= cnt[i] && cnt[i] < t)
 				{
 					L->getBin(i, 0, cnt[i], 1 , keys[i-1][0], keys[i][3]);
@@ -142,8 +142,11 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 					int N = L->getNEWsize(i);
 					int totStepsi = 2*(by(N*log2(N)*(log2(N)+1),4));
 					int stepi = 2*ceil(by(by(totStepsi, times),2));
-					L->deAmortBitSortC(stepi, count, N, i, keys[i][3]);
-					L->deAmortBitSort(stepi, count, N, i, keys[i][3]);
+					if(times*stepi < totStepsi)
+					{
+						L->deAmortBitSortC(stepi, count, N, i, keys[i][3]);
+						L->deAmortBitSort(stepi, count, N, i, keys[i][3]);
+					}
 				}
 			}
 			else
@@ -184,7 +187,6 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 					L->move(i,2,3);
 					updateKey(i,2,3);
 				}
-				//L->destroy(i,3);
     	    	unsigned char* newKey = new unsigned char[16];
     	    	memset(newKey, 0, 16);
     	    	keys[i][3] = newKey;
@@ -192,51 +194,56 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			}
 		}
 	}
-	prf_type keyVal;
-	createKeyVal(keyword, ind, op, keyVal);
+	prf_type keyVal = createKeyVal(keyword, ind, op);
 	L->append(0, keyVal, keys[0][3]);
-	L->updateOMAP(0,keyword, keys[0][3]);
-	L->updateCounters(0, keys[0][3]);
-	//cnt[0]=cnt[0]+1;
-	//if(cnt[0]==B)
-	//{
-		if(!(L->exist[0][0]))
-		{
-			L->move(0,0,3);
-			updateKey(0,0,3);
-		}
-		else if(!(L->exist[0][1]))
-		{
-			L->move(0,1,3);
-			updateKey(0,1,3);
-		}
-		else
-		{
-			L->move(0,2,3);
-			updateKey(0,2,3);
-		}
-		//L->destroy(0,3);
-       	unsigned char* newKey = new unsigned char[16];
-       	memset(newKey, 0, 16);
-       	keys[0][3] = newKey;
-	//	cnt[0] = 0;
-	//}
+	prf_type kwc = createKeyVal(keyword, 1);
+	L->appendTokwCounter(0, kwc, keys[0][3]);
+	L->updateHashTable(0, keys[0][3]);
+
+	if(!(L->exist[0][0]))
+	{
+		L->move(0,0,3);
+		updateKey(0,0,3);
+	}
+	else if(!(L->exist[0][1]))
+	{
+		L->move(0,1,3);
+		updateKey(0,1,3);
+	}
+	else
+	{
+		L->move(0,2,3);
+		updateKey(0,2,3);
+	}
+    unsigned char* newKey = new unsigned char[16];
+    memset(newKey, 0, 16);
+    keys[0][3] = newKey;
     updateCounter++;
 }
 
-void DeAmortized::createKeyVal(string keyword, int ind, OP op, prf_type& keyVal)
+prf_type DeAmortized::createKeyVal(string keyword, int ind, OP op)
 {
+	prf_type keyVal;
     memset(keyVal.data(), 0, AES_KEY_SIZE);
     std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
     *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind;//fileid
     keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == OP::INS ? 0 : 1);//op
     *(int*) (&(keyVal.data()[AES_KEY_SIZE - 11])) = 0;//index 0 has only bin 0
+	return keyVal;
+}
+
+prf_type DeAmortized::createKeyVal(string keyword, int cntw)
+{
+	prf_type keyVal;
+    memset(keyVal.data(), 0, AES_KEY_SIZE);
+    std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = cntw;//fileid
+	return keyVal;
 }
 
 void DeAmortized::updateKey(int index, int toInstance , int fromInstance)
 {
 	keys[index][toInstance] = keys[index][fromInstance];
-	//cout <<"keys:("<<index<<","<<toInstance<<")<-("<<index<<","<<fromInstance<<")"<<endl;
 }
 
 vector<int> DeAmortized::search(string keyword) 
@@ -250,32 +257,6 @@ vector<int> DeAmortized::search(string keyword)
     totalSearchCommSize = 0;
     vector<int> finalRes;
     vector<prf_type> encIndexes;
-	/*
-    for (int j = 0; j < 3; j++) 
-	{
-        for (int i = 0; i < localSize; i++) 
-		{
-            if (data[j][i].size() > 0) 
-			{
-                int curCounter = 1;
-                bool exist = true;
-                do 
-				{
-                    if (data[j][i].count(keyword + "-" + to_string(curCounter)) != 0) 
-					{
-                        encIndexes.push_back(data[j][i][keyword + "-" + to_string(curCounter)]);
-                        curCounter++;
-                    } 
-					else 
-					{
-                        exist = false;
-                    }
-                } 
-				while (exist);
-            }
-        }
-    }
-	*/
     for (int i = 0; i <= numOfIndices; i++) 
 	{
     	for (int j = 0; j < 3; j++) 
@@ -283,7 +264,7 @@ vector<int> DeAmortized::search(string keyword)
             if (L->exist[i][j]) 
 			{
 				//cout <<"searching at["<< i<<"]["<<j<<"]"<<endl;
-                auto tmpRes = L->NIsearch(i, j, keyword, keys[i][j]);
+                auto tmpRes = L->search(i, j, keyword, keys[i][j]);
                 encIndexes.insert(encIndexes.end(), tmpRes.begin(), tmpRes.end());
             }
         }
@@ -300,14 +281,10 @@ vector<int> DeAmortized::search(string keyword)
 			ressize++;
     }
 	cout <<"remove:"<<remove.size()<<"/"<<ressize<<endl;
-	int r = 1;
     for (auto const& cur : remove) 
 	{
-		//cout <<r<<":"<<cur.first <<"::"<<cur.second<<endl;
-		//r++;
         if (cur.second < 0) 
 		{
-			for(int i = 0; i<abs(cur.second); i++)
             	finalRes.emplace_back(cur.first);
 		}
     }
@@ -317,7 +294,6 @@ vector<int> DeAmortized::search(string keyword)
 				L->omaps[i]->treeHandler->oram->totalWrite)*(sizeof (prf_type) + sizeof (int));
     }
     totalSearchCommSize += L->totalCommunication;
-	cout <<"NUMBER OF TOTAL RETURN:"<<ressize<<endl;
     return finalRes;
 }
 

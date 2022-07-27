@@ -10,8 +10,6 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
 	b = ceil((float)log2(B));
-	int prev = 0;
-    int	cprev = 0;
     for (int j = 0; j <= dataIndex; j++) 
 	{
         int curNumberOfBins = j > 1 ? 
@@ -20,7 +18,7 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		int is = curNumberOfBins*curSizeOfEachBin;
-        printf("Storage:%d #of Bins:%d size of bin:%d is:%d\n", j, curNumberOfBins, curSizeOfEachBin, is);
+        //printf("Storage:%d #of Bins:%d size of bin:%d is:%d\n", j, curNumberOfBins, curSizeOfEachBin, is);
     }
 
 }
