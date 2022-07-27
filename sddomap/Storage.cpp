@@ -45,17 +45,6 @@ bool Storage::setup(bool overwrite)
 
 void Storage::insert(int dataIndex, int instance, map<prf_type, prf_type> ciphers) 
 {
-    if (inMemoryStorage) 
-    {
-        data[dataIndex].insert(ciphers.begin(), ciphers.end());
-    } 
-    else 
-    {
-        /*if (USE_XXL) {
-            for (auto item : ciphers) {
-                diskData[dataIndex]->insert(std::make_pair(item.first, item.second));
-            }
-        } else {*/
             int maxSize = pow(2, dataIndex);
             for (auto item : ciphers) 
 	    {
@@ -103,8 +92,6 @@ void Storage::insert(int dataIndex, int instance, map<prf_type, prf_type> cipher
                 file.close();
             }
 
-        //}
-    }
 }
 /*
 map<prf_type,prf_type> Storage::getCounters(int dataIndex, int start, int length) 
@@ -136,6 +123,38 @@ map<prf_type,prf_type> Storage::getCounters(int dataIndex, int start, int length
 }
 */
 
+void Storage::changeFileName(int index, int toInstance, int fromInstance)
+{
+	string fromFile = filenames[index][fromInstance].c_str();
+	filenames[index][toInstance] = fromFile;
+}
+
+void Storage::move(int index, int toInstance, int fromInstance)
+{
+	fstream infile(filenames[index][fromInstance].c_str(), ios::binary | ios::in | ios::out);
+    if (infile.fail()) 
+        cerr << "Error in read in move: " << strerror(errno);
+	infile.seekg(0, ios::end);
+	int infileSize = infile.tellg();
+	//SeekG++;
+	infile.seekg(0, ios::beg);
+	//SeekG++;
+    char* keyValues = new char[infileSize];
+    infile.read(keyValues, infileSize);
+    //unsigned char nullRecords[infileSize];
+    //memset(nullRecords, 0, infileSize);
+    //infile.write((char*) nullRecords, infileSize);
+    infile.close();
+
+	fstream outfile(filenames[index][toInstance].c_str(), ios::binary | ios::out);
+    if (outfile.fail()) 
+        cerr << "Error in write in move: " << strerror(errno);
+	outfile.seekg(0, ios::beg);
+	//SeekG++;
+    outfile.write(keyValues, infileSize);
+	outfile.close();
+	delete keyValues;
+}
 
 vector<pair<prf_type,prf_type>> Storage::getAll(int dataIndex, int instance) 
 {

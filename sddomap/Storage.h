@@ -41,6 +41,8 @@ public:
     vector<pair<prf_type,prf_type>> getAll(int dataIndex, int instance);
     void clear(int index, int instance);
     prf_type find(int index, int instance, prf_type mapKey, bool& found);
+	void move(int index, int toInstance, int fromInstance);
+	void changeFileName(int index, int toInstance, int fromInstance);
     virtual ~Storage();
 
 

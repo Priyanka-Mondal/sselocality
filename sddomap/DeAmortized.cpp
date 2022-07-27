@@ -23,7 +23,7 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 		int j = i + b;
         int curNumberOfBins = j > 1 ? 
 			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
-        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
+        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*(log2(log2(pow(2, j))))) : pow(2,j);
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		int is = curNumberOfBins*curSizeOfEachBin;

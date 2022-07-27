@@ -16,7 +16,7 @@ private:
 public:
     OneChoiceServer(int dataIndex, bool inMemory, bool overwrite, bool profile);
     virtual ~OneChoiceServer();
-    void clear(int index, int instance);
+    void destroy(int index, int instance);
 	void storeKwCounters(int dataIndex, int instance, map<prf_type, prf_type> keywordCounters);
 	int getCounter(int dataIndex, int instance, prf_type tokkw); 
     vector<prf_type> getAllData(int dataIndex, int instance);
@@ -28,7 +28,7 @@ public:
 	void putNEW(int index, int instance, vector<prf_type>);
 	int writeToNEW(int index, prf_type keyVal, int pos);
 	int writeToKW(int index, prf_type keyVal, int pos);
-	void truncate(int index, int size, int filesize);
+	void resize(int index, int size, int filesize);
     vector<prf_type> search(int dataIndex, int instance, prf_type token, int keywordCnt);
     //void storeCiphers(int dataIndex, int instance, vector<vector<pair<prf_type, prf_type> > > ciphers, map<prf_type, prf_type> keywordCounters);
 };

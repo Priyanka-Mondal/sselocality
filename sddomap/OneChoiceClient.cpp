@@ -101,7 +101,9 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 
 void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 {
+	server->destroy(index, toInstance);	
 	server->move(index, toInstance, fromInstance, indexSize[index]);
+	server->destroy(index, fromInstance);	
 	exist[index][toInstance] = true;
 	exist[index][fromInstance] = false;
 	if(fromInstance == 3)
@@ -127,13 +129,13 @@ void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 	prf_type encKeyVal;
 	encKeyVal = Utilities::encode(keyVal.data(), key);
 	int last = server->writeToNEW(index, encKeyVal, NEWsize[index]);
-	NEWsize[index]=NEWsize[index]+1;
+	NEWsize[index] = NEWsize[index]+1;
 	assert(last == NEWsize[index]*AES_KEY_SIZE);
 }
 
 void OneChoiceClient::destroy(int index, int instance)
 {
-    server->clear(index, instance);
+    server->destroy(index, instance);
     exist[index][instance] = false;
 	if(instance == 3)
 	{
@@ -143,7 +145,7 @@ void OneChoiceClient::destroy(int index, int instance)
 }
 void OneChoiceClient::resize(int index, int size)
 {
-	server->truncate(index, size, NEWsize[index]);
+	server->resize(index, size, NEWsize[index]);
 	NEWsize[index]=size;
 }
 
@@ -189,7 +191,7 @@ void OneChoiceClient::kwCount(int index, int count, int bins, unsigned char* key
 	vector<prf_type> some = server->getNEW(index, start, bins*sizeOfEachBin[index-1], true);
 
 	assert(NEWsize[index] == 2*indexSize[index-1]);
-	assert(start+bins*sizeOfEachBin[index-1]<=2*indexSize[index-1]);
+	assert(start+bins*sizeOfEachBin[index-1] <= 2*indexSize[index-1]);
 	assert(count<numberOfBins[index-1]);
 	assert(some.size() == bins*sizeOfEachBin[index-1]);
 
@@ -278,7 +280,8 @@ void OneChoiceClient::pad(int index, int newSize, unsigned char* key)
 
 void OneChoiceClient::updateHashTable(int index, unsigned char* key)
 {
-	vector<prf_type> all = server->getNEW(index, 0, pow(2, index), false); // for first pow(2, index) items
+	assert(KWsize[index] < 8*indexSize[index]);
+	vector<prf_type> all = server->getNEW(index, 0, KWsize[index], false); // for first pow(2, index) items
 	map <prf_type, prf_type> kcc;
 	for(auto c: all)
 	{
@@ -295,7 +298,20 @@ void OneChoiceClient::updateHashTable(int index, unsigned char* key)
 		prf_type valueTmp, totalTmp;
 		*(int*) (&(valueTmp[0])) = cntw;
 		prf_type mapValue = Utilities::encode(valueTmp.data(), K.data());
-		kcc[mapKey] = mapValue; 
+		if(kcc.find(mapKey) != kcc.end())
+		{
+			prf_type oldVal = kcc[mapKey];
+			prf_type plaintext;
+        	Utilities::decode(kcc[mapKey], plaintext, K.data());
+        	int keywordCnt = *(int*) (&(plaintext[0]));
+			if(keywordCnt < cntw)
+			{
+				kcc[mapKey] = mapValue; 
+			}		
+			cout <<"no upadte required:"<< keywordCnt<< ":"<<cntw<<endl;
+		}
+		else
+			kcc[mapKey] = mapValue;
 	}
 	server->storeKwCounters(index, 3, kcc);
 }

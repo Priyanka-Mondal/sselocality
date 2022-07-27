@@ -78,9 +78,10 @@ vector<prf_type> OneChoiceServer::getAllData(int dataIndex, int instance)
 void OneChoiceServer::move(int index, int toInstance, int fromInstance, int size)
 {
 	storage->move(index, toInstance, fromInstance, size);
-	map<prf_type,prf_type> wordCount;
-   	wordCount = keywordCounters->getAllData(index, fromInstance);
-	keywordCounters->insert(index, toInstance, wordCount);
+	keywordCounters->move(index, toInstance, fromInstance);
+	//map<prf_type,prf_type> wordCount;
+   	//wordCount = keywordCounters->getAllData(index, fromInstance);
+	//keywordCounters->insert(index, toInstance, wordCount);
 }
 
 int OneChoiceServer::writeToNEW(int index, prf_type keyVal, int pos)
@@ -95,13 +96,13 @@ int OneChoiceServer::writeToKW(int index, prf_type keyVal, int pos)
 	return last;
 }
 
-void OneChoiceServer::clear(int index, int instance)
+void OneChoiceServer::destroy(int index, int instance)
 {
     storage->clear(index, instance);
     keywordCounters->clear(index, instance);
 }
 
-void OneChoiceServer::truncate(int index, int size, int filesize)
+void OneChoiceServer::resize(int index, int size, int filesize)
 {
 	storage->truncate(index, size, filesize);
 }

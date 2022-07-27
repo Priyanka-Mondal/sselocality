@@ -38,7 +38,7 @@ bool OneChoiceStorage::setup(bool overwrite)
        	    fstream file(filec.c_str(), std::ofstream::out);
        	    if (file.fail()) 
        	        cerr << "Error: " << strerror(errno);
-       	    int maxSize = 6*numberOfBins[i] * sizeOfEachBin[i];
+       	    int maxSize = 8*numberOfBins[i] * sizeOfEachBin[i];
        	    for (int k = 0; k < maxSize; k++) 
 	   		{
        	       	file.write((char*) nullKey.data(), AES_KEY_SIZE);
@@ -59,7 +59,7 @@ bool OneChoiceStorage::setup(bool overwrite)
        		        cerr << "Error: " << strerror(errno);
 				if(j<3)
 				{
-       		    	int maxSize = numberOfBins[i] * sizeOfEachBin[i];
+       		    	int maxSize = 8*numberOfBins[i] * sizeOfEachBin[i];
        		    	for (int k = 0; k < maxSize; k++) 
 	   				{
        		        	file.write((char*) nullKey.data(), AES_KEY_SIZE);
@@ -67,7 +67,7 @@ bool OneChoiceStorage::setup(bool overwrite)
 				}
 				else
 				{
-					int maxSize = 6*numberOfBins[i]*sizeOfEachBin[i];
+					int maxSize = 8*numberOfBins[i]*sizeOfEachBin[i];
        		    	for (int k = 0; k < maxSize; k++) 
 	   				{
        		        	file.write((char*) nullKey.data(), AES_KEY_SIZE);
@@ -107,7 +107,7 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
     vector<prf_type> results;
     fstream file(filenames[index][instance].c_str(), ios::binary | ios::in);
     if (file.fail()) 
-        cerr << "Error in read: " << strerror(errno);
+        cerr << "Error in read getAllData oneChoiceStorage: " << strerror(errno);
 	int actSize = sizeOfEachBin[index]*numberOfBins[index]*AES_KEY_SIZE;
     file.seekg(0, ios::beg);
 	SeekG++;
@@ -118,12 +118,7 @@ vector<prf_type> OneChoiceStorage::getAllData(int index, int instance)
 	{
         prf_type tmp;
         std::copy(keyValues+i*AES_KEY_SIZE, keyValues+i*AES_KEY_SIZE+AES_KEY_SIZE, tmp.begin());
-        //if (tmp != nullKey) 
-		//{
-            results.push_back(tmp);
-			//if(index == 1)
-			//cout <<index<<" getAll:["<<tmp.data()<<"]"<<endl;
-        //}
+        results.push_back(tmp);
     }
     delete keyValues;
     return results;
@@ -186,7 +181,7 @@ void OneChoiceStorage::truncate(int index, int size, int fileSize)
 
 void OneChoiceStorage::move(int index, int toInstance, int fromInstance, int size)
 {
-	fstream infile(filenames[index][fromInstance].c_str(), ios::binary | ios::in);
+	fstream infile(filenames[index][fromInstance].c_str(), ios::binary | ios::in );
     if (infile.fail()) 
         cerr << "Error in read in move: " << strerror(errno);
 	infile.seekg(0, ios::beg);
@@ -202,6 +197,7 @@ void OneChoiceStorage::move(int index, int toInstance, int fromInstance, int siz
 	SeekG++;
     outfile.write(keyValues, size*AES_KEY_SIZE);
 	outfile.close();
+	delete keyValues;
 }
 
 int OneChoiceStorage::writeToKW(int index, prf_type keyVal, int pos)
@@ -283,9 +279,9 @@ void OneChoiceStorage::clear(int index, int instance)
             cerr << "Error: " << strerror(errno);
         int maxSize;
 	    if(instance == 3)	
-			maxSize = 6*numberOfBins[index] * sizeOfEachBin[index];
+			maxSize = 8*numberOfBins[index] * sizeOfEachBin[index];
 		else
-			maxSize = numberOfBins[index]*sizeOfEachBin[index];
+			maxSize = 8*numberOfBins[index]*sizeOfEachBin[index];
         for (int j = 0; j < maxSize; j++) 
 		{
             file.write((char*) nullKey.data(), AES_KEY_SIZE);
@@ -298,7 +294,7 @@ void OneChoiceStorage::clear(int index, int instance)
         fstream filec(fileCounter[index].c_str(), std::ios::binary | std::ofstream::out);
         if (filec.fail()) 
             cerr << "Error: " << strerror(errno);
-		int maxSize = 6*numberOfBins[index] * sizeOfEachBin[index];
+		int maxSize = 8*numberOfBins[index] * sizeOfEachBin[index];
         for (int j = 0; j < maxSize; j++) 
 		{
             filec.write((char*) nullKey.data(), AES_KEY_SIZE);
