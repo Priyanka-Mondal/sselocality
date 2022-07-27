@@ -55,11 +55,11 @@ public:
 	void appendTokwCounter(int instance, prf_type keyVal, unsigned char* key);
 	void destroy(int index, int instance);
 	void resize(int index, int size);
-	void reSize(int index, int size);
 	void getBin(int newindex, int instance, int start, int end, unsigned char* key1, unsigned char* key2);
-	void addDummy(int index, int count, unsigned char* key, int s, int r1, int r2);
-	void deAmortizedBitSort(int step, int counter, int size, int index, unsigned char* key);
-	void deAmortizedBitSortC(int step, int count, int size, int index, unsigned char* key);
+	void kwCount(int index, int count, int bin, unsigned char* key);
+	void addDummy(int index, int count, int numBin, unsigned char* key);
+	void deAmortBitSort(int step, int counter, int size, int index, unsigned char* key);
+	void deAmortBitSortC(int step, int count, int size, int index, unsigned char* key);
 	void nonOblSort(int index, unsigned char* key);
     int hashKey(string w, int cnt, int index, unsigned char* key);
 	void updateHashTable(int index, unsigned char* key);
@@ -67,10 +67,9 @@ public:
 	vector<prf_type> searchNEW(int index, string keyword);
 	void ensureNEWSize(int index, int bin, int cnt);
     int getNEWsize(int index);
-	void pad(int index, int newSize, int r, unsigned char* key);
+	void pad(int index, int newSize, unsigned char* key);
 	void updateCounters(int index, unsigned char* key);
 	void updateCounters(int index, unsigned char* key, int count, int r1, int r2);
-	void kwCount(int index, unsigned char* key, int count, int r1, int r2);
 	void updateOMAP(int index, string keyword, unsigned char* key);
 	bool sorted(int index, unsigned char* key);
 };

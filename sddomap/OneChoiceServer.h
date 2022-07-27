@@ -19,6 +19,7 @@ public:
     void clear(int index, int instance);
     virtual ~OneChoiceServer();
 	void storeKwCounters(int dataIndex, int instance, map<prf_type, prf_type> keywordCounters);
+	int getCounter(int dataIndex, int instance, prf_type tokkw); 
 	prf_type findCounter(int dataIndex, int instance, prf_type token);
     vector<prf_type> searchBin(int dataIndex, int instance, int bin);
     vector<prf_type> getAllData(int dataIndex, int instance);

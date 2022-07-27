@@ -12,22 +12,15 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
 	b = ceil((float)log2(B));
 	int prev = 0;
     int	cprev = 0;
-    for (int i = 0; i <= dataIndex; i++) 
+    for (int j = 0; j <= dataIndex; j++) 
 	{
-		int j = i + b;
         int curNumberOfBins = j > 1 ? 
 			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
-        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*ceil(log2(log2(pow(2, j))))) : pow(2,j);
-		/*if(curSizeOfEachBin*curNumberOfBins <= 2*prev*cprev)
-		{
-			curNumberOfBins = ceil((float)(2*prev*cprev+1)/(float)curSizeOfEachBin);
-		}
-		cprev = curSizeOfEachBin;
-		prev = curNumberOfBins;*/
+        int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*(log2(log2(pow(2, j))))) : pow(2,j);
         numberOfBins.push_back(curNumberOfBins);
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		int is = curNumberOfBins*curSizeOfEachBin;
-//        printf("%d StLevel:%d number of Bins:%d size of bin:%d is:%d\n",j, i, curNumberOfBins, curSizeOfEachBin, is);
+        printf("Storage:%d #of Bins:%d size of bin:%d is:%d\n", j, curNumberOfBins, curSizeOfEachBin, is);
     }
 
 }

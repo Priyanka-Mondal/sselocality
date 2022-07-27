@@ -22,6 +22,26 @@ void OneChoiceServer::storeCiphers(int dataIndex, int instance, vector<vector<pa
     keyworkCounters->insert(dataIndex, keywordCounters);
 }
 */
+
+int OneChoiceServer::getCounter(int dataIndex, int instance, prf_type tokkw) 
+{
+    prf_type curToken = tokkw;
+    unsigned char cntstr[AES_KEY_SIZE];
+    memset(cntstr, 0, AES_KEY_SIZE);
+    *(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+    prf_type keywordMapKey = Utilities::generatePRF(cntstr, curToken.data());
+    bool found = false;
+    prf_type res = keyworkCounters->find(dataIndex, instance, keywordMapKey, found);
+	int keywordCnt = 0;
+    if (found) 
+    {
+        prf_type plaintext;
+        Utilities::decode(res, plaintext, curToken.data());
+        keywordCnt = *(int*) (&(plaintext[0]));
+	}
+	return keywordCnt;
+}
+
 void OneChoiceServer::storeKwCounters(int dataIndex, int instance, map<prf_type, prf_type> kc) 
 {
     keyworkCounters->insert(dataIndex, instance, kc);
