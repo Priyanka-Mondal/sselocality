@@ -166,6 +166,7 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,i))
 			{
+				//cout <<"i:"<<i<<endl;
 				assert(L->sorted(i,keys[i][3]));
 				L->updateHashTable(i, keys[i][3]);
 				L->resize(i,indexSize[i]); 

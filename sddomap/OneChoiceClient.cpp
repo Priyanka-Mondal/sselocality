@@ -56,6 +56,7 @@ int issorted(vector<prf_type> A)
 	{
     	int bina = *(int*) (&(A[a].data()[AES_KEY_SIZE - 11]));
     	int binb = *(int*) (&(A[a+1].data()[AES_KEY_SIZE - 11]));
+		//cout <<"bin:"<<bina<<"/"<<binb<<endl;
 		if(bina>binb)
 			return 0;
 	}
@@ -67,6 +68,7 @@ int issortedC(vector<prf_type> A)
 	{
     	int prpa = *(int*) (&(A[a].data()[AES_KEY_SIZE - 11]));
     	int prpb = *(int*) (&(A[a+1].data()[AES_KEY_SIZE - 11]));
+		//cout <<"prp:"<<prpa<<"/"<<prpb<<endl;
 		if(prpa<prpb)
 			return 0;
 	}
@@ -83,6 +85,7 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
 	int keywordCount = server->getCounter(index, instance, K);
 	cout<<"("<<index<<","<<instance<<")"<<keywordCount<<endl;
 	vector<prf_type> ciphers = server->search(index, instance, K, keywordCount);
+	ciphers = server->getAllData(index, instance);
 	totalCommunication += ciphers.size() * sizeof (prf_type) ;
 	for (auto item : ciphers) 
 	{
@@ -308,7 +311,8 @@ void OneChoiceClient::updateHashTable(int index, unsigned char* key)
 			{
 				kcc[mapKey] = mapValue; 
 			}		
-			cout <<"no upadte required:"<< keywordCnt<< ":"<<cntw<<endl;
+			if(keywordCnt != cntw)
+				cout <<"no upadte required:"<< keywordCnt<< ":"<<cntw<<endl;
 		}
 		else
 			kcc[mapKey] = mapValue;
@@ -370,8 +374,25 @@ bool OneChoiceClient::sorted(int index, unsigned char* key)
 		prf_type plain;
 		Utilities::decode(n, plain, key);
 		decoded.push_back(plain);
-		return issorted(decoded);
 	}
+	vector<prf_type> els2 = server->getNEW(index, 0, KWsize[index], false);
+	vector<prf_type> decoded2;
+	for(auto n :els2)
+	{
+		prf_type plain;
+		Utilities::decode(n, plain, key);
+		decoded2.push_back(plain);
+	}
+
+	int one =  issorted(decoded);
+	int two = 1;
+	two =  issortedC(decoded2);
+sleep(1);
+cout <<index<<":"<<one <<" "<<two<<endl;
+if(one+two == 2)
+return true;
+else return false;
+	
 }
 void OneChoiceClient::deAmortBitSortC(int step, int count, int size, int index, unsigned char* key)
 {

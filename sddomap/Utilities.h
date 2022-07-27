@@ -15,6 +15,7 @@
 #include <math.h>
 #include <set>
 #include "Types.hpp"
+#include<assert.h>
 
 #define SUB_BLOCK_SIZE 4096
 #define SUB_BLOCKS_PER_BLOCK 4096
@@ -150,6 +151,7 @@ public:
          *          Q size
          *          delete number
          */
+
         std::ifstream infile;
         std::string tmp;
 
@@ -176,6 +178,7 @@ public:
             testCase.K = stoi(tmp);
             getline(infile, tmp);
             int qNum = stoi(tmp);
+			assert(testCase.K>=qNum);
             for (int i = 0; i < qNum; i++) {
                 getline(infile, tmp);
                 testCase.Qs.push_back(stoi(tmp));
