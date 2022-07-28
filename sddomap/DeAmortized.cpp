@@ -131,23 +131,19 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 				{
 					L->addDummy(i, cnt[i]-2*t, 1, keys[i][3]);
 				}
-				//if (2*t+m <= cnt[i] && cnt[i] < pow(2,j))
-				//if (2*t+m <= cnt[i] && cnt[i] < 2*t+m+2)
-				if (2*t+m == cnt[i])
+				if (2*t+m <= cnt[i] && cnt[i] < 2*t+m+pow(2,i))
 				{
 					int count = cnt[i]-(2*t+m);
-					//int times = pow(2,j)-(2*t+m);
-					int times = 2;
+					int times = pow(2,i) - (2*t+m);
 					int N = L->getNEWsize(i);
 					int totStepsi = 2*(by(N*log2(N)*(log2(N)+1),4));
-					int stepi = 2*ceil(by(by(totStepsi, times),2));
-					stepi = totStepsi;
-					//if(times*stepi < totStepsi)
+					int stepi = by(totStepsi, times);
+					stepi = pow(2, ceil(log2(stepi)));
+					assert(stepi >1);
+					if(stepi*count < totStepsi)
 					{
-						//L->deAmortBitSortC(stepi, count, N, i, keys[i][3]);
-						//L->deAmortBitSort(stepi, count, N, i, keys[i][3]);
-						L->nonOblSort(i, keys[i][3]);
-						L->nonOblSortC(i, keys[i][3]);
+						L->deAmortBitSortC(stepi, count, N, i, keys[i][3]);
+						L->deAmortBitSort(stepi, count, N, i, keys[i][3]);
 					}
 				}
 			}
@@ -161,10 +157,8 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 					L->addDummy(i, cnt[i], numberOfBins[i], keys[i][3]);
 					int N = L->getNEWsize(i);
 					int totSteps = 2*(by(N*log2(N)*(log2(N)+1) , 4));
-					//L->deAmortBitSortC(totSteps, cnt[i], N, i, keys[i][3]);
-					//L->deAmortBitSort(totSteps, cnt[i], N, i, keys[i][3]);
-						L->nonOblSort(i, keys[i][3]);
-						L->nonOblSortC(i, keys[i][3]);
+					L->deAmortBitSortC(totSteps, cnt[i], N, i, keys[i][3]);
+					L->deAmortBitSort(totSteps, cnt[i], N, i, keys[i][3]);
 				}
 			}
 			cnt[i] = cnt[i]+1;
@@ -285,7 +279,7 @@ vector<int> DeAmortized::search(string keyword)
 	    if ((strcmp((char*) decodedString.data(), keyword.data()) == 0)) 
 			ressize++;
     }
-	//cout <<"remove:"<<remove.size()<<"/"<<ressize<<endl;
+	cout <<"remove:"<<remove.size()<<"/"<<ressize<<endl;
     for (auto const& cur : remove) 
 	{
         if (cur.second < 0) 

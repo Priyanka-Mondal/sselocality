@@ -112,14 +112,14 @@ vector<prf_type> OneChoiceServer::getElements(int index, int instance, int start
 	return storage->getElements(index, instance, start, end);
 }
 
-vector< prf_type> OneChoiceServer::getNEW(int index, int count, int size, bool NEW)
+vector< prf_type> OneChoiceServer::getKW(int index, int count, int size)
 {
-	return storage->getNEW(index, count, size, NEW);
+	return storage->getKW(index, count, size);
 }
 
-void OneChoiceServer::putNEW(int index, int instance, vector<prf_type> sorted)//insertAll
+void OneChoiceServer::insertAll(int index, int instance, vector<prf_type> sorted)
 {
-	storage->clear(index,instance);
+	//storage->clear(index,instance);
 	storage->insertAll(index, instance, sorted);
 }
 

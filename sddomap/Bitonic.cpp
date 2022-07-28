@@ -1,24 +1,19 @@
-#include<string>
-#include<map>
-#include<vector>
-#include<algorithm>
-#include<assert.h>
 #include "Bitonic.h"
 
 using namespace::std;
-Bitonic::Bitonic(int N) 
+/*
+Bitonic::Bitonic() 
 {
-	this->N = N;
 }
 Bitonic::~Bitonic() { }
-
+*/
 void Bitonic::compAndSwap(int a[], int i, int j)
 {
 	if ((a[i]>a[j]))
 		swap(a[i],a[j]);
 }
 
-void Bitonic::bitonicMerge(int a[], int low, int cnt,vector<int>&memseq)
+void Bitonic::bitonicMerge(int a[], int low, int cnt,vector<int>& memseq)
 {
 	if (cnt>1)
 	{
@@ -34,7 +29,7 @@ void Bitonic::bitonicMerge(int a[], int low, int cnt,vector<int>&memseq)
 	}
 }
 
-void Bitonic::bitMerge(int a[], int low, int cnt,vector<int>&memseq)
+void Bitonic::bitMerge(int a[], int low, int cnt,vector<int>& memseq)
 {
 	if (cnt>1)
 	{
@@ -50,7 +45,7 @@ void Bitonic::bitMerge(int a[], int low, int cnt,vector<int>&memseq)
 	}
 }
 
-void Bitonic::bitonicSort(int a[],int low, int cnt, vector<int>&memseq)
+void Bitonic::bitonicSort(int a[],int low, int cnt, vector<int>& memseq)
 {
 	if (cnt>1)
 	{
@@ -72,6 +67,9 @@ vector<int> Bitonic::getSeq(int step, int count, int size)
 	int a[size];
 	memset(a,0,size);
 	generateSeq(a, size, memseq);
+	//for(auto m : memseq)
+	//	cout<<"("<<m<<")";
+	//cout<<endl;
 	assert(memseq.size() == 2*ceil((float)(size*log2(size)*(log2(size)+1)/(float)4)));
 	int start = count*step;
 	vector<int> res;

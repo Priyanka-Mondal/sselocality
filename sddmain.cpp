@@ -120,7 +120,7 @@ int main(int argc, char** argv)
 	{
         cout << "------------------------------------------------------------------------------" << endl;
         //cout << "Result of Operations for DB Size " << testCases[i].N << endl;
-        //cout << "Search for Keyword With [" << testCases[i].Qs[j] << "] Results and [" << testCases[i].delNumber[j] << "] Deletions:" <<testCases[i].testKeywords[j]<< endl;
+        cout << "Search for Keyword With [" << testCases[i].Qs[j] << "] Results and [" << testCases[i].delNumber[j] << "] Deletions:" <<testCases[i].testKeywords[j]<< endl;
         Utilities::startTimer(500);
         vector<int> res = client.search(testCases[i].testKeywords[j]);
         time = Utilities::stopTimer(500);
