@@ -62,7 +62,9 @@ public:
 	void deAmortBitSort(int step, int counter, int size, int index, unsigned char* key);
 	void deAmortBitSortC(int step, int count, int size, int index, unsigned char* key);
 	void nonOblSort(int index, unsigned char* key);
+	void nonOblSortC(int index, unsigned char* key);
     int hashKey(string w, int cnt, int index, unsigned char* key);
+	int PRP(string w, int index, unsigned char* key);
 	void updateHashTable(int index, unsigned char* key);
     Bid getBid(string str, int cnt);
 	vector<prf_type> searchNEW(int index, string keyword);

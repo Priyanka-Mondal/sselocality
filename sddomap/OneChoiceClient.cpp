@@ -37,7 +37,7 @@ OneChoiceClient::OneChoiceClient(int N, bool inMemory, bool overwrite, bool prof
 		{
             exist[i].push_back(false);
         }
-		numNEW.push_back(1);//updtCnt
+		numNEW.push_back(1);//updateCount
 		NEWsize.push_back(0);
 		KWsize.push_back(0);
     }
@@ -50,29 +50,28 @@ OneChoiceClient::OneChoiceClient(int N, bool inMemory, bool overwrite, bool prof
 	exist[0][3] = true;
 }
 
-int issorted(vector<prf_type> A)
+bool issorted(vector<prf_type> A)
 {
-	for(int a=0;a<A.size()-1;a++)
+	for(int a = 0; a < A.size()-1; a++)
 	{
     	int bina = *(int*) (&(A[a].data()[AES_KEY_SIZE - 11]));
     	int binb = *(int*) (&(A[a+1].data()[AES_KEY_SIZE - 11]));
-		//cout <<"bin:"<<bina<<"/"<<binb<<endl;
 		if(bina>binb)
-			return 0;
+			return false;
 	}
-	return 1;
+	return true;
 }
-int issortedC(vector<prf_type> A)
+bool issortedC(vector<prf_type> A)
 {
-	for(int a=0;a<A.size()-1;a++)
+	for(int a = 0; a < A.size()-1; a++)
 	{
     	int prpa = *(int*) (&(A[a].data()[AES_KEY_SIZE - 11]));
     	int prpb = *(int*) (&(A[a+1].data()[AES_KEY_SIZE - 11]));
 		//cout <<"prp:"<<prpa<<"/"<<prpb<<endl;
 		if(prpa<prpb)
-			return 0;
+			return false;
 	}
-	return 1;
+	return true;
 }
 
 vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword, unsigned char* key) 
@@ -83,21 +82,24 @@ vector<prf_type> OneChoiceClient::search(int index, int instance, string keyword
     vector<prf_type> finalRes;
 	prf_type K = Utilities::encode(keyword, key);
 	int keywordCount = server->getCounter(index, instance, K);
-	cout<<"("<<index<<","<<instance<<")"<<keywordCount<<endl;
-	vector<prf_type> ciphers = server->search(index, instance, K, keywordCount);
-	ciphers = server->getAllData(index, instance);
-	totalCommunication += ciphers.size() * sizeof (prf_type) ;
-	for (auto item : ciphers) 
+	if(keywordCount > 0)
 	{
-	    prf_type plaintext = item;
-	    Utilities::decode(item, plaintext, key);
-	   	if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+		//cout<<"("<<index<<","<<instance<<")"<<keywordCount<<endl;
+		vector<prf_type> ciphers = server->search(index, instance, K, keywordCount);
+		ciphers = server->getAllData(index, instance);
+		totalCommunication += ciphers.size() * sizeof (prf_type) ;
+		for (auto item : ciphers) 
 		{
-	       	finalRes.push_back(plaintext);
-	        int ind = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
-			int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]);
-			//cout<<" MATCH:"<<plaintext.data()<<" op:"<<op<<" id:"<<ind<<" index:"<<index<<endl;
-	   	}
+		    prf_type plaintext = item;
+		    Utilities::decode(item, plaintext, key);
+		   	if (strcmp((char*) plaintext.data(), keyword.data()) == 0) 
+			{
+		       	finalRes.push_back(plaintext);
+		        int ind = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
+				int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]);
+				//cout<<" MATCH:"<<plaintext.data()<<" op:"<<op<<" id:"<<ind<<" index:"<<index<<endl;
+		   	}
+		}
 	}
     return finalRes;
 }
@@ -114,6 +116,11 @@ void OneChoiceClient::move(int index, int toInstance, int fromInstance)
 		numNEW[index] = numNEW[index] + 1;
 		NEWsize[index] = 0;
 		KWsize[index] = 0;
+
+		delete omaps[index];
+   	    bytes<Key> key{0};
+   	    OMAP* omap = new OMAP(max((int) pow(2, index+2), 16), key);
+   	    omaps[index] = omap;
 	}
 }
 
@@ -126,6 +133,7 @@ void OneChoiceClient::appendTokwCounter(int index, prf_type keyVal, unsigned cha
 	KWsize[index]=KWsize[index]+1;
 	assert(last == KWsize[index]*AES_KEY_SIZE);
 }
+
 void OneChoiceClient::append(int index, prf_type keyVal, unsigned char* key)
 {
 	exist[index][3] = true;
@@ -146,6 +154,7 @@ void OneChoiceClient::destroy(int index, int instance)
 		KWsize[index]=0;
 	}
 }
+
 void OneChoiceClient::resize(int index, int size)
 {
 	server->resize(index, size, NEWsize[index]);
@@ -164,21 +173,13 @@ void OneChoiceClient::getBin(int index, int instance, int count, int numOfBins,
 	{
 	    prf_type plaintext;
 	    Utilities::decode(c, plaintext, key);
-	    //int ind = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
-	    //int op = ((byte) plaintext.data()[AES_KEY_SIZE - 6]); 
 	    string w((char*) plaintext.data());
 		int cnt = 0;
 		if(w!="")
 			cnt = stoi(omaps[index]->incrementCnt(getBid(w, upCnt)));
+
 		//else do dummy omap access
 		int newbin = hashKey(w, cnt, index, keynew);		
-		//prf_type keyVal;
-    	//memset(keyVal.data(), 0, AES_KEY_SIZE);
-		//std::copy(w.begin(), w.end(), keyVal.begin());
-		//*(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = ind; 
-		//keyVal.data()[AES_KEY_SIZE - 6] = (byte) (op == 0 ? OP::INS : OP::DEL);
-		//*(int*) (&(keyVal.data()[AES_KEY_SIZE - 11])) = newbin;
-		//append(index, keyVal, keynew);
 		*(int*) (&(plaintext.data()[AES_KEY_SIZE - 11])) = newbin;
 		append(index, plaintext, keynew);
 		if(w != "")
@@ -215,7 +216,7 @@ void OneChoiceClient::kwCount(int index, int count, int bins, unsigned char* key
     	memset(keyVal.data(), 0, AES_KEY_SIZE);
 	    std::copy(w.begin(), w.end(), keyVal.begin());
 	    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = cntw; 
-	    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 11])) = cntw;//here goes the PRP later
+	    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 11])) = PRP(w, index, key);
 		appendTokwCounter(index, keyVal, key);
 	}
 	assert(KWsize[index] <=2*indexSize[index-1]);
@@ -273,6 +274,7 @@ void OneChoiceClient::pad(int index, int newSize, unsigned char* key)
 	}
 	int kwsize = KWsize[index];
    	memset(dummy.data(), 0, AES_KEY_SIZE);
+    *(int*) (&(dummy.data()[AES_KEY_SIZE - 5])) = 0;//cntw
     *(int*) (&(dummy.data()[AES_KEY_SIZE - 11])) = 0;//prp
 	for(int k = 0; k <newSize-kwsize; k++)
 	{
@@ -284,7 +286,9 @@ void OneChoiceClient::pad(int index, int newSize, unsigned char* key)
 void OneChoiceClient::updateHashTable(int index, unsigned char* key)
 {
 	assert(KWsize[index] < 8*indexSize[index]);
+	assert(KWsize[index]  == NEWsize[index]);
 	vector<prf_type> all = server->getNEW(index, 0, KWsize[index], false); // for first pow(2, index) items
+	//vector<prf_type> all = server->getNEW(index, 0, pow(2, index), false); // for first pow(2, index) items
 	map <prf_type, prf_type> kcc;
 	for(auto c: all)
 	{
@@ -292,30 +296,18 @@ void OneChoiceClient::updateHashTable(int index, unsigned char* key)
 	    Utilities::decode(c, plaintext, key);
 	    string w((char*) plaintext.data());
 	    int cntw = *(int*) (&(plaintext.data()[AES_KEY_SIZE - 5]));
-	    //int prp = ((byte) plaintext.data()[AES_KEY_SIZE - 11]); 
 		prf_type K = Utilities::encode(w, key);
 		unsigned char cntstr[AES_KEY_SIZE];
 		memset(cntstr, 0, AES_KEY_SIZE);
-		*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1; // here add the PRP
+		*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1; 
 		prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
-		prf_type valueTmp, totalTmp;
+		prf_type valueTmp;
 		*(int*) (&(valueTmp[0])) = cntw;
 		prf_type mapValue = Utilities::encode(valueTmp.data(), K.data());
-		if(kcc.find(mapKey) != kcc.end())
+		if(kcc.find(mapKey) == kcc.end())
 		{
-			prf_type oldVal = kcc[mapKey];
-			prf_type plaintext;
-        	Utilities::decode(kcc[mapKey], plaintext, K.data());
-        	int keywordCnt = *(int*) (&(plaintext[0]));
-			if(keywordCnt < cntw)
-			{
-				kcc[mapKey] = mapValue; 
-			}		
-			if(keywordCnt != cntw)
-				cout <<"no upadte required:"<< keywordCnt<< ":"<<cntw<<endl;
-		}
-		else
 			kcc[mapKey] = mapValue;
+		}
 	}
 	server->storeKwCounters(index, 3, kcc);
 }
@@ -344,6 +336,20 @@ int OneChoiceClient::hashKey(string w, int cnt, int index, unsigned char* key)
 	return bin;
 }
 
+int OneChoiceClient::PRP(string w, int index, unsigned char* key)
+{
+	if(w == "")
+		return 0;
+    prf_type K = Utilities::encode(w, key);
+	unsigned char cntstr[AES_KEY_SIZE];		
+	memset(cntstr, 0, AES_KEY_SIZE);
+	*(int*) (&(cntstr[AES_KEY_SIZE - 5])) = -1;
+	prf_type mapKey = Utilities::generatePRF(cntstr, K.data());
+    unsigned char* hash = Utilities::sha256((char*) mapKey.data(), AES_KEY_SIZE);
+    int prp = ((unsigned int) (*((int*) hash)))+1;
+	return prp;
+}
+
 bool cmpp(prf_type &a, prf_type &b)
 {
     int bina = *(int*) (&(a.data()[AES_KEY_SIZE - 11]));
@@ -353,7 +359,6 @@ bool cmpp(prf_type &a, prf_type &b)
 
 bool cmpp2(prf_type &a, prf_type &b)
 {
-	//cout <<"cmp:["<<a.second.size()<< " "<<b.second.size()<<"]["<<(a.second.size() > b.second.size()) <<"]"<<endl;
     int prpa = *(int*) (&(a.data()[AES_KEY_SIZE - 11]));
     int prpb = *(int*) (&(b.data()[AES_KEY_SIZE - 11]));
 	return (prpa > prpb);
@@ -362,6 +367,11 @@ bool cmpp2(prf_type &a, prf_type &b)
 vector<prf_type> sort(vector<prf_type> &A)
 {
 	sort(A.begin(), A.end(), cmpp);
+	return A;
+}
+vector<prf_type> sortC(vector<prf_type> &A)
+{
+	sort(A.begin(), A.end(), cmpp2);
 	return A;
 }
 
@@ -384,19 +394,14 @@ bool OneChoiceClient::sorted(int index, unsigned char* key)
 		decoded2.push_back(plain);
 	}
 
-	int one =  issorted(decoded);
-	int two = 1;
-	two =  issortedC(decoded2);
-sleep(1);
-cout <<index<<":"<<one <<" "<<two<<endl;
-if(one+two == 2)
-return true;
-else return false;
-	
+	bool one = issorted(decoded);
+	bool two = issortedC(decoded2);
+	return (one&two);
 }
+
 void OneChoiceClient::deAmortBitSortC(int step, int count, int size, int index, unsigned char* key)
 {
-	assert(NEWsize[index]==KWsize[index]);
+	assert(NEWsize[index] == KWsize[index]);
 	vector<int> curMem = bitonic->getSeq(step, count, size);
 	std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
 	vector<int> ncm = bitonic->remDup(curMem);
@@ -438,7 +443,7 @@ void OneChoiceClient::deAmortBitSortC(int step, int count, int size, int index, 
 
 void OneChoiceClient::deAmortBitSort(int step, int count, int size, int index, unsigned char* key)
 {
-	assert(NEWsize[index]==KWsize[index]);
+	assert(NEWsize[index] == KWsize[index]);
 	vector<int> curMem = bitonic->getSeq(step, count, size);
 	std::sort(curMem.begin(), curMem.end(), [](int a, int b) {return a < b;});
 	vector<int> ncm = bitonic->remDup(curMem);
@@ -483,4 +488,46 @@ void OneChoiceClient::deAmortBitSort(int step, int count, int size, int index, u
 int OneChoiceClient::getNEWsize(int index)
 {
 	return NEWsize[index];
+}
+
+void OneChoiceClient::nonOblSort(int index, unsigned char* key)
+{
+	vector<prf_type> encNEWi = server->getNEW(index,0, NEWsize[index],true);
+	vector<prf_type> decodedNEWi;	
+	for(auto n : encNEWi)
+	{
+		prf_type dec;// = n;
+	    Utilities::decode(n, dec, key);
+		decodedNEWi.push_back(dec);
+	}
+		sort(decodedNEWi);
+		encNEWi.clear();
+		for(auto n : decodedNEWi)
+		{
+			prf_type enc;// = n;
+			enc = Utilities::encode(n.data(), key);
+			encNEWi.push_back(enc);
+		}
+		server->putNEW(index, 3, encNEWi);
+}
+
+void OneChoiceClient::nonOblSortC(int index, unsigned char* key)
+{
+	vector<prf_type> encNEWi = server->getNEW(index, 0, KWsize[index], false);
+	vector<prf_type> decodedNEWi;	
+	for(auto n : encNEWi)
+	{
+		prf_type dec;// = n;
+	    Utilities::decode(n, dec, key);
+		decodedNEWi.push_back(dec);
+	}
+		sortC(decodedNEWi);
+		encNEWi.clear();
+		for(auto n : decodedNEWi)
+		{
+			prf_type enc;// = n;
+			enc = Utilities::encode(n.data(), key);
+			encNEWi.push_back(enc);
+		}
+		server->putNEW(index, 4, encNEWi);
 }

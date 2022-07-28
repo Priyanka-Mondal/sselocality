@@ -9,7 +9,6 @@ OneChoiceStorage::OneChoiceStorage(bool inMemory, int dataIndex, string fileAddr
     this->dataIndex = dataIndex;
     this->profile = profile;
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-	b = ceil((float)log2(B));
     for (int j = 0; j <= dataIndex; j++) 
 	{
         int curNumberOfBins = j > 1 ? 

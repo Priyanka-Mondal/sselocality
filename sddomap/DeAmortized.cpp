@@ -15,12 +15,10 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
 	this->overwrite = overwrite;
    	this->deleteFiles = deleteFiles;
 	l = ceil((float)log2(N));
-	b = ceil((float)log2(B));
     memset(nullKey.data(), 0, AES_KEY_SIZE);
-	numOfIndices = l - b;
-    for (int i = 0; i <=numOfIndices; i++) 
+	numOfIndices = l;
+    for (int j = 0; j <= numOfIndices; j++) 
 	{
-		int j = i + b;
         int curNumberOfBins = j > 1 ? 
 			(int) ceil(((float) pow(2, j))/(float)(log2(pow(2, j))*log2(log2(pow(2, j))))) : 1;
         int curSizeOfEachBin = j > 1 ? 3*(log2(pow(2, j))*(log2(log2(pow(2, j))))) : pow(2,j);
@@ -28,7 +26,7 @@ DeAmortized::DeAmortized(int N, bool inMemory, bool overwrite)
         sizeOfEachBin.push_back(curSizeOfEachBin);
 		int is = curNumberOfBins*curSizeOfEachBin;
 		indexSize.push_back(is);
-//        printf("DeAm:%d number of Bins:%d size of bin:%d is:%d\n", i, curNumberOfBins, curSizeOfEachBin, is);
+//      printf("DeAm:%d #Bins:%d size of bin:%d is:%d\n", j, curNumberOfBins, curSizeOfEachBin, is);
     }
     for (int i = 0; i <= numOfIndices; i++) 
 	{
@@ -134,7 +132,8 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 					L->addDummy(i, cnt[i]-2*t, 1, keys[i][3]);
 				}
 				//if (2*t+m <= cnt[i] && cnt[i] < pow(2,j))
-				if (2*t+m <= cnt[i] && cnt[i] < 2*t+m+2)
+				//if (2*t+m <= cnt[i] && cnt[i] < 2*t+m+2)
+				if (2*t+m == cnt[i])
 				{
 					int count = cnt[i]-(2*t+m);
 					//int times = pow(2,j)-(2*t+m);
@@ -142,10 +141,13 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 					int N = L->getNEWsize(i);
 					int totStepsi = 2*(by(N*log2(N)*(log2(N)+1),4));
 					int stepi = 2*ceil(by(by(totStepsi, times),2));
-					if(times*stepi < totStepsi)
+					stepi = totStepsi;
+					//if(times*stepi < totStepsi)
 					{
-						L->deAmortBitSortC(stepi, count, N, i, keys[i][3]);
-						L->deAmortBitSort(stepi, count, N, i, keys[i][3]);
+						//L->deAmortBitSortC(stepi, count, N, i, keys[i][3]);
+						//L->deAmortBitSort(stepi, count, N, i, keys[i][3]);
+						L->nonOblSort(i, keys[i][3]);
+						L->nonOblSortC(i, keys[i][3]);
 					}
 				}
 			}
@@ -159,15 +161,16 @@ void DeAmortized::update(OP op, string keyword, int ind, bool setup)
 					L->addDummy(i, cnt[i], numberOfBins[i], keys[i][3]);
 					int N = L->getNEWsize(i);
 					int totSteps = 2*(by(N*log2(N)*(log2(N)+1) , 4));
-					L->deAmortBitSortC(totSteps, cnt[i], N, i, keys[i][3]);
-					L->deAmortBitSort(totSteps, cnt[i], N, i, keys[i][3]);
+					//L->deAmortBitSortC(totSteps, cnt[i], N, i, keys[i][3]);
+					//L->deAmortBitSort(totSteps, cnt[i], N, i, keys[i][3]);
+						L->nonOblSort(i, keys[i][3]);
+						L->nonOblSortC(i, keys[i][3]);
 				}
 			}
 			cnt[i] = cnt[i]+1;
 			if(cnt[i] == pow(2,i))
 			{
-				//cout <<"i:"<<i<<endl;
-				assert(L->sorted(i,keys[i][3]));
+				assert(L->sorted(i,keys[i][3]));  ///comment
 				L->updateHashTable(i, keys[i][3]);
 				L->resize(i,indexSize[i]); 
 				L->move(i-1,0,2); 
@@ -239,6 +242,7 @@ prf_type DeAmortized::createKeyVal(string keyword, int cntw)
     memset(keyVal.data(), 0, AES_KEY_SIZE);
     std::copy(keyword.begin(), keyword.end(), keyVal.begin());//keyword
     *(int*) (&(keyVal.data()[AES_KEY_SIZE - 5])) = cntw;//fileid
+    *(int*) (&(keyVal.data()[AES_KEY_SIZE - 11])) = 1;//PRP
 	return keyVal;
 }
 
@@ -281,7 +285,7 @@ vector<int> DeAmortized::search(string keyword)
 	    if ((strcmp((char*) decodedString.data(), keyword.data()) == 0)) 
 			ressize++;
     }
-	cout <<"remove:"<<remove.size()<<"/"<<ressize<<endl;
+	//cout <<"remove:"<<remove.size()<<"/"<<ressize<<endl;
     for (auto const& cur : remove) 
 	{
         if (cur.second < 0) 
